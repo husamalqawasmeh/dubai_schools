@@ -1,36 +1,39 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+## Dubai Schools Explorer (POC)
 
-## Getting Started
+A demo site for exploring and reviewing schools in Dubai.
 
-First, run the development server:
+### Run locally
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open http://localhost:3000
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### What's in this POC
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- **Home (`/`)** — search and filter all 232 schools by curriculum, area, KHDA rating, and max fee, with sorting.
+- **School detail (`/schools/[slug]`)** — curriculum, fees, KHDA rating, location map, official website link, and parent reviews (leave-a-review form).
+- **Parent Journal (`/journal`)** — a shared board where parents/residents post reviews, questions, or quotation requests, searchable by keyword.
+- **Chatbot** — floating icon (bottom-right on every page) opens a chat panel. It currently returns a stubbed reply.
 
-## Learn More
+### Data
 
-To learn more about Next.js, take a look at the following resources:
+School data lives in [`src/data/schools.json`](src/data/schools.json) — **all 232 private schools** in KHDA's public education directory, with curriculum, area, grade range, KHDA inspection rating and published annual fee range.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+It is generated, not hand-maintained:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+npm run seed:schools
+```
 
-## Deploy on Vercel
+See [`scripts/seed-data/README.md`](scripts/seed-data/README.md) for how the ingest works, the TLS quirk it works around, and what to check if KHDA changes their markup. KHDA has no public API and the Dubai Pulse open-data CSVs no longer resolve after that portal's migration, so the ingest parses the directory's server-rendered HTML and needs a periodic re-run rather than being a live feed.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Coverage at the last refresh: 232 schools, 206 with a published fee range, 210 with an inspection rating, 209 with a website. Figures are KHDA's own and should still be confirmed with the school before any decision.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Reviews and journal posts are stored in the browser's `localStorage` (no backend/database yet) — fine for a demo, but posts won't be shared across devices/browsers.
+
+### Wiring up the chatbot
+
+The chat UI is in [`src/components/ChatWidget.tsx`](src/components/ChatWidget.tsx). Replace the `getBotReply` function with a real API call (e.g. to an `/api/chat` route that forwards to your chosen provider) once an API key is available.

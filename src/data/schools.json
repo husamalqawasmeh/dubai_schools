@@ -1,0 +1,4180 @@
+[
+  {
+    "slug": "al-arqm-private-school",
+    "name": "Al Arqm Private School",
+    "area": "Al Barsha First",
+    "curricula": [
+      "UAE MOE"
+    ],
+    "khdaRating": "Acceptable",
+    "feeMinAED": 8404,
+    "feeMaxAED": 18346,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "Pre Primary - Grade 12",
+    "website": "https://www.alarqam.ae",
+    "address": "Al Barsha First, Dubai",
+    "description": "UAE MOE curriculum school in Al Barsha First, serving Pre Primary - Grade 12. Rated Acceptable in its latest KHDA inspection.",
+    "khdaId": "185",
+    "phone": "97143400888"
+  },
+  {
+    "slug": "al-basateen-private-nursery",
+    "name": "Al Basateen Private Nursery",
+    "area": "Al Khwaneej First",
+    "curricula": [
+      "UAE MOE"
+    ],
+    "khdaRating": "Good",
+    "feeMinAED": 8009,
+    "feeMaxAED": 8009,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "KG 1 - KG 2",
+    "website": "",
+    "address": "Al Khwaneej First, Dubai",
+    "description": "UAE MOE curriculum school in Al Khwaneej First, serving KG 1 - KG 2. Rated Good in its latest KHDA inspection.",
+    "khdaId": "341",
+    "phone": "97142892261"
+  },
+  {
+    "slug": "al-diyafah-high-school",
+    "name": "Al Diyafah High School L.L.C",
+    "area": "Al Nahda Second",
+    "curricula": [
+      "British"
+    ],
+    "khdaRating": "Good",
+    "feeMinAED": 9288,
+    "feeMaxAED": 20475,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "FS 1 - Year 13",
+    "website": "https://www.diyafah.com",
+    "address": "Al Nahda Second, Dubai",
+    "description": "British curriculum school in Al Nahda Second, serving FS 1 - Year 13. Rated Good in its latest KHDA inspection.",
+    "khdaId": "219",
+    "phone": "97142671115"
+  },
+  {
+    "slug": "al-eman-educational-est",
+    "name": "Al Eman Educational EST",
+    "area": "Al Rashidiya",
+    "curricula": [
+      "UAE MOE"
+    ],
+    "khdaRating": "Acceptable",
+    "feeMinAED": 6156,
+    "feeMaxAED": 9387,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "KG 1 - Grade 12",
+    "website": "",
+    "address": "Al Rashidiya, Dubai",
+    "description": "UAE MOE curriculum school in Al Rashidiya, serving KG 1 - Grade 12. Rated Acceptable in its latest KHDA inspection.",
+    "khdaId": "234",
+    "phone": "97142858589"
+  },
+  {
+    "slug": "al-fanar-school",
+    "name": "Al Fanar School",
+    "area": "Nadd al Shiba Fourth",
+    "curricula": [
+      "British"
+    ],
+    "khdaRating": "Not rated",
+    "feeMinAED": 0,
+    "feeMaxAED": 0,
+    "feeNote": "Fees not published by KHDA",
+    "gradeRange": "",
+    "website": "",
+    "address": "Nadd al Shiba Fourth, Dubai",
+    "description": "British curriculum school in Nadd al Shiba Fourth.",
+    "khdaId": "5604",
+    "phone": "043231618"
+  },
+  {
+    "slug": "al-ghaf-private-school",
+    "name": "Al Ghaf Private School L.L.C",
+    "area": "Jabal Ali First",
+    "curricula": [
+      "British"
+    ],
+    "khdaRating": "Acceptable",
+    "feeMinAED": 35000,
+    "feeMaxAED": 51000,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "FS 1 - Year 8",
+    "website": "https://www.ghafschool.com",
+    "address": "Jabal Ali First, Dubai",
+    "description": "British curriculum school in Jabal Ali First, serving FS 1 - Year 8. Rated Acceptable in its latest KHDA inspection.",
+    "khdaId": "5527",
+    "phone": "97148522295"
+  },
+  {
+    "slug": "al-ittihad-private-school",
+    "name": "Al Ittihad Private School",
+    "area": "Al Mamzar",
+    "curricula": [
+      "American"
+    ],
+    "khdaRating": "Good",
+    "feeMinAED": 18207,
+    "feeMaxAED": 42434,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "Pre Primary - Grade 12",
+    "website": "https://www.ipsmamzar.com",
+    "address": "Al Mamzar, Dubai",
+    "description": "American curriculum school in Al Mamzar, serving Pre Primary - Grade 12. Rated Good in its latest KHDA inspection.",
+    "khdaId": "297",
+    "phone": "042966314"
+  },
+  {
+    "slug": "al-ittihad-private-school-br",
+    "name": "Al Ittihad Private School (Br)",
+    "area": "Al Safa First",
+    "curricula": [
+      "American"
+    ],
+    "khdaRating": "Good",
+    "feeMinAED": 21709,
+    "feeMaxAED": 43272,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "Pre Primary - Grade 12",
+    "website": "https://www.ipsjumeira.com",
+    "address": "Al Safa First, Dubai",
+    "description": "American curriculum school in Al Safa First, serving Pre Primary - Grade 12. Rated Good in its latest KHDA inspection.",
+    "khdaId": "301",
+    "phone": "043945111"
+  },
+  {
+    "slug": "al-maaref-american-school",
+    "name": "Al Maaref American School L.L.C",
+    "area": "Al Qusais First",
+    "curricula": [
+      "American"
+    ],
+    "khdaRating": "Acceptable",
+    "feeMinAED": 12610,
+    "feeMaxAED": 37134,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "Pre Primary - Grade 12",
+    "website": "https://www.mas-edu.ae",
+    "address": "Al Qusais First, Dubai",
+    "description": "American curriculum school in Al Qusais First, serving Pre Primary - Grade 12. Rated Acceptable in its latest KHDA inspection.",
+    "khdaId": "267",
+    "phone": "042988881"
+  },
+  {
+    "slug": "al-mawakeb-school-al-barsha",
+    "name": "Al Mawakeb School Al Barsha L.L.C",
+    "area": "Al Barsha Second",
+    "curricula": [
+      "American"
+    ],
+    "khdaRating": "Good",
+    "feeMinAED": 15365,
+    "feeMaxAED": 25493,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "KG 1 - Grade 12",
+    "website": "https://www.almawakeb.sch.ae",
+    "address": "Al Barsha Second, Dubai",
+    "description": "American curriculum school in Al Barsha Second, serving KG 1 - Grade 12. Rated Good in its latest KHDA inspection.",
+    "khdaId": "207",
+    "phone": "97143478288"
+  },
+  {
+    "slug": "al-mawakeb-school-al-garhoud",
+    "name": "Al Mawakeb School Al Garhoud L.L.C",
+    "area": "Al Garhoud",
+    "curricula": [
+      "American"
+    ],
+    "khdaRating": "Good",
+    "feeMinAED": 15365,
+    "feeMaxAED": 25493,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "Pre Primary - Grade 12",
+    "website": "https://www.almawakeb.sch.ae",
+    "address": "Al Garhoud, Dubai",
+    "description": "American curriculum school in Al Garhoud, serving Pre Primary - Grade 12. Rated Good in its latest KHDA inspection.",
+    "khdaId": "198",
+    "phone": "97142851415"
+  },
+  {
+    "slug": "al-mawakeb-school-al-khawaneej",
+    "name": "Al Mawakeb School Al Khawaneej L.L.C",
+    "area": "Al Mizhar First",
+    "curricula": [
+      "American"
+    ],
+    "khdaRating": "Good",
+    "feeMinAED": 35350,
+    "feeMaxAED": 69602,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "Pre Primary - Grade 12",
+    "website": "https://www.almawakeb.sch.ae",
+    "address": "Al Mizhar First, Dubai",
+    "description": "American curriculum school in Al Mizhar First, serving Pre Primary - Grade 12. Rated Good in its latest KHDA inspection.",
+    "khdaId": "5516",
+    "phone": "97142514433"
+  },
+  {
+    "slug": "al-nibras-international-private-school",
+    "name": "Al Nibras International Private School",
+    "area": "Dubai Investment Park First",
+    "curricula": [
+      "American"
+    ],
+    "khdaRating": "Good",
+    "feeMinAED": 24735,
+    "feeMaxAED": 50321,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "KG 1 - Grade 12",
+    "website": "https://www.nisdubai.ae",
+    "address": "Dubai Investment Park First, Dubai",
+    "description": "American curriculum school in Dubai Investment Park First, serving KG 1 - Grade 12. Rated Good in its latest KHDA inspection.",
+    "khdaId": "343",
+    "phone": "97148853330"
+  },
+  {
+    "slug": "al-rashid-al-saleh-private-school",
+    "name": "Al Rashid Al Saleh Private School",
+    "area": "Oud Metha",
+    "curricula": [
+      "UAE MOE"
+    ],
+    "khdaRating": "Good",
+    "feeMinAED": 8783,
+    "feeMaxAED": 19290,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "KG 1 - Grade 12",
+    "website": "https://www.alrashed-alsaleh.com",
+    "address": "Oud Metha, Dubai",
+    "description": "UAE MOE curriculum school in Oud Metha, serving KG 1 - Grade 12. Rated Good in its latest KHDA inspection.",
+    "khdaId": "250",
+    "phone": "97143376126"
+  },
+  {
+    "slug": "al-sadiq-islamic-english-school",
+    "name": "Al Sadiq Islamic English School",
+    "area": "Al Qusais First",
+    "curricula": [
+      "British"
+    ],
+    "khdaRating": "Acceptable",
+    "feeMinAED": 4579,
+    "feeMaxAED": 9499,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "FS 2 - Year 11",
+    "website": "https://www.alsadiqschool.com/",
+    "address": "Al Qusais First, Dubai",
+    "description": "British curriculum school in Al Qusais First, serving FS 2 - Year 11. Rated Acceptable in its latest KHDA inspection.",
+    "khdaId": "283",
+    "phone": "97142634083"
+  },
+  {
+    "slug": "al-salam-community-school",
+    "name": "Al Salam Community School L.L.C",
+    "area": "Al Twar Second",
+    "curricula": [
+      "British"
+    ],
+    "khdaRating": "Good",
+    "feeMinAED": 23249,
+    "feeMaxAED": 41102,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "FS 1 - Year 13",
+    "website": "https://www.alsalamcommunity.ae",
+    "address": "Al Twar Second, Dubai",
+    "description": "British curriculum school in Al Twar Second, serving FS 1 - Year 13. Rated Good in its latest KHDA inspection.",
+    "khdaId": "5524",
+    "phone": "97142215554"
+  },
+  {
+    "slug": "al-salam-private-school",
+    "name": "Al Salam Private School",
+    "area": "Al Nahda Second",
+    "curricula": [
+      "British"
+    ],
+    "khdaRating": "Good",
+    "feeMinAED": 13948,
+    "feeMaxAED": 28536,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "FS 1 - Year 11",
+    "website": "https://www.alsalamschool.ae",
+    "address": "Al Nahda Second, Dubai",
+    "description": "British curriculum school in Al Nahda Second, serving FS 1 - Year 11. Rated Good in its latest KHDA inspection.",
+    "khdaId": "277",
+    "phone": "97142679594"
+  },
+  {
+    "slug": "al-shurooq-private-school",
+    "name": "Al Shurooq Private School",
+    "area": "Jumeira First",
+    "curricula": [
+      "UAE MOE"
+    ],
+    "khdaRating": "Good",
+    "feeMinAED": 7648,
+    "feeMaxAED": 13017,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "KG 1 - Grade 12",
+    "website": "https://www.shoruq.sch.ae/",
+    "address": "Jumeira First, Dubai",
+    "description": "UAE MOE curriculum school in Jumeira First, serving KG 1 - Grade 12. Rated Good in its latest KHDA inspection.",
+    "khdaId": "252",
+    "phone": "043442026"
+  },
+  {
+    "slug": "ambassador-international-academy",
+    "name": "Ambassador International Academy L.L.C",
+    "area": "Al Qouz Second",
+    "curricula": [
+      "IB",
+      "British"
+    ],
+    "khdaRating": "Good",
+    "feeMinAED": 46170,
+    "feeMaxAED": 93297,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "ECC (2-3) - Grade 11,Grade 9 - Grade 9",
+    "website": "https://www.aiadubai.com",
+    "address": "Al Qouz Second, Dubai",
+    "description": "IB and British curriculum school in Al Qouz Second, serving ECC (2-3) - Grade 11,Grade 9 - Grade 9. Rated Good in its latest KHDA inspection.",
+    "khdaId": "5526",
+    "phone": "045806999"
+  },
+  {
+    "slug": "ambassador-international-academy-5616",
+    "name": "Ambassador International Academy L.L.C (Branch)",
+    "area": "Mankhool",
+    "curricula": [
+      "IB"
+    ],
+    "khdaRating": "Not rated",
+    "feeMinAED": 0,
+    "feeMaxAED": 0,
+    "feeNote": "Fees not published by KHDA",
+    "gradeRange": "Pre Primary - Grade 12",
+    "website": "",
+    "address": "Mankhool, Dubai",
+    "description": "IB curriculum school in Mankhool, serving Pre Primary - Grade 12.",
+    "khdaId": "5616"
+  },
+  {
+    "slug": "ambassador-school",
+    "name": "Ambassador School",
+    "area": "Mankhool",
+    "curricula": [
+      "Indian"
+    ],
+    "khdaRating": "Very Good",
+    "feeMinAED": 22323,
+    "feeMaxAED": 45750,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "Pre Primary - Grade 12",
+    "website": "https://www.ambassadorschool.com",
+    "address": "Mankhool, Dubai",
+    "description": "Indian curriculum school in Mankhool, serving Pre Primary - Grade 12. Rated Very Good in its latest KHDA inspection.",
+    "khdaId": "4319",
+    "phone": "97143983535"
+  },
+  {
+    "slug": "american-academy-for-girls",
+    "name": "American Academy for Girls",
+    "area": "Al Mizhar First",
+    "curricula": [
+      "American"
+    ],
+    "khdaRating": "Good",
+    "feeMinAED": 44571,
+    "feeMaxAED": 71113,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "Pre Primary - Grade 12",
+    "website": "https://www.americanacademy.ae/",
+    "address": "Al Mizhar First, Dubai",
+    "description": "American curriculum school in Al Mizhar First, serving Pre Primary - Grade 12. Rated Good in its latest KHDA inspection.",
+    "khdaId": "196",
+    "phone": "97142887250"
+  },
+  {
+    "slug": "american-international-school",
+    "name": "American International School",
+    "area": "Al Qusais First",
+    "curricula": [
+      "American"
+    ],
+    "khdaRating": "Good",
+    "feeMinAED": 13097,
+    "feeMaxAED": 21732,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "KG 1 - Grade 12",
+    "website": "https://www.aisch.ae",
+    "address": "Al Qusais First, Dubai",
+    "description": "American curriculum school in Al Qusais First, serving KG 1 - Grade 12. Rated Good in its latest KHDA inspection.",
+    "khdaId": "315",
+    "phone": "+97142540509"
+  },
+  {
+    "slug": "american-school-dubai",
+    "name": "American School Dubai",
+    "area": "Al Barsha Second",
+    "curricula": [
+      "American"
+    ],
+    "khdaRating": "Good",
+    "feeMinAED": 59180,
+    "feeMaxAED": 89319,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "Pre Primary - Grade 12",
+    "website": "https://www.asdubai.org",
+    "address": "Al Barsha Second, Dubai",
+    "description": "American curriculum school in Al Barsha Second, serving Pre Primary - Grade 12. Rated Good in its latest KHDA inspection.",
+    "khdaId": "201",
+    "phone": "97143950005"
+  },
+  {
+    "slug": "american-school-of-creative-science",
+    "name": "American School of Creative Science L.L.C",
+    "area": "Nadd al Shiba Second",
+    "curricula": [
+      "American"
+    ],
+    "khdaRating": "Good",
+    "feeMinAED": 35000,
+    "feeMaxAED": 66528,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "Pre Primary - Grade 12",
+    "website": "https://ascs.sch.ae/nad-al-sheba/",
+    "address": "Nadd al Shiba Second, Dubai",
+    "description": "American curriculum school in Nadd al Shiba Second, serving Pre Primary - Grade 12. Rated Good in its latest KHDA inspection.",
+    "khdaId": "5482",
+    "phone": "97145107000"
+  },
+  {
+    "slug": "amity-english-school",
+    "name": "Amity English School",
+    "area": "Al Qusais First",
+    "curricula": [
+      "British"
+    ],
+    "khdaRating": "Not rated",
+    "feeMinAED": 0,
+    "feeMaxAED": 0,
+    "feeNote": "Fees not published by KHDA",
+    "gradeRange": "FS 1 - Year 7",
+    "website": "",
+    "address": "Al Qusais First, Dubai",
+    "description": "British curriculum school in Al Qusais First, serving FS 1 - Year 7.",
+    "khdaId": "5599",
+    "phone": "042041027"
+  },
+  {
+    "slug": "amity-school",
+    "name": "Amity School L.L.C",
+    "area": "Al Qusais First",
+    "curricula": [
+      "Indian"
+    ],
+    "khdaRating": "Good",
+    "feeMinAED": 16313,
+    "feeMaxAED": 33394,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "Pre Primary - Grade 12",
+    "website": "https://www.amityschooldubai.com",
+    "address": "Al Qusais First, Dubai",
+    "description": "Indian curriculum school in Al Qusais First, serving Pre Primary - Grade 12. Rated Good in its latest KHDA inspection.",
+    "khdaId": "5489",
+    "phone": "042041000"
+  },
+  {
+    "slug": "apple-international-school",
+    "name": "Apple International School",
+    "area": "Al Qusais First",
+    "curricula": [
+      "British"
+    ],
+    "khdaRating": "Good",
+    "feeMinAED": 6832,
+    "feeMaxAED": 27960,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "FS 1 - Year 13",
+    "website": "https://www.apple.sch.ae",
+    "address": "Al Qusais First, Dubai",
+    "description": "British curriculum school in Al Qusais First, serving FS 1 - Year 13. Rated Good in its latest KHDA inspection.",
+    "khdaId": "203",
+    "phone": "042279227"
+  },
+  {
+    "slug": "arab-unity-school",
+    "name": "Arab Unity School L.L.C",
+    "area": "Al Mizhar First",
+    "curricula": [
+      "British"
+    ],
+    "khdaRating": "Acceptable",
+    "feeMinAED": 6314,
+    "feeMaxAED": 10808,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "FS 2 - Year 13",
+    "website": "https://www.arabunityschool.ae",
+    "address": "Al Mizhar First, Dubai",
+    "description": "British curriculum school in Al Mizhar First, serving FS 2 - Year 13. Rated Acceptable in its latest KHDA inspection.",
+    "khdaId": "214",
+    "phone": "97142886226"
+  },
+  {
+    "slug": "arcadia-british-school",
+    "name": "Arcadia British School",
+    "area": "Jumeirah Village Circle (south)",
+    "curricula": [
+      "British"
+    ],
+    "khdaRating": "Very Good",
+    "feeMinAED": 66133,
+    "feeMaxAED": 96209,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "FS 1 - Year 13",
+    "website": "https://www.arcadia.sch.ae",
+    "address": "Jumeirah Village Circle (south), Dubai",
+    "description": "British curriculum school in Jumeirah Village Circle (south), serving FS 1 - Year 13. Rated Very Good in its latest KHDA inspection.",
+    "khdaId": "5471",
+    "phone": "97145522600"
+  },
+  {
+    "slug": "arcadia-global-school",
+    "name": "Arcadia Global School",
+    "area": "Al Furjan",
+    "curricula": [
+      "British"
+    ],
+    "khdaRating": "Good",
+    "feeMinAED": 40000,
+    "feeMaxAED": 61000,
+    "feeNote": "Published KHDA range, 2025-2026",
+    "gradeRange": "FS 1 - Year 9",
+    "website": "https://www.arcadiaglobal.sch.ae",
+    "address": "Al Furjan, Dubai",
+    "description": "British curriculum school in Al Furjan, serving FS 1 - Year 9. Rated Good in its latest KHDA inspection.",
+    "khdaId": "5567",
+    "phone": "056679058"
+  },
+  {
+    "slug": "australian-international-school-dubai",
+    "name": "Australian International School - Dubai L.L.C",
+    "area": "Al Barsha Second",
+    "curricula": [
+      "Australian"
+    ],
+    "khdaRating": "Good",
+    "feeMinAED": 52000,
+    "feeMaxAED": 85000,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "ECC (0-1) - Grade 10",
+    "website": "https://www.aisdubai.ae",
+    "address": "Al Barsha Second, Dubai",
+    "description": "Australian curriculum school in Al Barsha Second, serving ECC (0-1) - Grade 10. Rated Good in its latest KHDA inspection.",
+    "khdaId": "5549",
+    "phone": "971505550818"
+  },
+  {
+    "slug": "bc-academy-international-school",
+    "name": "BC Academy International School L.L.C",
+    "area": "Umm Suqeim Second",
+    "curricula": [
+      "British"
+    ],
+    "khdaRating": "Not rated",
+    "feeMinAED": 0,
+    "feeMaxAED": 0,
+    "feeNote": "Fees not published by KHDA",
+    "gradeRange": "Year 1 - Year 7",
+    "website": "https://bcacademy.ae/",
+    "address": "Umm Suqeim Second, Dubai",
+    "description": "British curriculum school in Umm Suqeim Second, serving Year 1 - Year 7.",
+    "khdaId": "5596",
+    "phone": "04 350 2600"
+  },
+  {
+    "slug": "bilingual-french-international-school-fz",
+    "name": "Bilingual French International School L.L.C-FZ",
+    "area": "Meydan City",
+    "curricula": [
+      "French"
+    ],
+    "khdaRating": "Very Good",
+    "feeMinAED": 48459,
+    "feeMaxAED": 96306,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "Pre Primary - Grade 12",
+    "website": "",
+    "address": "Meydan City, Dubai",
+    "description": "French curriculum school in Meydan City, serving Pre Primary - Grade 12. Rated Very Good in its latest KHDA inspection.",
+    "khdaId": "4435",
+    "phone": "97143708668"
+  },
+  {
+    "slug": "bloom-world-academy",
+    "name": "Bloom World Academy L.L.C",
+    "area": "Al Barsha Second",
+    "curricula": [
+      "IB"
+    ],
+    "khdaRating": "Good",
+    "feeMinAED": 48000,
+    "feeMaxAED": 85000,
+    "feeNote": "Published KHDA range, 2024-2025",
+    "gradeRange": "ECC (1-2) - Grade 11",
+    "website": "https://www.bloomworldacademy.ae",
+    "address": "Al Barsha Second, Dubai",
+    "description": "IB curriculum school in Al Barsha Second, serving ECC (1-2) - Grade 11. Rated Good in its latest KHDA inspection.",
+    "khdaId": "5562"
+  },
+  {
+    "slug": "bright-learners-private-school",
+    "name": "Bright Learners Private School L.L.C",
+    "area": "Al Rashidiya",
+    "curricula": [
+      "American"
+    ],
+    "khdaRating": "Acceptable",
+    "feeMinAED": 24041,
+    "feeMaxAED": 32719,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "Pre Primary - Grade 8",
+    "website": "https://56AStreet-AlRashidiya-Dubai",
+    "address": "Al Rashidiya, Dubai",
+    "description": "American curriculum school in Al Rashidiya, serving Pre Primary - Grade 8. Rated Acceptable in its latest KHDA inspection.",
+    "khdaId": "5540",
+    "phone": "97143353203"
+  },
+  {
+    "slug": "bright-riders-school",
+    "name": "Bright Riders School",
+    "area": "Dubai Investment Park First",
+    "curricula": [
+      "Indian"
+    ],
+    "khdaRating": "Good",
+    "feeMinAED": 19000,
+    "feeMaxAED": 30000,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "Pre Primary - Grade 11",
+    "website": "https://www.brightridersdubai.com",
+    "address": "Dubai Investment Park First, Dubai",
+    "description": "Indian curriculum school in Dubai Investment Park First, serving Pre Primary - Grade 11. Rated Good in its latest KHDA inspection.",
+    "khdaId": "5508",
+    "phone": "048237444"
+  },
+  {
+    "slug": "brighton-college-dubai",
+    "name": "Brighton College Dubai L.L.C",
+    "area": "Al Barsha Second",
+    "curricula": [
+      "British"
+    ],
+    "khdaRating": "Very Good",
+    "feeMinAED": 68919,
+    "feeMaxAED": 117933,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "FS 1 - Year 13",
+    "website": "https://www.brightoncollegedubai.ae",
+    "address": "Al Barsha Second, Dubai",
+    "description": "British curriculum school in Al Barsha Second, serving FS 1 - Year 13. Rated Very Good in its latest KHDA inspection.",
+    "khdaId": "5514",
+    "phone": "97143871111"
+  },
+  {
+    "slug": "buds-public-school",
+    "name": "Buds Public School",
+    "area": "Muhaisnah First",
+    "curricula": [
+      "Indian"
+    ],
+    "khdaRating": "Acceptable",
+    "feeMinAED": 8356,
+    "feeMaxAED": 15271,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "Pre Primary - Grade 12",
+    "website": "https://www.bpsdubai.ae",
+    "address": "Muhaisnah First, Dubai",
+    "description": "Indian curriculum school in Muhaisnah First, serving Pre Primary - Grade 12. Rated Acceptable in its latest KHDA inspection.",
+    "khdaId": "241",
+    "phone": "042888143"
+  },
+  {
+    "slug": "cambridge-international-school",
+    "name": "Cambridge International School",
+    "area": "Al Twar First",
+    "curricula": [
+      "British"
+    ],
+    "khdaRating": "Good",
+    "feeMinAED": 23249,
+    "feeMaxAED": 36775,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "FS 1 - Year 13",
+    "website": "https://www.gemscis-dubai.com",
+    "address": "Al Twar First, Dubai",
+    "description": "British curriculum school in Al Twar First, serving FS 1 - Year 13. Rated Good in its latest KHDA inspection.",
+    "khdaId": "191",
+    "phone": "97142824646"
+  },
+  {
+    "slug": "capital-school",
+    "name": "Capital School L.L.C",
+    "area": "Al Qusais First",
+    "curricula": [
+      "British"
+    ],
+    "khdaRating": "Good",
+    "feeMinAED": 40000,
+    "feeMaxAED": 66600,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "FS 1 - Year 13",
+    "website": "https://www.capitalschooluae.com",
+    "address": "Al Qusais First, Dubai",
+    "description": "British curriculum school in Al Qusais First, serving FS 1 - Year 13. Rated Good in its latest KHDA inspection.",
+    "khdaId": "4445",
+    "phone": "97142988776"
+  },
+  {
+    "slug": "cedar-school",
+    "name": "Cedar School L.L.C",
+    "area": "Al Warqa First",
+    "curricula": [
+      "British"
+    ],
+    "khdaRating": "Acceptable",
+    "feeMinAED": 25244,
+    "feeMaxAED": 39669,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "FS 1 - Year 9",
+    "website": "https://www.cedarschool.ae",
+    "address": "Al Warqa First, Dubai",
+    "description": "British curriculum school in Al Warqa First, serving FS 1 - Year 9. Rated Acceptable in its latest KHDA inspection.",
+    "khdaId": "5538",
+    "phone": "043803902"
+  },
+  {
+    "slug": "chinese-school-dubai",
+    "name": "Chinese School Dubai",
+    "area": "Mirdif",
+    "curricula": [
+      "Chinese"
+    ],
+    "khdaRating": "Good",
+    "feeMinAED": 27038,
+    "feeMaxAED": 32654,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "Grade 1 - Grade 9",
+    "website": "https://www.csd.ae",
+    "address": "Mirdif, Dubai",
+    "description": "Chinese curriculum school in Mirdif, serving Grade 1 - Grade 9. Rated Good in its latest KHDA inspection.",
+    "khdaId": "5541",
+    "phone": "97142202275"
+  },
+  {
+    "slug": "citizens-school",
+    "name": "Citizens School",
+    "area": "Al Satwa",
+    "curricula": [
+      "British"
+    ],
+    "khdaRating": "Good",
+    "feeMinAED": 42150,
+    "feeMaxAED": 75000,
+    "feeNote": "Published KHDA range, 2024-2025",
+    "gradeRange": "ECC (0-1) - Year 9",
+    "website": "https://www.citizens.me",
+    "address": "Al Satwa, Dubai",
+    "description": "British curriculum school in Al Satwa, serving ECC (0-1) - Year 9. Rated Good in its latest KHDA inspection.",
+    "khdaId": "5560"
+  },
+  {
+    "slug": "clarion-school",
+    "name": "Clarion School L.L.C",
+    "area": "Al Qouz First",
+    "curricula": [
+      "American"
+    ],
+    "khdaRating": "Good",
+    "feeMinAED": 42080,
+    "feeMaxAED": 94680,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "ECC (1-2) - Grade 8",
+    "website": "https://www.clarionschooldubai.com",
+    "address": "Al Qouz First, Dubai",
+    "description": "American curriculum school in Al Qouz First, serving ECC (1-2) - Grade 8. Rated Good in its latest KHDA inspection.",
+    "khdaId": "5484",
+    "phone": "97144073000"
+  },
+  {
+    "slug": "collegiate-international-school",
+    "name": "Collegiate International School",
+    "area": "Umm Suqeim Third",
+    "curricula": [
+      "American",
+      "IB"
+    ],
+    "khdaRating": "Good",
+    "feeMinAED": 38572,
+    "feeMaxAED": 70630,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "Grade 9 - Grade 12,Pre Primary - Grade 12",
+    "website": "",
+    "address": "Umm Suqeim Third, Dubai",
+    "description": "American and IB curriculum school in Umm Suqeim Third, serving Grade 9 - Grade 12,Pre Primary - Grade 12. Rated Good in its latest KHDA inspection.",
+    "khdaId": "4404",
+    "phone": "97144271400"
+  },
+  {
+    "slug": "credence-high-school",
+    "name": "Credence High School L.L.C",
+    "area": "Al Qouz First",
+    "curricula": [
+      "Indian"
+    ],
+    "khdaRating": "Very Good",
+    "feeMinAED": 16534,
+    "feeMaxAED": 28736,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "Pre Primary - Grade 12",
+    "website": "https://www.credencehighschool.com",
+    "address": "Al Qouz First, Dubai",
+    "description": "Indian curriculum school in Al Qouz First, serving Pre Primary - Grade 12. Rated Very Good in its latest KHDA inspection.",
+    "khdaId": "4437",
+    "phone": "97143212144"
+  },
+  {
+    "slug": "crescent-english-school",
+    "name": "Crescent English School",
+    "area": "Al Qusais First",
+    "curricula": [
+      "Indian"
+    ],
+    "khdaRating": "Acceptable",
+    "feeMinAED": 2793,
+    "feeMaxAED": 10374,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "KG 1 - Grade 12",
+    "website": "https://www.crescentschooldubai.com",
+    "address": "Al Qusais First, Dubai",
+    "description": "Indian curriculum school in Al Qusais First, serving KG 1 - Grade 12. Rated Acceptable in its latest KHDA inspection.",
+    "khdaId": "323",
+    "phone": "97142988866"
+  },
+  {
+    "slug": "dar-al-marefa-private-school",
+    "name": "Dar Al Marefa Private School",
+    "area": "Al Khwaneej First",
+    "curricula": [
+      "IB"
+    ],
+    "khdaRating": "Good",
+    "feeMinAED": 64453,
+    "feeMaxAED": 101121,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "Pre Primary - Grade 12",
+    "website": "https://www.daralmarefa.ae",
+    "address": "Al Khwaneej First, Dubai",
+    "description": "IB curriculum school in Al Khwaneej First, serving Pre Primary - Grade 12. Rated Good in its latest KHDA inspection.",
+    "khdaId": "4279",
+    "phone": "97142885782"
+  },
+  {
+    "slug": "deira-international-school",
+    "name": "Deira International School",
+    "area": "Dubai Festival City",
+    "curricula": [
+      "IB",
+      "British"
+    ],
+    "khdaRating": "Outstanding",
+    "feeMinAED": 43592,
+    "feeMaxAED": 89889,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "FS 1 - Year 11,Year 12 - Year 13",
+    "website": "https://www.disdubai.ae",
+    "address": "Dubai Festival City, Dubai",
+    "description": "IB World School in Deira offering the full continuum, one of the few international options on that side of the city.",
+    "khdaId": "280",
+    "phone": "97142325552"
+  },
+  {
+    "slug": "deira-private-school",
+    "name": "Deira Private School",
+    "area": "Al Twar First",
+    "curricula": [
+      "British"
+    ],
+    "khdaRating": "Acceptable",
+    "feeMinAED": 22342,
+    "feeMaxAED": 41147,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "FS 1 - Year 9",
+    "website": "https://deiraprivateschool.ae",
+    "address": "Al Twar First, Dubai",
+    "description": "British curriculum school in Al Twar First, serving FS 1 - Year 9. Rated Acceptable in its latest KHDA inspection.",
+    "khdaId": "4297",
+    "phone": "042641595"
+  },
+  {
+    "slug": "delhi-private-school",
+    "name": "Delhi Private School L.L.C",
+    "area": "Jabal Ali First",
+    "curricula": [
+      "Indian"
+    ],
+    "khdaRating": "Very Good",
+    "feeMinAED": 10883,
+    "feeMaxAED": 15592,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "Pre Primary - Grade 12",
+    "website": "https://www.dpsdubai.com",
+    "address": "Jabal Ali First, Dubai",
+    "description": "Indian curriculum school in Jabal Ali First, serving Pre Primary - Grade 12. Rated Very Good in its latest KHDA inspection.",
+    "khdaId": "243",
+    "phone": "97148821848"
+  },
+  {
+    "slug": "dewa-academy",
+    "name": "DEWA Academy",
+    "area": "Al Hudaiba",
+    "curricula": [
+      "UAE MOE"
+    ],
+    "khdaRating": "Good",
+    "feeMinAED": 0,
+    "feeMaxAED": 0,
+    "feeNote": "Fees not published by KHDA",
+    "gradeRange": "Grade 9 - Grade 12",
+    "website": "",
+    "address": "Al Hudaiba, Dubai",
+    "description": "UAE MOE curriculum school in Al Hudaiba, serving Grade 9 - Grade 12. Rated Good in its latest KHDA inspection.",
+    "khdaId": "5490",
+    "phone": "97143220113"
+  },
+  {
+    "slug": "dewvale-school",
+    "name": "Dewvale School L.L.C",
+    "area": "Al Qouz Third",
+    "curricula": [
+      "Indian"
+    ],
+    "khdaRating": "Acceptable",
+    "feeMinAED": 12000,
+    "feeMaxAED": 19787,
+    "feeNote": "Published KHDA range, 2025-2026",
+    "gradeRange": "Pre Primary - Grade 8",
+    "website": "https://www.dewvaleschool.ae",
+    "address": "Al Qouz Third, Dubai",
+    "description": "Indian curriculum school in Al Qouz Third, serving Pre Primary - Grade 8. Rated Acceptable in its latest KHDA inspection.",
+    "khdaId": "5576"
+  },
+  {
+    "slug": "dhruv-global-school",
+    "name": "Dhruv Global school",
+    "area": "Al Barsha South",
+    "curricula": [
+      "Indian"
+    ],
+    "khdaRating": "Acceptable",
+    "feeMinAED": 18000,
+    "feeMaxAED": 24000,
+    "feeNote": "Published KHDA range, 2025-2026",
+    "gradeRange": "Pre Primary - Grade 8",
+    "website": "https://www.dhruv.ae",
+    "address": "Al Barsha South, Dubai",
+    "description": "Indian curriculum school in Al Barsha South, serving Pre Primary - Grade 8. Rated Acceptable in its latest KHDA inspection.",
+    "khdaId": "5579"
+  },
+  {
+    "slug": "dove-green-private-school",
+    "name": "Dove Green Private School L.L.C",
+    "area": "Dubai Investment Park First",
+    "curricula": [
+      "British"
+    ],
+    "khdaRating": "Good",
+    "feeMinAED": 42000,
+    "feeMaxAED": 60000,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "FS 1 - Year 11",
+    "website": "https://www.dovegreenschool.com",
+    "address": "Dubai Investment Park First, Dubai",
+    "description": "British curriculum school in Dubai Investment Park First, serving FS 1 - Year 11. Rated Good in its latest KHDA inspection.",
+    "khdaId": "4444",
+    "phone": "97148837474"
+  },
+  {
+    "slug": "dubai-british-school",
+    "name": "Dubai British School",
+    "area": "Emirates Hills",
+    "curricula": [
+      "British"
+    ],
+    "khdaRating": "Outstanding",
+    "feeMinAED": 51809,
+    "feeMaxAED": 79541,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "FS 1 - Year 13",
+    "website": "https://www.dubaibritishschool.ae",
+    "address": "Emirates Hills, Dubai",
+    "description": "British curriculum school in Emirates Hills, serving FS 1 - Year 13. Rated Outstanding in its latest KHDA inspection.",
+    "khdaId": "213",
+    "phone": "97143619361"
+  },
+  {
+    "slug": "dubai-british-school-jumeira",
+    "name": "Dubai British School Jumeira",
+    "area": "Jumeira Second",
+    "curricula": [
+      "British"
+    ],
+    "khdaRating": "Not rated",
+    "feeMinAED": 43500,
+    "feeMaxAED": 69872,
+    "feeNote": "Published KHDA range",
+    "gradeRange": "ECC (2-3) - Year 8",
+    "website": "",
+    "address": "Jumeira Second, Dubai",
+    "description": "British curriculum school in Jumeira Second, serving ECC (2-3) - Year 8.",
+    "khdaId": "5584"
+  },
+  {
+    "slug": "dubai-british-school-jumeirah-park",
+    "name": "Dubai British School Jumeirah Park",
+    "area": "Jumeirah Park",
+    "curricula": [
+      "British"
+    ],
+    "khdaRating": "Outstanding",
+    "feeMinAED": 44947,
+    "feeMaxAED": 111799,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "ECC (2-3) - Year 13",
+    "website": "https://www.dubaibritishschooljp.ae",
+    "address": "Jumeirah Park, Dubai",
+    "description": "British curriculum school in Jumeirah Park, serving ECC (2-3) - Year 13. Rated Outstanding in its latest KHDA inspection.",
+    "khdaId": "4449",
+    "phone": "97145520247"
+  },
+  {
+    "slug": "dubai-british-school-mira-br-of-taaleem-management-l-l-c",
+    "name": "DUBAI BRITISH SCHOOL MIRA (BR OF TAALEEM MANAGEMENT (L L C))",
+    "area": "Arabian Ranches",
+    "curricula": [
+      "British"
+    ],
+    "khdaRating": "Not rated",
+    "feeMinAED": 0,
+    "feeMaxAED": 0,
+    "feeNote": "Fees not published by KHDA",
+    "gradeRange": "FS 1 - Year 7",
+    "website": "",
+    "address": "Arabian Ranches, Dubai",
+    "description": "British curriculum school in Arabian Ranches, serving FS 1 - Year 7.",
+    "khdaId": "5601"
+  },
+  {
+    "slug": "dubai-carmel-school",
+    "name": "Dubai Carmel School",
+    "area": "Al Qusais First",
+    "curricula": [
+      "British"
+    ],
+    "khdaRating": "Acceptable",
+    "feeMinAED": 8912,
+    "feeMaxAED": 15479,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "FS 1 - Year 13",
+    "website": "https://www.dubaicarmelschool.com",
+    "address": "Al Qusais First, Dubai",
+    "description": "British curriculum school in Al Qusais First, serving FS 1 - Year 13. Rated Acceptable in its latest KHDA inspection.",
+    "khdaId": "326",
+    "phone": "97142675424"
+  },
+  {
+    "slug": "dubai-college",
+    "name": "Dubai College",
+    "area": "Al Safouh First",
+    "curricula": [
+      "British"
+    ],
+    "khdaRating": "Outstanding",
+    "feeMinAED": 93220,
+    "feeMaxAED": 110305,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "Year 7 - Year 13",
+    "website": "https://www.dubaicollege.org",
+    "address": "Al Safouh First, Dubai",
+    "description": "A long-established British curriculum secondary school in Al Sufouh, known for strong academic results and a selective admissions process.",
+    "khdaId": "192",
+    "phone": "97143999111"
+  },
+  {
+    "slug": "dubai-english-speaking-school",
+    "name": "Dubai English Speaking School",
+    "area": "Oud Metha",
+    "curricula": [
+      "British"
+    ],
+    "khdaRating": "Outstanding",
+    "feeMinAED": 41427,
+    "feeMaxAED": 53320,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "FS 1 - Year 6",
+    "website": "https://www.dessc.sch.ae",
+    "address": "Oud Metha, Dubai",
+    "description": "British curriculum school in Oud Metha, serving FS 1 - Year 6. Rated Outstanding in its latest KHDA inspection.",
+    "khdaId": "202",
+    "phone": "97143371457"
+  },
+  {
+    "slug": "dubai-english-speaking-school-college",
+    "name": "Dubai English Speaking School - (College)",
+    "area": "Academic City",
+    "curricula": [
+      "British"
+    ],
+    "khdaRating": "Outstanding",
+    "feeMinAED": 81082,
+    "feeMaxAED": 90633,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "Year 7 - Year 13",
+    "website": "https://www.dessc.sch.ae",
+    "address": "Academic City, Dubai",
+    "description": "British curriculum school in Academic City, serving Year 7 - Year 13. Rated Outstanding in its latest KHDA inspection.",
+    "khdaId": "255",
+    "phone": "97143604866"
+  },
+  {
+    "slug": "dubai-english-speaking-school-academic-city",
+    "name": "Dubai English Speaking School - Academic City",
+    "area": "Academic City",
+    "curricula": [
+      "British"
+    ],
+    "khdaRating": "Not rated",
+    "feeMinAED": 0,
+    "feeMaxAED": 0,
+    "feeNote": "Fees not published by KHDA",
+    "gradeRange": "",
+    "website": "https://dess.sch.ae",
+    "address": "Academic City, Dubai",
+    "description": "British curriculum school in Academic City.",
+    "khdaId": "5607",
+    "phone": "04 614 6999"
+  },
+  {
+    "slug": "dubai-gem-private-school",
+    "name": "Dubai Gem Private School",
+    "area": "Oud Metha",
+    "curricula": [
+      "British"
+    ],
+    "khdaRating": "Good",
+    "feeMinAED": 13209,
+    "feeMaxAED": 27756,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "FS 1 - Year 13",
+    "website": "https://www.dubaigem.ae",
+    "address": "Oud Metha, Dubai",
+    "description": "British curriculum school in Oud Metha, serving FS 1 - Year 13. Rated Good in its latest KHDA inspection.",
+    "khdaId": "222",
+    "phone": "97143376661"
+  },
+  {
+    "slug": "dubai-heights-academy",
+    "name": "Dubai Heights Academy",
+    "area": "Al Barsha Second",
+    "curricula": [
+      "IB",
+      "British"
+    ],
+    "khdaRating": "Very Good",
+    "feeMinAED": 47570,
+    "feeMaxAED": 90741,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "FS 1 - Year 12,FS 1 - Year 4",
+    "website": "https://www.dubaiheightsacademy.com",
+    "address": "Al Barsha Second, Dubai",
+    "description": "IB and British curriculum school in Al Barsha Second, serving FS 1 - Year 12,FS 1 - Year 4. Rated Very Good in its latest KHDA inspection.",
+    "khdaId": "5497",
+    "phone": "043563333"
+  },
+  {
+    "slug": "dubai-international-academy-albarsha",
+    "name": "Dubai International Academy Albarsha",
+    "area": "Al Barsha First",
+    "curricula": [
+      "IB"
+    ],
+    "khdaRating": "Very Good",
+    "feeMinAED": 51892,
+    "feeMaxAED": 96309,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "ECC (0-1) - Grade 12",
+    "website": "https://www.innoventureseducation.com",
+    "address": "Al Barsha First, Dubai",
+    "description": "IB curriculum school in Al Barsha First, serving ECC (0-1) - Grade 12. Rated Very Good in its latest KHDA inspection.",
+    "khdaId": "5518"
+  },
+  {
+    "slug": "dubai-international-academy",
+    "name": "Dubai International Academy L.L.C",
+    "area": "Emirates Hills",
+    "curricula": [
+      "IB"
+    ],
+    "khdaRating": "Outstanding",
+    "feeMinAED": 43946,
+    "feeMaxAED": 79696,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "KG 1 - Grade 13,",
+    "website": "https://www.diadubai.com",
+    "address": "Emirates Hills, Dubai",
+    "description": "IB curriculum school in Emirates Hills, serving KG 1 - Grade 13,. Rated Outstanding in its latest KHDA inspection.",
+    "khdaId": "285",
+    "phone": "97143684111"
+  },
+  {
+    "slug": "dubai-international-academy-town-square",
+    "name": "Dubai International Academy Town Square",
+    "area": "Dubai Land",
+    "curricula": [
+      "IB"
+    ],
+    "khdaRating": "Not rated",
+    "feeMinAED": 0,
+    "feeMaxAED": 0,
+    "feeNote": "Fees not published by KHDA",
+    "gradeRange": "",
+    "website": "",
+    "address": "Dubai Land, Dubai",
+    "description": "IB curriculum school in Dubai Land.",
+    "khdaId": "5614"
+  },
+  {
+    "slug": "dubai-international-private-school",
+    "name": "Dubai International Private School",
+    "area": "Al Garhoud",
+    "curricula": [
+      "American"
+    ],
+    "khdaRating": "Acceptable",
+    "feeMinAED": 14705,
+    "feeMaxAED": 23629,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "KG 1 - Grade 12",
+    "website": "https://www.dipschool.ae/",
+    "address": "Al Garhoud, Dubai",
+    "description": "American curriculum school in Al Garhoud, serving KG 1 - Grade 12. Rated Acceptable in its latest KHDA inspection.",
+    "khdaId": "216",
+    "phone": "042823524"
+  },
+  {
+    "slug": "dubai-international-private-school-br",
+    "name": "Dubai International Private School - Br",
+    "area": "Al Qouz First",
+    "curricula": [
+      "American"
+    ],
+    "khdaRating": "Good",
+    "feeMinAED": 15607,
+    "feeMaxAED": 25080,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "KG 1 - Grade 12",
+    "website": "https://www.dips-alquoz.ae",
+    "address": "Al Qouz First, Dubai",
+    "description": "American curriculum school in Al Qouz First, serving KG 1 - Grade 12. Rated Good in its latest KHDA inspection.",
+    "khdaId": "232",
+    "phone": "97143385530"
+  },
+  {
+    "slug": "dubai-modern-education-school",
+    "name": "Dubai Modern Education School",
+    "area": "Al Mizhar First",
+    "curricula": [
+      "American",
+      "UAE MOE"
+    ],
+    "khdaRating": "Acceptable",
+    "feeMinAED": 11681,
+    "feeMaxAED": 18624,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "KG 1 - Grade 12,KG 1 - Grade 12",
+    "website": "https://www.dmes.ae",
+    "address": "Al Mizhar First, Dubai",
+    "description": "American and UAE MOE curriculum school in Al Mizhar First, serving KG 1 - Grade 12,KG 1 - Grade 12. Rated Acceptable in its latest KHDA inspection.",
+    "khdaId": "313",
+    "phone": "042885115"
+  },
+  {
+    "slug": "dubai-national-school-altwar",
+    "name": "Dubai National School AlTwar L.L.C",
+    "area": "Al Twar First",
+    "curricula": [
+      "American"
+    ],
+    "khdaRating": "Good",
+    "feeMinAED": 19416,
+    "feeMaxAED": 38836,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "ECC (0-1) - Grade 12",
+    "website": "https://www.dns.sch.ae",
+    "address": "Al Twar First, Dubai",
+    "description": "American curriculum school in Al Twar First, serving ECC (0-1) - Grade 12. Rated Good in its latest KHDA inspection.",
+    "khdaId": "298",
+    "phone": "97142988555"
+  },
+  {
+    "slug": "dubai-national-school",
+    "name": "Dubai National School L.L.C",
+    "area": "Al Barsha First",
+    "curricula": [
+      "American"
+    ],
+    "khdaRating": "Good",
+    "feeMinAED": 23617,
+    "feeMaxAED": 39665,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "Pre Primary - Grade 12",
+    "website": "https://www.dnsalbarsha.com",
+    "address": "Al Barsha First, Dubai",
+    "description": "American curriculum school in Al Barsha First, serving Pre Primary - Grade 12. Rated Good in its latest KHDA inspection.",
+    "khdaId": "258",
+    "phone": "97143474555"
+  },
+  {
+    "slug": "dubai-scholars-private-school",
+    "name": "Dubai Scholars Private School",
+    "area": "Al Qusais First",
+    "curricula": [
+      "British"
+    ],
+    "khdaRating": "Good",
+    "feeMinAED": 15469,
+    "feeMaxAED": 32568,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "ECC (2-3) - Year 13",
+    "website": "https://www.dubaischolars.com",
+    "address": "Al Qusais First, Dubai",
+    "description": "British curriculum school in Al Qusais First, serving ECC (2-3) - Year 13. Rated Good in its latest KHDA inspection.",
+    "khdaId": "307",
+    "phone": "97147069000"
+  },
+  {
+    "slug": "dubai-schools-corporation-al-khawaneej",
+    "name": "Dubai Schools Corporation Al Khawaneej L.L.C",
+    "area": "Al Khwaneej Second",
+    "curricula": [
+      "American"
+    ],
+    "khdaRating": "Acceptable",
+    "feeMinAED": 29900,
+    "feeMaxAED": 40280,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "KG 1 - Grade 8",
+    "website": "https://www.dubaischools-alkhawaneej.ae",
+    "address": "Al Khwaneej Second, Dubai",
+    "description": "American curriculum school in Al Khwaneej Second, serving KG 1 - Grade 8. Rated Acceptable in its latest KHDA inspection.",
+    "khdaId": "5547",
+    "phone": "043727000"
+  },
+  {
+    "slug": "dubai-schools-corporation-albarsha",
+    "name": "Dubai Schools Corporation L.L.C Albarsha",
+    "area": "Al Barsha South Second",
+    "curricula": [
+      "American"
+    ],
+    "khdaRating": "Acceptable",
+    "feeMinAED": 29900,
+    "feeMaxAED": 42271,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "KG 1 - Grade 7",
+    "website": "https://www.dubaischools-albarsha.ae",
+    "address": "Al Barsha South Second, Dubai",
+    "description": "American curriculum school in Al Barsha South Second, serving KG 1 - Grade 7. Rated Acceptable in its latest KHDA inspection.",
+    "khdaId": "5548",
+    "phone": "97145840401"
+  },
+  {
+    "slug": "dubai-schools-corporation-nad-alshiba",
+    "name": "Dubai Schools Corporation Nad AlShiba L.L.C",
+    "area": "Nadd al Shiba Fourth",
+    "curricula": [
+      "American"
+    ],
+    "khdaRating": "Acceptable",
+    "feeMinAED": 29900,
+    "feeMaxAED": 44829,
+    "feeNote": "Published KHDA range, 2024-2025",
+    "gradeRange": "KG 1 - Grade 8",
+    "website": "https://www.dubaischools-nas.ae",
+    "address": "Nadd al Shiba Fourth, Dubai",
+    "description": "American curriculum school in Nadd al Shiba Fourth, serving KG 1 - Grade 8. Rated Acceptable in its latest KHDA inspection.",
+    "khdaId": "5566",
+    "phone": "043294610"
+  },
+  {
+    "slug": "dunecrest-american-school",
+    "name": "Dunecrest American School L.L.C",
+    "area": "Al Barari",
+    "curricula": [
+      "American"
+    ],
+    "khdaRating": "Good",
+    "feeMinAED": 48612,
+    "feeMaxAED": 96263,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "Pre Primary - Grade 12",
+    "website": "https://www.esoleducation.com",
+    "address": "Al Barari, Dubai",
+    "description": "American curriculum school in Al Barari, serving Pre Primary - Grade 12. Rated Good in its latest KHDA inspection.",
+    "khdaId": "5504"
+  },
+  {
+    "slug": "durham-school",
+    "name": "Durham School L.L.C",
+    "area": "Dubai Investment Park First",
+    "curricula": [
+      "British"
+    ],
+    "khdaRating": "Acceptable",
+    "feeMinAED": 54000,
+    "feeMaxAED": 95186,
+    "feeNote": "Published KHDA range, 2024-2025",
+    "gradeRange": "FS 1 - Year 11",
+    "website": "https://www.durhamdubai.ae",
+    "address": "Dubai Investment Park First, Dubai",
+    "description": "British curriculum school in Dubai Investment Park First, serving FS 1 - Year 11. Rated Acceptable in its latest KHDA inspection.",
+    "khdaId": "5563",
+    "phone": "048170600"
+  },
+  {
+    "slug": "dwight-school",
+    "name": "Dwight School L.L.C",
+    "area": "Dubai Sports City",
+    "curricula": [
+      "IB"
+    ],
+    "khdaRating": "Good",
+    "feeMinAED": 63622,
+    "feeMaxAED": 110755,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "Pre Primary - Grade 12",
+    "website": "https://www.dwightschooldubai.ae",
+    "address": "Dubai Sports City, Dubai",
+    "description": "IB curriculum school in Dubai Sports City, serving Pre Primary - Grade 12. Rated Good in its latest KHDA inspection.",
+    "khdaId": "5513",
+    "phone": "800394448"
+  },
+  {
+    "slug": "elite-english-school",
+    "name": "ELITE ENGLISH SCHOOL L.L.C",
+    "area": "Deira",
+    "curricula": [
+      "Indian"
+    ],
+    "khdaRating": "Acceptable",
+    "feeMinAED": 4734,
+    "feeMaxAED": 10697,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "Pre Primary - Grade 12",
+    "website": "https://www.eliteenglishschool.com",
+    "address": "Deira, Dubai",
+    "description": "Indian curriculum school in Deira, serving Pre Primary - Grade 12. Rated Acceptable in its latest KHDA inspection.",
+    "khdaId": "244",
+    "phone": "97142688244"
+  },
+  {
+    "slug": "emirates-international-school",
+    "name": "Emirates International School L.L.C.",
+    "area": "Umm Suqeim First",
+    "curricula": [
+      "IB",
+      "British"
+    ],
+    "khdaRating": "Very Good",
+    "feeMinAED": 37749,
+    "feeMaxAED": 81872,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "FS 1 - Year 13",
+    "website": "https://www.eischools.ae",
+    "address": "Umm Suqeim First, Dubai",
+    "description": "IB and British curriculum school in Umm Suqeim First, serving FS 1 - Year 13. Rated Very Good in its latest KHDA inspection.",
+    "khdaId": "291",
+    "phone": "043489804"
+  },
+  {
+    "slug": "emirates-international-school-meadows",
+    "name": "EMIRATES INTERNATIONAL SCHOOL MEADOWS",
+    "area": "Meadows",
+    "curricula": [
+      "IB"
+    ],
+    "khdaRating": "Very Good",
+    "feeMinAED": 28324,
+    "feeMaxAED": 85976,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": ",FS 1 - Year 13",
+    "website": "https://www.eischools.ae",
+    "address": "Meadows, Dubai",
+    "description": "IB curriculum school in Meadows, serving ,FS 1 - Year 13. Rated Very Good in its latest KHDA inspection.",
+    "khdaId": "186",
+    "phone": "043629009"
+  },
+  {
+    "slug": "emirates-national-schools-dubai",
+    "name": "Emirates National Schools - Dubai Branch",
+    "area": "Al Khwaneej Second",
+    "curricula": [
+      "American",
+      "IB"
+    ],
+    "khdaRating": "Acceptable",
+    "feeMinAED": 25000,
+    "feeMaxAED": 45000,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "Pre Primary - Grade 8",
+    "website": "https://www.ens.sch.ae",
+    "address": "Al Khwaneej Second, Dubai",
+    "description": "American and IB curriculum school in Al Khwaneej Second, serving Pre Primary - Grade 8. Rated Acceptable in its latest KHDA inspection.",
+    "khdaId": "5551",
+    "phone": "456288456"
+  },
+  {
+    "slug": "english-language-private-school",
+    "name": "English Language Private School",
+    "area": "Umm Hurair First",
+    "curricula": [
+      "British"
+    ],
+    "khdaRating": "Acceptable",
+    "feeMinAED": 4424,
+    "feeMaxAED": 11888,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "FS 2 - Year 13",
+    "website": "https://www.elspvtdubai.com",
+    "address": "Umm Hurair First, Dubai",
+    "description": "British curriculum school in Umm Hurair First, serving FS 2 - Year 13. Rated Acceptable in its latest KHDA inspection.",
+    "khdaId": "223",
+    "phone": "043377503"
+  },
+  {
+    "slug": "fairgreen-international-school",
+    "name": "Fairgreen International School L.L.C",
+    "area": "Dubai Land",
+    "curricula": [
+      "IB"
+    ],
+    "khdaRating": "Good",
+    "feeMinAED": 52800,
+    "feeMaxAED": 92302,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "Pre Primary - Grade 12",
+    "website": "https://www.esoleducation.com",
+    "address": "Dubai Land, Dubai",
+    "description": "IB curriculum school in Dubai Land, serving Pre Primary - Grade 12. Rated Good in its latest KHDA inspection.",
+    "khdaId": "5505",
+    "phone": "97148754999"
+  },
+  {
+    "slug": "gems-al-khaleej-international-school-dubai",
+    "name": "GEMS Al Khaleej International School - Dubai Branch",
+    "area": "Al Warqa Fourth",
+    "curricula": [
+      "American",
+      "IB"
+    ],
+    "khdaRating": "Good",
+    "feeMinAED": 33153,
+    "feeMaxAED": 63457,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "Pre Primary - Grade 12,Grade 11 - Grade 12",
+    "website": "https://www.gemsakns.net",
+    "address": "Al Warqa Fourth, Dubai",
+    "description": "American and IB curriculum school in Al Warqa Fourth, serving Pre Primary - Grade 12,Grade 11 - Grade 12. Rated Good in its latest KHDA inspection.",
+    "khdaId": "268",
+    "phone": "97142173900"
+  },
+  {
+    "slug": "gems-albarsha-national-school-dubai",
+    "name": "GEMS Albarsha National School - Dubai Branch",
+    "area": "Al Barsha South Second",
+    "curricula": [
+      "British"
+    ],
+    "khdaRating": "Acceptable",
+    "feeMinAED": 44385,
+    "feeMaxAED": 67060,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "FS 1 - Year 13",
+    "website": "https://www.gemsnationalschool-barsha.com",
+    "address": "Al Barsha South Second, Dubai",
+    "description": "British curriculum school in Al Barsha South Second, serving FS 1 - Year 13. Rated Acceptable in its latest KHDA inspection.",
+    "khdaId": "5501",
+    "phone": "97145069222"
+  },
+  {
+    "slug": "gems-dubai-american-academy-dubai",
+    "name": "GEMS Dubai American Academy - Dubai Branch",
+    "area": "Al Barsha South First",
+    "curricula": [
+      "American",
+      "IB"
+    ],
+    "khdaRating": "Outstanding",
+    "feeMinAED": 64665,
+    "feeMaxAED": 93300,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "KG 1 - Grade 12,Grade 11 - Grade 12",
+    "website": "https://www.gemsaa-dubai.com",
+    "address": "Al Barsha South First, Dubai",
+    "description": "American and IB curriculum school in Al Barsha South First, serving KG 1 - Grade 12,Grade 11 - Grade 12. Rated Outstanding in its latest KHDA inspection.",
+    "khdaId": "262",
+    "phone": "97147049777"
+  },
+  {
+    "slug": "gems-first-point-school",
+    "name": "GEMS First Point School L.L.C",
+    "area": "Dubai Land",
+    "curricula": [
+      "British"
+    ],
+    "khdaRating": "Very Good",
+    "feeMinAED": 43271,
+    "feeMaxAED": 75756,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "ECC (2-3) - Year 13",
+    "website": "https://www.gemsfirstpointschool-dubai.com",
+    "address": "Dubai Land, Dubai",
+    "description": "British curriculum school in Dubai Land, serving ECC (2-3) - Year 13. Rated Very Good in its latest KHDA inspection.",
+    "khdaId": "4439",
+    "phone": "97142789700"
+  },
+  {
+    "slug": "gems-founders-school-dubai",
+    "name": "GEMS Founders School - Dubai Branch",
+    "area": "Al Barsha Second",
+    "curricula": [
+      "British"
+    ],
+    "khdaRating": "Very Good",
+    "feeMinAED": 24181,
+    "feeMaxAED": 37124,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "FS 1 - Year 13",
+    "website": "https://www.gemsfoundersschool-dubai.com",
+    "address": "Al Barsha Second, Dubai",
+    "description": "British curriculum school in Al Barsha Second, serving FS 1 - Year 13. Rated Very Good in its latest KHDA inspection.",
+    "khdaId": "5488",
+    "phone": "97145195222"
+  },
+  {
+    "slug": "gems-founders-school-ds-dwc",
+    "name": "GEMS Founders School DS DWC-LLC",
+    "area": "Dubai South Hq",
+    "curricula": [
+      "British"
+    ],
+    "khdaRating": "Not rated",
+    "feeMinAED": 0,
+    "feeMaxAED": 0,
+    "feeNote": "Fees not published by KHDA",
+    "gradeRange": "FS 1 - Year 9",
+    "website": "",
+    "address": "Dubai South Hq, Dubai",
+    "description": "British curriculum school in Dubai South Hq, serving FS 1 - Year 9.",
+    "khdaId": "5589"
+  },
+  {
+    "slug": "gems-founders-school-mizhar",
+    "name": "GEMS Founders School Mizhar",
+    "area": "Al Mizhar First",
+    "curricula": [
+      "British"
+    ],
+    "khdaRating": "Good",
+    "feeMinAED": 24306,
+    "feeMaxAED": 37856,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "FS 1 - Year 13",
+    "website": "https://www.gemsfoundersschool-mizhar.com/en/",
+    "address": "Al Mizhar First, Dubai",
+    "description": "British curriculum school in Al Mizhar First, serving FS 1 - Year 13. Rated Good in its latest KHDA inspection.",
+    "khdaId": "5511",
+    "phone": "04 210 3555"
+  },
+  {
+    "slug": "gems-founders-school-nad-al-hamar-br-of-fzegems-wellington-academy-dubai",
+    "name": "GEMS FOUNDERS SCHOOL NAD AL HAMAR (Br of FZEGEMS WELLINGTON ACADEMY) - DUBAI BRANCH",
+    "area": "Nadd al Hamar",
+    "curricula": [
+      "British"
+    ],
+    "khdaRating": "Not rated",
+    "feeMinAED": 0,
+    "feeMaxAED": 0,
+    "feeNote": "Fees not published by KHDA",
+    "gradeRange": "",
+    "website": "",
+    "address": "Nadd al Hamar, Dubai",
+    "description": "British curriculum school in Nadd al Hamar.",
+    "khdaId": "5621"
+  },
+  {
+    "slug": "gems-international-school-al-khail",
+    "name": "GEMS International School Al Khail L.L.C",
+    "area": "Al Khail",
+    "curricula": [
+      "IB"
+    ],
+    "khdaRating": "Good",
+    "feeMinAED": 51212,
+    "feeMaxAED": 79488,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "Pre Primary - Grade 12",
+    "website": "https://www.gemsinternationalschool-alkhail.com",
+    "address": "Al Khail, Dubai",
+    "description": "IB curriculum school in Al Khail, serving Pre Primary - Grade 12. Rated Good in its latest KHDA inspection.",
+    "khdaId": "4433",
+    "phone": "97143396200"
+  },
+  {
+    "slug": "gems-jumeira-primary-school-dubai",
+    "name": "GEMS Jumeira Primary School - Dubai Branch",
+    "area": "Jumeira Third",
+    "curricula": [
+      "British"
+    ],
+    "khdaRating": "Outstanding",
+    "feeMinAED": 43185,
+    "feeMaxAED": 55714,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "FS 1 - Year 6",
+    "website": "https://www.jpsdubai.sch.ae",
+    "address": "Jumeira Third, Dubai",
+    "description": "British curriculum school in Jumeira Third, serving FS 1 - Year 6. Rated Outstanding in its latest KHDA inspection.",
+    "khdaId": "281",
+    "phone": "97143943500"
+  },
+  {
+    "slug": "gems-legacy-school-dubai",
+    "name": "GEMS Legacy School - Dubai Branch",
+    "area": "Al Garhoud",
+    "curricula": [
+      "Indian"
+    ],
+    "khdaRating": "Good",
+    "feeMinAED": 8336,
+    "feeMaxAED": 18902,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "KG 1 - Grade 11",
+    "website": "https://www.gemslegacyschool-dubai.com",
+    "address": "Al Garhoud, Dubai",
+    "description": "Indian curriculum school in Al Garhoud, serving KG 1 - Grade 11. Rated Good in its latest KHDA inspection.",
+    "khdaId": "228",
+    "phone": "97142824090"
+  },
+  {
+    "slug": "gems-metropole-school-al-waha",
+    "name": "GEMS Metropole School - Al Waha",
+    "area": "Emirates Road",
+    "curricula": [
+      "British"
+    ],
+    "khdaRating": "Good",
+    "feeMinAED": 40000,
+    "feeMaxAED": 50000,
+    "feeNote": "Published KHDA range, 2025-2026",
+    "gradeRange": "FS 1 - Year 13,",
+    "website": "https://www.gemsmetropoleschool-alwaha.com",
+    "address": "Emirates Road, Dubai",
+    "description": "British curriculum school in Emirates Road, serving FS 1 - Year 13,. Rated Good in its latest KHDA inspection.",
+    "khdaId": "5578"
+  },
+  {
+    "slug": "gems-metropole-school-dubai",
+    "name": "GEMS Metropole School - Dubai Branch",
+    "area": "Motor City",
+    "curricula": [
+      "British"
+    ],
+    "khdaRating": "Good",
+    "feeMinAED": 37511,
+    "feeMaxAED": 51190,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "FS 1 - Year 13",
+    "website": "https://www.gemsmetropoleschool-dubai.com",
+    "address": "Motor City, Dubai",
+    "description": "British curriculum school in Motor City, serving FS 1 - Year 13. Rated Good in its latest KHDA inspection.",
+    "khdaId": "4442",
+    "phone": "97145507200"
+  },
+  {
+    "slug": "gems-modern-academy",
+    "name": "GEMS Modern Academy",
+    "area": "Nadd al Shiba First",
+    "curricula": [
+      "Indian",
+      "IB"
+    ],
+    "khdaRating": "Outstanding",
+    "feeMinAED": 30272,
+    "feeMaxAED": 73876,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "Grade 6 - Grade 12,Pre Primary - Grade 12",
+    "website": "https://www.gemsmodernacademy-dubai.com",
+    "address": "Nadd al Shiba First, Dubai",
+    "description": "One of Dubai's largest CBSE curriculum schools, offering both CBSE and IB Diploma streams at senior level.",
+    "khdaId": "239",
+    "phone": "97143263339"
+  },
+  {
+    "slug": "gems-new-millennium-school",
+    "name": "GEMS New Millennium School L.L.C",
+    "area": "Al Khail",
+    "curricula": [
+      "Indian",
+      "British"
+    ],
+    "khdaRating": "Very Good",
+    "feeMinAED": 22612,
+    "feeMaxAED": 33557,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "Pre Primary - Grade 12",
+    "website": "https://www.gemsnms-alkhail.com",
+    "address": "Al Khail, Dubai",
+    "description": "Indian and British curriculum school in Al Khail, serving Pre Primary - Grade 12. Rated Very Good in its latest KHDA inspection.",
+    "khdaId": "4427",
+    "phone": "044452900"
+  },
+  {
+    "slug": "gems-our-own-english-high-school",
+    "name": "GEMS Our Own English High School",
+    "area": "Al Warqa First",
+    "curricula": [
+      "Indian"
+    ],
+    "khdaRating": "Very Good",
+    "feeMinAED": 7648,
+    "feeMaxAED": 17257,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "Pre Primary - Grade 12",
+    "website": "https://www.gemsoo-dubai.com",
+    "address": "Al Warqa First, Dubai",
+    "description": "Indian curriculum school in Al Warqa First, serving Pre Primary - Grade 12. Rated Very Good in its latest KHDA inspection.",
+    "khdaId": "238",
+    "phone": "97142361335"
+  },
+  {
+    "slug": "gems-our-own-indian-school",
+    "name": "GEMS Our Own Indian School",
+    "area": "Al Qouz First",
+    "curricula": [
+      "Indian"
+    ],
+    "khdaRating": "Very Good",
+    "feeMinAED": 7043,
+    "feeMaxAED": 14696,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "KG 1 - Grade 12",
+    "website": "https://www.gemsoo-alquoz.com",
+    "address": "Al Qouz First, Dubai",
+    "description": "Indian curriculum school in Al Qouz First, serving KG 1 - Grade 12. Rated Very Good in its latest KHDA inspection.",
+    "khdaId": "237",
+    "phone": "97143391188"
+  },
+  {
+    "slug": "gems-royal-dubai-school-dubai",
+    "name": "GEMS Royal Dubai School - Dubai Branch",
+    "area": "Mirdif",
+    "curricula": [
+      "British"
+    ],
+    "khdaRating": "Very Good",
+    "feeMinAED": 39328,
+    "feeMaxAED": 50753,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "ECC (2-3) - Year 8",
+    "website": "https://www.royaldubaischool.com",
+    "address": "Mirdif, Dubai",
+    "description": "British curriculum school in Mirdif, serving ECC (2-3) - Year 8. Rated Very Good in its latest KHDA inspection.",
+    "khdaId": "312",
+    "phone": "97142886499"
+  },
+  {
+    "slug": "gems-school-of-research-and-innovation",
+    "name": "GEMS School of Research and Innovation",
+    "area": "Dubai Sports City",
+    "curricula": [
+      "British"
+    ],
+    "khdaRating": "Not rated",
+    "feeMinAED": 0,
+    "feeMaxAED": 0,
+    "feeNote": "Fees not published by KHDA",
+    "gradeRange": "",
+    "website": "https://www.gemseducation.com/en/Our-Schools/All-Our-Schools/GEMS-School-of-Research-and-Innovation",
+    "address": "Dubai Sports City, Dubai",
+    "description": "British curriculum school in Dubai Sports City.",
+    "khdaId": "5591",
+    "phone": "044995000"
+  },
+  {
+    "slug": "gems-wellington-academy",
+    "name": "GEMS Wellington Academy -Fze",
+    "area": "Dubai Silicon Oasis",
+    "curricula": [
+      "British",
+      "IB"
+    ],
+    "khdaRating": "Very Good",
+    "feeMinAED": 39414,
+    "feeMaxAED": 91093,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": ",ECC (1-2) - Year 13",
+    "website": "https://www.gemswellingtonacademy-dso.com",
+    "address": "Dubai Silicon Oasis, Dubai",
+    "description": "British and IB curriculum school in Dubai Silicon Oasis, serving ,ECC (1-2) - Year 13. Rated Very Good in its latest KHDA inspection.",
+    "khdaId": "4407",
+    "phone": "97145159000"
+  },
+  {
+    "slug": "gems-wellington-academy-al-khail",
+    "name": "GEMS Wellington Academy Al Khail L.L.C",
+    "area": "Al Khail",
+    "curricula": [
+      "British"
+    ],
+    "khdaRating": "Very Good",
+    "feeMinAED": 50725,
+    "feeMaxAED": 109800,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "ECC (2-3) - Year 13",
+    "website": "https://www.gemswellingtonacademy-alkhail.com",
+    "address": "Al Khail, Dubai",
+    "description": "British curriculum school in Al Khail, serving ECC (2-3) - Year 13. Rated Very Good in its latest KHDA inspection.",
+    "khdaId": "4432",
+    "phone": "045129100"
+  },
+  {
+    "slug": "gems-wellington-international-school-dubai",
+    "name": "GEMS Wellington International School - Dubai Branch",
+    "area": "Al Safouh First",
+    "curricula": [
+      "IB",
+      "British"
+    ],
+    "khdaRating": "Outstanding",
+    "feeMinAED": 46436,
+    "feeMaxAED": 103399,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "FS 1 - Year 13,Year 12 - Year 13",
+    "website": "https://www.wellingtoninternationalschool.com",
+    "address": "Al Safouh First, Dubai",
+    "description": "IB and British curriculum school in Al Safouh First, serving FS 1 - Year 13,Year 12 - Year 13. Rated Outstanding in its latest KHDA inspection.",
+    "khdaId": "272",
+    "phone": "043073000"
+  },
+  {
+    "slug": "gems-winchester-school",
+    "name": "GEMS Winchester School",
+    "area": "Dubai Land",
+    "curricula": [
+      "British"
+    ],
+    "khdaRating": "Good",
+    "feeMinAED": 19902,
+    "feeMaxAED": 38403,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "FS 1 - Year 13",
+    "website": "https://www.gemswinchesterschool-dubai.com",
+    "address": "Dubai Land, Dubai",
+    "description": "British curriculum school in Dubai Land, serving FS 1 - Year 13. Rated Good in its latest KHDA inspection.",
+    "khdaId": "4405",
+    "phone": "97145952555"
+  },
+  {
+    "slug": "gems-world-academy",
+    "name": "GEMS WORLD ACADEMY",
+    "area": "Al Barsha First",
+    "curricula": [
+      "IB"
+    ],
+    "khdaRating": "Very Good",
+    "feeMinAED": 69480,
+    "feeMaxAED": 123442,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "Pre Primary - Grade 12",
+    "website": "https://www.gemsworldacademy-dubai.com",
+    "address": "Al Barsha First, Dubai",
+    "description": "IB curriculum school in Al Barsha First, serving Pre Primary - Grade 12. Rated Very Good in its latest KHDA inspection.",
+    "khdaId": "348",
+    "phone": "97143736373"
+  },
+  {
+    "slug": "german-international-school-dubai",
+    "name": "German International School Dubai",
+    "area": "Academic City",
+    "curricula": [
+      "German"
+    ],
+    "khdaRating": "Very Good",
+    "feeMinAED": 38760,
+    "feeMaxAED": 73227,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "Pre Primary - Grade 12",
+    "website": "https://www.germanschool.ae",
+    "address": "Academic City, Dubai",
+    "description": "German curriculum school in Academic City, serving Pre Primary - Grade 12. Rated Very Good in its latest KHDA inspection.",
+    "khdaId": "286",
+    "phone": "97144562718"
+  },
+  {
+    "slug": "glendale-international-school",
+    "name": "Glendale International School LLC",
+    "area": "Oud Metha",
+    "curricula": [
+      "British"
+    ],
+    "khdaRating": "Acceptable",
+    "feeMinAED": 42000,
+    "feeMaxAED": 55200,
+    "feeNote": "Published KHDA range, 2025-2026",
+    "gradeRange": "FS 1 - Year 8",
+    "website": "https://glendaleschool.org/ae/",
+    "address": "Oud Metha, Dubai",
+    "description": "British curriculum school in Oud Metha, serving FS 1 - Year 8. Rated Acceptable in its latest KHDA inspection.",
+    "khdaId": "5581",
+    "phone": "045949911"
+  },
+  {
+    "slug": "global-indian-international-school",
+    "name": "Global Indian International School L.L.C",
+    "area": "Al Qouz First",
+    "curricula": [
+      "Indian"
+    ],
+    "khdaRating": "Good",
+    "feeMinAED": 22378,
+    "feeMaxAED": 41993,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "Pre Primary - Grade 12",
+    "website": "https://www.globalindianschool.org",
+    "address": "Al Qouz First, Dubai",
+    "description": "Indian curriculum school in Al Qouz First, serving Pre Primary - Grade 12. Rated Good in its latest KHDA inspection.",
+    "khdaId": "5495"
+  },
+  {
+    "slug": "grammar-school",
+    "name": "Grammar School",
+    "area": "Al Garhoud",
+    "curricula": [
+      "British"
+    ],
+    "khdaRating": "Acceptable",
+    "feeMinAED": 5002,
+    "feeMaxAED": 7040,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "FS 2 - Year 13",
+    "website": "https://www.grammarschool.ae",
+    "address": "Al Garhoud, Dubai",
+    "description": "British curriculum school in Al Garhoud, serving FS 2 - Year 13. Rated Acceptable in its latest KHDA inspection.",
+    "khdaId": "279",
+    "phone": "97142824822"
+  },
+  {
+    "slug": "greenfield-international-school",
+    "name": "Greenfield International School",
+    "area": "Dubai Investment Park First",
+    "curricula": [
+      "IB"
+    ],
+    "khdaRating": "Very Good",
+    "feeMinAED": 34286,
+    "feeMaxAED": 89192,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "ECC (2-3) - Grade 12",
+    "website": "https://www.gischool.ae",
+    "address": "Dubai Investment Park First, Dubai",
+    "description": "IB curriculum school in Dubai Investment Park First, serving ECC (2-3) - Grade 12. Rated Very Good in its latest KHDA inspection.",
+    "khdaId": "350",
+    "phone": "97148856600"
+  },
+  {
+    "slug": "greenwood-international-school",
+    "name": "Greenwood International School",
+    "area": "Muhaisnah First",
+    "curricula": [
+      "American"
+    ],
+    "khdaRating": "Good",
+    "feeMinAED": 19662,
+    "feeMaxAED": 30860,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "KG 1 - Grade 12",
+    "website": "",
+    "address": "Muhaisnah First, Dubai",
+    "description": "American curriculum school in Muhaisnah First, serving KG 1 - Grade 12. Rated Good in its latest KHDA inspection.",
+    "khdaId": "321",
+    "phone": "97142888000"
+  },
+  {
+    "slug": "gulf-indian-high-school",
+    "name": "Gulf Indian High School",
+    "area": "Al Garhoud",
+    "curricula": [
+      "Indian"
+    ],
+    "khdaRating": "Good",
+    "feeMinAED": 4874,
+    "feeMaxAED": 9434,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "KG 1 - Grade 12",
+    "website": "https://www.gihsdubai.com",
+    "address": "Al Garhoud, Dubai",
+    "description": "Indian curriculum school in Al Garhoud, serving KG 1 - Grade 12. Rated Good in its latest KHDA inspection.",
+    "khdaId": "295",
+    "phone": "97146119400"
+  },
+  {
+    "slug": "gulf-model-school",
+    "name": "Gulf Model School",
+    "area": "Muhaisnah First",
+    "curricula": [
+      "Indian"
+    ],
+    "khdaRating": "Acceptable",
+    "feeMinAED": 3875,
+    "feeMaxAED": 7212,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "KG 1 - Grade 12",
+    "website": "https://gmsdubai.ae/",
+    "address": "Muhaisnah First, Dubai",
+    "description": "Indian curriculum school in Muhaisnah First, serving KG 1 - Grade 12. Rated Acceptable in its latest KHDA inspection.",
+    "khdaId": "344",
+    "phone": "042544222"
+  },
+  {
+    "slug": "h-h-shaikh-rashid-al-maktoum-pakistani-school",
+    "name": "H.H.Shaikh Rashid Al Maktoum Pakistani School",
+    "area": "Al Qusais First",
+    "curricula": [
+      "Pakistani"
+    ],
+    "khdaRating": "Acceptable",
+    "feeMinAED": 4400,
+    "feeMaxAED": 9000,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "KG 1 - Grade 12",
+    "website": "https://www.sramps.sch.ae",
+    "address": "Al Qusais First, Dubai",
+    "description": "Pakistani curriculum school in Al Qusais First, serving KG 1 - Grade 12. Rated Acceptable in its latest KHDA inspection.",
+    "khdaId": "293",
+    "phone": "97142988303"
+  },
+  {
+    "slug": "hampton-heights-international-school",
+    "name": "Hampton Heights International School",
+    "area": "Al Twar Third",
+    "curricula": [
+      "British"
+    ],
+    "khdaRating": "Not rated",
+    "feeMinAED": 0,
+    "feeMaxAED": 0,
+    "feeNote": "Fees not published by KHDA",
+    "gradeRange": "FS 1 - Year 7",
+    "website": "https://www.hamptonheights.ae",
+    "address": "Al Twar Third, Dubai",
+    "description": "British curriculum school in Al Twar Third, serving FS 1 - Year 7.",
+    "khdaId": "5594",
+    "phone": "97143473333"
+  },
+  {
+    "slug": "hartland-international-school-fz",
+    "name": "Hartland International School - FZ",
+    "area": "Meydan City",
+    "curricula": [
+      "IB",
+      "British"
+    ],
+    "khdaRating": "Very Good",
+    "feeMinAED": 43328,
+    "feeMaxAED": 92803,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "FS 1 - Year 13,Grade 12 - Grade 13",
+    "website": "https://hartlandinternational.com",
+    "address": "Meydan City, Dubai",
+    "description": "IB and British curriculum school in Meydan City, serving FS 1 - Year 13,Grade 12 - Grade 13. Rated Very Good in its latest KHDA inspection.",
+    "khdaId": "4448",
+    "phone": "97144079444"
+  },
+  {
+    "slug": "himayah-kindergarten-for-education-karama",
+    "name": "Himayah Kindergarten For Education- Karama",
+    "area": "Al Karama",
+    "curricula": [
+      "UAE MOE"
+    ],
+    "khdaRating": "Good",
+    "feeMinAED": 0,
+    "feeMaxAED": 0,
+    "feeNote": "Fees not published by KHDA",
+    "gradeRange": "KG 1 - KG 2",
+    "website": "https://www.dubaipolice.gov.ae",
+    "address": "Al Karama, Dubai",
+    "description": "UAE MOE curriculum school in Al Karama, serving KG 1 - KG 2. Rated Good in its latest KHDA inspection.",
+    "khdaId": "247",
+    "phone": "97145070444"
+  },
+  {
+    "slug": "himayah-school-for-education-boys-diera-abu-hail",
+    "name": "Himayah School For Education Boys - Diera (Abu Hail)",
+    "area": "Abu Hail",
+    "curricula": [
+      "UAE MOE"
+    ],
+    "khdaRating": "Acceptable",
+    "feeMinAED": 0,
+    "feeMaxAED": 0,
+    "feeNote": "Fees not published by KHDA",
+    "gradeRange": "Grade 1 - Grade 12",
+    "website": "",
+    "address": "Abu Hail, Dubai",
+    "description": "UAE MOE curriculum school in Abu Hail, serving Grade 1 - Grade 12. Rated Acceptable in its latest KHDA inspection.",
+    "khdaId": "5522",
+    "phone": "97143482255"
+  },
+  {
+    "slug": "himayah-school-for-education-girls-al-karama",
+    "name": "Himayah School For Education Girls - Al Karama",
+    "area": "Al Karama",
+    "curricula": [
+      "UAE MOE"
+    ],
+    "khdaRating": "Acceptable",
+    "feeMinAED": 0,
+    "feeMaxAED": 0,
+    "feeNote": "Fees not published by KHDA",
+    "gradeRange": "KG 1 - Grade 12",
+    "website": "https://www.dubaipolice.gov.ae",
+    "address": "Al Karama, Dubai",
+    "description": "UAE MOE curriculum school in Al Karama, serving KG 1 - Grade 12. Rated Acceptable in its latest KHDA inspection.",
+    "khdaId": "5523",
+    "phone": "97143482255"
+  },
+  {
+    "slug": "horizon-english-school-town-square",
+    "name": "Horizon English School Town Square",
+    "area": "Dubai Land",
+    "curricula": [
+      "British"
+    ],
+    "khdaRating": "Not rated",
+    "feeMinAED": 0,
+    "feeMaxAED": 0,
+    "feeNote": "Fees not published by KHDA",
+    "gradeRange": "",
+    "website": "",
+    "address": "Dubai Land, Dubai",
+    "description": "British curriculum school in Dubai Land.",
+    "khdaId": "5606"
+  },
+  {
+    "slug": "horizon-international-school",
+    "name": "Horizon International School L.L.C",
+    "area": "Umm al Sheif",
+    "curricula": [
+      "British"
+    ],
+    "khdaRating": "Very Good",
+    "feeMinAED": 37940,
+    "feeMaxAED": 73124,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "FS 1 - Year 13",
+    "website": "https://www.hisdubai.ae",
+    "address": "Umm al Sheif, Dubai",
+    "description": "British curriculum school in Umm al Sheif, serving FS 1 - Year 13. Rated Very Good in its latest KHDA inspection.",
+    "khdaId": "4281",
+    "phone": "97143483314"
+  },
+  {
+    "slug": "horizons-english-school",
+    "name": "Horizons English School L.L.C",
+    "area": "Al Wasl",
+    "curricula": [
+      "British"
+    ],
+    "khdaRating": "Outstanding",
+    "feeMinAED": 30780,
+    "feeMaxAED": 44121,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "FS 1 - Year 6",
+    "website": "https://www.horizonschooldubai.com",
+    "address": "Al Wasl, Dubai",
+    "description": "British curriculum school in Al Wasl, serving FS 1 - Year 6. Rated Outstanding in its latest KHDA inspection.",
+    "khdaId": "276",
+    "phone": "97143422891"
+  },
+  {
+    "slug": "icademy-middle-east-fz",
+    "name": "Icademy Middle East Fz.Llc",
+    "area": "Dubai Knowledge Park",
+    "curricula": [
+      "American"
+    ],
+    "khdaRating": "Not rated",
+    "feeMinAED": 19373,
+    "feeMaxAED": 27767,
+    "feeNote": "Published KHDA range, 2022-2023",
+    "gradeRange": "KG 1 - Grade 12",
+    "website": "https://icademymiddleeast.com/",
+    "address": "Dubai Knowledge Park, Dubai",
+    "description": "American curriculum school in Dubai Knowledge Park, serving KG 1 - Grade 12.",
+    "khdaId": "4398",
+    "phone": "971971444012"
+  },
+  {
+    "slug": "ignite-school",
+    "name": "Ignite School L.L.C",
+    "area": "Al Warqa Third",
+    "curricula": [
+      "American"
+    ],
+    "khdaRating": "Acceptable",
+    "feeMinAED": 28000,
+    "feeMaxAED": 41964,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "Pre Primary - Grade 12",
+    "website": "https://www.igniteschool.ae",
+    "address": "Al Warqa Third, Dubai",
+    "description": "American curriculum school in Al Warqa Third, serving Pre Primary - Grade 12. Rated Acceptable in its latest KHDA inspection.",
+    "khdaId": "5507",
+    "phone": "042110771"
+  },
+  {
+    "slug": "international-academic-school",
+    "name": "International Academic School",
+    "area": "Al Warqa First",
+    "curricula": [
+      "American"
+    ],
+    "khdaRating": "Acceptable",
+    "feeMinAED": 14648,
+    "feeMaxAED": 28112,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "Pre Primary - Grade 12",
+    "website": "https://www.iasdubai.com",
+    "address": "Al Warqa First, Dubai",
+    "description": "American curriculum school in Al Warqa First, serving Pre Primary - Grade 12. Rated Acceptable in its latest KHDA inspection.",
+    "khdaId": "306",
+    "phone": "042800993"
+  },
+  {
+    "slug": "international-school-of-arts-and-sciences",
+    "name": "International School of Arts & Sciences L.L.C",
+    "area": "Al Warqa First",
+    "curricula": [
+      "American"
+    ],
+    "khdaRating": "Good",
+    "feeMinAED": 0,
+    "feeMaxAED": 32958,
+    "feeNote": "Upper fee only, 2019-2020",
+    "gradeRange": "KG 1 - Grade 12",
+    "website": "https://www.isas.sch.ae",
+    "address": "Al Warqa First, Dubai",
+    "description": "American curriculum school in Al Warqa First, serving KG 1 - Grade 12. Rated Good in its latest KHDA inspection.",
+    "khdaId": "351",
+    "phone": "97142800459"
+  },
+  {
+    "slug": "international-school-of-creative-science-nad-alshiba",
+    "name": "International School of Creative Science Nad Alshiba L.L.C",
+    "area": "Nadd al Shiba Third",
+    "curricula": [
+      "British"
+    ],
+    "khdaRating": "Good",
+    "feeMinAED": 33500,
+    "feeMaxAED": 65504,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "FS 1 - Year 13",
+    "website": "http://www.iscs.sch.ae/en/nad-al-sheba/",
+    "address": "Nadd al Shiba Third, Dubai",
+    "description": "British curriculum school in Nadd al Shiba Third, serving FS 1 - Year 13. Rated Good in its latest KHDA inspection.",
+    "khdaId": "5483",
+    "phone": "045107000"
+  },
+  {
+    "slug": "islamic-school-for-training-and-education",
+    "name": "Islamic School for Training & Education",
+    "area": "Muhaisnah First",
+    "curricula": [
+      "UAE MOE"
+    ],
+    "khdaRating": "Acceptable",
+    "feeMinAED": 8983,
+    "feeMaxAED": 13520,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "KG 1 - Grade 12",
+    "website": "https://www.lootah.com/eng/school/schlfrmset.htm",
+    "address": "Muhaisnah First, Dubai",
+    "description": "UAE MOE curriculum school in Muhaisnah First, serving KG 1 - Grade 12. Rated Acceptable in its latest KHDA inspection.",
+    "khdaId": "248",
+    "phone": "97142646001"
+  },
+  {
+    "slug": "japanese-school",
+    "name": "Japanese School",
+    "area": "Al Wasl",
+    "curricula": [
+      "Japanese"
+    ],
+    "khdaRating": "Good",
+    "feeMinAED": 32400,
+    "feeMaxAED": 38400,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "Pre Primary - Grade 9",
+    "website": "https://www.japanese.sch.ae",
+    "address": "Al Wasl, Dubai",
+    "description": "Japanese curriculum school in Al Wasl, serving Pre Primary - Grade 9. Rated Good in its latest KHDA inspection.",
+    "khdaId": "342",
+    "phone": "97143449119"
+  },
+  {
+    "slug": "jebel-ali-school-br-of-taaleem-management-l-l-c",
+    "name": "Jebel Ali School (Br of Taaleem Management (L L C))",
+    "area": "Jabal Ali First",
+    "curricula": [
+      "British"
+    ],
+    "khdaRating": "Very Good",
+    "feeMinAED": 48496,
+    "feeMaxAED": 101671,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "FS 1 - Year 13",
+    "website": "https://jebelalischool.org/",
+    "address": "Jabal Ali First, Dubai",
+    "description": "British curriculum school in Jabal Ali First, serving FS 1 - Year 13. Rated Very Good in its latest KHDA inspection.",
+    "khdaId": "218",
+    "phone": "97148846485"
+  },
+  {
+    "slug": "jss-international-school",
+    "name": "JSS International School L.L.C",
+    "area": "Jumeirah Village Circle (south)",
+    "curricula": [
+      "Indian"
+    ],
+    "khdaRating": "Very Good",
+    "feeMinAED": 16362,
+    "feeMaxAED": 43698,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "Pre Primary - Grade 12",
+    "website": "https://www.jssisdubai.com",
+    "address": "Jumeirah Village Circle (south), Dubai",
+    "description": "Indian curriculum school in Jumeirah Village Circle (south), serving Pre Primary - Grade 12. Rated Very Good in its latest KHDA inspection.",
+    "khdaId": "4299",
+    "phone": "97142406353"
+  },
+  {
+    "slug": "jss-private-school",
+    "name": "JSS Private School L.L.C",
+    "area": "Al Wasl",
+    "curricula": [
+      "Indian"
+    ],
+    "khdaRating": "Very Good",
+    "feeMinAED": 11866,
+    "feeMaxAED": 26375,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "Pre Primary - Grade 12",
+    "website": "https://www.jsspsdubai.com",
+    "address": "Al Wasl, Dubai",
+    "description": "Indian curriculum school in Al Wasl, serving Pre Primary - Grade 12. Rated Very Good in its latest KHDA inspection.",
+    "khdaId": "4403",
+    "phone": "97143446419"
+  },
+  {
+    "slug": "jumeira-baccalaureate-school",
+    "name": "Jumeira Baccalaureate School",
+    "area": "Jumeira First",
+    "curricula": [
+      "IB"
+    ],
+    "khdaRating": "Very Good",
+    "feeMinAED": 62727,
+    "feeMaxAED": 96300,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "Pre Primary - Grade 12",
+    "website": "https://www.jbschool.ae",
+    "address": "Jumeira First, Dubai",
+    "description": "IB curriculum school in Jumeira First, serving Pre Primary - Grade 12. Rated Very Good in its latest KHDA inspection.",
+    "khdaId": "4318",
+    "phone": "97143446931"
+  },
+  {
+    "slug": "jumeirah-college",
+    "name": "Jumeirah College",
+    "area": "Al Safa First",
+    "curricula": [
+      "British"
+    ],
+    "khdaRating": "Outstanding",
+    "feeMinAED": 77133,
+    "feeMaxAED": 98681,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "Year 7 - Year 13",
+    "website": "https://www.gemsjc.com",
+    "address": "Al Safa First, Dubai",
+    "description": "British curriculum school in Al Safa First, serving Year 7 - Year 13. Rated Outstanding in its latest KHDA inspection.",
+    "khdaId": "205",
+    "phone": "97143955524"
+  },
+  {
+    "slug": "jumeirah-english-speaking-school",
+    "name": "Jumeirah English Speaking School",
+    "area": "Al Safa First",
+    "curricula": [
+      "British"
+    ],
+    "khdaRating": "Outstanding",
+    "feeMinAED": 48331,
+    "feeMaxAED": 65098,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "FS 1 - Year 6",
+    "website": "https://www.jess.sch.ae",
+    "address": "Al Safa First, Dubai",
+    "description": "British curriculum school in Al Safa First, serving FS 1 - Year 6. Rated Outstanding in its latest KHDA inspection.",
+    "khdaId": "200",
+    "phone": "97143945515"
+  },
+  {
+    "slug": "jumeirah-english-speaking-school-br",
+    "name": "Jumeirah English Speaking School (Br)",
+    "area": "Arabian Ranches",
+    "curricula": [
+      "IB",
+      "British"
+    ],
+    "khdaRating": "Outstanding",
+    "feeMinAED": 48330,
+    "feeMaxAED": 105607,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "FS 1 - Year 11,Grade 12 - Grade 13",
+    "website": "https://www.jess.sch.ae",
+    "address": "Arabian Ranches, Dubai",
+    "description": "IB and British curriculum school in Arabian Ranches, serving FS 1 - Year 11,Grade 12 - Grade 13. Rated Outstanding in its latest KHDA inspection.",
+    "khdaId": "206",
+    "phone": "97143619019"
+  },
+  {
+    "slug": "kent-college-fz",
+    "name": "Kent College L.L.C - FZ",
+    "area": "Nadd al Shiba Second",
+    "curricula": [
+      "British"
+    ],
+    "khdaRating": "Very Good",
+    "feeMinAED": 58151,
+    "feeMaxAED": 108013,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "FS 1 - Year 13",
+    "website": "https://www.kentcollege.sch.ae",
+    "address": "Nadd al Shiba Second, Dubai",
+    "description": "British curriculum school in Nadd al Shiba Second, serving FS 1 - Year 13. Rated Very Good in its latest KHDA inspection.",
+    "khdaId": "5476",
+    "phone": "971508891"
+  },
+  {
+    "slug": "kings-school-al-barsha",
+    "name": "Kings School Al Barsha L.L.C",
+    "area": "Al Barsha Second",
+    "curricula": [
+      "British"
+    ],
+    "khdaRating": "Outstanding",
+    "feeMinAED": 56667,
+    "feeMaxAED": 115088,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "FS 1 - Year 13",
+    "website": "https://www.kingsdubai.com/Kings-School-Al-Barsha",
+    "address": "Al Barsha Second, Dubai",
+    "description": "British curriculum school in Al Barsha Second, serving FS 1 - Year 13. Rated Outstanding in its latest KHDA inspection.",
+    "khdaId": "4446",
+    "phone": "97143566900"
+  },
+  {
+    "slug": "kings-school-dubai",
+    "name": "Kings School Dubai L.L.C",
+    "area": "Umm Suqeim Third",
+    "curricula": [
+      "British"
+    ],
+    "khdaRating": "Outstanding",
+    "feeMinAED": 46096,
+    "feeMaxAED": 71801,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "FS 1 - Year 6",
+    "website": "http://kings-edu.com/dubai/",
+    "address": "Umm Suqeim Third, Dubai",
+    "description": "British curriculum school in Umm Suqeim Third, serving FS 1 - Year 6. Rated Outstanding in its latest KHDA inspection.",
+    "khdaId": "273",
+    "phone": "97143483939"
+  },
+  {
+    "slug": "kings-school-nad-al-sheba",
+    "name": "Kings School Nad Al Sheba L.L.C",
+    "area": "Nadd al Shiba First",
+    "curricula": [
+      "British"
+    ],
+    "khdaRating": "Very Good",
+    "feeMinAED": 42271,
+    "feeMaxAED": 96618,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "ECC (1-2) - Year 13",
+    "website": "http://kings-edu.com/nadalsheba/",
+    "address": "Nadd al Shiba First, Dubai",
+    "description": "British curriculum school in Nadd al Shiba First, serving ECC (1-2) - Year 13. Rated Very Good in its latest KHDA inspection.",
+    "khdaId": "4440",
+    "phone": "97142375555"
+  },
+  {
+    "slug": "little-flower-english-school",
+    "name": "Little Flower English School",
+    "area": "Hor al Anz",
+    "curricula": [
+      "Indian"
+    ],
+    "khdaRating": "Acceptable",
+    "feeMinAED": 3749,
+    "feeMaxAED": 4135,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "KG 1 - Grade 6",
+    "website": "https://www.littlefllowerdubai.com",
+    "address": "Hor al Anz, Dubai",
+    "description": "Indian curriculum school in Hor al Anz, serving KG 1 - Grade 6. Rated Acceptable in its latest KHDA inspection.",
+    "khdaId": "328"
+  },
+  {
+    "slug": "lycee-francais-international",
+    "name": "Lycee Francais International",
+    "area": "Oud Metha",
+    "curricula": [
+      "French"
+    ],
+    "khdaRating": "Outstanding",
+    "feeMinAED": 28811,
+    "feeMaxAED": 62363,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "Pre Primary - Grade 12",
+    "website": "https://lfidubai.aflec-fr.org/",
+    "address": "Oud Metha, Dubai",
+    "description": "French curriculum school in Oud Metha, serving Pre Primary - Grade 12. Rated Outstanding in its latest KHDA inspection.",
+    "khdaId": "284",
+    "phone": "97143368552"
+  },
+  {
+    "slug": "lycee-francais-international-georges-pompidou-school-dubai",
+    "name": "Lycee Francais International Georges Pompidou School (Dubai Branch)",
+    "area": "Al Rowaiyah First",
+    "curricula": [
+      "French"
+    ],
+    "khdaRating": "Very Good",
+    "feeMinAED": 36072,
+    "feeMaxAED": 50700,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "Grade 1 - Grade 12",
+    "website": "",
+    "address": "Al Rowaiyah First, Dubai",
+    "description": "French curriculum school in Al Rowaiyah First, serving Grade 1 - Grade 12. Rated Very Good in its latest KHDA inspection.",
+    "khdaId": "309",
+    "phone": "97143260026"
+  },
+  {
+    "slug": "lycee-francais-international-georges-pompidou-school-oud-metha",
+    "name": "Lycee Francais International Georges Pompidou School Oud Metha",
+    "area": "Oud Metha",
+    "curricula": [
+      "French"
+    ],
+    "khdaRating": "Outstanding",
+    "feeMinAED": 30558,
+    "feeMaxAED": 31276,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "Pre Primary - KG 2",
+    "website": "https://www.lfigp.org",
+    "address": "Oud Metha, Dubai",
+    "description": "French curriculum school in Oud Metha, serving Pre Primary - KG 2. Rated Outstanding in its latest KHDA inspection.",
+    "khdaId": "316",
+    "phone": "043374161"
+  },
+  {
+    "slug": "lycee-francais-international-5592",
+    "name": "LYCEE FRANCAIS INTERNATIONAL L.L.C (BRANCH)",
+    "area": "Mudon",
+    "curricula": [
+      "French"
+    ],
+    "khdaRating": "Not rated",
+    "feeMinAED": 0,
+    "feeMaxAED": 0,
+    "feeNote": "Fees not published by KHDA",
+    "gradeRange": "",
+    "website": "",
+    "address": "Mudon, Dubai",
+    "description": "French curriculum school in Mudon.",
+    "khdaId": "5592"
+  },
+  {
+    "slug": "lycee-francais-jean-mermoz",
+    "name": "Lycee Francais Jean Mermoz L.L.C",
+    "area": "Al Qouz First",
+    "curricula": [
+      "French"
+    ],
+    "khdaRating": "Very Good",
+    "feeMinAED": 38875,
+    "feeMaxAED": 64634,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "Pre Primary - Grade 12",
+    "website": "https://lfjm.education",
+    "address": "Al Qouz First, Dubai",
+    "description": "French curriculum school in Al Qouz First, serving Pre Primary - Grade 12. Rated Very Good in its latest KHDA inspection.",
+    "khdaId": "5492",
+    "phone": "043344111"
+  },
+  {
+    "slug": "lycee-francais-jean-mermoz-south",
+    "name": "LYCEE FRANCAIS JEAN MERMOZ SOUTH L.L.C",
+    "area": "Al Barsha South",
+    "curricula": [
+      "French"
+    ],
+    "khdaRating": "Not rated",
+    "feeMinAED": 0,
+    "feeMaxAED": 0,
+    "feeNote": "Fees not published by KHDA",
+    "gradeRange": "Pre Primary - Grade 12",
+    "website": "https://lfjm.education",
+    "address": "Al Barsha South, Dubai",
+    "description": "French curriculum school in Al Barsha South, serving Pre Primary - Grade 12.",
+    "khdaId": "5585",
+    "phone": "526744001"
+  },
+  {
+    "slug": "lycee-libanais-francophone-prive-meydan-fz",
+    "name": "Lycee Libanais Francophone Prive Meydan L.L.C - FZ",
+    "area": "Meydan City",
+    "curricula": [
+      "French"
+    ],
+    "khdaRating": "Very Good",
+    "feeMinAED": 38988,
+    "feeMaxAED": 69307,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "Pre Primary - Grade 12",
+    "website": "https://www.llfpm.com",
+    "address": "Meydan City, Dubai",
+    "description": "French curriculum school in Meydan City, serving Pre Primary - Grade 12. Rated Very Good in its latest KHDA inspection.",
+    "khdaId": "5557",
+    "phone": "97145607800"
+  },
+  {
+    "slug": "m-s-b-private-school",
+    "name": "M S B Private School",
+    "area": "Al Nahda Second",
+    "curricula": [
+      "British"
+    ],
+    "khdaRating": "Good",
+    "feeMinAED": 11545,
+    "feeMaxAED": 27681,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "FS 1 - Year 13",
+    "website": "https://www.msbdubai.com",
+    "address": "Al Nahda Second, Dubai",
+    "description": "British curriculum school in Al Nahda Second, serving FS 1 - Year 13. Rated Good in its latest KHDA inspection.",
+    "khdaId": "193",
+    "phone": "97142677100"
+  },
+  {
+    "slug": "mirdif-american-school",
+    "name": "Mirdif American School",
+    "area": "Al Mizhar First",
+    "curricula": [
+      "American"
+    ],
+    "khdaRating": "Good",
+    "feeMinAED": 25348,
+    "feeMaxAED": 45034,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "Pre Primary - Grade 10",
+    "website": "https://www.mirdifprivateschool.ae",
+    "address": "Al Mizhar First, Dubai",
+    "description": "American curriculum school in Al Mizhar First, serving Pre Primary - Grade 10. Rated Good in its latest KHDA inspection.",
+    "khdaId": "257",
+    "phone": "97142883303"
+  },
+  {
+    "slug": "national-charity-school-primary",
+    "name": "national charity school primary",
+    "area": "Abu Hail",
+    "curricula": [
+      "UAE MOE"
+    ],
+    "khdaRating": "Acceptable",
+    "feeMinAED": 4614,
+    "feeMaxAED": 5377,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "Grade 1 - Grade 4",
+    "website": "https://www.charityschools.com",
+    "address": "Abu Hail, Dubai",
+    "description": "UAE MOE curriculum school in Abu Hail, serving Grade 1 - Grade 4. Rated Acceptable in its latest KHDA inspection.",
+    "khdaId": "5553",
+    "phone": "97143897600"
+  },
+  {
+    "slug": "new-academy-school",
+    "name": "New Academy School",
+    "area": "Al Raffa",
+    "curricula": [
+      "American"
+    ],
+    "khdaRating": "Good",
+    "feeMinAED": 9026,
+    "feeMaxAED": 24625,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "KG 1 - Grade 12",
+    "website": "",
+    "address": "Al Raffa, Dubai",
+    "description": "American curriculum school in Al Raffa, serving KG 1 - Grade 12. Rated Good in its latest KHDA inspection.",
+    "khdaId": "259",
+    "phone": "97143988873"
+  },
+  {
+    "slug": "new-dawn-private-school",
+    "name": "New Dawn Private School",
+    "area": "Muhaisanah Fourth",
+    "curricula": [
+      "British"
+    ],
+    "khdaRating": "Not rated",
+    "feeMinAED": 0,
+    "feeMaxAED": 0,
+    "feeNote": "Fees not published by KHDA",
+    "gradeRange": "FS 1 - Year 7",
+    "website": "https://www.ndps.ae",
+    "address": "Muhaisanah Fourth, Dubai",
+    "description": "British curriculum school in Muhaisanah Fourth, serving FS 1 - Year 7.",
+    "khdaId": "5590"
+  },
+  {
+    "slug": "new-indian-model-school",
+    "name": "New Indian Model School",
+    "area": "Al Garhoud",
+    "curricula": [
+      "Indian"
+    ],
+    "khdaRating": "Good",
+    "feeMinAED": 4363,
+    "feeMaxAED": 7769,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "KG 1 - Grade 12",
+    "website": "https://www.nimsdxb.com",
+    "address": "Al Garhoud, Dubai",
+    "description": "Indian curriculum school in Al Garhoud, serving KG 1 - Grade 12. Rated Good in its latest KHDA inspection.",
+    "khdaId": "242",
+    "phone": "97142824313"
+  },
+  {
+    "slug": "newlands-school-br-of-beaconhouse-education-investments",
+    "name": "Newlands School (BR of Beaconhouse Education Investments L.L.C)",
+    "area": "Al Warqa First",
+    "curricula": [
+      "British"
+    ],
+    "khdaRating": "Good",
+    "feeMinAED": 20881,
+    "feeMaxAED": 40072,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "FS 1 - Year 13",
+    "website": "https://www.newlandsschool.ae",
+    "address": "Al Warqa First, Dubai",
+    "description": "British curriculum school in Al Warqa First, serving FS 1 - Year 13. Rated Good in its latest KHDA inspection.",
+    "khdaId": "5500",
+    "phone": "97142821200"
+  },
+  {
+    "slug": "next-generation-school",
+    "name": "Next Generation School L.L.C",
+    "area": "Al Barsha First",
+    "curricula": [
+      "American"
+    ],
+    "khdaRating": "Good",
+    "feeMinAED": 28714,
+    "feeMaxAED": 47133,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "Pre Primary - Grade 12",
+    "website": "https://www.ngsdubai.ae",
+    "address": "Al Barsha First, Dubai",
+    "description": "American curriculum school in Al Barsha First, serving Pre Primary - Grade 12. Rated Good in its latest KHDA inspection.",
+    "khdaId": "5474",
+    "phone": "045817700"
+  },
+  {
+    "slug": "nord-anglia-international-school",
+    "name": "Nord Anglia International School L.L.C",
+    "area": "Al Barsha Second",
+    "curricula": [
+      "British",
+      "IB"
+    ],
+    "khdaRating": "Outstanding",
+    "feeMinAED": 68026,
+    "feeMaxAED": 105288,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "FS 1 - Year 11,Year 12 - Year 13",
+    "website": "https://www.nasdubai.ae",
+    "address": "Al Barsha Second, Dubai",
+    "description": "British and IB curriculum school in Al Barsha Second, serving FS 1 - Year 11,Year 12 - Year 13. Rated Outstanding in its latest KHDA inspection.",
+    "khdaId": "4441",
+    "phone": "97142199999"
+  },
+  {
+    "slug": "north-american-international-school",
+    "name": "North American International School L.L.C",
+    "area": "Al Mizhar First",
+    "curricula": [
+      "American"
+    ],
+    "khdaRating": "Acceptable",
+    "feeMinAED": 29960,
+    "feeMaxAED": 49061,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "KG 1 - Grade 12",
+    "website": "https://www.naischool.ae",
+    "address": "Al Mizhar First, Dubai",
+    "description": "American curriculum school in Al Mizhar First, serving KG 1 - Grade 12. Rated Acceptable in its latest KHDA inspection.",
+    "khdaId": "353",
+    "phone": "97142884844"
+  },
+  {
+    "slug": "north-london-collegiate-school-middle-east-fz",
+    "name": "North London Collegiate School Middle East L.L.C - FZ",
+    "area": "Meydan City",
+    "curricula": [
+      "IB"
+    ],
+    "khdaRating": "Very Good",
+    "feeMinAED": 89629,
+    "feeMaxAED": 143681,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "Pre Primary - Grade 12",
+    "website": "https://www.nlcsdubai.ae",
+    "address": "Meydan City, Dubai",
+    "description": "IB curriculum school in Meydan City, serving Pre Primary - Grade 12. Rated Very Good in its latest KHDA inspection.",
+    "khdaId": "5496",
+    "phone": "97143190888"
+  },
+  {
+    "slug": "oak-tree-primary-school",
+    "name": "Oak Tree Primary School",
+    "area": "Al Qouz Fourth",
+    "curricula": [
+      "British"
+    ],
+    "khdaRating": "Acceptable",
+    "feeMinAED": 15852,
+    "feeMaxAED": 27041,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "FS 1 - Year 6",
+    "website": "https://www.oaktreeprimary.com",
+    "address": "Al Qouz Fourth, Dubai",
+    "description": "British curriculum school in Al Qouz Fourth, serving FS 1 - Year 6. Rated Acceptable in its latest KHDA inspection.",
+    "khdaId": "5477",
+    "phone": "971433339"
+  },
+  {
+    "slug": "our-own-high-school-dubai",
+    "name": "Our Own High School - Dubai Branch",
+    "area": "Al Warqa First",
+    "curricula": [
+      "Indian"
+    ],
+    "khdaRating": "Good",
+    "feeMinAED": 7648,
+    "feeMaxAED": 16299,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "KG 1 - Grade 12",
+    "website": "https://www.gemsoo-alwarqa.com",
+    "address": "Al Warqa First, Dubai",
+    "description": "Indian curriculum school in Al Warqa First, serving KG 1 - Grade 12. Rated Good in its latest KHDA inspection.",
+    "khdaId": "236",
+    "phone": "97142800077"
+  },
+  {
+    "slug": "oxford-school",
+    "name": "Oxford School",
+    "area": "Muhaisanah Fourth",
+    "curricula": [
+      "British"
+    ],
+    "khdaRating": "Good",
+    "feeMinAED": 12404,
+    "feeMaxAED": 20128,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "FS 1 - Year 13",
+    "website": "https://www.oxford.sch.ae",
+    "address": "Muhaisanah Fourth, Dubai",
+    "description": "British curriculum school in Muhaisanah Fourth, serving FS 1 - Year 13. Rated Good in its latest KHDA inspection.",
+    "khdaId": "190",
+    "phone": "042543666"
+  },
+  {
+    "slug": "pace-modern-british-school",
+    "name": "Pace Modern British School L.L.C",
+    "area": "Al Rashidiya",
+    "curricula": [
+      "British"
+    ],
+    "khdaRating": "Acceptable",
+    "feeMinAED": 19802,
+    "feeMaxAED": 27430,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "FS 1 - Year 10",
+    "website": "https://www.pacembs.com",
+    "address": "Al Rashidiya, Dubai",
+    "description": "British curriculum school in Al Rashidiya, serving FS 1 - Year 10. Rated Acceptable in its latest KHDA inspection.",
+    "khdaId": "5554"
+  },
+  {
+    "slug": "pace-springfield-international-school",
+    "name": "Pace Springfield International School",
+    "area": "Al Awir First",
+    "curricula": [
+      "British"
+    ],
+    "khdaRating": "Not rated",
+    "feeMinAED": 0,
+    "feeMaxAED": 0,
+    "feeNote": "Fees not published by KHDA",
+    "gradeRange": "FS 1 - Year 7",
+    "website": "https://www.pacespringfield.com",
+    "address": "Al Awir First, Dubai",
+    "description": "British curriculum school in Al Awir First, serving FS 1 - Year 7.",
+    "khdaId": "5593",
+    "phone": "042710000"
+  },
+  {
+    "slug": "pakistan-education-academy",
+    "name": "Pakistan Education Academy",
+    "area": "Umm Hurair First",
+    "curricula": [
+      "Pakistani"
+    ],
+    "khdaRating": "Acceptable",
+    "feeMinAED": 6369,
+    "feeMaxAED": 9138,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "KG 1 - Grade 12",
+    "website": "https://NA",
+    "address": "Umm Hurair First, Dubai",
+    "description": "Pakistani curriculum school in Umm Hurair First, serving KG 1 - Grade 12. Rated Acceptable in its latest KHDA inspection.",
+    "khdaId": "292",
+    "phone": "97143370126"
+  },
+  {
+    "slug": "pearl-wisdom-school",
+    "name": "Pearl Wisdom School L.L.C",
+    "area": "Hor al Anz",
+    "curricula": [
+      "Indian"
+    ],
+    "khdaRating": "Good",
+    "feeMinAED": 15712,
+    "feeMaxAED": 21072,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "KG 1 - Grade 12",
+    "website": "http://www.pearlwisdomschool.com",
+    "address": "Hor al Anz, Dubai",
+    "description": "Indian curriculum school in Hor al Anz, serving KG 1 - Grade 12. Rated Good in its latest KHDA inspection.",
+    "khdaId": "5537",
+    "phone": "97148843884"
+  },
+  {
+    "slug": "philadelphia-private-school",
+    "name": "Philadelphia Private School",
+    "area": "Muhaisnah First",
+    "curricula": [
+      "American",
+      "IB"
+    ],
+    "khdaRating": "Good",
+    "feeMinAED": 20061,
+    "feeMaxAED": 42987,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "Pre Primary - Grade 12,Grade 11 - Grade 12",
+    "website": "https://www.ppsdubai.org",
+    "address": "Muhaisnah First, Dubai",
+    "description": "American and IB curriculum school in Muhaisnah First, serving Pre Primary - Grade 12,Grade 11 - Grade 12. Rated Good in its latest KHDA inspection.",
+    "khdaId": "261",
+    "phone": "97142646202"
+  },
+  {
+    "slug": "primus-private-school",
+    "name": "Primus Private School L.L.C",
+    "area": "Al Warqa First",
+    "curricula": [
+      "Indian"
+    ],
+    "khdaRating": "Good",
+    "feeMinAED": 11983,
+    "feeMaxAED": 24587,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "Pre Primary - Grade 12",
+    "website": "https://www.primusschool.sch.ae",
+    "address": "Al Warqa First, Dubai",
+    "description": "Indian curriculum school in Al Warqa First, serving Pre Primary - Grade 12. Rated Good in its latest KHDA inspection.",
+    "khdaId": "361",
+    "phone": "042800691"
+  },
+  {
+    "slug": "pristine-private-school",
+    "name": "Pristine Private School",
+    "area": "Al Nahda Second",
+    "curricula": [
+      "British"
+    ],
+    "khdaRating": "Good",
+    "feeMinAED": 12018,
+    "feeMaxAED": 29204,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "FS 1 - Year 13",
+    "website": "https://www.pristineschool.com",
+    "address": "Al Nahda Second, Dubai",
+    "description": "British curriculum school in Al Nahda Second, serving FS 1 - Year 13. Rated Good in its latest KHDA inspection.",
+    "khdaId": "212",
+    "phone": "97142674299"
+  },
+  {
+    "slug": "queen-elizabeth-s-school",
+    "name": "Queen Elizabeth's School L.L.C",
+    "area": "Dubai Sports City",
+    "curricula": [
+      "British"
+    ],
+    "khdaRating": "Not rated",
+    "feeMinAED": 0,
+    "feeMaxAED": 0,
+    "feeNote": "Fees not published by KHDA",
+    "gradeRange": "",
+    "website": "",
+    "address": "Dubai Sports City, Dubai",
+    "description": "British curriculum school in Dubai Sports City.",
+    "khdaId": "5613"
+  },
+  {
+    "slug": "queen-international-school",
+    "name": "Queen International School",
+    "area": "Deira",
+    "curricula": [
+      "British"
+    ],
+    "khdaRating": "Acceptable",
+    "feeMinAED": 15197,
+    "feeMaxAED": 29170,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "FS 1 - Year 13",
+    "website": "https://www.queen-schools.com",
+    "address": "Deira, Dubai",
+    "description": "British curriculum school in Deira, serving FS 1 - Year 13. Rated Acceptable in its latest KHDA inspection.",
+    "khdaId": "188",
+    "phone": "97142652600"
+  },
+  {
+    "slug": "raffles-international-school-umm-suqeim-south-br",
+    "name": "Raffles International School L.L.C (Umm Suqeim South Br)",
+    "area": "Umm Suqeim Third",
+    "curricula": [
+      "British"
+    ],
+    "khdaRating": "Very Good",
+    "feeMinAED": 33273,
+    "feeMaxAED": 87879,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "FS 1 - Year 13",
+    "website": "https://www.rafflesis.com",
+    "address": "Umm Suqeim Third, Dubai",
+    "description": "British curriculum school in Umm Suqeim Third, serving FS 1 - Year 13. Rated Very Good in its latest KHDA inspection.",
+    "khdaId": "4288",
+    "phone": "97144271200"
+  },
+  {
+    "slug": "raffles-world-academy",
+    "name": "Raffles World Academy",
+    "area": "Umm Suqeim Third",
+    "curricula": [
+      "IB"
+    ],
+    "khdaRating": "Very Good",
+    "feeMinAED": 32774,
+    "feeMaxAED": 93922,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "Pre Primary - Grade 12",
+    "website": "https://www.rwadubai.com",
+    "address": "Umm Suqeim Third, Dubai",
+    "description": "IB World School offering the full continuum, located close to Dubai International Airport.",
+    "khdaId": "354",
+    "phone": "97144271200"
+  },
+  {
+    "slug": "ranches-primary-school",
+    "name": "Ranches Primary School",
+    "area": "Arabian Ranches",
+    "curricula": [
+      "British"
+    ],
+    "khdaRating": "Very Good",
+    "feeMinAED": 49278,
+    "feeMaxAED": 61643,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "FS 1 - Year 6",
+    "website": "https://www.rpsdubai.com",
+    "address": "Arabian Ranches, Dubai",
+    "description": "British curriculum school in Arabian Ranches, serving FS 1 - Year 6. Rated Very Good in its latest KHDA inspection.",
+    "khdaId": "5467",
+    "phone": "97144429765"
+  },
+  {
+    "slug": "regent-international-private-school",
+    "name": "Regent International Private School L.L.C",
+    "area": "Al Barsha Second",
+    "curricula": [
+      "British"
+    ],
+    "khdaRating": "Very Good",
+    "feeMinAED": 47949,
+    "feeMaxAED": 103630,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "FS 1 - Year 13",
+    "website": "https://www.risdubai.com",
+    "address": "Al Barsha Second, Dubai",
+    "description": "British curriculum school in Al Barsha Second, serving FS 1 - Year 13. Rated Very Good in its latest KHDA inspection.",
+    "khdaId": "271",
+    "phone": "97143608830"
+  },
+  {
+    "slug": "renaissance-school",
+    "name": "Renaissance School L.L.C",
+    "area": "Dubai Sports City",
+    "curricula": [
+      "American"
+    ],
+    "khdaRating": "Acceptable",
+    "feeMinAED": 36050,
+    "feeMaxAED": 56650,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "ECC (2-3) - Grade 8",
+    "website": "https://www.renaissanceschool.ae",
+    "address": "Dubai Sports City, Dubai",
+    "description": "American curriculum school in Dubai Sports City, serving ECC (2-3) - Grade 8. Rated Acceptable in its latest KHDA inspection.",
+    "khdaId": "5520",
+    "phone": "97145897717"
+  },
+  {
+    "slug": "repton-al-barsha-fz",
+    "name": "Repton Al Barsha Fz-Llc",
+    "area": "Al Barsha South",
+    "curricula": [
+      "British"
+    ],
+    "khdaRating": "Very Good",
+    "feeMinAED": 52311,
+    "feeMaxAED": 89774,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "FS 1 - Year 13",
+    "website": "https://www.reptonalbarsha.org",
+    "address": "Al Barsha South, Dubai",
+    "description": "British curriculum school in Al Barsha South, serving FS 1 - Year 13. Rated Very Good in its latest KHDA inspection.",
+    "khdaId": "4434",
+    "phone": "97148188600"
+  },
+  {
+    "slug": "repton-school",
+    "name": "Repton School",
+    "area": "Nadd al Shiba Third",
+    "curricula": [
+      "IB",
+      "British"
+    ],
+    "khdaRating": "Outstanding",
+    "feeMinAED": 55865,
+    "feeMaxAED": 102753,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "FS 1 - Year 13,FS 1 - Year 13,FS 1 - Year 13",
+    "website": "https://www.reptondubai.org",
+    "address": "Nadd al Shiba Third, Dubai",
+    "description": "IB and British curriculum school in Nadd al Shiba Third, serving FS 1 - Year 13,FS 1 - Year 13,FS 1 - Year 13. Rated Outstanding in its latest KHDA inspection.",
+    "khdaId": "356",
+    "phone": "800 REPTON (737866)"
+  },
+  {
+    "slug": "royal-grammar-school-guildford",
+    "name": "Royal Grammar School Guildford L.L.C",
+    "area": "Dubai Sports City",
+    "curricula": [
+      "British"
+    ],
+    "khdaRating": "Very Good",
+    "feeMinAED": 76950,
+    "feeMaxAED": 119713,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "FS 1 - Year 10",
+    "website": "https://www.rgsgd.com",
+    "address": "Dubai Sports City, Dubai",
+    "description": "British curriculum school in Dubai Sports City, serving FS 1 - Year 10. Rated Very Good in its latest KHDA inspection.",
+    "khdaId": "5542",
+    "phone": "97144464377"
+  },
+  {
+    "slug": "rugby-school-fz",
+    "name": "Rugby School L.L.C-FZ",
+    "area": "Meydan City",
+    "curricula": [
+      "British"
+    ],
+    "khdaRating": "Not rated",
+    "feeMinAED": 0,
+    "feeMaxAED": 0,
+    "feeNote": "Fees not published by KHDA",
+    "gradeRange": "",
+    "website": "",
+    "address": "Meydan City, Dubai",
+    "description": "British curriculum school in Meydan City.",
+    "khdaId": "5608"
+  },
+  {
+    "slug": "russian-international-school",
+    "name": "Russian International School",
+    "area": "Muhaisanah Fourth",
+    "curricula": [
+      "Russian"
+    ],
+    "khdaRating": "Good",
+    "feeMinAED": 15361,
+    "feeMaxAED": 25180,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "KG 1 - Grade 11",
+    "website": "https://www.dubairuschool.com",
+    "address": "Muhaisanah Fourth, Dubai",
+    "description": "Russian curriculum school in Muhaisanah Fourth, serving KG 1 - Grade 11. Rated Good in its latest KHDA inspection.",
+    "khdaId": "4400",
+    "phone": "97142641515"
+  },
+  {
+    "slug": "sabari-indian-school",
+    "name": "Sabari Indian School L.L.C",
+    "area": "Deira",
+    "curricula": [
+      "Indian"
+    ],
+    "khdaRating": "Good",
+    "feeMinAED": 15730,
+    "feeMaxAED": 19591,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "Pre Primary - Grade 12",
+    "website": "https://www.sisdubai.com",
+    "address": "Deira, Dubai",
+    "description": "Indian curriculum school in Deira, serving Pre Primary - Grade 12. Rated Good in its latest KHDA inspection.",
+    "khdaId": "4424",
+    "phone": "042505806"
+  },
+  {
+    "slug": "safa-british-school",
+    "name": "Safa British School",
+    "area": "Al Safa First",
+    "curricula": [
+      "British"
+    ],
+    "khdaRating": "Very Good",
+    "feeMinAED": 44385,
+    "feeMaxAED": 73550,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "FS 1 - Year 13",
+    "website": "https://www.safabritishschool.com",
+    "address": "Al Safa First, Dubai",
+    "description": "British curriculum school in Al Safa First, serving FS 1 - Year 13. Rated Very Good in its latest KHDA inspection.",
+    "khdaId": "194",
+    "phone": "97143884300"
+  },
+  {
+    "slug": "safa-community-school",
+    "name": "Safa Community School",
+    "area": "Al Barsha South First",
+    "curricula": [
+      "British",
+      "IB"
+    ],
+    "khdaRating": "Outstanding",
+    "feeMinAED": 53187,
+    "feeMaxAED": 89440,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": ",FS 1 - Year 13",
+    "website": "https://www.safacommunityschool.com",
+    "address": "Al Barsha South First, Dubai",
+    "description": "British and IB curriculum school in Al Barsha South First, serving ,FS 1 - Year 13. Rated Outstanding in its latest KHDA inspection.",
+    "khdaId": "4443",
+    "phone": "97143851810"
+  },
+  {
+    "slug": "school-of-modern-skills",
+    "name": "SCHOOL OF MODERN SKILLS",
+    "area": "Muhaisnah First",
+    "curricula": [
+      "American"
+    ],
+    "khdaRating": "Acceptable",
+    "feeMinAED": 17089,
+    "feeMaxAED": 29572,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "KG 1 - Grade 12",
+    "website": "https://www.dubai-sms.com",
+    "address": "Muhaisnah First, Dubai",
+    "description": "American curriculum school in Muhaisnah First, serving KG 1 - Grade 12. Rated Acceptable in its latest KHDA inspection.",
+    "khdaId": "211",
+    "phone": "042887765"
+  },
+  {
+    "slug": "sharjah-american-international-private-school-dubai",
+    "name": "Sharjah American International Private School - Dubai Branch",
+    "area": "Al Warqa First",
+    "curricula": [
+      "American"
+    ],
+    "khdaRating": "Good",
+    "feeMinAED": 17563,
+    "feeMaxAED": 44938,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "KG 1 - Grade 12",
+    "website": "https://www.saisdubai.com",
+    "address": "Al Warqa First, Dubai",
+    "description": "American curriculum school in Al Warqa First, serving KG 1 - Grade 12. Rated Good in its latest KHDA inspection.",
+    "khdaId": "215",
+    "phone": "97142801111"
+  },
+  {
+    "slug": "sheikh-rashid-bin-saeed-islamic-institute",
+    "name": "Sheikh Rashid Bin Saeed Islamic Institute",
+    "area": "Al Rowaiyah First",
+    "curricula": [
+      "UAE MOE"
+    ],
+    "khdaRating": "Good",
+    "feeMinAED": 0,
+    "feeMaxAED": 0,
+    "feeNote": "Fees not published by KHDA",
+    "gradeRange": "Grade 5 - Grade 12",
+    "website": "https://www.rid.ae",
+    "address": "Al Rowaiyah First, Dubai",
+    "description": "UAE MOE curriculum school in Al Rowaiyah First, serving Grade 5 - Grade 12. Rated Good in its latest KHDA inspection.",
+    "khdaId": "249",
+    "phone": "97143688532"
+  },
+  {
+    "slug": "smart-vision-school",
+    "name": "Smart Vision School",
+    "area": "Al Barsha Second",
+    "curricula": [
+      "British"
+    ],
+    "khdaRating": "Good",
+    "feeMinAED": 30892,
+    "feeMaxAED": 77806,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "ECC (2-3) - Year 7",
+    "website": "https://www.svschool.ae",
+    "address": "Al Barsha Second, Dubai",
+    "description": "British curriculum school in Al Barsha Second, serving ECC (2-3) - Year 7. Rated Good in its latest KHDA inspection.",
+    "khdaId": "5479",
+    "phone": "042880965"
+  },
+  {
+    "slug": "south-view-school",
+    "name": "South View School L.L.C",
+    "area": "Dubai Land",
+    "curricula": [
+      "British"
+    ],
+    "khdaRating": "Good",
+    "feeMinAED": 45442,
+    "feeMaxAED": 66519,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "FS 1 - Year 13",
+    "website": "https://southviewschool.com/",
+    "address": "Dubai Land, Dubai",
+    "description": "British curriculum school in Dubai Land, serving FS 1 - Year 13. Rated Good in its latest KHDA inspection.",
+    "khdaId": "5506",
+    "phone": "97145897904."
+  },
+  {
+    "slug": "springdales-school",
+    "name": "Springdales School L.L.C",
+    "area": "Al Qouz Fourth",
+    "curricula": [
+      "Indian",
+      "British"
+    ],
+    "khdaRating": "Good",
+    "feeMinAED": 19378,
+    "feeMaxAED": 46350,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "Pre Primary - Grade 12",
+    "website": "https://www.springdalesdubai.com",
+    "address": "Al Qouz Fourth, Dubai",
+    "description": "Indian and British curriculum school in Al Qouz Fourth, serving Pre Primary - Grade 12. Rated Good in its latest KHDA inspection.",
+    "khdaId": "4425",
+    "phone": "97143381311"
+  },
+  {
+    "slug": "st-mary-high-school-muhaisnah",
+    "name": "ST MARY HIGH SCHOOL MUHAISNAH L.L.C",
+    "area": "Muhaisanah Fourth",
+    "curricula": [
+      "British"
+    ],
+    "khdaRating": "Good",
+    "feeMinAED": 12211,
+    "feeMaxAED": 24177,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "FS 1 - Year 13",
+    "website": "https://www.stmarysmuhaisnah.com",
+    "address": "Muhaisanah Fourth, Dubai",
+    "description": "British curriculum school in Muhaisanah Fourth, serving FS 1 - Year 13. Rated Good in its latest KHDA inspection.",
+    "khdaId": "5468",
+    "phone": "97142614014"
+  },
+  {
+    "slug": "st-mary-catholic-high-school-dubai",
+    "name": "ST. Mary Catholic High School - Dubai",
+    "area": "Umm Hurair First",
+    "curricula": [
+      "British"
+    ],
+    "khdaRating": "Good",
+    "feeMinAED": 6944,
+    "feeMaxAED": 15812,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "Year 1 - Year 13",
+    "website": "https://www.stmarysdubai.com",
+    "address": "Umm Hurair First, Dubai",
+    "description": "British curriculum school in Umm Hurair First, serving Year 1 - Year 13. Rated Good in its latest KHDA inspection.",
+    "khdaId": "275",
+    "phone": "043370252"
+  },
+  {
+    "slug": "star-international-school",
+    "name": "Star International School",
+    "area": "Al Qusais First",
+    "curricula": [
+      "British"
+    ],
+    "khdaRating": "Good",
+    "feeMinAED": 21521,
+    "feeMaxAED": 71409,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "FS 1 - Year 13",
+    "website": "https://www.starintlschoolaltwar.com",
+    "address": "Al Qusais First, Dubai",
+    "description": "British curriculum school in Al Qusais First, serving FS 1 - Year 13. Rated Good in its latest KHDA inspection.",
+    "khdaId": "336",
+    "phone": "97142638999"
+  },
+  {
+    "slug": "star-international-school-4282",
+    "name": "Star International School (Branch)",
+    "area": "Mirdif",
+    "curricula": [
+      "British"
+    ],
+    "khdaRating": "Good",
+    "feeMinAED": 33394,
+    "feeMaxAED": 73508,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "FS 1 - Year 13",
+    "website": "https://www.starmirdifschool.com/",
+    "address": "Mirdif, Dubai",
+    "description": "British curriculum school in Mirdif, serving FS 1 - Year 13. Rated Good in its latest KHDA inspection.",
+    "khdaId": "4282",
+    "phone": "97142884644"
+  },
+  {
+    "slug": "sunmarke-school",
+    "name": "Sunmarke School FZE",
+    "area": "Al Khail",
+    "curricula": [
+      "IB",
+      "British"
+    ],
+    "khdaRating": "Very Good",
+    "feeMinAED": 60228,
+    "feeMaxAED": 106475,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "FS 1 - Year 13,Year 12 - Year 13",
+    "website": "https://www.sunmarkedubai.com",
+    "address": "Al Khail, Dubai",
+    "description": "IB and British curriculum school in Al Khail, serving FS 1 - Year 13,Year 12 - Year 13. Rated Very Good in its latest KHDA inspection.",
+    "khdaId": "5475"
+  },
+  {
+    "slug": "swiss-international-scientific-school-fz",
+    "name": "Swiss International Scientific School FZ-LLC",
+    "area": "Dubai Healthcare City",
+    "curricula": [
+      "IB"
+    ],
+    "khdaRating": "Very Good",
+    "feeMinAED": 67287,
+    "feeMaxAED": 137736,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "Pre Primary - Grade 12",
+    "website": "https://www.sisd.ae",
+    "address": "Dubai Healthcare City, Dubai",
+    "description": "IB curriculum school in Dubai Healthcare City, serving Pre Primary - Grade 12. Rated Very Good in its latest KHDA inspection.",
+    "khdaId": "4450",
+    "phone": "97143750600"
+  },
+  {
+    "slug": "the-apple-international-community-school",
+    "name": "The Apple International Community School",
+    "area": "Al Karama",
+    "curricula": [
+      "British"
+    ],
+    "khdaRating": "Acceptable",
+    "feeMinAED": 18981,
+    "feeMaxAED": 23102,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "FS 1 - Year 11",
+    "website": "https://www.applecommunityschool.ae",
+    "address": "Al Karama, Dubai",
+    "description": "British curriculum school in Al Karama, serving FS 1 - Year 11. Rated Acceptable in its latest KHDA inspection.",
+    "khdaId": "5556",
+    "phone": "97143797732"
+  },
+  {
+    "slug": "the-aquila-school",
+    "name": "The Aquila School",
+    "area": "Dubai Land",
+    "curricula": [
+      "IB",
+      "British"
+    ],
+    "khdaRating": "Good",
+    "feeMinAED": 47555,
+    "feeMaxAED": 77876,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "FS 1 - Year 13,FS 1 - Year 13",
+    "website": "https://www.theaquilaschool.com",
+    "address": "Dubai Land, Dubai",
+    "description": "IB and British curriculum school in Dubai Land, serving FS 1 - Year 13,FS 1 - Year 13. Rated Good in its latest KHDA inspection.",
+    "khdaId": "5509",
+    "phone": "97145862700"
+  },
+  {
+    "slug": "the-arbor-school",
+    "name": "The Arbor School L.L.C",
+    "area": "Al Furjan",
+    "curricula": [
+      "British"
+    ],
+    "khdaRating": "Good",
+    "feeMinAED": 57456,
+    "feeMaxAED": 97232,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "FS 1 - Year 13",
+    "website": "https://www.thearborschool.ae",
+    "address": "Al Furjan, Dubai",
+    "description": "British curriculum school in Al Furjan, serving FS 1 - Year 13. Rated Good in its latest KHDA inspection.",
+    "khdaId": "5493",
+    "phone": "97145814100"
+  },
+  {
+    "slug": "the-central-school",
+    "name": "The Central School",
+    "area": "Al Nahda Second",
+    "curricula": [
+      "Indian"
+    ],
+    "khdaRating": "Acceptable",
+    "feeMinAED": 4081,
+    "feeMaxAED": 7352,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "KG 1 - Grade 12",
+    "website": "https://www.centraldxb.com",
+    "address": "Al Nahda Second, Dubai",
+    "description": "Indian curriculum school in Al Nahda Second, serving KG 1 - Grade 12. Rated Acceptable in its latest KHDA inspection.",
+    "khdaId": "246",
+    "phone": "042674433"
+  },
+  {
+    "slug": "the-city-school-international-private",
+    "name": "The City School International Private",
+    "area": "Nadd al Hamar",
+    "curricula": [
+      "British"
+    ],
+    "khdaRating": "Good",
+    "feeMinAED": 14442,
+    "feeMaxAED": 35694,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "FS 1 - Year 13",
+    "website": "https://thecityschool.sch.ae/",
+    "address": "Nadd al Hamar, Dubai",
+    "description": "British curriculum school in Nadd al Hamar, serving FS 1 - Year 13. Rated Good in its latest KHDA inspection.",
+    "khdaId": "299",
+    "phone": "97142899722"
+  },
+  {
+    "slug": "the-english-college-dubai",
+    "name": "The English College Dubai L.L.C",
+    "area": "Umm Suqeim First",
+    "curricula": [
+      "British"
+    ],
+    "khdaRating": "Very Good",
+    "feeMinAED": 50915,
+    "feeMaxAED": 68265,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "FS 1 - Year 13",
+    "website": "http://www.englishcollegedubai.com/",
+    "address": "Umm Suqeim First, Dubai",
+    "description": "British curriculum school in Umm Suqeim First, serving FS 1 - Year 13. Rated Very Good in its latest KHDA inspection.",
+    "khdaId": "278",
+    "phone": "043943465"
+  },
+  {
+    "slug": "the-indian-academy",
+    "name": "The Indian Academy",
+    "area": "Muhaisanah Fourth",
+    "curricula": [
+      "Indian"
+    ],
+    "khdaRating": "Good",
+    "feeMinAED": 11732,
+    "feeMaxAED": 23795,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "Pre Primary - Grade 12",
+    "website": "",
+    "address": "Muhaisanah Fourth, Dubai",
+    "description": "Indian curriculum school in Muhaisanah Fourth, serving Pre Primary - Grade 12. Rated Good in its latest KHDA inspection.",
+    "khdaId": "4413",
+    "phone": "042646746"
+  },
+  {
+    "slug": "the-indian-high-school",
+    "name": "The Indian High School",
+    "area": "Oud Metha",
+    "curricula": [
+      "Indian"
+    ],
+    "khdaRating": "Very Good",
+    "feeMinAED": 5525,
+    "feeMaxAED": 10465,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "Grade 5 - Grade 12",
+    "website": "https://ihsom.ihsdubai.org/",
+    "address": "Oud Metha, Dubai",
+    "description": "Indian curriculum school in Oud Metha, serving Grade 5 - Grade 12. Rated Very Good in its latest KHDA inspection.",
+    "khdaId": "324",
+    "phone": "97143358851"
+  },
+  {
+    "slug": "the-indian-high-school-325",
+    "name": "The Indian High School-Branch",
+    "area": "Al Garhoud",
+    "curricula": [
+      "Indian"
+    ],
+    "khdaRating": "Good",
+    "feeMinAED": 5276,
+    "feeMaxAED": 21000,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "Pre Primary - Grade 4",
+    "website": "https://ihsag.ihsdubai.org",
+    "address": "Al Garhoud, Dubai",
+    "description": "Indian curriculum school in Al Garhoud, serving Pre Primary - Grade 4. Rated Good in its latest KHDA inspection.",
+    "khdaId": "325",
+    "phone": "97142823555"
+  },
+  {
+    "slug": "the-indian-international-school-dso",
+    "name": "The Indian International School (Dso Branch)",
+    "area": "Dubai Silicon Oasis",
+    "curricula": [
+      "Indian"
+    ],
+    "khdaRating": "Good",
+    "feeMinAED": 9679,
+    "feeMaxAED": 21000,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "Pre Primary - Grade 12",
+    "website": "https://iisdso.ihsdubai.org/",
+    "address": "Dubai Silicon Oasis, Dubai",
+    "description": "Indian curriculum school in Dubai Silicon Oasis, serving Pre Primary - Grade 12. Rated Good in its latest KHDA inspection.",
+    "khdaId": "4414",
+    "phone": "97143423909"
+  },
+  {
+    "slug": "the-international-school-of-choueifat",
+    "name": "The International School of Choueifat",
+    "area": "Al Safouh First",
+    "curricula": [
+      "SABIS",
+      "British",
+      "American"
+    ],
+    "khdaRating": "Acceptable",
+    "feeMinAED": 21393,
+    "feeMaxAED": 41906,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "Pre Primary - Grade 12",
+    "website": "http://iscdubai.sabis.net",
+    "address": "Al Safouh First, Dubai",
+    "description": "SABIS and British and American curriculum school in Al Safouh First, serving Pre Primary - Grade 12. Rated Acceptable in its latest KHDA inspection.",
+    "khdaId": "220",
+    "phone": "97143999444"
+  },
+  {
+    "slug": "the-international-school-of-choueifat-4419",
+    "name": "The International School of Choueifat (Branch)",
+    "area": "Dubai Investment Park First",
+    "curricula": [
+      "SABIS",
+      "British",
+      "American"
+    ],
+    "khdaRating": "Acceptable",
+    "feeMinAED": 25694,
+    "feeMaxAED": 50077,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "Pre Primary - Grade 12",
+    "website": "https://iscdip.sabis.net/",
+    "address": "Dubai Investment Park First, Dubai",
+    "description": "SABIS and British and American curriculum school in Dubai Investment Park First, serving Pre Primary - Grade 12. Rated Acceptable in its latest KHDA inspection.",
+    "khdaId": "4419",
+    "phone": "048847884"
+  },
+  {
+    "slug": "the-millenium-school",
+    "name": "The Millenium School",
+    "area": "Al Qusais First",
+    "curricula": [
+      "Indian"
+    ],
+    "khdaRating": "Very Good",
+    "feeMinAED": 17858,
+    "feeMaxAED": 26876,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "Pre Primary - Grade 12",
+    "website": "https://www.themillenniumschool-dubai.com/",
+    "address": "Al Qusais First, Dubai",
+    "description": "Indian curriculum school in Al Qusais First, serving Pre Primary - Grade 12. Rated Very Good in its latest KHDA inspection.",
+    "khdaId": "217",
+    "phone": "97142988567"
+  },
+  {
+    "slug": "the-national-charity-school-for-boys",
+    "name": "The National Charity School for Boys L.L.C",
+    "area": "Al Garhoud",
+    "curricula": [
+      "UAE MOE"
+    ],
+    "khdaRating": "Acceptable",
+    "feeMinAED": 5254,
+    "feeMaxAED": 8656,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "Grade 5 - Grade 12",
+    "website": "https://www.charityschools.com",
+    "address": "Al Garhoud, Dubai",
+    "description": "UAE MOE curriculum school in Al Garhoud, serving Grade 5 - Grade 12. Rated Acceptable in its latest KHDA inspection.",
+    "khdaId": "5558"
+  },
+  {
+    "slug": "the-national-charity-school-for-girls-br-of-the-national-charity-school-for-boys",
+    "name": "The National Charity School for Girls (Br of The National Charity School for Boys L.L.C)",
+    "area": "Al Garhoud",
+    "curricula": [
+      "UAE MOE"
+    ],
+    "khdaRating": "Acceptable",
+    "feeMinAED": 4614,
+    "feeMaxAED": 8656,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "Grade 1 - Grade 12",
+    "website": "https://www.charityschools.com",
+    "address": "Al Garhoud, Dubai",
+    "description": "UAE MOE curriculum school in Al Garhoud, serving Grade 1 - Grade 12. Rated Acceptable in its latest KHDA inspection.",
+    "khdaId": "210",
+    "phone": "97142821942"
+  },
+  {
+    "slug": "the-philippine-school",
+    "name": "The Philippine School",
+    "area": "Muhaisanah Second",
+    "curricula": [
+      "Philippine"
+    ],
+    "khdaRating": "Acceptable",
+    "feeMinAED": 6295,
+    "feeMaxAED": 16294,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "KG 1 - Grade 12",
+    "website": "https://www.tpsdxb.com",
+    "address": "Muhaisanah Second, Dubai",
+    "description": "Philippine curriculum school in Muhaisanah Second, serving KG 1 - Grade 12. Rated Acceptable in its latest KHDA inspection.",
+    "khdaId": "4296",
+    "phone": "97142844465"
+  },
+  {
+    "slug": "the-scholars-school",
+    "name": "The Scholars School",
+    "area": "Al Qouz First",
+    "curricula": [
+      "British"
+    ],
+    "khdaRating": "Not rated",
+    "feeMinAED": 0,
+    "feeMaxAED": 0,
+    "feeNote": "Fees not published by KHDA",
+    "gradeRange": "",
+    "website": "https://scholarsschool.com/",
+    "address": "Al Qouz First, Dubai",
+    "description": "British curriculum school in Al Qouz First.",
+    "khdaId": "5620"
+  },
+  {
+    "slug": "the-school-of-research-science",
+    "name": "The School of Research Science L.L.C",
+    "area": "Al Warqa Fourth",
+    "curricula": [
+      "British"
+    ],
+    "khdaRating": "Good",
+    "feeMinAED": 36310,
+    "feeMaxAED": 79790,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "FS 1 - Year 13,Grade 10 - Grade 12",
+    "website": "https://www.srsdubai.ae",
+    "address": "Al Warqa Fourth, Dubai",
+    "description": "British curriculum school in Al Warqa Fourth, serving FS 1 - Year 13,Grade 10 - Grade 12. Rated Good in its latest KHDA inspection.",
+    "khdaId": "317",
+    "phone": "97146011011"
+  },
+  {
+    "slug": "the-school-of-research-science-us-high-school",
+    "name": "The School of Research Science US High School L.L.C",
+    "area": "Al Warqa Fourth",
+    "curricula": [
+      "American"
+    ],
+    "khdaRating": "Acceptable",
+    "feeMinAED": 58787,
+    "feeMaxAED": 70039,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "Grade 9 - Grade 12",
+    "website": "https://www.srsusdubai.ae",
+    "address": "Al Warqa Fourth, Dubai",
+    "description": "American curriculum school in Al Warqa Fourth, serving Grade 9 - Grade 12. Rated Acceptable in its latest KHDA inspection.",
+    "khdaId": "5536",
+    "phone": "97146011011"
+  },
+  {
+    "slug": "the-sheffield-private-school",
+    "name": "The Sheffield Private School L.L.C",
+    "area": "Al Nahda Second",
+    "curricula": [
+      "British"
+    ],
+    "khdaRating": "Good",
+    "feeMinAED": 23088,
+    "feeMaxAED": 44563,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "FS 1 - Year 13",
+    "website": "https://www.sheffield-school.com",
+    "address": "Al Nahda Second, Dubai",
+    "description": "British curriculum school in Al Nahda Second, serving FS 1 - Year 13. Rated Good in its latest KHDA inspection.",
+    "khdaId": "282",
+    "phone": "97142678444"
+  },
+  {
+    "slug": "the-westminster-school-dubai",
+    "name": "The Westminster School - DUBAI BRANCH",
+    "area": "Al Qusais First",
+    "curricula": [
+      "British"
+    ],
+    "khdaRating": "Good",
+    "feeMinAED": 9147,
+    "feeMaxAED": 18203,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "FS 1 - Year 13",
+    "website": "https://www.gemsws-ghusais.com",
+    "address": "Al Qusais First, Dubai",
+    "description": "British curriculum school in Al Qusais First, serving FS 1 - Year 13. Rated Good in its latest KHDA inspection.",
+    "khdaId": "199",
+    "phone": "97142988333"
+  },
+  {
+    "slug": "the-winchester-school-dubai",
+    "name": "The Winchester School - DUBAI BRANCH",
+    "area": "Jabal Ali First",
+    "curricula": [
+      "British"
+    ],
+    "khdaRating": "Very Good",
+    "feeMinAED": 14607,
+    "feeMaxAED": 33352,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "FS 1 - Year 13",
+    "website": "https://www.thewinchesterschool.com",
+    "address": "Jabal Ali First, Dubai",
+    "description": "British curriculum school in Jabal Ali First, serving FS 1 - Year 13. Rated Very Good in its latest KHDA inspection.",
+    "khdaId": "270",
+    "phone": "048820444"
+  },
+  {
+    "slug": "united-international-private-school",
+    "name": "United International Private School L.L.C",
+    "area": "Muhaisnah First",
+    "curricula": [
+      "Philippine"
+    ],
+    "khdaRating": "Acceptable",
+    "feeMinAED": 5457,
+    "feeMaxAED": 11990,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "KG 1 - Grade 12",
+    "website": "https://www.uips.ae",
+    "address": "Muhaisnah First, Dubai",
+    "description": "Philippine curriculum school in Muhaisnah First, serving KG 1 - Grade 12. Rated Acceptable in its latest KHDA inspection.",
+    "khdaId": "322",
+    "phone": "042543888"
+  },
+  {
+    "slug": "universal-american-school",
+    "name": "Universal American School - Branch",
+    "area": "Ras al Khor",
+    "curricula": [
+      "IB",
+      "American"
+    ],
+    "khdaRating": "Very Good",
+    "feeMinAED": 39450,
+    "feeMaxAED": 81834,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "Pre Primary - Grade 12",
+    "website": "https://www.uasdubai.ae",
+    "address": "Ras al Khor, Dubai",
+    "description": "IB and American curriculum school in Ras al Khor, serving Pre Primary - Grade 12. Rated Very Good in its latest KHDA inspection.",
+    "khdaId": "264",
+    "phone": "97145240444"
+  },
+  {
+    "slug": "uptown-international-school-br-of-taaleem-management",
+    "name": "Uptown International School (Br. of Taaleem Management LLC)",
+    "area": "Mirdif",
+    "curricula": [
+      "IB"
+    ],
+    "khdaRating": "Very Good",
+    "feeMinAED": 38044,
+    "feeMaxAED": 96461,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "ECC (0-1) - Grade 12",
+    "website": "https://www.uptownschool.ae",
+    "address": "Mirdif, Dubai",
+    "description": "IB curriculum school in Mirdif, serving ECC (0-1) - Grade 12. Rated Very Good in its latest KHDA inspection.",
+    "khdaId": "4423",
+    "phone": "97142515001"
+  },
+  {
+    "slug": "vernus-international-primary-school-fzco",
+    "name": "Vernus International Primary School - FZCO",
+    "area": "Dubai Silicon Oasis",
+    "curricula": [
+      "American"
+    ],
+    "khdaRating": "Acceptable",
+    "feeMinAED": 34884,
+    "feeMaxAED": 42419,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "Pre Primary - Grade 5",
+    "website": "https://www.visdubai.com",
+    "address": "Dubai Silicon Oasis, Dubai",
+    "description": "American curriculum school in Dubai Silicon Oasis, serving Pre Primary - Grade 5. Rated Acceptable in its latest KHDA inspection.",
+    "khdaId": "5539",
+    "phone": "97143208000"
+  },
+  {
+    "slug": "victory-heights-primary-school-city-of-arabia",
+    "name": "Victory Heights Primary School City of Arabia LLC",
+    "area": "Wadi al Safa 2",
+    "curricula": [
+      "British"
+    ],
+    "khdaRating": "Not rated",
+    "feeMinAED": 0,
+    "feeMaxAED": 0,
+    "feeNote": "Fees not published by KHDA",
+    "gradeRange": "",
+    "website": "",
+    "address": "Wadi al Safa 2, Dubai",
+    "description": "British curriculum school in Wadi al Safa 2.",
+    "khdaId": "5602"
+  },
+  {
+    "slug": "victory-heights-primary-school",
+    "name": "Victory Heights Primary School L.L.C",
+    "area": "Dubai Sports City",
+    "curricula": [
+      "British"
+    ],
+    "khdaRating": "Outstanding",
+    "feeMinAED": 39216,
+    "feeMaxAED": 54733,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "FS 1 - Year 6",
+    "website": "https://vhprimary.com",
+    "address": "Dubai Sports City, Dubai",
+    "description": "British curriculum school in Dubai Sports City, serving FS 1 - Year 6. Rated Outstanding in its latest KHDA inspection.",
+    "khdaId": "4429",
+    "phone": "97144231100"
+  },
+  {
+    "slug": "woodlem-park-school",
+    "name": "Woodlem Park School L.L.C",
+    "area": "Al Qusais First",
+    "curricula": [
+      "Indian"
+    ],
+    "khdaRating": "Acceptable",
+    "feeMinAED": 12312,
+    "feeMaxAED": 24153,
+    "feeNote": "Published KHDA range, 2023-2024",
+    "gradeRange": "Pre Primary - Grade 12",
+    "website": "https://www.woodlemdubai.ae",
+    "address": "Al Qusais First, Dubai",
+    "description": "Indian curriculum school in Al Qusais First, serving Pre Primary - Grade 12. Rated Acceptable in its latest KHDA inspection.",
+    "khdaId": "4447",
+    "phone": "042040900"
+  }
+]
