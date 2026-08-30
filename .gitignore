@@ -47,3 +47,6 @@ next-env.d.ts
 
 # local data backups must never be committed
 *_DATA_BACKUP_*.zip
+
+# the template is safe to commit; real .env files stay ignored above
+!.env.example

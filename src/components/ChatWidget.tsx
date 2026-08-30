@@ -21,29 +21,38 @@ const SUGGESTIONS = [
   "British schools under AED 50,000",
 ];
 
-const SESSION_KEY = "dxb-schools-chat-session";
+/**
+ * Streams the reply from /api/chat, calling onChunk as text arrives so the
+ * answer appears while it is being written. Prior turns are sent along so the
+ * assistant can follow a conversation rather than answering each message cold.
+ */
+async function streamBotReply(
+  history: Message[],
+  userText: string,
+  onChunk: (text: string) => void,
+  signal: AbortSignal
+): Promise<void> {
+  const res = await fetch("/api/chat", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      chatInput: userText,
+      history: history.map((m) => ({ role: m.role, text: m.text })),
+    }),
+    signal,
+  });
 
-function getSessionId(): string {
-  if (typeof window === "undefined") return crypto.randomUUID();
-  let id = window.localStorage.getItem(SESSION_KEY);
-  if (!id) {
-    id = crypto.randomUUID();
-    window.localStorage.setItem(SESSION_KEY, id);
+  if (!res.body) {
+    onChunk(await res.text());
+    return;
   }
-  return id;
-}
 
-async function getBotReply(userText: string): Promise<string> {
-  try {
-    const res = await fetch("/api/chat", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ sessionId: getSessionId(), chatInput: userText }),
-    });
-    const data = await res.json();
-    return data.reply ?? "Sorry, something went wrong. Please try again.";
-  } catch {
-    return "Sorry, I couldn't reach the assistant right now. Please try again in a moment.";
+  const reader = res.body.getReader();
+  const decoder = new TextDecoder();
+  for (;;) {
+    const { done, value } = await reader.read();
+    if (done) break;
+    onChunk(decoder.decode(value, { stream: true }));
   }
 }
 
@@ -55,6 +64,10 @@ export default function ChatWidget() {
   const bottomRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const panelRef = useRef<HTMLDivElement>(null);
+  const abortRef = useRef<AbortController | null>(null);
+  // send() reads history without depending on `messages`, so the callback
+  // identity stays stable while a reply streams in.
+  const messagesRef = useRef(messages);
 
   // The navbar CTA (and anything else) can open the panel via a window event.
   useEffect(() => {
@@ -72,6 +85,13 @@ export default function ChatWidget() {
   }, [open]);
 
   useEffect(() => {
+    messagesRef.current = messages;
+  }, [messages]);
+
+  // Drop an in-flight reply if the panel closes or the page unmounts.
+  useEffect(() => () => abortRef.current?.abort(), []);
+
+  useEffect(() => {
     if (!open) return;
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") setOpen(false);
@@ -84,13 +104,46 @@ export default function ChatWidget() {
     async (text: string) => {
       const trimmed = text.trim();
       if (!trimmed || sending) return;
+
+      // Snapshot the turns before this one — that is what the model needs.
+      const priorTurns = messagesRef.current.slice(1);
+
       setMessages((m) => [...m, { role: "user", text: trimmed }]);
       setInput("");
       setSending(true);
-      const reply = await getBotReply(trimmed);
-      setMessages((m) => [...m, { role: "bot", text: reply }]);
-      setSending(false);
-      inputRef.current?.focus();
+
+      const controller = new AbortController();
+      abortRef.current = controller;
+      let started = false;
+
+      const append = (chunk: string) => {
+        if (!chunk) return;
+        setMessages((m) => {
+          if (!started) {
+            started = true;
+            return [...m, { role: "bot", text: chunk }];
+          }
+          const next = [...m];
+          const last = next[next.length - 1];
+          next[next.length - 1] = { ...last, text: last.text + chunk };
+          return next;
+        });
+      };
+
+      try {
+        await streamBotReply(priorTurns, trimmed, append, controller.signal);
+        if (!started) append("Sorry, I didn't catch that. Please try again.");
+      } catch (err) {
+        if (!(err instanceof DOMException && err.name === "AbortError")) {
+          append(
+            "Sorry, I couldn't reach the assistant right now. Please try again in a moment."
+          );
+        }
+      } finally {
+        setSending(false);
+        abortRef.current = null;
+        inputRef.current?.focus();
+      }
     },
     [sending]
   );

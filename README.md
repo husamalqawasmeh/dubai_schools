@@ -16,7 +16,7 @@ Open http://localhost:3000
 - **Home (`/`)** — search and filter all 232 schools by curriculum, area, KHDA rating, and max fee, with sorting.
 - **School detail (`/schools/[slug]`)** — curriculum, fees, KHDA rating, location map, official website link, and parent reviews (leave-a-review form).
 - **Parent Journal (`/journal`)** — a shared board where parents/residents post reviews, questions, or quotation requests, searchable by keyword.
-- **Chatbot** — floating icon (bottom-right on every page) opens a chat panel. It currently returns a stubbed reply.
+- **Assistant** — floating icon (bottom-right on every page) opens a chat panel. Answers stream in from Claude, grounded in the school data below.
 
 ### Data
 
@@ -34,6 +34,22 @@ Coverage at the last refresh: 232 schools, 206 with a published fee range, 210 w
 
 Reviews and journal posts are stored in the browser's `localStorage` (no backend/database yet) — fine for a demo, but posts won't be shared across devices/browsers.
 
-### Wiring up the chatbot
+### The assistant
 
-The chat UI is in [`src/components/ChatWidget.tsx`](src/components/ChatWidget.tsx). Replace the `getBotReply` function with a real API call (e.g. to an `/api/chat` route that forwards to your chosen provider) once an API key is available.
+Set one environment variable and the chat panel works:
+
+```bash
+# .env.local
+ANTHROPIC_API_KEY=sk-ant-...
+```
+
+Without it the panel replies "The assistant isn't configured yet" rather than failing — safe to deploy before the key is set. On Vercel, add it under Project → Settings → Environment Variables.
+
+How it works:
+
+- [`src/app/api/chat/route.ts`](src/app/api/chat/route.ts) calls Claude and **streams** the reply back as plain text, so answers appear as they are written.
+- [`src/lib/systemPrompt.ts`](src/lib/systemPrompt.ts) holds the assistant's instructions — scope, tone, and the rules against inventing fees or ratings.
+- [`src/lib/schoolContext.ts`](src/lib/schoolContext.ts) renders all 232 schools as a compact table (~8K tokens) appended to the system prompt. Every answer is therefore grounded in the real listing with no vector store or retrieval step. The prompt is static, so it is marked cacheable and repeat requests read it at a fraction of the cost.
+- The last 10 turns are sent with each request, so the assistant can follow a conversation.
+
+**Before a public launch:** this endpoint calls a paid API and has no rate limiting. Input length and history depth are capped, but nothing stops repeated requests from one visitor. Put a rate limiter in front of it.
