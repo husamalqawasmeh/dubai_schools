@@ -16,6 +16,8 @@ import type { School } from "../../src/types.ts";
 const HERE = dirname(fileURLToPath(import.meta.url));
 const REPO = join(HERE, "..", "..");
 
+/** `satisfies` keeps this honest: renaming a School field fails the build here
+ *  rather than silently exporting an empty column. */
 const COLUMNS = [
   "slug",
   "name",
@@ -31,7 +33,7 @@ const COLUMNS = [
   "phone",
   "khdaId",
   "description",
-] as const;
+] as const satisfies readonly (keyof School)[];
 
 /** RFC 4180: quote if the value contains a comma, quote, or newline. */
 function csvCell(value: unknown): string {
@@ -53,7 +55,7 @@ async function main() {
   const rows = [
     COLUMNS.join(","),
     ...schools.map((s) =>
-      COLUMNS.map((c) => csvCell((s as Record<string, unknown>)[c])).join(",")
+      COLUMNS.map((c) => csvCell(s[c])).join(",")
     ),
   ];
 

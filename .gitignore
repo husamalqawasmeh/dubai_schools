@@ -44,3 +44,6 @@ next-env.d.ts
 
 # generated data exports (regenerate with: npm run export:schools)
 /exports/
+
+# local data backups must never be committed
+*_DATA_BACKUP_*.zip

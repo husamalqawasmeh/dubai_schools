@@ -2,20 +2,27 @@ import Container from "./ui/Container";
 import { LinkButton } from "./ui/Button";
 import { ArrowRightIcon } from "./icons";
 
+export interface HeroStats {
+  total: number;
+  withFeeRange: number;
+  withRating: number;
+  withWebsite: number;
+  areas: number;
+  curricula: number;
+  unrated: number;
+}
+
 /** Every figure here is counted from src/data/schools.json — nothing invented. */
-export default function Hero({
-  schoolCount,
-  curriculumCount,
-  areaCount,
-}: {
-  schoolCount: number;
-  curriculumCount: number;
-  areaCount: number;
-}) {
-  const stats = [
-    { value: schoolCount, label: "schools listed" },
-    { value: curriculumCount, label: "curricula" },
-    { value: areaCount, label: "areas of Dubai" },
+export default function Hero({ stats }: { stats: HeroStats }) {
+  // Three of these are a share of the total, so they carry a "/ 232" denominator —
+  // "206" on its own says nothing about coverage.
+  const tiles: { value: number; of?: number; label: string }[] = [
+    { value: stats.total, label: "Schools listed" },
+    { value: stats.withFeeRange, of: stats.total, label: "With a fee range" },
+    { value: stats.withRating, of: stats.total, label: "With a KHDA rating" },
+    { value: stats.withWebsite, of: stats.total, label: "With a website" },
+    { value: stats.areas, label: "Areas of Dubai" },
+    { value: stats.curricula, label: "Curricula" },
   ];
 
   return (
@@ -72,24 +79,43 @@ export default function Hero({
           </LinkButton>
         </div>
 
+        {/* Stat tiles. Values use the font's proportional figures — tabular-nums
+            is for columns that align vertically, and makes display numbers
+            look loose. */}
         <dl
-          className="animate-fade-up mx-auto mt-14 flex max-w-lg items-center justify-center divide-x divide-ink-200"
+          className="animate-fade-up mt-14 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6"
           style={{ animationDelay: "240ms" }}
         >
-          {stats.map((stat) => (
-            <div key={stat.label} className="flex-1 px-4 sm:px-6">
-              <dt className="sr-only">{stat.label}</dt>
-              <dd>
-                <span className="tabular block text-2xl font-semibold text-ink-900">
-                  {stat.value}
-                </span>
-                <span className="mt-1 block text-[13px] text-ink-500">
-                  {stat.label}
-                </span>
+          {tiles.map((tile) => (
+            <div
+              key={tile.label}
+              className="flex flex-col-reverse rounded-lg border border-ink-200 bg-white/70 p-4 text-left shadow-xs"
+            >
+              <dt className="mt-1 text-xs leading-snug text-ink-500">
+                {tile.label}
+              </dt>
+              <dd className="text-[26px] font-semibold leading-none tracking-[-0.02em] text-ink-900">
+                {tile.value}
+                {tile.of !== undefined && (
+                  <span className="text-sm font-medium text-ink-400">
+                    {" / "}
+                    {tile.of}
+                  </span>
+                )}
               </dd>
             </div>
           ))}
         </dl>
+
+        {stats.unrated > 0 && (
+          <p
+            className="animate-fade-up mt-4 text-xs text-ink-500"
+            style={{ animationDelay: "280ms" }}
+          >
+            {stats.unrated} unrated — usually newly opened schools that have not
+            yet had a first KHDA inspection.
+          </p>
+        )}
       </Container>
     </section>
   );
