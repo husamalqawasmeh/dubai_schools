@@ -38,6 +38,11 @@ interface ChatRequest {
  * not from the call that created it.
  */
 function describeError(err: unknown): string {
+  // Always log the real cause — the visitor gets a plain sentence, but the
+  // operator needs the actual reason in the server logs. Swallowing this
+  // makes a misconfigured deployment impossible to diagnose.
+  console.error("[api/chat]", err);
+
   if (err instanceof Anthropic.AuthenticationError) {
     return "The assistant's API key is invalid or expired.";
   }
@@ -45,6 +50,11 @@ function describeError(err: unknown): string {
     return "The assistant is busy right now. Please try again in a moment.";
   }
   if (err instanceof Anthropic.APIError) {
+    // Billing failures arrive as a 400, but retrying will never clear them —
+    // say so rather than implying a transient outage.
+    if (/credit balance|billing|quota/i.test(err.message)) {
+      return "The assistant is unavailable — the account behind it needs billing attention.";
+    }
     return `Sorry, the assistant is temporarily unavailable (${err.status}). Please try again shortly.`;
   }
   return "Sorry, I couldn't reach the assistant right now. Please try again in a moment.";
