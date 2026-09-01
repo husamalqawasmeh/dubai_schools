@@ -1,0 +1,9 @@
+{
+  "name": "dubai_schools",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "seed:schools": "node --use-system-ca scripts/seed-data/ingest.mts",
+    "export:schools": "node --use-system-ca scripts/seed-data/export.mts"
+  }
+}
