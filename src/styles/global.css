@@ -1124,3 +1124,9 @@ a.adminlink:hover { border-color: var(--accent); }
   min-height: 0;
 }
 .chatbox.is-open .chatlog { flex: 1; max-height: none; min-height: 0; }
+
+/* An icon per stat tile, sat with the label rather than the number so it
+   does not compete with the figure it belongs to. */
+.stat span { display: flex; align-items: center; gap: 6px; }
+.stat-ico { flex: none; width: 15px; height: 15px; color: var(--accent); }
+.stat-ico svg { display: block; width: 100%; height: 100%; }
