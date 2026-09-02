@@ -81,11 +81,24 @@ const maxCur = top[0]?.n ?? 1;
               <span class="band-range">{b.short}</span>
             </a>
           ))}
+          <a class="tier" href="/schools?band=none">
+            <span class="band-coins">
+              <svg
+                class="coins coins-lg coin-empty"
+                viewBox="0 0 46 48"
+                width="46"
+                height="48"
+                role="img"
+                aria-label="No fee published"
+              >
+                <ellipse cx="23" cy="38" rx="14" ry="4.8" />
+              </svg>
+            </span>
+            <span class="tier-name">No fee published</span>
+            <span class="tier-n">{s.bands["none"] ?? 0}</span>
+            <span class="band-range">&mdash;</span>
+          </a>
         </div>
-        <p class="sub" style="margin:13px 0 0">
-          Annual fee in AED, one coin to four.
-          <a href="/schools?band=none">{s.bands["none"] ?? 0} schools</a> publish no fee at all.
-        </p>
       </div>
 
       <div class="chart">
