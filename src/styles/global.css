@@ -118,9 +118,17 @@ p { margin: 0 0 14px; }
 .stats {
   display: flex; flex-wrap: wrap; gap: 5px;
   background: transparent; border: none; margin: 14px 0 0;
+  /* Exactly the width of the KHDA box below: that box spans two of the four
+     panelset columns, and this row sits inside a three-column hero, so two
+     columns plus a gap is (2H - 12) / 3 of the hero's width. Derived rather
+     than hard-coded, so it follows the grid if the container changes. */
+  width: calc((200% - 12px) / 3);
 }
 .stat {
-  flex: 0 0 auto; min-width: 128px;
+  /* Sized by content, then grown to fill the target. The old 128px floor was
+     padding all four out to the same width and pushing the row 93px past the
+     box below it. */
+  flex: 1 1 auto; min-width: 0;
   background: var(--surface);
   border: 1px solid var(--rule);
   border-radius: 8px;
