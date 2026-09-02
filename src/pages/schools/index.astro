@@ -70,9 +70,43 @@ const curOptions = [...curCount.entries()]
   .map(([value, count]) => ({ value, label: value, count }));
 
 const areaCount = tally(all, (x) => [x.area]);
-const areaOptions = [...areaCount.entries()]
-  .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
-  .map(([value, count]) => ({ value, label: value, count }));
+
+/**
+ * KHDA numbers its areas — "Al Barsha First", "Al Warqa Third" — which makes a
+ * flat list of 78 hard to scan when nine of them are really one place. Trailing
+ * ordinals and compass words are stripped to find the group.
+ *
+ * Deliberately conservative: this only strips suffixes, so "Jumeira First" and
+ * "Jumeirah Park" stay apart, which is right — they are different places, not
+ * two halves of one. The single alias covers KHDA spelling the same district
+ * two ways.
+ */
+const ORDINAL = /\s+(First|Second|Third|Fourth|Fifth|Sixth|\d+)$/i;
+const COMPASS = /\s+(South|North|East|West)$/i;
+const AREA_ALIAS: Record<string, string> = { Muhaisanah: "Muhaisnah" };
+
+function areaGroup(a: string): string {
+  let s = a;
+  if (ORDINAL.test(s)) s = s.replace(ORDINAL, "");
+  if (COMPASS.test(s)) s = s.replace(COMPASS, "");
+  return AREA_ALIAS[s] ?? s;
+}
+
+const grouped = new Map<string, { count: number; children: { value: string; label: string; count: number }[] }>();
+for (const [name, n] of areaCount) {
+  const key = areaGroup(name);
+  if (!grouped.has(key)) grouped.set(key, { count: 0, children: [] });
+  const g = grouped.get(key)!;
+  g.count += n;
+  g.children.push({ value: name, label: name, count: n });
+}
+const areaGroups = [...grouped.entries()]
+  .sort((a, b) => b[1].count - a[1].count || a[0].localeCompare(b[0]))
+  .map(([label, g]) => ({
+    label,
+    count: g.count,
+    children: g.children.sort((x, y) => y.count - x.count || x.label.localeCompare(y.label)),
+  }));
 
 // KHDA's tiers stay in their official order, best first — sorting these by
 // count would throw away the one thing the scale actually encodes.
@@ -139,7 +173,7 @@ const title = activeBits.length
           <MultiSelect id="curriculum" label="Curriculum" options={curOptions} selected={sel.curriculum} allLabel="All curricula" />
           <MultiSelect id="rating" label="KHDA rating" options={ratOptions} selected={sel.rating} allLabel="All ratings" />
           <MultiSelect id="band" label="Fee band" options={bandOptions} selected={sel.band} allLabel="Any fee" />
-          <MultiSelect id="area" label="Area" options={areaOptions} selected={sel.area} allLabel="All areas" scroll />
+          <MultiSelect id="area" label="Area" groups={areaGroups} selected={sel.area} allLabel="All areas" scroll />
         </div>
       </div>
     </div>
@@ -221,7 +255,7 @@ const title = activeBits.length
       listValued: !!LIST_VALUED[key],
       box,
       summary: box.querySelector(".multi-summary") as HTMLElement,
-      inputs: Array.from(box.querySelectorAll<HTMLInputElement>('input[type="checkbox"]')),
+      inputs: Array.from(box.querySelectorAll<HTMLInputElement>('input[type="checkbox"]:not(.grp)')),
       allLabel: ALL_LABEL[key],
     };
   });
@@ -288,15 +322,61 @@ const title = activeBits.length
     history.replaceState(null, "", u);
   }
 
+  /* ---- grouped options: a parent box toggles its children ---- */
+  const groupsOf = (f: Facet) =>
+    Array.from(f.box.querySelectorAll<HTMLElement>(".multi-group"));
+  const kidsOf = (g: HTMLElement) =>
+    Array.from(g.querySelectorAll<HTMLInputElement>(".multi-kids input"));
+  const parentOf = (g: HTMLElement) => g.querySelector(".grp") as HTMLInputElement;
+
+  function syncParents() {
+    for (const f of facets)
+      for (const g of groupsOf(f)) {
+        const kids = kidsOf(g);
+        const on = kids.filter((k) => k.checked).length;
+        const p = parentOf(g);
+        p.checked = on === kids.length && on > 0;
+        // Some but not all: the box shows a dash rather than lying either way.
+        p.indeterminate = on > 0 && on < kids.length;
+      }
+  }
+
   q.addEventListener("input", apply);
   for (const f of facets) {
-    for (const i of f.inputs) i.addEventListener("change", apply);
+    for (const i of f.inputs) i.addEventListener("change", () => { syncParents(); apply(); });
+
+    for (const g of groupsOf(f)) {
+      const p = parentOf(g);
+      const kids = kidsOf(g);
+      const toggle = g.querySelector(".grp-name") as HTMLButtonElement;
+      const panel = g.querySelector(".multi-kids") as HTMLElement;
+
+      p.addEventListener("change", () => {
+        for (const k of kids) k.checked = p.checked;
+        p.indeterminate = false;
+        // Selecting a whole group and leaving it shut hides what was chosen.
+        if (p.checked && panel.hidden) {
+          panel.hidden = false;
+          toggle.setAttribute("aria-expanded", "true");
+        }
+        apply();
+      });
+
+      toggle.addEventListener("click", () => {
+        panel.hidden = !panel.hidden;
+        toggle.setAttribute("aria-expanded", panel.hidden ? "false" : "true");
+      });
+    }
+
     const clear = f.box.querySelector(".multi-clear") as HTMLButtonElement;
     clear.addEventListener("click", () => {
       for (const i of f.inputs) i.checked = false;
+      syncParents();
       apply();
     });
   }
+
+  syncParents();
 
   // Close on an outside click or Escape, and never leave two panels open at
   // once — they overlap each other in a four-column row.

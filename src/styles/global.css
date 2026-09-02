@@ -836,3 +836,39 @@ a.adminlink:hover { border-color: var(--accent); }
 @media (min-width: 700px) {
   .listing .filters .row { grid-template-columns: 0.85fr 0.85fr 0.9fr 1.5fr; }
 }
+
+/* ---------------- grouped options ---------------- */
+.multi-group { border-bottom: 1px solid var(--rule); }
+.multi-group:last-of-type { border-bottom: none; }
+.multi-opt.is-parent {
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  font-weight: 600;
+  cursor: default;
+}
+.grp-name {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  text-align: left;
+  min-width: 0;
+  justify-self: start;
+}
+.grp-name > span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.grp-name:hover { color: var(--accent); }
+.grp-name:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 3px; }
+.tri {
+  width: 10px; height: 10px; flex: none; color: var(--muted);
+  transition: transform 0.12s ease;
+}
+.grp-name[aria-expanded="true"] .tri { transform: rotate(90deg); }
+.multi-kids { padding: 0 0 4px 0; }
+.multi-opt.is-kid { padding-left: 30px; font-size: 12.5px; }
+.multi-opt.is-kid .multi-name { color: var(--ink-2); }
+.multi-opt.is-kid:has(input:checked) .multi-name { color: var(--ink); }

@@ -1,34 +1,48 @@
 ---
 /**
  * A checkbox dropdown. Built on <details> so it opens and closes without
- * JavaScript, and so the whole list is still readable and submittable if the
- * script never runs.
+ * JavaScript, and so the whole list is still readable if the script never runs.
+ *
+ * Options may be flat, or grouped one level deep. A group with a single member
+ * renders flat — a disclosure triangle over one child is noise, and the child's
+ * own name is more honest than the group's ("Al Nahda Second", not "Al Nahda",
+ * when that is the only one KHDA lists).
  *
  * Counts are over the whole directory rather than the currently filtered set,
- * so a number never shifts under the pointer while you are working down the
- * same list.
+ * so a number never shifts under the pointer while working down the same list.
  */
-interface Option {
+export interface Option {
   value: string;
   label: string;
   count: number;
 }
+export interface Group {
+  label: string;
+  count: number;
+  children: Option[];
+}
 interface Props {
   id: string;          // also the query-string key
   label: string;
-  options: Option[];
+  options?: Option[];
+  groups?: Group[];
   selected: string[];
-  allLabel: string;    // shown when nothing is picked
-  scroll?: boolean;    // long lists (areas) get their own scroll
+  allLabel: string;
+  scroll?: boolean;
 }
-const { id, label, options, selected, allLabel, scroll = false } = Astro.props;
+const { id, label, options = [], groups, selected, allLabel, scroll = false } = Astro.props;
+
+const flat: Option[] = groups ? groups.flatMap((g) => g.children) : options;
 
 const summary =
   selected.length === 0
     ? allLabel
     : selected.length === 1
-      ? (options.find((o) => o.value === selected[0])?.label ?? selected[0])
+      ? (flat.find((o) => o.value === selected[0])?.label ?? selected[0])
       : `${selected.length} selected`;
+
+const anySelected = (g: Group) => g.children.some((c) => selected.includes(c.value));
+const allSelected = (g: Group) => g.children.every((c) => selected.includes(c.value));
 ---
 
 <div class="field">
@@ -40,14 +54,52 @@ const summary =
         <path d="M2.5 4.5 6 8l3.5-3.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
       </svg>
     </summary>
+
     <div class={scroll ? "multi-panel multi-scroll" : "multi-panel"} role="group" aria-labelledby={`${id}-label`}>
-      {options.map((o) => (
-        <label class="multi-opt">
-          <input type="checkbox" value={o.value} checked={selected.includes(o.value)} />
-          <span class="multi-name">{o.label}</span>
-          <span class="multi-n">({o.count})</span>
-        </label>
-      ))}
+      {groups
+        ? groups.map((g) =>
+            g.children.length === 1 ? (
+              <label class="multi-opt">
+                <input type="checkbox" value={g.children[0].value} checked={selected.includes(g.children[0].value)} />
+                <span class="multi-name">{g.children[0].label}</span>
+                <span class="multi-n">({g.children[0].count})</span>
+              </label>
+            ) : (
+              <div class="multi-group">
+                <div class="multi-opt is-parent">
+                  <input
+                    type="checkbox"
+                    class="grp"
+                    checked={allSelected(g)}
+                    data-some={anySelected(g) && !allSelected(g) ? "1" : undefined}
+                  />
+                  <button type="button" class="grp-name" aria-expanded={anySelected(g) ? "true" : "false"}>
+                    <span>{g.label}</span>
+                    <svg class="tri" viewBox="0 0 10 10" aria-hidden="true">
+                      <path d="M3.5 2 6.5 5l-3 3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                  </button>
+                  <span class="multi-n">({g.count})</span>
+                </div>
+                <div class="multi-kids" hidden={!anySelected(g)}>
+                  {g.children.map((o) => (
+                    <label class="multi-opt is-kid">
+                      <input type="checkbox" value={o.value} checked={selected.includes(o.value)} />
+                      <span class="multi-name">{o.label}</span>
+                      <span class="multi-n">({o.count})</span>
+                    </label>
+                  ))}
+                </div>
+              </div>
+            )
+          )
+        : options.map((o) => (
+            <label class="multi-opt">
+              <input type="checkbox" value={o.value} checked={selected.includes(o.value)} />
+              <span class="multi-name">{o.label}</span>
+              <span class="multi-n">({o.count})</span>
+            </label>
+          ))}
       <button type="button" class="multi-clear">Clear</button>
     </div>
   </details>
