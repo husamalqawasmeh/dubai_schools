@@ -464,7 +464,7 @@ body:has(.listing) main { overflow: hidden; }
   top: calc(100% + 4px);
   left: 0;
   right: 0;
-  min-width: 190px;
+  min-width: 215px;
   background: var(--surface);
   border: 1px solid var(--rule-firm);
   border-radius: 6px;
@@ -478,10 +478,12 @@ body:has(.listing) main { overflow: hidden; }
 
 .multi-opt {
   display: grid;
+  /* Box, then the name taking every spare pixel, then the count. The 1fr is
+     what pins the count to the right edge however short the name is. */
   grid-template-columns: auto minmax(0, 1fr) auto;
   align-items: center;
-  gap: 8px;
-  padding: 5px 7px;
+  column-gap: 12px;
+  padding: 5px 9px;
   border-radius: 4px;
   font-family: var(--display);
   font-size: 13px;
@@ -496,12 +498,15 @@ body:has(.listing) main { overflow: hidden; }
   cursor: pointer;
   flex: none;
 }
-.multi-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.multi-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; text-align: left; justify-self: start; }
 .multi-n {
   font-family: var(--mono);
   font-size: 11px;
   font-variant-numeric: tabular-nums;
   color: var(--muted);
+  text-align: right;
+  justify-self: end;
+  padding-left: 8px;
 }
 .multi-opt:has(input:checked) .multi-name { font-weight: 600; }
 
