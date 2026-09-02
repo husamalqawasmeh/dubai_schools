@@ -997,7 +997,7 @@ a.adminlink:hover { border-color: var(--accent); }
 /* The same four tracks and the same 12px gap as the panelset below, so the
    chat box and the Browse box are literally the same column — a fixed 292px
    was 33px wider than a quarter of the row and threw their left edges out. */
-.home-top { display: grid; gap: 12px; align-items: start; margin-bottom: 12px; }
+.home-top { display: grid; gap: 12px; align-items: stretch; margin-bottom: 12px; }
 /* 760px, the same breakpoint the panelset uses. At 900px the top row was
    still stacked and running the full width while the row beneath it had
    already gone to columns, so the two rows did not match between the two. */
@@ -1009,9 +1009,10 @@ a.adminlink:hover { border-color: var(--accent); }
 .home-hero { min-width: 0; }
 .home-hero h1 { margin-bottom: 2px; }
 .home-hero .stats { margin: 14px 0 0; }
-/* Sits on the same baseline as the stat row beside it, rather than at the
-   top of the column. When the chat opens it grows upward from there. */
-.chatwrap { min-width: 0; align-self: end; }
+/* Fills the row rather than sitting on the stat row's baseline, so its top
+   edge lines up with the top of the page title beside it. */
+.chatwrap { min-width: 0; display: flex; }
+.chatwrap > .chatbox { flex: 1; }
 
 /* ---------------- chat box ---------------- */
 .chatbox {
