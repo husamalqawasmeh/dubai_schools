@@ -674,7 +674,9 @@ button.btn:disabled { opacity: 0.55; cursor: default; }
 .advertise { padding: 22px 0 50px; max-width: 1060px; }
 .ad-head { margin-bottom: 22px; }
 .ad-head h1 { font-size: 30px; margin-top: 6px; }
-.ad-lede { font-size: 16.5px; color: var(--ink-2); margin: 12px 0 0; max-width: 66ch; }
+/* Full container width, not a reading measure: at 66ch this ran to three
+   lines, and it is a standfirst rather than body copy. */
+.ad-lede { font-size: 16.5px; color: var(--ink-2); margin: 12px 0 0; max-width: none; text-wrap: pretty; }
 .ad-stats {
   display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
   gap: 2px; background: var(--rule-firm); border: 1px solid var(--rule-firm);
