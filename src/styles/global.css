@@ -998,7 +998,10 @@ a.adminlink:hover { border-color: var(--accent); }
    chat box and the Browse box are literally the same column — a fixed 292px
    was 33px wider than a quarter of the row and threw their left edges out. */
 .home-top { display: grid; gap: 12px; align-items: start; margin-bottom: 12px; }
-@media (min-width: 900px) {
+/* 760px, the same breakpoint the panelset uses. At 900px the top row was
+   still stacked and running the full width while the row beneath it had
+   already gone to columns, so the two rows did not match between the two. */
+@media (min-width: 760px) {
   .home-top { grid-template-columns: repeat(4, 1fr); }
   .home-hero { grid-column: span 3; }
   .chatwrap { grid-column: span 1; }
