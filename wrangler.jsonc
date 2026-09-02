@@ -1,0 +1,17 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "dubai-schools",
+  "compatibility_date": "2026-09-01",
+  "compatibility_flags": ["nodejs_compat"],
+  "routes": [
+    { "pattern": "dubai-schools.can-du-ai.com", "custom_domain": true }
+  ],
+  "observability": { "enabled": true },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "dubai-schools",
+      "database_id": "5f8286f1-bf48-4760-a941-3995e8caccc6"
+    }
+  ]
+}

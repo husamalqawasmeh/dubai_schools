@@ -1,9 +1,25 @@
 {
   "name": "dubai_schools",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "private": true,
+  "type": "module",
   "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "wrangler dev",
+    "deploy": "astro build && wrangler deploy",
+    "db:migrate": "wrangler d1 migrations apply dubai-schools --remote",
+    "db:migrate:local": "wrangler d1 migrations apply dubai-schools --local",
+    "db:seed": "node --use-system-ca scripts/seed-d1.mts",
     "seed:schools": "node --use-system-ca scripts/seed-data/ingest.mts",
     "export:schools": "node --use-system-ca scripts/seed-data/export.mts"
+  },
+  "dependencies": {
+    "@astrojs/cloudflare": "^14.2.6",
+    "astro": "^7.2.10"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^5.20260902.1",
+    "wrangler": "^4.128.0"
   }
 }

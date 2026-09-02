@@ -1,0 +1,122 @@
+import { env } from "cloudflare:workers";
+
+/** The D1 binding, declared in wrangler.jsonc. */
+const DB = (env as unknown as { DB: D1Database }).DB;
+
+export type FeeBand = "acceptable" | "medium" | "high" | "very_high";
+
+export interface SchoolRow {
+  id: number;
+  slug: string;
+  name: string;
+  area: string;
+  curricula: string;        // JSON array as stored
+  khda_rating: string;
+  fee_min_aed: number | null;
+  fee_max_aed: number | null;
+  fee_year: string | null;
+  fee_note: string | null;
+  fee_band: FeeBand | null; // generated column; NULL when no fee is published
+  grade_range: string | null;
+  students_total: number | null;
+  website: string | null;
+  phone: string | null;
+  address: string | null;
+  description: string | null;
+}
+
+export interface School extends Omit<SchoolRow, "curricula"> {
+  curricula: string[];
+}
+
+function hydrate(row: SchoolRow): School {
+  let curricula: string[] = [];
+  try {
+    curricula = JSON.parse(row.curricula);
+  } catch {
+    // A malformed row should not take down the page it appears on.
+    curricula = [];
+  }
+  return { ...row, curricula };
+}
+
+const COLUMNS = `id, slug, name, area, curricula, khda_rating, fee_min_aed,
+  fee_max_aed, fee_year, fee_note, fee_band, grade_range, students_total,
+  website, phone, address, description`;
+
+export async function allSchools(): Promise<School[]> {
+  const { results } = await DB.prepare(
+    `SELECT ${COLUMNS} FROM schools WHERE delisted_at IS NULL ORDER BY name`
+  ).all<SchoolRow>();
+  return results.map(hydrate);
+}
+
+export async function schoolBySlug(slug: string): Promise<School | null> {
+  const row = await DB.prepare(
+    `SELECT ${COLUMNS} FROM schools WHERE slug = ? AND delisted_at IS NULL`
+  )
+    .bind(slug)
+    .first<SchoolRow>();
+  return row ? hydrate(row) : null;
+}
+
+export interface Stats {
+  total: number;
+  rated: number;
+  priced: number;
+  areas: number;
+  curricula: number;
+  bands: Record<string, number>;
+  ratings: Record<string, number>;
+}
+
+/** Counted in the database rather than in JavaScript, so the headline figures
+ *  can never drift from what the table actually contains. */
+export async function stats(): Promise<Stats> {
+  const [totals, bands, ratings] = await DB.batch<any>([
+    DB.prepare(
+      `SELECT COUNT(*) total,
+              SUM(CASE WHEN khda_rating <> 'Not rated' THEN 1 ELSE 0 END) rated,
+              COUNT(fee_max_aed) priced,
+              COUNT(DISTINCT area) areas
+       FROM schools WHERE delisted_at IS NULL`
+    ),
+    DB.prepare(
+      `SELECT COALESCE(fee_band,'none') band, COUNT(*) n
+       FROM schools WHERE delisted_at IS NULL GROUP BY fee_band`
+    ),
+    DB.prepare(
+      `SELECT khda_rating rating, COUNT(*) n
+       FROM schools WHERE delisted_at IS NULL GROUP BY khda_rating`
+    ),
+  ]);
+
+  const t = totals.results[0];
+  const bandMap: Record<string, number> = {};
+  for (const r of bands.results) bandMap[r.band] = r.n;
+  const ratingMap: Record<string, number> = {};
+  for (const r of ratings.results) ratingMap[r.rating] = r.n;
+
+  // Curricula are a JSON array per row, so this one is counted in JS.
+  const { results } = await DB.prepare(
+    `SELECT curricula FROM schools WHERE delisted_at IS NULL`
+  ).all<{ curricula: string }>();
+  const set = new Set<string>();
+  for (const r of results) {
+    try {
+      for (const c of JSON.parse(r.curricula)) set.add(c);
+    } catch {
+      /* ignore a malformed row */
+    }
+  }
+
+  return {
+    total: t.total,
+    rated: t.rated,
+    priced: t.priced,
+    areas: t.areas,
+    curricula: set.size,
+    bands: bandMap,
+    ratings: ratingMap,
+  };
+}

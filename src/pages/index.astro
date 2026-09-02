@@ -1,0 +1,209 @@
+---
+import Base from "../layouts/Base.astro";
+import { allSchools, stats, type School } from "../lib/db";
+
+const schools: School[] = await allSchools();
+const s = await stats();
+
+// KHDA's tiers in their official order, best first, keeping only those present.
+const TIERS = ["Outstanding", "Very Good", "Good", "Acceptable", "Weak", "Very Weak", "Not rated"];
+const tiersPresent = TIERS.filter((t) => s.ratings[t]);
+const maxTier = Math.max(...tiersPresent.map((t) => s.ratings[t]));
+
+const BANDS = [
+  { key: "acceptable", label: "Acceptable", dots: 1, range: "under AED 25,000" },
+  { key: "medium", label: "Medium", dots: 2, range: "25,000 – 49,999" },
+  { key: "high", label: "High", dots: 3, range: "50,000 – 89,999" },
+  { key: "very_high", label: "Very high", dots: 4, range: "90,000 and above" },
+];
+const maxBand = Math.max(...BANDS.map((b) => s.bands[b.key] ?? 0));
+
+const areas = [...new Set(schools.map((x) => x.area))].sort();
+const curricula = [...new Set(schools.flatMap((x) => x.curricula))].sort();
+
+const bandLabel: Record<string, string> = {
+  acceptable: "Acceptable",
+  medium: "Medium",
+  high: "High",
+  very_high: "Very high",
+};
+const bandDots: Record<string, number> = { acceptable: 1, medium: 2, high: 3, very_high: 4 };
+---
+
+<Base title="Dubai Schools — compare all 232 KHDA-registered schools">
+  <section class="hero">
+    <div class="wrap">
+      <p class="eyebrow">KHDA education directory</p>
+      <h1>Every private school in Dubai, in one place.</h1>
+      <p class="lede">
+        All {s.total} schools registered with KHDA — curriculum, area, inspection
+        rating and published fees. Filter to what fits, then check the detail.
+      </p>
+
+      <div class="stats">
+        <div class="stat"><b>{s.total}</b><span>Schools listed</span></div>
+        <div class="stat"><b>{s.rated}</b><span>Inspected &amp; rated</span></div>
+        <div class="stat"><b>{s.areas}</b><span>Areas covered</span></div>
+        <div class="stat"><b>{s.curricula}</b><span>Curricula</span></div>
+      </div>
+
+      <div class="charts">
+        <div class="chart">
+          <h3>Where the ratings sit</h3>
+          <p class="sub">Schools per KHDA tier. Darker is a better inspection result.</p>
+          <div class="bars">
+            {tiersPresent.map((t, i) => (
+              <div class="bar-row">
+                <span class="bar-lab">{t}</span>
+                <span class="bar-track">
+                  <span
+                    class={t === "Not rated" ? "bar hatch" : "bar"}
+                    style={`--w:${Math.round((s.ratings[t] / maxTier) * 100)}%;--c:var(--r${Math.min(i + 1, 4)})`}
+                  ></span>
+                </span>
+                <span class="bar-val">{s.ratings[t]}</span>
+              </div>
+            ))}
+          </div>
+          <p class="sub" style="margin:13px 0 0">
+            Not rated is hatched, not coloured: no inspection has happened yet,
+            usually a new school. It is not a low score.
+          </p>
+        </div>
+
+        <div class="chart">
+          <h3>What schools cost</h3>
+          <p class="sub">Fee bands, cut on the real quartiles of the {s.priced} priced schools.</p>
+          <div class="bars">
+            {BANDS.map((b) => (
+              <div class="bar-row">
+                <span class="bar-lab">
+                  <span class="meter" aria-hidden="true">
+                    {[1, 2, 3, 4].map((d) => <i class={d <= b.dots ? "on" : ""}></i>)}
+                  </span>
+                </span>
+                <span class="bar-track">
+                  <span class="bar" style={`--w:${Math.round(((s.bands[b.key] ?? 0) / maxBand) * 100)}%`}></span>
+                </span>
+                <span class="bar-val">{s.bands[b.key] ?? 0}</span>
+              </div>
+            ))}
+          </div>
+          <p class="sub" style="margin:13px 0 0">
+            {BANDS.map((b) => `${b.dots === 1 ? "" : " · "}${b.label} ${b.range}`).join("")}.
+            The remaining {s.bands["none"] ?? 0} schools publish no fee at all.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="wrap" style="padding-top:34px;padding-bottom:70px">
+    <h2 id="schools">All schools</h2>
+    <p style="color:var(--muted);font-size:14.5px;margin:6px 0 18px">
+      Filter by curriculum, area, rating, or fee band.
+    </p>
+
+    <div class="filters">
+      <input id="q" type="search" placeholder="Search by school, area, or curriculum…" aria-label="Search schools" />
+      <div class="row">
+        <div class="field">
+          <label for="f-cur">Curriculum</label>
+          <select id="f-cur"><option value="">All curricula</option>{curricula.map((c) => <option value={c}>{c}</option>)}</select>
+        </div>
+        <div class="field">
+          <label for="f-area">Area</label>
+          <select id="f-area"><option value="">All areas</option>{areas.map((a) => <option value={a}>{a}</option>)}</select>
+        </div>
+        <div class="field">
+          <label for="f-rat">KHDA rating</label>
+          <select id="f-rat"><option value="">All ratings</option>{tiersPresent.map((t) => <option value={t}>{t}</option>)}</select>
+        </div>
+        <div class="field">
+          <label for="f-band">Fee band</label>
+          <select id="f-band">
+            <option value="">Any fee</option>
+            {BANDS.map((b) => <option value={b.key}>{b.label} — {b.range}</option>)}
+            <option value="none">Not published</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <p class="count"><b id="n">{schools.length}</b> <span id="noun">schools</span></p>
+
+    <div class="grid" id="grid">
+      {schools.map((x) => (
+        <a
+          class="card"
+          href={`/schools/${x.slug}`}
+          data-name={x.name.toLowerCase()}
+          data-area={x.area}
+          data-cur={x.curricula.join("|")}
+          data-rat={x.khda_rating}
+          data-band={x.fee_band ?? "none"}
+        >
+          <h3>{x.name}</h3>
+          <p class="where">{x.area} · {x.curricula.join(" / ")}</p>
+          <div class="foot">
+            <span class="fee">
+              {x.fee_band ? (
+                <>
+                  <span class="meter" aria-hidden="true">
+                    {[1, 2, 3, 4].map((d) => <i class={d <= bandDots[x.fee_band!] ? "on" : ""}></i>)}
+                  </span>
+                  {bandLabel[x.fee_band]}
+                </>
+              ) : (
+                <span class="missing">Fee not published</span>
+              )}
+            </span>
+            <span class="badge" data-r={x.khda_rating}>{x.khda_rating}</span>
+          </div>
+        </a>
+      ))}
+    </div>
+
+    <div class="empty" id="empty" hidden>
+      No schools match these filters. Try widening the fee band or clearing the area.
+    </div>
+  </div>
+</Base>
+
+<script>
+  // All 232 cards are rendered server-side; filtering just toggles them.
+  // No JSON payload, no framework, and the full list still works with JS off.
+  const q = document.getElementById("q") as HTMLInputElement;
+  const cur = document.getElementById("f-cur") as HTMLSelectElement;
+  const area = document.getElementById("f-area") as HTMLSelectElement;
+  const rat = document.getElementById("f-rat") as HTMLSelectElement;
+  const band = document.getElementById("f-band") as HTMLSelectElement;
+  const grid = document.getElementById("grid")!;
+  const empty = document.getElementById("empty")!;
+  const n = document.getElementById("n")!;
+  const noun = document.getElementById("noun")!;
+  const cards = Array.from(grid.children) as HTMLElement[];
+
+  function apply() {
+    const text = q.value.trim().toLowerCase();
+    let shown = 0;
+    for (const c of cards) {
+      const d = c.dataset;
+      const ok =
+        (!text || d.name!.includes(text) || d.area!.toLowerCase().includes(text) || d.cur!.toLowerCase().includes(text)) &&
+        (!cur.value || d.cur!.split("|").includes(cur.value)) &&
+        (!area.value || d.area === area.value) &&
+        (!rat.value || d.rat === rat.value) &&
+        (!band.value || d.band === band.value);
+      c.hidden = !ok;
+      if (ok) shown++;
+    }
+    n.textContent = String(shown);
+    noun.textContent = shown === 1 ? "school" : "schools";
+    empty.hidden = shown > 0;
+  }
+
+  for (const el of [q, cur, area, rat, band]) {
+    el.addEventListener("input", apply);
+  }
+</script>

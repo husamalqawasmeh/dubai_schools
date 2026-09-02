@@ -1,0 +1,58 @@
+---
+import "../styles/global.css";
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description = "Search and compare all 232 KHDA-registered private schools in Dubai: curriculum, fees, inspection rating, and location." } = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap"
+    />
+  </head>
+  <body>
+    <header class="site-head">
+      <div class="wrap">
+        <a class="brand" href="/">Dubai <span>Schools</span></a>
+        <nav>
+          <a href="/">Schools</a>
+          <a href="https://www.can-du-ai.com">can-du-ai</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <slot />
+    </main>
+
+    <footer class="site-foot">
+      <div class="wrap">
+        <p>
+          Data published by KHDA (Knowledge and Human Development Authority),
+          Dubai. Fees and inspection ratings are as published and are not all
+          from the same academic year &mdash; each fee shows its own year.
+          Confirm current figures with the school before making a decision.
+        </p>
+        <p>Part of <a href="https://www.can-du-ai.com">can-du-ai.com</a>.</p>
+      </div>
+    </footer>
+  </body>
+</html>

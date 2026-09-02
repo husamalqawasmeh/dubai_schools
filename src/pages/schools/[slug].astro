@@ -1,0 +1,131 @@
+---
+import Base from "../../layouts/Base.astro";
+import { schoolBySlug } from "../../lib/db";
+
+const { slug } = Astro.params;
+const school = await schoolBySlug(slug!);
+
+if (!school) {
+  return new Response(null, { status: 404, statusText: "School not found" });
+}
+
+const aed = (v: number) => "AED " + v.toLocaleString("en-AE");
+
+/** KHDA publishes a range, only an upper bound, or nothing at all. */
+function feeRange(): string | null {
+  if (school!.fee_min_aed && school!.fee_max_aed) return `${aed(school!.fee_min_aed)} – ${aed(school!.fee_max_aed)}`;
+  if (school!.fee_max_aed) return `up to ${aed(school!.fee_max_aed)}`;
+  return null;
+}
+const fee = feeRange();
+
+const bandLabel: Record<string, string> = {
+  acceptable: "Acceptable", medium: "Medium", high: "High", very_high: "Very high",
+};
+const bandDots: Record<string, number> = { acceptable: 1, medium: 2, high: 3, very_high: 4 };
+
+const mapQuery = encodeURIComponent(`${school.name}, ${school.address ?? "Dubai"}`);
+
+const facts: { k: string; v: string | null }[] = [
+  { k: school.curricula.length > 1 ? "Curricula" : "Curriculum", v: school.curricula.join(", ") },
+  { k: "Grades", v: school.grade_range },
+  { k: "Area", v: school.area },
+  { k: "KHDA rating", v: school.khda_rating },
+  { k: "Students", v: school.students_total ? school.students_total.toLocaleString("en-AE") : null },
+];
+---
+
+<Base
+  title={`${school.name} — fees, curriculum and KHDA rating`}
+  description={school.description ?? `${school.name} in ${school.area}, Dubai.`}
+>
+  <div class="detail-head">
+    <div class="wrap">
+      <a class="back" href="/">&larr; All schools</a>
+      <h1 style="margin-top:14px">{school.name}</h1>
+      <p style="color:var(--muted);font-family:var(--display);font-size:14px;margin:10px 0 0">
+        {school.area} · {school.curricula.join(" / ")}
+        {school.grade_range ? ` · ${school.grade_range}` : ""}
+      </p>
+      {school.description && <p style="max-width:62ch;color:var(--ink-2);margin:16px 0 0">{school.description}</p>}
+    </div>
+  </div>
+
+  <div class="wrap">
+    <div class="detail-grid">
+      <div>
+        <h2>Location</h2>
+        <p style="color:var(--muted);font-size:14.5px;margin:6px 0 14px">{school.address ?? school.area}, Dubai</p>
+        <div style="border:1px solid var(--rule);border-radius:6px;overflow:hidden">
+          <iframe
+            title={`Map showing ${school.name}`}
+            src={`https://www.google.com/maps?q=${mapQuery}&output=embed`}
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            style="display:block;width:100%;height:330px;border:0"
+          ></iframe>
+        </div>
+
+        <h2 style="margin-top:34px">School details</h2>
+        <div class="panel" style="margin-top:12px">
+          <p class="missing" style="margin:0">
+            Official email, teacher and admin staff numbers, and school
+            transport are not published by KHDA. They are collected separately
+            and will appear here once confirmed with the school.
+          </p>
+        </div>
+
+        <h2 style="margin-top:34px">Parent feedback</h2>
+        <div class="panel" style="margin-top:12px">
+          <p class="missing" style="margin:0">
+            Not open yet. Feedback will be moderated before it appears, and no
+            summary is shown until a school has at least five responses.
+          </p>
+        </div>
+      </div>
+
+      <aside>
+        <div class="panel">
+          <p style="font-family:var(--display);font-size:10.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 6px">
+            Annual fees
+          </p>
+          {fee ? (
+            <>
+              <span class="feebig">{fee}</span>
+              <span class="feeyear">
+                {school.fee_year ? `KHDA published, ${school.fee_year}` : "KHDA published, year not stated"}
+              </span>
+              {school.fee_band && (
+                <p style="margin:12px 0 0;display:flex;align-items:center;gap:8px;font-family:var(--display);font-size:13px;color:var(--ink-2)">
+                  <span class="meter" aria-hidden="true">
+                    {[1, 2, 3, 4].map((d) => <i class={d <= bandDots[school.fee_band!] ? "on" : ""}></i>)}
+                  </span>
+                  {bandLabel[school.fee_band]} for Dubai
+                </p>
+              )}
+            </>
+          ) : (
+            <p class="missing" style="margin:0">KHDA publishes no fee for this school.</p>
+          )}
+
+          <dl style="margin-top:16px;padding-top:15px;border-top:1px solid var(--rule)">
+            {facts.filter((f) => f.v).map((f) => (
+              <div class="kv"><dt>{f.k}</dt><dd>{f.v}</dd></div>
+            ))}
+          </dl>
+
+          {school.website && <a class="btn" href={school.website} target="_blank" rel="noopener noreferrer">Visit school website</a>}
+          {school.phone && <a class="btn sec" href={`tel:${school.phone}`}>{school.phone}</a>}
+          <a class="btn sec" href={`https://www.google.com/maps/search/?api=1&query=${mapQuery}`} target="_blank" rel="noopener noreferrer">
+            Open in Google Maps
+          </a>
+
+          <p style="font-family:var(--display);font-size:11.5px;color:var(--muted);margin:14px 0 0;line-height:1.45">
+            Figures as published by KHDA. Confirm current fees and availability
+            with the school directly.
+          </p>
+        </div>
+      </aside>
+    </div>
+  </div>
+</Base>
