@@ -135,7 +135,6 @@ p { margin: 0 0 14px; }
   background: var(--surface); border: 1px solid var(--rule); border-radius: 6px;
   padding: 12px 15px 13px; box-shadow: var(--shadow);
 }
-.chart h3 { margin-bottom: 3px; font-size: 14.5px; }
 .chart .sub { font-family: var(--display); font-size: 12.5px; color: var(--muted); margin: 0 0 11px; line-height: 1.4; }
 .bars { display: grid; gap: 7px; }
 .bar-row {
@@ -374,7 +373,6 @@ body:has(.listing) main { overflow: hidden; }
 .coins-lg .coin-face { stroke-width: 1.1; }
 
 /* ---------------- chart header icons ---------------- */
-.chart h3 { display: flex; align-items: center; gap: 7px; }
 .chart-ico { flex: none; width: 15px; height: 15px; color: var(--accent); }
 .chart-ico svg { display: block; width: 100%; height: 100%; }
 
@@ -393,20 +391,20 @@ body:has(.listing) main { overflow: hidden; }
   display: flex;
   align-items: flex-end;
   justify-content: center;
-  height: 40px;
-  padding-top: 2px;
+  height: 32px;
+  padding-top: 0;
 }
-.band-grid .tier-name { padding-top: 4px; font-size: 11.5px; }
+.band-grid .tier-name { padding-top: 1px; font-size: 11.5px; }
 .band-range {
   display: block;
   font-family: var(--mono);
   font-size: 11px;
   color: var(--muted);
   text-align: center;
-  padding: 0 3px 7px;
+  padding: 0 3px 5px;
   line-height: 1.25;
 }
-.band-grid .tier-n { padding-bottom: 3px; }
+.band-grid .tier-n { padding-bottom: 1px; }
 @media (max-width: 460px) {
   .band-coins { height: 32px; }
   .band-coins .coins-lg { height: 30px; }
@@ -970,11 +968,11 @@ a.adminlink:hover { border-color: var(--accent); }
   .pane-wide { grid-column: span 3; }
   .pane-narrow { grid-column: span 1; }
 }
-.pane h3 { display: flex; align-items: center; gap: 7px; margin-bottom: 8px; font-size: 14.5px; }
+.pane h3 { display: flex; align-items: center; gap: 7px; margin-bottom: 9px; font-size: 16px; }
 .pane .sub { font-family: var(--display); font-size: 12.5px; color: var(--muted); margin: 0 0 10px; line-height: 1.4; }
 
 /* The coin stack set the height of the whole top row. */
-.band-coins .coins-lg { height: 38px; width: auto; }
+.band-coins .coins-lg { height: 34px; width: auto; }
 
 
 /* The one pane that keeps a box: it is the call to action, not a statistic. */
