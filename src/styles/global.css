@@ -290,9 +290,11 @@ body:has(.listing) main { overflow: hidden; }
 .tier-grid {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
-  gap: 1px;
-  background: var(--rule);
-  border: 1px solid var(--rule);
+  /* The gap is the divider: the grid's own background shows through it, so a
+     wider gap in a firmer tone is what separates one category from the next. */
+  gap: 2px;
+  background: var(--rule-firm);
+  border: 1px solid var(--rule-firm);
   border-radius: 6px;
   overflow: hidden;
 }
@@ -317,7 +319,7 @@ body:has(.listing) main { overflow: hidden; }
   line-height: 1.2;
   color: var(--muted);
   text-align: center;
-  padding: 9px 4px 0;
+  padding: 9px 7px 0;
   overflow-wrap: anywhere;
 }
 .tier-n {
