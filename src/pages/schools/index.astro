@@ -152,9 +152,14 @@ const title = activeBits.length
       <div class="listing-head">
         <div>
           <a class="back" href="/">&larr; Overview</a>
-          <h1 style="font-size:22px;margin-top:6px">
-            {activeBits.length ? activeBits.join(" · ") : "All schools"}
-          </h1>
+          {activeBits.length ? (
+            <h1 class="criteria">
+              <span class="criteria-label">Filtering criteria:</span>
+              {activeBits.join(" · ")}
+            </h1>
+          ) : (
+            <h1 style="font-size:22px;margin-top:6px">All schools</h1>
+          )}
         </div>
         <p class="count"><b id="n">{shown.length}</b> <span id="noun">{shown.length === 1 ? "school" : "schools"}</span> of {all.length}</p>
       </div>
