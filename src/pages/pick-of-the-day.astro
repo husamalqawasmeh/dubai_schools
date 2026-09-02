@@ -1,0 +1,91 @@
+---
+import Base from "../layouts/Base.astro";
+import Coins from "../components/Coins.astro";
+import { allSchools, gradeFees, type School } from "../lib/db";
+
+/**
+ * One school a day, chosen by the date rather than at random, so everyone
+ * looking on the same day sees the same school and it changes exactly once at
+ * midnight. Rated schools only: featuring a school KHDA has not inspected
+ * would be presenting an unknown as a recommendation.
+ */
+const all: School[] = await allSchools();
+const eligible = all.filter((s) => s.khda_rating !== "Not rated" && s.fee_max_aed);
+
+const today = new Date();
+const dayNumber = Math.floor(Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate()) / 86_400_000);
+const school = eligible[dayNumber % eligible.length];
+const grades = await gradeFees(school.id);
+
+const aed = (v: number) => "AED " + v.toLocaleString("en-AE");
+const bandLabel: Record<string, string> = {
+  acceptable: "Acceptable", medium: "Medium", high: "Higher", very_high: "Highest",
+};
+const bandDots: Record<string, number> = { acceptable: 1, medium: 2, high: 3, very_high: 4 };
+
+const cheapest = grades.find((g) => g.tuition_aed);
+const dearest = [...grades].reverse().find((g) => g.tuition_aed);
+const transport = grades.find((g) => g.transport)?.transport ?? null;
+
+const dateLabel = today.toLocaleDateString("en-GB", {
+  weekday: "long", day: "numeric", month: "long", year: "numeric", timeZone: "Asia/Dubai",
+});
+---
+
+<Base
+  title={`Pick of the day — ${school.name}`}
+  description={`Today's featured Dubai school: ${school.name} in ${school.area}.`}
+>
+  <div class="wrap pick">
+    <a class="back" href="/">Overview</a>
+    <p class="pick-date">{dateLabel}</p>
+    <h1>{school.name}</h1>
+    <p class="pick-where">
+      {school.area} · {school.curricula.join(" / ")}
+      {school.grade_range ? ` · ${school.grade_range}` : ""}
+    </p>
+
+    <div class="pick-grid">
+      <div class="pane">
+        <h3>Why it is today's pick</h3>
+        <p class="pick-body">
+          Rated <strong>{school.khda_rating}</strong> by KHDA, teaching the
+          {school.curricula.length > 1 ? " " : " "}{school.curricula.join(" and ")} curriculum
+          in {school.area}.
+          {cheapest && dearest && cheapest.tuition_aed && dearest.tuition_aed
+            ? ` Tuition runs from ${aed(cheapest.tuition_aed)} in ${cheapest.grade} to ${aed(dearest.tuition_aed)} in ${dearest.grade}${cheapest.academic_year ? ` for ${cheapest.academic_year}` : ""}.`
+            : ""}
+        </p>
+        <p class="pick-note">
+          Picked by the date, not by anyone paying for it. Every school in the
+          directory takes its turn.
+        </p>
+      </div>
+
+      <div class="pane">
+        <h3>At a glance</h3>
+        <dl class="pick-facts">
+          <div class="kv"><dt>KHDA rating</dt><dd>{school.khda_rating}</dd></div>
+          <div class="kv"><dt>Area</dt><dd>{school.area}</dd></div>
+          <div class="kv"><dt>Grades</dt><dd>{school.grade_range ?? "—"}</dd></div>
+          <div class="kv">
+            <dt>Fee band</dt>
+            <dd>
+              {school.fee_band ? (
+                <span style="display:inline-flex;align-items:flex-end;gap:6px">
+                  <Coins n={bandDots[school.fee_band]} label={bandLabel[school.fee_band]} />
+                  {bandLabel[school.fee_band]}
+                </span>
+              ) : "Not published"}
+            </dd>
+          </div>
+          {transport && <div class="kv"><dt>Transport</dt><dd>AED {transport}</dd></div>}
+          {grades.length > 0 && (
+            <div class="kv"><dt>Fee sheets</dt><dd>{grades.length} grades</dd></div>
+          )}
+        </dl>
+        <a class="btn" href={`/schools/${school.slug}`}>See the full page</a>
+      </div>
+    </div>
+  </div>
+</Base>

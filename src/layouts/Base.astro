@@ -31,11 +31,15 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
   <body>
     <header class="site-head">
       <div class="wrap">
-        <a class="brand" href="/">Dubai <span>Schools</span></a>
+        <div class="brandwrap">
+          <a class="brand" href="/">Dubai <span>Schools</span></a>
+          <a class="partof" href="https://www.can-du-ai.com">Part of can-du-ai.com</a>
+        </div>
         <nav>
+          <a href="/#chatbox">Chatbot</a>
+          <a href="/pick-of-the-day">Pick of the day</a>
           <a href="/contribute">Contribute</a>
           <a href="/advertise">Advertise</a>
-          <a href="https://www.can-du-ai.com">Part of can-du-ai.com</a>
         </nav>
       </div>
     </header>

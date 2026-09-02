@@ -42,12 +42,14 @@ const maxCur = top[0]?.n ?? 1;
       </div>
 
       <aside class="chatwrap">
-        <div class="chatbox">
+        <div class="chatbox" id="chatbox">
           <p class="chatbox-q">Have a question?</p>
-          <p class="chatbox-sub">
-            Ask about fees, admissions, or a school you cannot find here.
-          </p>
-          <a class="btn chatbox-cta" href="/contribute?as=parent">Chat with us</a>
+          <div class="chatlog" id="chatlog" hidden></div>
+          <form class="chatform" id="chatform" hidden>
+            <input id="chatinput" placeholder="Ask about fees, curricula or areas…" autocomplete="off" />
+            <button type="submit" id="chatsend" aria-label="Send">&rarr;</button>
+          </form>
+          <button type="button" class="btn chatbox-cta" id="chatopen">Chat with us</button>
         </div>
       </aside>
     </div>
@@ -138,3 +140,85 @@ const maxCur = top[0]?.n ?? 1;
 
   </div>
 </Base>
+
+<script>
+  const box = document.getElementById("chatbox")!;
+  const open = document.getElementById("chatopen") as HTMLButtonElement;
+  const form = document.getElementById("chatform") as HTMLFormElement;
+  const input = document.getElementById("chatinput") as HTMLInputElement;
+  const send = document.getElementById("chatsend") as HTMLButtonElement;
+  const log = document.getElementById("chatlog")!;
+  const history: { role: string; text: string }[] = [];
+
+  function bubble(role: "user" | "bot", text = "") {
+    const el = document.createElement("p");
+    el.className = "chatmsg is-" + role;
+    el.textContent = text;
+    log.appendChild(el);
+    log.scrollTop = log.scrollHeight;
+    return el;
+  }
+
+  open.addEventListener("click", () => {
+    box.classList.add("is-open");
+    open.hidden = true;
+    log.hidden = false;
+    form.hidden = false;
+    if (!log.childElementCount) {
+      bubble("bot", "Ask me about fees, curricula, areas or KHDA ratings across all 232 schools.");
+    }
+    input.focus();
+  });
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const q = input.value.trim();
+    if (!q) return;
+    input.value = "";
+    bubble("user", q);
+    send.disabled = true;
+    const out = bubble("bot", "…");
+    let first = true;
+
+    // A share of calls come back with the upstream refusing the connection.
+    // Server-side retries reuse the same egress path, so a fresh request from
+    // here is what actually gets a different one.
+    async function ask(tries = 3): Promise<Response> {
+      const res = await fetch("/api/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message: q, history }),
+      });
+      if (tries > 1 && res.headers.get("content-length")) {
+        const body = await res.clone().text();
+        if (/could not be reached|temporarily unavailable/i.test(body)) {
+          await new Promise((r) => setTimeout(r, 400));
+          return ask(tries - 1);
+        }
+      }
+      return res;
+    }
+
+    try {
+      const res = await ask();
+      if (!res.body) {
+        out.textContent = await res.text();
+      } else {
+        const reader = res.body.getReader();
+        const dec = new TextDecoder();
+        for (;;) {
+          const { done, value } = await reader.read();
+          if (done) break;
+          if (first) { out.textContent = ""; first = false; }
+          out.textContent += dec.decode(value, { stream: true });
+          log.scrollTop = log.scrollHeight;
+        }
+      }
+      history.push({ role: "user", text: q }, { role: "assistant", text: out.textContent ?? "" });
+    } catch {
+      out.textContent = "That did not send — check your connection and try again.";
+    }
+    send.disabled = false;
+    input.focus();
+  });
+</script>

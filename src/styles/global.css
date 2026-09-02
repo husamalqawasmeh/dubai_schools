@@ -1022,3 +1022,66 @@ a.adminlink:hover { border-color: var(--accent); }
   margin: 0 0 14px;
 }
 .chatbox-cta { margin-top: auto; }
+
+/* ---------------- header: brand and origin together on the left ---------------- */
+.brandwrap { display: flex; align-items: baseline; gap: 12px; min-width: 0; }
+.partof {
+  font-family: var(--ui); font-size: 12.5px; font-weight: 500;
+  color: var(--muted); text-decoration: none; white-space: nowrap;
+}
+.partof:hover { color: var(--accent); }
+@media (max-width: 620px) { .partof { display: none; } }
+
+/* ---------------- chat, inside the box ---------------- */
+.chatbox.is-open { min-height: 260px; }
+.chatlog {
+  flex: 1;
+  min-height: 150px;
+  max-height: 260px;
+  overflow-y: auto;
+  margin: 0 0 10px;
+  padding-right: 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.chatmsg {
+  font-family: var(--ui); font-size: 13.5px; font-weight: 500;
+  line-height: 1.5; margin: 0; padding: 8px 11px; border-radius: 10px;
+  white-space: pre-wrap; overflow-wrap: anywhere;
+}
+.chatmsg.is-bot { background: var(--surface-2); color: var(--ink); border-bottom-left-radius: 3px; }
+.chatmsg.is-user {
+  background: var(--accent-2); color: var(--on-accent);
+  align-self: flex-end; border-bottom-right-radius: 3px; max-width: 88%;
+}
+.chatform { display: flex; gap: 7px; }
+.chatform input {
+  flex: 1; min-width: 0; height: 36px; padding: 0 11px;
+  font-family: var(--ui); font-size: 13.5px; color: var(--ink);
+  background: var(--surface); border: 1px solid var(--rule-firm); border-radius: 6px;
+}
+.chatform input:focus { border-color: var(--accent); outline: none; }
+.chatform button {
+  width: 36px; height: 36px; flex: none; cursor: pointer;
+  font-size: 16px; font-weight: 700; line-height: 1;
+  color: var(--on-accent); background: var(--accent-2);
+  border: none; border-radius: 6px;
+}
+.chatform button:disabled { opacity: 0.5; cursor: default; }
+
+/* ---------------- pick of the day ---------------- */
+.pick { padding: 20px 0 50px; max-width: 900px; }
+.pick-date {
+  font-family: var(--mono); font-size: 11.5px; letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--accent); margin: 10px 0 4px;
+}
+.pick h1 { font-size: 30px; }
+.pick-where { font-family: var(--ui); font-size: 14.5px; color: var(--muted); margin: 8px 0 18px; }
+.pick-grid { display: grid; gap: 12px; }
+@media (min-width: 760px) { .pick-grid { grid-template-columns: 1fr 1fr; align-items: start; } }
+.pick-body { font-size: 15.5px; color: var(--ink-2); margin: 0 0 12px; }
+.pick-note { font-family: var(--ui); font-size: 12.5px; color: var(--muted); margin: 0; }
+.pick-facts { margin: 0 0 14px; display: grid; gap: 10px; }
+.pick-facts dt { font-family: var(--ui); font-size: 13px; color: var(--muted); }
+.pick-facts dd { margin: 0; font-family: var(--ui); font-size: 13.5px; font-weight: 700; text-align: right; }
