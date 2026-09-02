@@ -880,3 +880,14 @@ a.adminlink:hover { border-color: var(--accent); }
   letter-spacing: 0.04em;
   margin-right: 6px;
 }
+
+/* The blurb under each Contribute tab: the rounded face, and a floor of two
+   lines so the form below it sits at the same height whichever tab is open. */
+.contribute .muted-p {
+  font-family: var(--ui);
+  font-size: 15.5px;
+  font-weight: 500;
+  line-height: 1.6;
+  min-height: calc(15.5px * 1.6 * 2);
+  max-width: 68ch;
+}

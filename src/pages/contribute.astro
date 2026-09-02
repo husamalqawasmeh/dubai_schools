@@ -5,7 +5,7 @@ import { allSchools } from "../lib/db";
 const schools = await allSchools();
 const names = schools.map((s) => s.name);
 
-const active = (Astro.url.searchParams.get("as") ?? "student").toLowerCase();
+const active = (Astro.url.searchParams.get("as") ?? "school").toLowerCase();
 
 /**
  * One action per audience for now.
@@ -18,17 +18,16 @@ const active = (Astro.url.searchParams.get("as") ?? "student").toLowerCase();
  */
 const TABS = [
   {
-    id: "student",
-    label: "Students",
-    kind: "comment",
-    title: "Leave a comment",
+    id: "school",
+    label: "School admin",
+    kind: "school_details",
+    title: "Provide details to be reviewed and shared",
     blurb:
-      "Tell people what your school is actually like — the teaching, the facilities, how it feels to be there day to day.",
-    messageLabel: "Your comment",
-    placeholder: "What would you want someone starting at your school to know?",
-    guard:
-      "Write about the school, not about individual people by name. Comments naming a teacher or another student are not published.",
-    contactLabel: "",
+      "KHDA does not publish your office email, your staff numbers or your transport routes. Send them here and they appear on your school's page once we have checked them.",
+    messageLabel: "Details",
+    placeholder:
+      "Office email, number of teachers, number of admin staff, transport routes and fees, anything else worth listing.",
+    contactLabel: "Your work email",
   },
   {
     id: "parent",
@@ -36,34 +35,20 @@ const TABS = [
     kind: "info_request",
     title: "Request information",
     blurb:
-      "Ask about a school — fees not listed here, admissions, transport, waiting lists — and we will chase the answer and publish it where it helps others.",
+      "Ask about a school — a fee that is not listed, admissions, transport, waiting lists. We will chase the answer and publish it where it helps the next parent asking.",
     messageLabel: "What would you like to know?",
     placeholder: "e.g. Does this school run a bus from Al Barsha, and what does it cost?",
-    guard: "",
     contactLabel: "Email, if you would like a reply",
-  },
-  {
-    id: "school",
-    label: "School admin",
-    kind: "school_details",
-    title: "Provide details to be reviewed and shared",
-    blurb:
-      "KHDA does not publish your office email, staff numbers or transport. Send them here and they will appear on your school's page once checked.",
-    messageLabel: "Details",
-    placeholder:
-      "Office email, number of teachers, number of admin staff, transport routes and fees, anything else worth listing.",
-    guard: "",
-    contactLabel: "Your work email",
   },
   {
     id: "site",
     label: "Site admin",
     kind: "comment",
     title: "Sign in",
-    blurb: "",
+    blurb:
+      "The console for moderating what comes in through this page, editing school data, and running the update against KHDA.",
     messageLabel: "",
     placeholder: "",
-    guard: "",
     contactLabel: "",
   },
 ];
@@ -97,20 +82,14 @@ const current = TABS.find((t) => t.id === active) ?? TABS[0];
     <div class="tabpanel" role="tabpanel">
       {current.id === "site" ? (
         <div class="panel">
-          <h2>Sign in</h2>
-          <p class="muted-p">
-            The admin console is not built yet. It will hold the moderation
-            queue for everything submitted here, school editing, and the data
-            update runs.
-          </p>
-          <a class="btn" href="/" style="max-width:200px">Back to the directory</a>
+          <h2>{current.title}</h2>
+          <p class="muted-p">{current.blurb}</p>
+          <a class="btn" href="/admin/login" style="max-width:200px">Sign in</a>
         </div>
       ) : (
         <div class="panel">
           <h2>{current.title}</h2>
           <p class="muted-p">{current.blurb}</p>
-
-          {current.guard && <p class="guard">{current.guard}</p>}
 
           <form id="f" data-audience={current.id} data-kind={current.kind}>
             <div class="form-row">
