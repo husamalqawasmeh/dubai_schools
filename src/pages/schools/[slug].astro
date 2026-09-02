@@ -55,8 +55,60 @@ const facts: { k: string; v: string | null }[] = [
   </div>
 
   <div class="wrap">
-    <div class="detail-grid">
-      <div>
+    <div class="topsplit">
+      <div class="topinfo">
+      <div class="panel">
+        <p style="font-family:var(--display);font-size:10.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 6px">
+          Annual fees
+        </p>
+        {fee ? (
+          <>
+            <span class="feebig">{fee}</span>
+            <span class="feeyear">
+              {school.fee_year ? `KHDA published, ${school.fee_year}` : "KHDA published, year not stated"}
+            </span>
+            {school.fee_band && (
+              <p style="margin:12px 0 0;display:flex;align-items:flex-end;gap:8px;font-family:var(--display);font-size:13px;color:var(--ink-2)">
+                <Coins n={bandDots[school.fee_band]} label={bandLabel[school.fee_band]} />
+                <span style="padding-bottom:2px">{bandLabel[school.fee_band]} for Dubai</span>
+              </p>
+            )}
+          </>
+        ) : (
+          <p class="missing" style="margin:0">KHDA publishes no fee for this school.</p>
+        )}
+
+        <dl style="margin-top:16px;padding-top:15px;border-top:1px solid var(--rule)">
+          {facts.filter((f) => f.v).map((f) => (
+            <div class="kv"><dt>{f.k}</dt><dd>{f.v}</dd></div>
+          ))}
+        </dl>
+
+        {school.website && <a class="btn" href={school.website} target="_blank" rel="noopener noreferrer">Visit school website</a>}
+        {school.phone && <a class="btn sec" href={`tel:${school.phone}`}>{school.phone}</a>}
+        <a class="btn sec" href={`https://www.google.com/maps/search/?api=1&query=${mapQuery}`} target="_blank" rel="noopener noreferrer">
+          Open in Google Maps
+        </a>
+
+        <p style="font-family:var(--display);font-size:11.5px;color:var(--muted);margin:14px 0 0;line-height:1.45">
+          Figures as published by KHDA. Confirm current fees and availability
+          with the school directly.
+        </p>
+      </div>
+      </div>
+      <div class="topmap">
+      <div class="mapcard">
+        <iframe
+          title={`Map showing ${school.name}`}
+          src={`https://www.google.com/maps?q=${mapQuery}&output=embed`}
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+        ></iframe>
+      </div>
+      </div>
+    </div>
+
+    <div class="belowsplit">
         <h2>Fees by grade</h2>
         {grades.length > 0 ? (
           <>
@@ -145,57 +197,6 @@ const facts: { k: string; v: string | null }[] = [
             summary is shown until a school has at least five responses.
           </p>
         </div>
-      </div>
-
-      <aside>
-        <div class="mapcard">
-          <iframe
-            title={`Map showing ${school.name}`}
-            src={`https://www.google.com/maps?q=${mapQuery}&output=embed`}
-            loading="lazy"
-            referrerpolicy="no-referrer-when-downgrade"
-          ></iframe>
-        </div>
-
-        <div class="panel">
-          <p style="font-family:var(--display);font-size:10.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 6px">
-            Annual fees
-          </p>
-          {fee ? (
-            <>
-              <span class="feebig">{fee}</span>
-              <span class="feeyear">
-                {school.fee_year ? `KHDA published, ${school.fee_year}` : "KHDA published, year not stated"}
-              </span>
-              {school.fee_band && (
-                <p style="margin:12px 0 0;display:flex;align-items:flex-end;gap:8px;font-family:var(--display);font-size:13px;color:var(--ink-2)">
-                  <Coins n={bandDots[school.fee_band]} label={bandLabel[school.fee_band]} />
-                  <span style="padding-bottom:2px">{bandLabel[school.fee_band]} for Dubai</span>
-                </p>
-              )}
-            </>
-          ) : (
-            <p class="missing" style="margin:0">KHDA publishes no fee for this school.</p>
-          )}
-
-          <dl style="margin-top:16px;padding-top:15px;border-top:1px solid var(--rule)">
-            {facts.filter((f) => f.v).map((f) => (
-              <div class="kv"><dt>{f.k}</dt><dd>{f.v}</dd></div>
-            ))}
-          </dl>
-
-          {school.website && <a class="btn" href={school.website} target="_blank" rel="noopener noreferrer">Visit school website</a>}
-          {school.phone && <a class="btn sec" href={`tel:${school.phone}`}>{school.phone}</a>}
-          <a class="btn sec" href={`https://www.google.com/maps/search/?api=1&query=${mapQuery}`} target="_blank" rel="noopener noreferrer">
-            Open in Google Maps
-          </a>
-
-          <p style="font-family:var(--display);font-size:11.5px;color:var(--muted);margin:14px 0 0;line-height:1.45">
-            Figures as published by KHDA. Confirm current fees and availability
-            with the school directly.
-          </p>
-        </div>
-      </aside>
     </div>
   </div>
 </Base>
