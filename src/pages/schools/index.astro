@@ -2,55 +2,99 @@
 import Base from "../../layouts/Base.astro";
 import { allSchools, type School } from "../../lib/db";
 import Coins from "../../components/Coins.astro";
+import MultiSelect from "../../components/MultiSelect.astro";
 
 const p = Astro.url.searchParams;
-const f = {
-  q: p.get("q")?.trim() ?? "",
-  curriculum: p.get("curriculum") ?? "",
-  area: p.get("area") ?? "",
-  rating: p.get("rating") ?? "",
-  band: p.get("band") ?? "",
-  rated: p.get("rated") === "1",
+
+/** Every facet is multi-select, carried as a comma-separated list so the URL
+ *  stays readable: ?curriculum=British,IB&rating=Outstanding,Very Good */
+const list = (k: string) =>
+  (p.get(k) ?? "").split(",").map((s) => s.trim()).filter(Boolean);
+
+const sel = {
+  curriculum: list("curriculum"),
+  area: list("area"),
+  rating: list("rating"),
+  band: list("band"),
 };
+const q = p.get("q")?.trim() ?? "";
+const ratedOnly = p.get("rated") === "1";
 
 const all: School[] = await allSchools();
 
 // Filtered on the server so a link from the landing page works without
 // JavaScript and is indexable. The client script re-runs the same rules.
+// Within a facet the values are OR; across facets they are AND.
 const shown = all.filter((x) => {
-  const text = f.q.toLowerCase();
+  const text = q.toLowerCase();
   return (
     (!text ||
       x.name.toLowerCase().includes(text) ||
       x.area.toLowerCase().includes(text) ||
       x.curricula.join(" ").toLowerCase().includes(text)) &&
-    (!f.curriculum || x.curricula.includes(f.curriculum)) &&
-    (!f.area || x.area === f.area) &&
-    (!f.rating || x.khda_rating === f.rating) &&
-    (!f.band || (x.fee_band ?? "none") === f.band) &&
-    (!f.rated || x.khda_rating !== "Not rated")
+    (sel.curriculum.length === 0 || x.curricula.some((c) => sel.curriculum.includes(c))) &&
+    (sel.area.length === 0 || sel.area.includes(x.area)) &&
+    (sel.rating.length === 0 || sel.rating.includes(x.khda_rating)) &&
+    (sel.band.length === 0 || sel.band.includes(x.fee_band ?? "none")) &&
+    (!ratedOnly || x.khda_rating !== "Not rated")
   );
 });
 
+/* ---- option lists, each with its count over the whole directory ---- */
+const tally = <T,>(items: T[], key: (t: T) => string[]) => {
+  const m = new Map<string, number>();
+  for (const it of items) for (const k of key(it)) m.set(k, (m.get(k) ?? 0) + 1);
+  return m;
+};
+
+const curCount = tally(all, (x) => x.curricula);
+const curOptions = [...curCount.entries()]
+  .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
+  .map(([value, count]) => ({ value, label: value, count }));
+
+const areaCount = tally(all, (x) => [x.area]);
+const areaOptions = [...areaCount.entries()]
+  .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
+  .map(([value, count]) => ({ value, label: value, count }));
+
+// KHDA's tiers stay in their official order, best first — sorting these by
+// count would throw away the one thing the scale actually encodes.
 const TIERS = ["Outstanding", "Very Good", "Good", "Acceptable", "Weak", "Very Weak", "Not rated"];
-const tiersPresent = TIERS.filter((t) => all.some((x) => x.khda_rating === t));
-const areas = [...new Set(all.map((x) => x.area))].sort();
-const curricula = [...new Set(all.flatMap((x) => x.curricula))].sort();
+const ratCount = tally(all, (x) => [x.khda_rating]);
+const ratOptions = TIERS.filter((t) => ratCount.has(t)).map((value) => ({
+  value,
+  label: value,
+  count: ratCount.get(value)!,
+}));
 
 const BANDS = [
   { key: "acceptable", label: "Acceptable", range: "under AED 25,000" },
   { key: "medium", label: "Medium", range: "AED 25,000 – 49,999" },
   { key: "high", label: "High", range: "AED 50,000 – 89,999" },
   { key: "very_high", label: "Very high", range: "AED 90,000 and above" },
+  { key: "none", label: "No fee published", range: "" },
 ];
+const bandCount = tally(all, (x) => [x.fee_band ?? "none"]);
+const bandOptions = BANDS.filter((b) => bandCount.has(b.key)).map((b) => ({
+  value: b.key,
+  label: b.label,
+  count: bandCount.get(b.key)!,
+}));
+
 const bandLabel: Record<string, string> = {
   acceptable: "Acceptable", medium: "Medium", high: "High", very_high: "Very high",
 };
 const bandDots: Record<string, number> = { acceptable: 1, medium: 2, high: 3, very_high: 4 };
 
-// Name the active filter in the title so a filtered link reads correctly in
+// Name the active filters in the title so a filtered link reads correctly in
 // search results and when shared.
-const activeBits = [f.curriculum, f.rating && `rated ${f.rating}`, f.area, f.band && bandLabel[f.band]].filter(Boolean);
+const say = (xs: string[]) => xs.join(" or ");
+const activeBits = [
+  say(sel.curriculum),
+  sel.rating.length ? `rated ${say(sel.rating)}` : "",
+  say(sel.area),
+  sel.band.length ? say(sel.band.map((b) => bandLabel[b] ?? "No fee published")) : "",
+].filter(Boolean);
 const title = activeBits.length
   ? `${activeBits.join(", ")} schools in Dubai`
   : "All Dubai schools — search and filter";
@@ -69,38 +113,21 @@ const title = activeBits.length
         <p class="count"><b id="n">{shown.length}</b> <span id="noun">{shown.length === 1 ? "school" : "schools"}</span> of {all.length}</p>
       </div>
 
+      <div class="searchbar">
+        <input id="q" type="search" value={q} placeholder="Search by school, area, or curriculum…" aria-label="Search schools" />
+        <span class="search-ico" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="10.5" cy="10.5" r="6.5" /><path d="M15.5 15.5 21 21" />
+          </svg>
+        </span>
+      </div>
+
       <div class="filters">
-        <input id="q" type="search" value={f.q} placeholder="Search by school, area, or curriculum…" aria-label="Search schools" />
         <div class="row">
-          <div class="field">
-            <label for="f-cur">Curriculum</label>
-            <select id="f-cur">
-              <option value="">All curricula</option>
-              {curricula.map((c) => <option value={c} selected={c === f.curriculum}>{c}</option>)}
-            </select>
-          </div>
-          <div class="field">
-            <label for="f-area">Area</label>
-            <select id="f-area">
-              <option value="">All areas</option>
-              {areas.map((a) => <option value={a} selected={a === f.area}>{a}</option>)}
-            </select>
-          </div>
-          <div class="field">
-            <label for="f-rat">KHDA rating</label>
-            <select id="f-rat">
-              <option value="">All ratings</option>
-              {tiersPresent.map((t) => <option value={t} selected={t === f.rating}>{t}</option>)}
-            </select>
-          </div>
-          <div class="field">
-            <label for="f-band">Fee band</label>
-            <select id="f-band">
-              <option value="">Any fee</option>
-              {BANDS.map((b) => <option value={b.key} selected={b.key === f.band}>{b.label} — {b.range}</option>)}
-              <option value="none" selected={f.band === "none"}>Not published</option>
-            </select>
-          </div>
+          <MultiSelect id="curriculum" label="Curriculum" options={curOptions} selected={sel.curriculum} allLabel="All curricula" />
+          <MultiSelect id="area" label="Area" options={areaOptions} selected={sel.area} allLabel="All areas" scroll />
+          <MultiSelect id="rating" label="KHDA rating" options={ratOptions} selected={sel.rating} allLabel="All ratings" />
+          <MultiSelect id="band" label="Fee band" options={bandOptions} selected={sel.band} allLabel="Any fee" />
         </div>
       </div>
     </div>
@@ -138,7 +165,7 @@ const title = activeBits.length
       </div>
 
       <div class="empty" id="empty" hidden={shown.length > 0}>
-        No schools match these filters. Try widening the fee band or clearing the area.
+        No schools match these filters. Try clearing a filter or widening the fee band.
       </div>
     </div>
   </div>
@@ -148,11 +175,45 @@ const title = activeBits.length
   // Every card is already in the DOM; filtering toggles them, so there is no
   // round trip and no JSON payload. The URL is kept in step so a filtered
   // view stays shareable and the back button behaves.
+  interface Facet {
+    key: string;
+    attr: string;
+    /** true when the card itself holds several values (a school may run two
+     *  curricula), so the test is intersection rather than membership. */
+    listValued: boolean;
+    box: HTMLDetailsElement;
+    summary: HTMLElement;
+    inputs: HTMLInputElement[];
+    allLabel: string;
+  }
+
+  const ALL_LABEL: Record<string, string> = {
+    curriculum: "All curricula",
+    area: "All areas",
+    rating: "All ratings",
+    band: "Any fee",
+  };
+  const LIST_VALUED: Record<string, boolean> = { curriculum: true };
+  const ATTR: Record<string, string> = {
+    curriculum: "cur", area: "area", rating: "rat", band: "band",
+  };
+
+  const facets: Facet[] = Array.from(
+    document.querySelectorAll<HTMLDetailsElement>(".multi[data-key]")
+  ).map((box) => {
+    const key = box.dataset.key!;
+    return {
+      key,
+      attr: ATTR[key],
+      listValued: !!LIST_VALUED[key],
+      box,
+      summary: box.querySelector(".multi-summary") as HTMLElement,
+      inputs: Array.from(box.querySelectorAll<HTMLInputElement>('input[type="checkbox"]')),
+      allLabel: ALL_LABEL[key],
+    };
+  });
+
   const q = document.getElementById("q") as HTMLInputElement;
-  const cur = document.getElementById("f-cur") as HTMLSelectElement;
-  const area = document.getElementById("f-area") as HTMLSelectElement;
-  const rat = document.getElementById("f-rat") as HTMLSelectElement;
-  const band = document.getElementById("f-band") as HTMLSelectElement;
   const grid = document.getElementById("grid")!;
   const empty = document.getElementById("empty")!;
   const n = document.getElementById("n")!;
@@ -162,36 +223,89 @@ const title = activeBits.length
 
   function apply() {
     const text = q.value.trim().toLowerCase();
-    let shown = 0;
+
+    const picked = facets.map((f) => {
+      const on = f.inputs.filter((i) => i.checked);
+      const values = on.map((i) => i.value);
+      f.summary.textContent =
+        values.length === 0
+          ? f.allLabel
+          : values.length === 1
+            ? (on[0].parentElement!.querySelector(".multi-name") as HTMLElement).textContent!
+            : `${values.length} selected`;
+      f.box.classList.toggle("has-picks", values.length > 0);
+      return { f, values };
+    });
+
+    let count = 0;
     for (const c of cards) {
       const d = c.dataset;
-      const ok =
-        (!text ||
-          d.name!.includes(text) ||
-          d.area!.toLowerCase().includes(text) ||
-          d.cur!.toLowerCase().includes(text)) &&
-        (!cur.value || d.cur!.split("|").includes(cur.value)) &&
-        (!area.value || d.area === area.value) &&
-        (!rat.value || d.rat === rat.value) &&
-        (!band.value || d.band === band.value);
+      let ok =
+        !text ||
+        d.name!.includes(text) ||
+        d.area!.toLowerCase().includes(text) ||
+        d.cur!.toLowerCase().includes(text);
+
+      if (ok) {
+        for (const { f, values } of picked) {
+          if (values.length === 0) continue;
+          const cardVal = d[f.attr]!;
+          const hit = f.listValued
+            ? cardVal.split("|").some((v) => values.includes(v))
+            : values.includes(cardVal);
+          if (!hit) { ok = false; break; }
+        }
+      }
+
       c.hidden = !ok;
-      if (ok) shown++;
+      if (ok) count++;
     }
-    n.textContent = String(shown);
-    noun.textContent = shown === 1 ? "school" : "schools";
-    empty.hidden = shown > 0;
+
+    n.textContent = String(count);
+    noun.textContent = count === 1 ? "school" : "schools";
+    empty.hidden = count > 0;
     results.scrollTop = 0;
 
     const u = new URL(location.href);
     const set = (k: string, v: string) => (v ? u.searchParams.set(k, v) : u.searchParams.delete(k));
     set("q", q.value.trim());
-    set("curriculum", cur.value);
-    set("area", area.value);
-    set("rating", rat.value);
-    set("band", band.value);
+    for (const { f, values } of picked) set(f.key, values.join(","));
     u.searchParams.delete("rated");
     history.replaceState(null, "", u);
   }
 
-  for (const el of [q, cur, area, rat, band]) el.addEventListener("input", apply);
+  q.addEventListener("input", apply);
+  for (const f of facets) {
+    for (const i of f.inputs) i.addEventListener("change", apply);
+    const clear = f.box.querySelector(".multi-clear") as HTMLButtonElement;
+    clear.addEventListener("click", () => {
+      for (const i of f.inputs) i.checked = false;
+      apply();
+    });
+  }
+
+  // Close on an outside click or Escape, and never leave two panels open at
+  // once — they overlap each other in a four-column row.
+  document.addEventListener("click", (e) => {
+    for (const f of facets) {
+      if (f.box.open && !f.box.contains(e.target as Node)) f.box.open = false;
+    }
+  });
+  document.addEventListener("keydown", (e) => {
+    if (e.key !== "Escape") return;
+    for (const f of facets) {
+      if (f.box.open) {
+        f.box.open = false;
+        (f.box.querySelector("summary") as HTMLElement).focus();
+      }
+    }
+  });
+  for (const f of facets) {
+    f.box.addEventListener("toggle", () => {
+      if (!f.box.open) return;
+      for (const o of facets) if (o !== f) o.box.open = false;
+    });
+  }
+
+  apply();
 </script>
