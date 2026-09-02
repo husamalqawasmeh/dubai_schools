@@ -995,7 +995,9 @@ a.adminlink:hover { border-color: var(--accent); }
 .home-hero { min-width: 0; }
 .home-hero h1 { margin-bottom: 2px; }
 .home-hero .stats { margin: 14px 0 0; }
-.chatwrap { min-width: 0; }
+/* Sits on the same baseline as the stat row beside it, rather than at the
+   top of the column. When the chat opens it grows upward from there. */
+.chatwrap { min-width: 0; align-self: end; }
 
 /* ---------------- chat box ---------------- */
 .chatbox {
@@ -1008,7 +1010,7 @@ a.adminlink:hover { border-color: var(--accent); }
 }
 .chatbox-q {
   font-family: var(--ui);
-  font-size: 17px;
+  font-size: 15px;
   font-weight: 700;
   color: var(--ink);
   margin: 0 0 6px;
