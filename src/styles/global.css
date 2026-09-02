@@ -120,11 +120,11 @@ p { margin: 0 0 14px; }
   background: transparent; border: none; margin: 14px 0 0;
 }
 .stat {
-  flex: 0 0 auto; min-width: 120px;
+  flex: 0 0 auto; min-width: 128px;
   background: var(--surface);
   border: 1px solid var(--rule);
   border-radius: 8px;
-  padding: 10px 12px 11px;
+  padding: 10px 14px 12px;
   text-decoration: none; color: inherit;
   transition: background .12s ease, border-color .12s ease;
 }
