@@ -1085,3 +1085,8 @@ a.adminlink:hover { border-color: var(--accent); }
 .pick-facts { margin: 0 0 14px; display: grid; gap: 10px; }
 .pick-facts dt { font-family: var(--ui); font-size: 13px; color: var(--muted); }
 .pick-facts dd { margin: 0; font-family: var(--ui); font-size: 13.5px; font-weight: 700; text-align: right; }
+
+/* The rating table drops a little clear of its heading; the heading itself
+   does not move. Only this grid — the fee and curriculum tables sit tight
+   under theirs because they carry more rows of their own. */
+.rating-grid { margin-top: 12px; }
