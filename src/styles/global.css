@@ -116,7 +116,7 @@ p { margin: 0 0 14px; }
    needs: laid out with flex, not a stretch-to-fit grid, so they sit together
    at the left instead of spreading across the column. */
 .stats {
-  display: flex; flex-wrap: wrap; gap: 6px;
+  display: flex; flex-wrap: wrap; gap: 5px;
   background: transparent; border: none; margin: 14px 0 0;
 }
 .stat {
@@ -124,7 +124,7 @@ p { margin: 0 0 14px; }
   background: var(--surface);
   border: 1px solid var(--rule);
   border-radius: 8px;
-  padding: 10px 14px 12px;
+  padding: 10px 12px 12px;
   text-decoration: none; color: inherit;
   transition: background .12s ease, border-color .12s ease;
 }
