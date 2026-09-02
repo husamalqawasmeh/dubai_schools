@@ -1049,7 +1049,6 @@ a.adminlink:hover { border-color: var(--accent); }
 @media (max-width: 620px) { .partof { display: none; } }
 
 /* ---------------- chat, inside the box ---------------- */
-.chatbox.is-open { min-height: 260px; }
 .chatlog {
   flex: 1;
   min-height: 150px;
@@ -1106,3 +1105,22 @@ a.adminlink:hover { border-color: var(--accent); }
    does not move. Only this grid — the fee and curriculum tables sit tight
    under theirs because they carry more rows of their own. */
 .rating-grid { margin-top: 22px; }
+
+/* Chat icon, and the expanded state. The box is taken out of flow on open —
+   see the script — so it grows over the column beneath instead of pushing
+   the page down. */
+.chatbox-q { display: flex; align-items: center; gap: 7px; }
+.chatbox-ico { flex: none; width: 17px; height: 17px; color: var(--accent); }
+.chatbox-ico svg { display: block; width: 100%; height: 100%; }
+.chatclose {
+  margin-left: auto; width: 22px; height: 22px; flex: none;
+  font-size: 17px; line-height: 1; cursor: pointer;
+  color: var(--muted); background: none; border: none; border-radius: 5px;
+}
+.chatclose:hover { color: var(--ink); background: var(--surface-2); }
+.chatbox.is-open {
+  z-index: 30;
+  box-shadow: 0 8px 26px rgba(18, 36, 26, 0.16);
+  min-height: 0;
+}
+.chatbox.is-open .chatlog { flex: 1; max-height: none; min-height: 0; }

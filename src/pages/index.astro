@@ -43,7 +43,15 @@ const maxCur = top[0]?.n ?? 1;
 
       <aside class="chatwrap">
         <div class="chatbox" id="chatbox">
-          <p class="chatbox-q">Have a question?</p>
+          <p class="chatbox-q">
+            <span class="chatbox-ico" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 11.5a8.4 8.4 0 0 1-9 8.4 9.9 9.9 0 0 1-2.8-.4L3 21l1.6-4.6A8.2 8.2 0 0 1 3.6 11.5 8.4 8.4 0 0 1 12 3.1a8.4 8.4 0 0 1 9 8.4z"/>
+              </svg>
+            </span>
+            Have a question?
+            <button type="button" class="chatclose" id="chatclose" hidden aria-label="Close chat">&times;</button>
+          </p>
           <div class="chatlog" id="chatlog" hidden></div>
           <form class="chatform" id="chatform" hidden>
             <input id="chatinput" placeholder="Ask about fees, curricula or areas…" autocomplete="off" />
@@ -159,15 +167,55 @@ const maxCur = top[0]?.n ?? 1;
     return el;
   }
 
+  const close = document.getElementById("chatclose") as HTMLButtonElement;
+  const wrap = box.parentElement as HTMLElement;
+
+  /**
+   * Expand over the column rather than inside it. The box goes absolute and
+   * its wrapper is frozen at the height it already had, so the grid row keeps
+   * its size and nothing below moves by a pixel. The height is measured to
+   * the bottom of the Browse box two rows down, which is the one thing CSS
+   * alone cannot express — they are in different grid rows.
+   */
+  function size() {
+    const browse = document.querySelector(".pane-narrow");
+    if (!browse) return;
+    const boxTop = box.getBoundingClientRect().top;
+    box.style.height = Math.round(browse.getBoundingClientRect().bottom - boxTop) + "px";
+  }
+
   open.addEventListener("click", () => {
+    const h = box.getBoundingClientRect().height;
+    wrap.style.height = h + "px";          // hold the row open at its old size
+    wrap.style.position = "relative";
+    box.style.position = "absolute";
+    box.style.insetInline = "0";
+    box.style.top = "0";
+
     box.classList.add("is-open");
     open.hidden = true;
+    close.hidden = false;
     log.hidden = false;
     form.hidden = false;
     if (!log.childElementCount) {
       bubble("bot", "Ask me about fees, curricula, areas or KHDA ratings across all 232 schools.");
     }
+    size();
     input.focus();
+  });
+
+  close.addEventListener("click", () => {
+    box.classList.remove("is-open");
+    box.removeAttribute("style");
+    wrap.removeAttribute("style");
+    close.hidden = true;
+    log.hidden = true;
+    form.hidden = true;
+    open.hidden = false;
+  });
+
+  addEventListener("resize", () => {
+    if (box.classList.contains("is-open")) size();
   });
 
   form.addEventListener("submit", async (e) => {
