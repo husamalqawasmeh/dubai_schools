@@ -87,7 +87,7 @@ input:focus-visible {
 }
 
 h1, h2, h3 { font-family: var(--display); letter-spacing: -0.02em; margin: 0; text-wrap: balance; }
-h1 { font-size: clamp(21px, 2.9vw, 30px); font-weight: 700; line-height: 1.08; }
+h1 { font-size: clamp(20px, 2.6vw, 27px); font-weight: 700; line-height: 1.1; }
 h2 { font-size: 20px; font-weight: 600; }
 h3 { font-size: 17px; font-weight: 600; }
 p { margin: 0 0 14px; }
@@ -399,7 +399,7 @@ body:has(.listing) main { overflow: hidden; }
   display: flex;
   align-items: flex-end;
   justify-content: center;
-  height: 32px;
+  height: 26px;
   padding-top: 0;
 }
 .band-grid .tier-name { padding-top: 1px; font-size: 11.5px; }
@@ -409,13 +409,13 @@ body:has(.listing) main { overflow: hidden; }
   font-size: 11px;
   color: var(--muted);
   text-align: center;
-  padding: 0 3px 5px;
-  line-height: 1.25;
+  padding: 0 3px 3px;
+  line-height: 1.2;
 }
-.band-grid .tier-n { padding-bottom: 1px; }
+.band-grid .tier-n { padding-bottom: 0; padding-top: 0; }
 @media (max-width: 460px) {
-  .band-coins { height: 32px; }
-  .band-coins .coins-lg { height: 30px; }
+  .band-coins { height: 24px; }
+  .band-coins .coins-lg { height: 24px; }
   .band-range { font-size: 10px; }
 }
 
@@ -980,7 +980,7 @@ a.adminlink:hover { border-color: var(--accent); }
 .pane .sub { font-family: var(--display); font-size: 12.5px; color: var(--muted); margin: 0 0 10px; line-height: 1.4; }
 
 /* The coin stack set the height of the whole top row. */
-.band-coins .coins-lg { height: 34px; width: auto; }
+.band-coins .coins-lg { height: 26px; width: auto; }
 
 
 /* The one pane that keeps a box: it is the call to action, not a statistic. */
@@ -994,9 +994,14 @@ a.adminlink:hover { border-color: var(--accent); }
    Only the top row is split: the hero on the left, the chat box on the right.
    Everything under it runs the full width of the page, as before. */
 .home { padding-top: 18px; padding-bottom: 34px; }
-.home-top { display: grid; gap: 14px; align-items: start; margin-bottom: 12px; }
+/* The same four tracks and the same 12px gap as the panelset below, so the
+   chat box and the Browse box are literally the same column — a fixed 292px
+   was 33px wider than a quarter of the row and threw their left edges out. */
+.home-top { display: grid; gap: 12px; align-items: start; margin-bottom: 12px; }
 @media (min-width: 900px) {
-  .home-top { grid-template-columns: minmax(0, 1fr) 292px; }
+  .home-top { grid-template-columns: repeat(4, 1fr); }
+  .home-hero { grid-column: span 3; }
+  .chatwrap { grid-column: span 1; }
 }
 .home-hero { min-width: 0; }
 .home-hero h1 { margin-bottom: 2px; }
@@ -1097,4 +1102,4 @@ a.adminlink:hover { border-color: var(--accent); }
 /* The rating table drops a little clear of its heading; the heading itself
    does not move. Only this grid — the fee and curriculum tables sit tight
    under theirs because they carry more rows of their own. */
-.rating-grid { margin-top: 12px; }
+.rating-grid { margin-top: 22px; }
