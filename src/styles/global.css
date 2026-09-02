@@ -25,6 +25,7 @@
   --accent: #0c6455;
   --accent-2: #084a3f;
   --on-accent: #ffffff;
+  --divider: #ffffff;   /* column separators, deliberately off the green scale */
 
   /* KHDA's scale, re-stepped for a light-green ground. Each step is both a
      3:1 graphic against the card and dark enough to carry white text, which
@@ -326,7 +327,7 @@ body:has(.listing) main { overflow: hidden; }
 }
 .tier + .tier,
 .tier-grid > .tier-static + .tier,
-.tier-grid > .tier + .tier-static { border-left: 1px solid var(--rule); }
+.tier-grid > .tier + .tier-static { border-left: 2px solid var(--divider); }
 .tier {
   background: transparent;
   text-decoration: none;
