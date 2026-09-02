@@ -1,0 +1,207 @@
+---
+import Base from "../layouts/Base.astro";
+import { allSchools } from "../lib/db";
+
+const schools = await allSchools();
+const names = schools.map((s) => s.name);
+
+const active = (Astro.url.searchParams.get("as") ?? "student").toLowerCase();
+
+/**
+ * One action per audience for now.
+ *
+ * Students deliberately get a school-level comment box and nothing that
+ * invites naming a teacher. Named criticism of an identifiable person,
+ * written by a minor, is a defamation and safeguarding problem rather than a
+ * feature — recognition of good teaching can come back later as a positive-only
+ * nomination, which carries none of that risk.
+ */
+const TABS = [
+  {
+    id: "student",
+    label: "Students",
+    kind: "comment",
+    title: "Leave a comment",
+    blurb:
+      "Tell people what your school is actually like — the teaching, the facilities, how it feels to be there day to day.",
+    messageLabel: "Your comment",
+    placeholder: "What would you want someone starting at your school to know?",
+    guard:
+      "Write about the school, not about individual people by name. Comments naming a teacher or another student are not published.",
+    contactLabel: "",
+  },
+  {
+    id: "parent",
+    label: "Parents",
+    kind: "info_request",
+    title: "Request information",
+    blurb:
+      "Ask about a school — fees not listed here, admissions, transport, waiting lists — and we will chase the answer and publish it where it helps others.",
+    messageLabel: "What would you like to know?",
+    placeholder: "e.g. Does this school run a bus from Al Barsha, and what does it cost?",
+    guard: "",
+    contactLabel: "Email, if you would like a reply",
+  },
+  {
+    id: "school",
+    label: "School admin",
+    kind: "school_details",
+    title: "Provide details to be reviewed and shared",
+    blurb:
+      "KHDA does not publish your office email, staff numbers or transport. Send them here and they will appear on your school's page once checked.",
+    messageLabel: "Details",
+    placeholder:
+      "Office email, number of teachers, number of admin staff, transport routes and fees, anything else worth listing.",
+    guard: "",
+    contactLabel: "Your work email",
+  },
+  {
+    id: "site",
+    label: "Site admin",
+    kind: "comment",
+    title: "Sign in",
+    blurb: "",
+    messageLabel: "",
+    placeholder: "",
+    guard: "",
+    contactLabel: "",
+  },
+];
+
+const current = TABS.find((t) => t.id === active) ?? TABS[0];
+---
+
+<Base
+  title="Contribute — Dubai Schools"
+  description="Students, parents and schools: leave a comment, request information, or send details to be listed."
+>
+  <div class="wrap contribute">
+    <div class="contribute-head">
+      <a class="back" href="/">&larr; Overview</a>
+      <h1>Contribute</h1>
+    </div>
+
+    <div class="tabs" role="tablist">
+      {TABS.map((t) => (
+        <a
+          class={t.id === current.id ? "tab is-on" : "tab"}
+          href={`/contribute?as=${t.id}`}
+          role="tab"
+          aria-selected={t.id === current.id ? "true" : "false"}
+        >
+          {t.label}
+        </a>
+      ))}
+    </div>
+
+    <div class="tabpanel" role="tabpanel">
+      {current.id === "site" ? (
+        <div class="panel">
+          <h2>Sign in</h2>
+          <p class="muted-p">
+            The admin console is not built yet. It will hold the moderation
+            queue for everything submitted here, school editing, and the data
+            update runs.
+          </p>
+          <a class="btn" href="/" style="max-width:200px">Back to the directory</a>
+        </div>
+      ) : (
+        <div class="panel">
+          <h2>{current.title}</h2>
+          <p class="muted-p">{current.blurb}</p>
+
+          {current.guard && <p class="guard">{current.guard}</p>}
+
+          <form id="f" data-audience={current.id} data-kind={current.kind}>
+            <div class="form-row">
+              <div class="field">
+                <label for="school_name">School</label>
+                <input id="school_name" name="school_name" list="school-list" placeholder="Start typing a school name" autocomplete="off" />
+                <datalist id="school-list">
+                  {names.map((n) => <option value={n}></option>)}
+                </datalist>
+              </div>
+              <div class="field">
+                <label for="author_name">Your name <span class="opt">optional</span></label>
+                <input id="author_name" name="author_name" placeholder="Shown with your comment, if published" autocomplete="off" />
+              </div>
+            </div>
+
+            {current.contactLabel && (
+              <div class="field">
+                <label for="contact">{current.contactLabel} <span class="opt">never published</span></label>
+                <input id="contact" name="contact" type="email" placeholder="you@example.com" autocomplete="email" />
+              </div>
+            )}
+
+            <div class="field">
+              <label for="message">{current.messageLabel}</label>
+              <textarea id="message" name="message" rows="6" placeholder={current.placeholder} required></textarea>
+            </div>
+
+            {/* Honeypot. Hidden from people, irresistible to bots. */}
+            <div class="hp" aria-hidden="true">
+              <label for="website">Website</label>
+              <input id="website" name="website" tabindex="-1" autocomplete="off" />
+            </div>
+
+            <div class="form-foot">
+              <button class="btn" type="submit" id="send">Send for review</button>
+              <p class="note" id="msg">
+                Nothing appears on the site until it has been read and approved.
+              </p>
+            </div>
+          </form>
+        </div>
+      )}
+    </div>
+  </div>
+</Base>
+
+<script>
+  const form = document.getElementById("f") as HTMLFormElement | null;
+  if (form) {
+    const btn = document.getElementById("send") as HTMLButtonElement;
+    const msg = document.getElementById("msg")!;
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      btn.disabled = true;
+      msg.textContent = "Sending…";
+      msg.className = "note";
+
+      const data = new FormData(form);
+      const payload = {
+        audience: form.dataset.audience,
+        kind: form.dataset.kind,
+        school_name: data.get("school_name") ?? "",
+        author_name: data.get("author_name") ?? "",
+        contact: data.get("contact") ?? "",
+        message: data.get("message") ?? "",
+        website: data.get("website") ?? "",
+      };
+
+      try {
+        const res = await fetch("/api/submit", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        });
+        const out = (await res.json()) as { ok: boolean; error?: string };
+        if (out.ok) {
+          form.innerHTML =
+            '<p class="thanks">Thank you — that has gone to the moderation queue. ' +
+            "It will appear on the site once a moderator has read it.</p>";
+        } else {
+          msg.textContent = out.error ?? "That did not send. Please try again.";
+          msg.className = "note is-bad";
+          btn.disabled = false;
+        }
+      } catch {
+        msg.textContent = "That did not send — check your connection and try again.";
+        msg.className = "note is-bad";
+        btn.disabled = false;
+      }
+    });
+  }
+</script>
