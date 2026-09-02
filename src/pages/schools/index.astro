@@ -23,7 +23,7 @@ const ratedOnly = p.get("rated") === "1";
 const all: School[] = await allSchools();
 
 const bandLabel: Record<string, string> = {
-  acceptable: "Acceptable", medium: "Medium", high: "High", very_high: "Very high",
+  acceptable: "Acceptable", medium: "Medium", high: "Higher", very_high: "Highest",
 };
 const bandDots: Record<string, number> = { acceptable: 1, medium: 2, high: 3, very_high: 4 };
 
@@ -121,8 +121,8 @@ const ratOptions = TIERS.filter((t) => ratCount.has(t)).map((value) => ({
 const BANDS = [
   { key: "acceptable", label: "Acceptable", range: "under AED 25,000" },
   { key: "medium", label: "Medium", range: "AED 25,000 – 49,999" },
-  { key: "high", label: "High", range: "AED 50,000 – 89,999" },
-  { key: "very_high", label: "Very high", range: "AED 90,000 and above" },
+  { key: "high", label: "Higher", range: "AED 50,000 – 89,999" },
+  { key: "very_high", label: "Highest", range: "AED 90,000 and above" },
   { key: "none", label: "No fee published", range: "" },
 ];
 const bandCount = tally(all, (x) => [x.fee_band ?? "none"]);

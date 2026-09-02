@@ -40,7 +40,7 @@ const areas = [...new Set(rows.map((r) => r.area))].sort();
 const curricula = [...new Set(rows.flatMap((r) => r.curricula))].sort();
 const TIERS = ["Outstanding", "Very Good", "Good", "Acceptable", "Not rated"];
 const bandLabel: Record<string, string> = {
-  acceptable: "Acceptable", medium: "Medium", high: "High", very_high: "Very high",
+  acceptable: "Acceptable", medium: "Medium", high: "Higher", very_high: "Highest",
 };
 ---
 

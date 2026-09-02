@@ -8,60 +8,44 @@
    blindness and greyscale printing unchanged.
    --------------------------------------------------------------------------- */
 :root {
-  --ground: #f2f4f3;
-  --surface: #ffffff;
-  --surface-2: #e9edeb;
-  --ink: #101f1d;
-  --ink-2: #46534f;
-  --muted: #5f6e6b;
-  --rule: #dbe1de;
-  --rule-firm: #c3ccc8;
-  --accent: #0e6a62;
-  --accent-2: #0a544d;
+  /* A light-green scheme, committed to rather than paired with a dark one.
+     The card sits slightly darker than the page, so the usual "card lifts off
+     the ground" reading is inverted deliberately.
+
+     Every colour below was checked against the CARD surface, not the page,
+     because that is the tighter of the two grounds. */
+  --ground: #e9f3ea;
+  --surface: #dceade;
+  --surface-2: #cfe2d3;
+  --ink: #12241a;
+  --ink-2: #3a4f41;
+  --muted: #546b5b;
+  --rule: #c3d9c8;
+  --rule-firm: #a8c6af;
+  --accent: #0c6455;
+  --accent-2: #084a3f;
   --on-accent: #ffffff;
 
-  --r1: #08514c; /* Outstanding */
-  --r2: #0e7a70; /* Very Good   */
-  --r3: #2aa396; /* Good        */
-  --r4: #7fcbbf; /* Acceptable  */
+  /* KHDA's scale, re-stepped for a light-green ground. Each step is both a
+     3:1 graphic against the card and dark enough to carry white text, which
+     the old ramp was not once the card stopped being white. */
+  --r1: #062c26; /* Outstanding */
+  --r2: #0a4b41; /* Very Good   */
+  --r3: #0d675a; /* Good        */
+  --r4: #118372; /* Acceptable  */
 
-  --warn: #8a5a12;
-  --coin: #d9a327;      /* coin face */
-  --coin-rim: #9a6c12;  /* cylinder side and face edge */
-  --coin-ink: #6b4a0c;  /* the dirham mark struck into the face */
-  --shadow: 0 1px 2px rgba(16, 31, 29, 0.05), 0 1px 1px rgba(16, 31, 29, 0.04);
+  --warn: #7d5210;
+  --coin: #d9a327;
+  --coin-rim: #8a6210;
+  --coin-ink: #4a3406;
+  --crit: #8f3327;
+
+  --shadow: 0 1px 2px rgba(18, 36, 26, 0.07), 0 1px 1px rgba(18, 36, 26, 0.05);
 
   --display: "Archivo", "Helvetica Neue", Arial, sans-serif;
   --body: "Source Serif 4", Georgia, "Times New Roman", serif;
   --mono: "IBM Plex Mono", ui-monospace, Consolas, monospace;
-  /* Rounded, humanist terminals — used for buttons, where Archivo's squared
-     grotesque reads colder than a call to action wants to. */
   --ui: "Quicksand", "Trebuchet MS", "Segoe UI", sans-serif;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --ground: #0e1917;
-    --surface: #16221f;
-    --surface-2: #1e2b28;
-    --ink: #e8edeb;
-    --ink-2: #b4c0bd;
-    --muted: #8b9995;
-    --rule: #2a3936;
-    --rule-firm: #3b4c48;
-    --accent: #5cc2b5;
-    --accent-2: #8ad8cd;
-    --on-accent: #08201d;
-    --r1: #9fe0d5;
-    --r2: #5cc2b5;
-    --r3: #2e9186;
-    --r4: #1c6259;
-    --warn: #d9a441;
-    --coin: #e6bb52;
-    --coin-rim: #a87f1e;
-    --coin-ink: #4a3406;
-    --shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
-  }
 }
 
 * { box-sizing: border-box; }
@@ -178,8 +162,8 @@ a.bar-row:hover .bar-lab { color: var(--ink); }
 .filters .row { display: grid; gap: 12px; }
 @media (min-width: 700px) { .filters .row { grid-template-columns: repeat(4, 1fr); } }
 .field label {
-  display: block; font-family: var(--display); font-size: 10.5px; font-weight: 600;
-  letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 5px;
+  display: block; font-family: var(--display); font-size: 11.5px; font-weight: 600;
+  letter-spacing: 0.01em; color: var(--muted); margin-bottom: 5px;
 }
 .field select, .field input {
   width: 100%; height: 38px; padding: 0 10px; font-family: var(--display); font-size: 14px;
@@ -216,7 +200,7 @@ a.bar-row:hover .bar-lab { color: var(--ink); }
 .badge[data-r="Outstanding"] { background: var(--r1); }
 .badge[data-r="Very Good"]   { background: var(--r2); }
 .badge[data-r="Good"]        { background: var(--r3); }
-.badge[data-r="Acceptable"]  { background: var(--r4); color: #08201d; }
+.badge[data-r="Acceptable"]  { background: var(--r4); }
 .badge[data-r="Not rated"]   { background: transparent; color: var(--muted); border: 1px dashed var(--rule-firm); }
 
 .empty {
@@ -483,7 +467,7 @@ body:has(.listing) main { overflow: hidden; }
   grid-template-columns: auto minmax(0, 1fr) auto;
   align-items: center;
   column-gap: 10px;
-  padding: 6px 10px;
+  padding: 3px 10px;
   border-radius: 4px;
   font-family: var(--display);
   font-size: 13px;
@@ -513,16 +497,20 @@ body:has(.listing) main { overflow: hidden; }
 .multi-clear {
   display: block;
   width: 100%;
-  margin-top: 4px;
-  padding: 6px;
+  margin: 0 0 4px;
+  padding: 5px 6px;
   font-family: var(--display);
   font-size: 12px;
   color: var(--muted);
   background: none;
   border: none;
-  border-top: 1px solid var(--rule);
-  border-radius: 0 0 4px 4px;
+  border-bottom: 1px solid var(--rule);
+  border-radius: 4px 4px 0 0;
   cursor: pointer;
+  position: sticky;
+  top: -5px;
+  background: var(--surface);
+  z-index: 1;
 }
 .multi-clear:hover { color: var(--ink); background: var(--surface-2); }
 
@@ -614,8 +602,7 @@ body:has(.listing) main { overflow: hidden; }
   font-family: var(--display);
   font-size: 10.5px;
   font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
+  letter-spacing: 0.01em;
   color: var(--muted);
   margin-bottom: 5px;
 }
@@ -767,7 +754,7 @@ button.btn:disabled { opacity: 0.55; cursor: default; }
 .adminlogin .field label,
 .adminwrap .field label {
   display: block; font-family: var(--display); font-size: 10.5px; font-weight: 700;
-  letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 5px;
+  letter-spacing: 0.01em; color: var(--muted); margin-bottom: 5px;
 }
 .adminlogin input {
   width: 100%; height: 38px; padding: 0 11px; font-family: var(--display); font-size: 14.5px;
