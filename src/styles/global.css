@@ -87,7 +87,7 @@ input:focus-visible {
 }
 
 h1, h2, h3 { font-family: var(--display); letter-spacing: -0.02em; margin: 0; text-wrap: balance; }
-h1 { font-size: clamp(25px, 3.4vw, 35px); font-weight: 700; line-height: 1.06; }
+h1 { font-size: clamp(21px, 2.9vw, 30px); font-weight: 700; line-height: 1.08; }
 h2 { font-size: 20px; font-weight: 600; }
 h3 { font-size: 17px; font-weight: 600; }
 p { margin: 0 0 14px; }
