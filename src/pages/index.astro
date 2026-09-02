@@ -11,12 +11,11 @@ const tiersPresent = TIERS.filter((t) => s.ratings[t]);
 const maxTier = Math.max(...tiersPresent.map((t) => s.ratings[t]));
 
 const BANDS = [
-  { key: "acceptable", label: "Acceptable", dots: 1, range: "under AED 25,000" },
-  { key: "medium", label: "Medium", dots: 2, range: "AED 25,000 – 49,999" },
-  { key: "high", label: "High", dots: 3, range: "AED 50,000 – 89,999" },
-  { key: "very_high", label: "Very high", dots: 4, range: "AED 90,000 and above" },
+  { key: "acceptable", label: "Acceptable", dots: 1, range: "under AED 25,000", short: "< 25k" },
+  { key: "medium", label: "Medium", dots: 2, range: "AED 25,000 – 49,999", short: "25–50k" },
+  { key: "high", label: "High", dots: 3, range: "AED 50,000 – 89,999", short: "50–90k" },
+  { key: "very_high", label: "Very high", dots: 4, range: "AED 90,000 and above", short: "90k +" },
 ];
-const maxBand = Math.max(...BANDS.map((b) => s.bands[b.key] ?? 0));
 
 // Top curricula by name, with the long tail folded into one row rather than
 // drawn as eight bars of one or two schools each.
@@ -73,22 +72,18 @@ const maxCur = top[0]?.n ?? 1;
       <div class="chart">
         <h3><span class="chart-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="6" rx="8" ry="3"/><path d="M4 6v5c0 1.7 3.6 3 8 3s8-1.3 8-3V6"/><path d="M4 11v5c0 1.7 3.6 3 8 3s8-1.3 8-3v-5"/></svg></span>What schools cost</h3>
         <p class="sub">Fee bands, cut on the real quartiles of the {s.priced} priced schools.</p>
-        <div class="bars">
+        <div class="tier-grid band-grid">
           {BANDS.map((b) => (
-            <a class="bar-row" href={`/schools?band=${b.key}`} title={`${b.label} — ${b.range}`}>
-              <span class="bar-lab" style="display:flex;align-items:flex-end;gap:7px">
-                <Coins n={b.dots} label={b.label} />
-                <span class="sr-only">{b.label}</span>
-              </span>
-              <span class="bar-track">
-                <span class="bar" style={`--w:${Math.round(((s.bands[b.key] ?? 0) / maxBand) * 100)}%`}></span>
-              </span>
-              <span class="bar-val">{s.bands[b.key] ?? 0}</span>
+            <a class="tier" href={`/schools?band=${b.key}`}>
+              <span class="band-coins"><Coins n={b.dots} size="lg" label={b.label} /></span>
+              <span class="tier-name">{b.label}</span>
+              <span class="tier-n">{s.bands[b.key] ?? 0}</span>
+              <span class="band-range">{b.short}</span>
             </a>
           ))}
         </div>
         <p class="sub" style="margin:13px 0 0">
-          One coin {BANDS[0].range}, four coins {BANDS[3].range}.
+          Annual fee in AED, one coin to four.
           <a href="/schools?band=none">{s.bands["none"] ?? 0} schools</a> publish no fee at all.
         </p>
       </div>

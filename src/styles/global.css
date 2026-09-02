@@ -26,7 +26,9 @@
   --r4: #7fcbbf; /* Acceptable  */
 
   --warn: #8a5a12;
-  --coin: #a8781f;   /* brass; 3.91:1 on white, checked as a graphic */
+  --coin: #d9a327;      /* coin face */
+  --coin-rim: #9a6c12;  /* cylinder side and face edge */
+  --coin-ink: #6b4a0c;  /* the dirham mark struck into the face */
   --shadow: 0 1px 2px rgba(16, 31, 29, 0.05), 0 1px 1px rgba(16, 31, 29, 0.04);
 
   --display: "Archivo", "Helvetica Neue", Arial, sans-serif;
@@ -52,7 +54,9 @@
     --r3: #2e9186;
     --r4: #1c6259;
     --warn: #d9a441;
-    --coin: #e0b65c;  /* 8.59:1 on the dark surface */
+    --coin: #e6bb52;
+    --coin-rim: #a87f1e;
+    --coin-ink: #4a3406;
     --shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
   }
 }
@@ -333,14 +337,19 @@ body:has(.listing) main { overflow: hidden; }
 }
 
 /* ---------------- coin stack (fee band) ----------------
-   Replaces the dot meter. Height is the encoding, so one coin reads as
-   cheap and four as dear without needing a legend. */
+   Height is the encoding, so one coin reads as cheap and four as dear
+   without needing a legend. */
 .coins { display: block; flex: none; }
-.coins ellipse {
-  fill: var(--coin);
-  stroke: var(--surface);
-  stroke-width: 0.8;
+.coin-face { fill: var(--coin); stroke: var(--coin-rim); stroke-width: 0.7; }
+.coin-edge { fill: var(--coin-rim); }
+.coin-mark {
+  fill: none;
+  stroke: var(--coin-ink);
+  stroke-width: 3.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
+.coins-lg .coin-face { stroke-width: 0.9; }
 
 /* ---------------- chart header icons ---------------- */
 .chart h3 { display: flex; align-items: center; gap: 7px; }
@@ -350,3 +359,28 @@ body:has(.listing) main { overflow: hidden; }
 /* Fee cells align on the coin baseline rather than centre, so stacks of
    different height still sit on a common floor. */
 .fee { align-items: flex-end; }
+
+/* ---------------- fee band: four columns, matching the rating panel ---------------- */
+.band-grid { grid-template-columns: repeat(4, 1fr); }
+.band-coins {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  height: 52px;
+  padding-top: 6px;
+}
+.band-grid .tier-name { padding-top: 4px; }
+.band-range {
+  display: block;
+  font-family: var(--mono);
+  font-size: 9.5px;
+  color: var(--muted);
+  text-align: center;
+  padding: 0 3px 10px;
+  line-height: 1.25;
+}
+.band-grid .tier-n { padding-bottom: 3px; }
+@media (max-width: 460px) {
+  .band-coins { height: 44px; }
+  .band-range { font-size: 8.5px; }
+}
