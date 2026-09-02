@@ -26,3 +26,4 @@
 *.pem
 npm-debug.log*
 /.admin.sql
+/.emails.sql

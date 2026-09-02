@@ -1,0 +1,1542 @@
+[
+  {
+    "centerId": "506085",
+    "schoolName": "",
+    "email": "diatshead@innoventureseducation.com",
+    "domain": "innoventureseducation.com",
+    "institutional": true
+  },
+  {
+    "centerId": "12",
+    "schoolName": "Al Arqm Private School",
+    "email": "alarqam@emirates.net.ae",
+    "domain": "emirates.net.ae",
+    "institutional": true
+  },
+  {
+    "centerId": "15",
+    "schoolName": "Al Basateen Private Nursery",
+    "email": "dwa-khawanij@hotmail.com",
+    "domain": "hotmail.com",
+    "institutional": false
+  },
+  {
+    "centerId": "59",
+    "schoolName": "Al Diyafah High School L.L.C",
+    "email": "principal@diyafahschool.com",
+    "domain": "diyafahschool.com",
+    "institutional": true
+  },
+  {
+    "centerId": "5",
+    "schoolName": "Al Eman Educational EST",
+    "email": "emanschooldubai@gmail.com",
+    "domain": "gmail.com",
+    "institutional": false
+  },
+  {
+    "centerId": "500819",
+    "schoolName": "Al Ghaf Private School L.L.C",
+    "email": "info@ghafschool.com",
+    "domain": "ghafschool.com",
+    "institutional": true
+  },
+  {
+    "centerId": "21",
+    "schoolName": "Al Ittihad Private School",
+    "email": "director@ipsmamzar.com",
+    "domain": "ipsmamzar.com",
+    "institutional": true
+  },
+  {
+    "centerId": "22",
+    "schoolName": "Al Ittihad Private School (Br)",
+    "email": "principal@ipsjumeira.com",
+    "domain": "ipsjumeira.com",
+    "institutional": true
+  },
+  {
+    "centerId": "23",
+    "schoolName": "Al Maaref American School L.L.C",
+    "email": "info@mas-edu.ae",
+    "domain": "mas-edu.ae",
+    "institutional": true
+  },
+  {
+    "centerId": "20",
+    "schoolName": "Al Mawakeb School Al Barsha L.L.C",
+    "email": "micheline.eid@almawakeb.sch.ae",
+    "domain": "almawakeb.sch.ae",
+    "institutional": true
+  },
+  {
+    "centerId": "19",
+    "schoolName": "Al Mawakeb School Al Garhoud L.L.C",
+    "email": "omar.hatoum@amsi.ae",
+    "domain": "amsi.ae",
+    "institutional": true
+  },
+  {
+    "centerId": "151988",
+    "schoolName": "Al Mawakeb School Al Khawaneej L.L.C",
+    "email": "amk@almawakeb.sch.ae",
+    "domain": "almawakeb.sch.ae",
+    "institutional": true
+  },
+  {
+    "centerId": "126",
+    "schoolName": "Al Nibras International Private School",
+    "email": "principal@nisdubai.ae",
+    "domain": "nisdubai.ae",
+    "institutional": true
+  },
+  {
+    "centerId": "10",
+    "schoolName": "Al Rashid Al Saleh Private School",
+    "email": "principal@alrashed-alsaleh.com",
+    "domain": "alrashed-alsaleh.com",
+    "institutional": true
+  },
+  {
+    "centerId": "68",
+    "schoolName": "Al Sadiq Islamic English School",
+    "email": "principal@alsadiqschool.com",
+    "domain": "alsadiqschool.com",
+    "institutional": true
+  },
+  {
+    "centerId": "152894",
+    "schoolName": "Al Salam Community School L.L.C",
+    "email": "registrar@alsalamcommunity.ae",
+    "domain": "alsalamcommunity.ae",
+    "institutional": true
+  },
+  {
+    "centerId": "43",
+    "schoolName": "Al Salam Private School",
+    "email": "principal@alsalamschool.ae",
+    "domain": "alsalamschool.ae",
+    "institutional": true
+  },
+  {
+    "centerId": "3",
+    "schoolName": "Al Shurooq Private School",
+    "email": "aps@shoruq.sch.ae",
+    "domain": "shoruq.sch.ae",
+    "institutional": true
+  },
+  {
+    "centerId": "500721",
+    "schoolName": "Ambassador International Academy L.L.C",
+    "email": "principalaia@aiadubai.com",
+    "domain": "aiadubai.com",
+    "institutional": true
+  },
+  {
+    "centerId": "502551",
+    "schoolName": "Ambassador International Academy L.L.C (Branch)",
+    "email": "accounts@ambassadorschool.com",
+    "domain": "ambassadorschool.com",
+    "institutional": true
+  },
+  {
+    "centerId": "401",
+    "schoolName": "Ambassador School",
+    "email": "principalasd@ambassadorschool.com",
+    "domain": "ambassadorschool.com",
+    "institutional": true
+  },
+  {
+    "centerId": "130",
+    "schoolName": "American Academy for Girls",
+    "email": "principal@americanacademy.ae",
+    "domain": "americanacademy.ae",
+    "institutional": true
+  },
+  {
+    "centerId": "32",
+    "schoolName": "American International School",
+    "email": "principal@aisschool.net",
+    "domain": "aisschool.net",
+    "institutional": true
+  },
+  {
+    "centerId": "34",
+    "schoolName": "American School Dubai",
+    "email": "superintendent@asdubai.org",
+    "domain": "asdubai.org",
+    "institutional": true
+  },
+  {
+    "centerId": "15159",
+    "schoolName": "American School of Creative Science L.L.C",
+    "email": "nura.lafee@nas.ascs.sch.ae",
+    "domain": "nas.ascs.sch.ae",
+    "institutional": true
+  },
+  {
+    "centerId": "505385",
+    "schoolName": "Amity English School",
+    "email": "gre-aesd@amitydubai.ae",
+    "domain": "amitydubai.ae",
+    "institutional": true
+  },
+  {
+    "centerId": "152457",
+    "schoolName": "Amity School L.L.C",
+    "email": "principal@amitydubai.ae",
+    "domain": "amitydubai.ae",
+    "institutional": true
+  },
+  {
+    "centerId": "52",
+    "schoolName": "Apple International School",
+    "email": "khdacoordinator_sec@apple.sch.ae",
+    "domain": "apple.sch.ae",
+    "institutional": true
+  },
+  {
+    "centerId": "44",
+    "schoolName": "Arab Unity School L.L.C",
+    "email": "principal@arabunityschool.ae",
+    "domain": "arabunityschool.ae",
+    "institutional": true
+  },
+  {
+    "centerId": "151820",
+    "schoolName": "Arcadia British School",
+    "email": "principal@arcadia.sch.ae",
+    "domain": "arcadia.sch.ae",
+    "institutional": true
+  },
+  {
+    "centerId": "503416",
+    "schoolName": "Arcadia Global School",
+    "email": "ahlam.ismail@arcadia.sch.ae",
+    "domain": "arcadia.sch.ae",
+    "institutional": true
+  },
+  {
+    "centerId": "501095",
+    "schoolName": "Australian International School - Dubai L.L.C",
+    "email": "info@aisdubai.ae",
+    "domain": "aisdubai.ae",
+    "institutional": true
+  },
+  {
+    "centerId": "505085",
+    "schoolName": "BC Academy International School L.L.C",
+    "email": "info@bcacad.org",
+    "domain": "bcacad.org",
+    "institutional": true
+  },
+  {
+    "centerId": "1440",
+    "schoolName": "Bilingual French International School L.L.C-FZ",
+    "email": "administrator.khda@icedubai.org",
+    "domain": "icedubai.org",
+    "institutional": true
+  },
+  {
+    "centerId": "502805",
+    "schoolName": "Bloom World Academy L.L.C",
+    "email": "principal@bloomworldacademy.ae",
+    "domain": "bloomworldacademy.ae",
+    "institutional": true
+  },
+  {
+    "centerId": "500607",
+    "schoolName": "Bright Learners Private School L.L.C",
+    "email": "arabic.secretary@brightlearners.ae",
+    "domain": "brightlearners.ae",
+    "institutional": true
+  },
+  {
+    "centerId": "152711",
+    "schoolName": "Bright Riders School",
+    "email": "info@brightridersdubai.com",
+    "domain": "brightridersdubai.com",
+    "institutional": true
+  },
+  {
+    "centerId": "152035",
+    "schoolName": "Brighton College Dubai L.L.C",
+    "email": "headmaster@brightoncollegedubai.ae",
+    "domain": "brightoncollegedubai.ae",
+    "institutional": true
+  },
+  {
+    "centerId": "87",
+    "schoolName": "Buds Public School",
+    "email": "admin@budsdxb.ae",
+    "domain": "budsdxb.ae",
+    "institutional": true
+  },
+  {
+    "centerId": "48",
+    "schoolName": "Cambridge International School",
+    "email": "principal_cis@gemsedu.com",
+    "domain": "gemsedu.com",
+    "institutional": true
+  },
+  {
+    "centerId": "2149",
+    "schoolName": "Capital School L.L.C",
+    "email": "info@capitalschooluae.com",
+    "domain": "capitalschooluae.com",
+    "institutional": true
+  },
+  {
+    "centerId": "501052",
+    "schoolName": "Cedar School L.L.C",
+    "email": "registrar@cedarschool.ae",
+    "domain": "cedarschool.ae",
+    "institutional": true
+  },
+  {
+    "centerId": "501256",
+    "schoolName": "Chinese School Dubai",
+    "email": "info@csd.ae",
+    "domain": "csd.ae",
+    "institutional": true
+  },
+  {
+    "centerId": "14720",
+    "schoolName": "Citizens School",
+    "email": "aya.alkafory@citizens.me",
+    "domain": "citizens.me",
+    "institutional": true
+  },
+  {
+    "centerId": "15083",
+    "schoolName": "Clarion School L.L.C",
+    "email": "principal@clarionschool.com",
+    "domain": "clarionschool.com",
+    "institutional": true
+  },
+  {
+    "centerId": "643",
+    "schoolName": "Collegiate International School",
+    "email": "head@casdubai.com",
+    "domain": "casdubai.com",
+    "institutional": true
+  },
+  {
+    "centerId": "1604",
+    "schoolName": "Credence High School L.L.C",
+    "email": "principal@credencehighschool.com",
+    "domain": "credencehighschool.com",
+    "institutional": true
+  },
+  {
+    "centerId": "80",
+    "schoolName": "Crescent English School",
+    "email": "principal@crescentschooldubai.com",
+    "domain": "crescentschooldubai.com",
+    "institutional": true
+  },
+  {
+    "centerId": "266",
+    "schoolName": "Dar Al Marefa Private School",
+    "email": "steven.g@daralmarefa.ae",
+    "domain": "daralmarefa.ae",
+    "institutional": true
+  },
+  {
+    "centerId": "124",
+    "schoolName": "Deira International School",
+    "email": "director@disdubai.ae",
+    "domain": "disdubai.ae",
+    "institutional": true
+  },
+  {
+    "centerId": "339",
+    "schoolName": "Deira Private School",
+    "email": "principal@deiraprivateschool.ae",
+    "domain": "deiraprivateschool.ae",
+    "institutional": true
+  },
+  {
+    "centerId": "112",
+    "schoolName": "Delhi Private School L.L.C",
+    "email": "principal@dpsdubai.com",
+    "domain": "dpsdubai.com",
+    "institutional": true
+  },
+  {
+    "centerId": "15002",
+    "schoolName": "DEWA Academy",
+    "email": "khalid.binmasood@dewa.gov.ae",
+    "domain": "dewa.gov.ae",
+    "institutional": true
+  },
+  {
+    "centerId": "503607",
+    "schoolName": "Dewvale School L.L.C",
+    "email": "principal@dewvaleschool.ae",
+    "domain": "dewvaleschool.ae",
+    "institutional": true
+  },
+  {
+    "centerId": "503799",
+    "schoolName": "Dhruv Global school",
+    "email": "principal@dhruv.ae",
+    "domain": "dhruv.ae",
+    "institutional": true
+  },
+  {
+    "centerId": "2248",
+    "schoolName": "Dove Green Private School L.L.C",
+    "email": "registrar@dovegreenschool.com",
+    "domain": "dovegreenschool.com",
+    "institutional": true
+  },
+  {
+    "centerId": "134",
+    "schoolName": "Dubai British School",
+    "email": "principal@dubaibritishschool.ae",
+    "domain": "dubaibritishschool.ae",
+    "institutional": true
+  },
+  {
+    "centerId": "14564",
+    "schoolName": "Dubai British School Jumeirah Park",
+    "email": "principal@dubaibritishschooljp.ae",
+    "domain": "dubaibritishschooljp.ae",
+    "institutional": true
+  },
+  {
+    "centerId": "505058",
+    "schoolName": "DUBAI BRITISH SCHOOL MIRA (BR OF TAALEEM MANAGEMENT (L L C))",
+    "email": "awilliamson@taaleem.ae",
+    "domain": "taaleem.ae",
+    "institutional": true
+  },
+  {
+    "centerId": "39",
+    "schoolName": "Dubai Carmel School",
+    "email": "info@dubaicarmelschool.com",
+    "domain": "dubaicarmelschool.com",
+    "institutional": true
+  },
+  {
+    "centerId": "70",
+    "schoolName": "Dubai College",
+    "email": "dccommunications@dubaicollege.org",
+    "domain": "dubaicollege.org",
+    "institutional": true
+  },
+  {
+    "centerId": "50",
+    "schoolName": "Dubai English Speaking School",
+    "email": "dess_headteacher@dessc.sch.ae",
+    "domain": "dessc.sch.ae",
+    "institutional": true
+  },
+  {
+    "centerId": "357",
+    "schoolName": "Dubai English Speaking School - (College)",
+    "email": "desc_headteacher@dessc.sch.ae",
+    "domain": "dessc.sch.ae",
+    "institutional": true
+  },
+  {
+    "centerId": "506702",
+    "schoolName": "Dubai English Speaking School - Academic City",
+    "email": "nbrinicombe@dess.sch.ae",
+    "domain": "dess.sch.ae",
+    "institutional": true
+  },
+  {
+    "centerId": "65",
+    "schoolName": "Dubai Gem Private School",
+    "email": "principal@dubaigem.ae",
+    "domain": "dubaigem.ae",
+    "institutional": true
+  },
+  {
+    "centerId": "152197",
+    "schoolName": "Dubai Heights Academy",
+    "email": "arabicsecretary@dubaiheightsacademy.com",
+    "domain": "dubaiheightsacademy.com",
+    "institutional": true
+  },
+  {
+    "centerId": "500005",
+    "schoolName": "Dubai International Academy Albarsha",
+    "email": "compliance@innoventureseducation.com",
+    "domain": "innoventureseducation.com",
+    "institutional": true
+  },
+  {
+    "centerId": "129",
+    "schoolName": "Dubai International Academy L.L.C",
+    "email": "dinay@diadubai.com",
+    "domain": "diadubai.com",
+    "institutional": true
+  },
+  {
+    "centerId": "25",
+    "schoolName": "Dubai International Private School",
+    "email": "superintendent@dischool.com",
+    "domain": "dischool.com",
+    "institutional": true
+  },
+  {
+    "centerId": "26",
+    "schoolName": "Dubai International Private School - Br",
+    "email": "email@mydischool.com",
+    "domain": "mydischool.com",
+    "institutional": true
+  },
+  {
+    "centerId": "18",
+    "schoolName": "Dubai Modern Education School",
+    "email": "dmes@emirates.net.ae",
+    "domain": "emirates.net.ae",
+    "institutional": true
+  },
+  {
+    "centerId": "27",
+    "schoolName": "Dubai National School AlTwar L.L.C",
+    "email": "malek.daradkeh@dns.sch.ae",
+    "domain": "dns.sch.ae",
+    "institutional": true
+  },
+  {
+    "centerId": "28",
+    "schoolName": "Dubai National School L.L.C",
+    "email": "dns.barsha@dns.sch.ae",
+    "domain": "dns.sch.ae",
+    "institutional": true
+  },
+  {
+    "centerId": "66",
+    "schoolName": "Dubai Scholars Private School",
+    "email": "principal@dubaischolars.com",
+    "domain": "dubaischolars.com",
+    "institutional": true
+  },
+  {
+    "centerId": "502020",
+    "schoolName": "Dubai Schools Corporation Al Khawaneej L.L.C",
+    "email": "principal@dubaischools-alkhawaneej.ae",
+    "domain": "dubaischools-alkhawaneej.ae",
+    "institutional": true
+  },
+  {
+    "centerId": "502089",
+    "schoolName": "Dubai Schools Corporation L.L.C Albarsha",
+    "email": "principal@dubaischools-albarsha.ae",
+    "domain": "dubaischools-albarsha.ae",
+    "institutional": true
+  },
+  {
+    "centerId": "503338",
+    "schoolName": "Dubai Schools Corporation Nad AlShiba L.L.C",
+    "email": "principal@dubaischools-nas.ae",
+    "domain": "dubaischools-nas.ae",
+    "institutional": true
+  },
+  {
+    "centerId": "152311",
+    "schoolName": "Dunecrest American School L.L.C",
+    "email": "babushakra@esoleducation.com",
+    "domain": "esoleducation.com",
+    "institutional": true
+  },
+  {
+    "centerId": "502857",
+    "schoolName": "Durham School L.L.C",
+    "email": "info@durhamdubai.ae",
+    "domain": "durhamdubai.ae",
+    "institutional": true
+  },
+  {
+    "centerId": "152031",
+    "schoolName": "Dwight School L.L.C",
+    "email": "info@dwight.ae",
+    "domain": "dwight.ae",
+    "institutional": true
+  },
+  {
+    "centerId": "76",
+    "schoolName": "ELITE ENGLISH SCHOOL L.L.C",
+    "email": "ees@eliteenglishschool.com",
+    "domain": "eliteenglishschool.com",
+    "institutional": true
+  },
+  {
+    "centerId": "103",
+    "schoolName": "Emirates International School L.L.C.",
+    "email": "principaljumeirah@eischools.ae",
+    "domain": "eischools.ae",
+    "institutional": true
+  },
+  {
+    "centerId": "133",
+    "schoolName": "EMIRATES INTERNATIONAL SCHOOL MEADOWS",
+    "email": "principalmeadows@eischools.ae",
+    "domain": "eischools.ae",
+    "institutional": true
+  },
+  {
+    "centerId": "502174",
+    "schoolName": "Emirates National Schools - Dubai Branch",
+    "email": "principal@dxb.ens.sch.ae",
+    "domain": "dxb.ens.sch.ae",
+    "institutional": true
+  },
+  {
+    "centerId": "53",
+    "schoolName": "English Language Private School",
+    "email": "principal@elspvtdubai.com",
+    "domain": "elspvtdubai.com",
+    "institutional": true
+  },
+  {
+    "centerId": "152361",
+    "schoolName": "Fairgreen International School L.L.C",
+    "email": "info@fairgreen.ae",
+    "domain": "fairgreen.ae",
+    "institutional": true
+  },
+  {
+    "centerId": "29",
+    "schoolName": "GEMS Al Khaleej International School - Dubai Branch",
+    "email": "ghadeer.a_akn@gemsedu.com",
+    "domain": "gemsedu.com",
+    "institutional": true
+  },
+  {
+    "centerId": "152733",
+    "schoolName": "GEMS Albarsha National School - Dubai Branch",
+    "email": "principal_gns@gemsedu.com",
+    "domain": "gemsedu.com",
+    "institutional": true
+  },
+  {
+    "centerId": "2261",
+    "schoolName": "GEMS First Point School L.L.C",
+    "email": "principal_fps@gemsedu.com",
+    "domain": "gemsedu.com",
+    "institutional": true
+  },
+  {
+    "centerId": "14568",
+    "schoolName": "GEMS Founders School - Dubai Branch",
+    "email": "h.mahmoud_gfs@gemsedu.com",
+    "domain": "gemsedu.com",
+    "institutional": true
+  },
+  {
+    "centerId": "505334",
+    "schoolName": "GEMS Founders School DS DWC-LLC",
+    "email": "principal_gfd@gemsedu.com",
+    "domain": "gemsedu.com",
+    "institutional": true
+  },
+  {
+    "centerId": "151816",
+    "schoolName": "GEMS Founders School Mizhar",
+    "email": "gre_gfm@gemsedu.com",
+    "domain": "gemsedu.com",
+    "institutional": true
+  },
+  {
+    "centerId": "64",
+    "schoolName": "GEMS Jumeira Primary School - Dubai Branch",
+    "email": "principal_jps@gemsedu.com",
+    "domain": "gemsedu.com",
+    "institutional": true
+  },
+  {
+    "centerId": "83",
+    "schoolName": "GEMS Legacy School - Dubai Branch",
+    "email": "asha.a_gls@gemsedu.com",
+    "domain": "gemsedu.com",
+    "institutional": true
+  },
+  {
+    "centerId": "503690",
+    "schoolName": "GEMS Metropole School - Al Waha",
+    "email": "gre_mtw@gemsedu.com",
+    "domain": "gemsedu.com",
+    "institutional": true
+  },
+  {
+    "centerId": "2256",
+    "schoolName": "GEMS Metropole School - Dubai Branch",
+    "email": "principal_mts@gemsedu.com",
+    "domain": "gemsedu.com",
+    "institutional": true
+  },
+  {
+    "centerId": "78",
+    "schoolName": "GEMS Modern Academy",
+    "email": "principal_mhs@gemsedu.com",
+    "domain": "gemsedu.com",
+    "institutional": true
+  },
+  {
+    "centerId": "1267",
+    "schoolName": "GEMS New Millennium School L.L.C",
+    "email": "fatima.m_nms@gemsedu.com",
+    "domain": "gemsedu.com",
+    "institutional": true
+  },
+  {
+    "centerId": "77",
+    "schoolName": "GEMS Our Own English High School",
+    "email": "principal_ood@gemsedu.com",
+    "domain": "gemsedu.com",
+    "institutional": true
+  },
+  {
+    "centerId": "89",
+    "schoolName": "GEMS Our Own Indian School",
+    "email": "lalitha.s_ois@gemsedu.com",
+    "domain": "gemsedu.com",
+    "institutional": true
+  },
+  {
+    "centerId": "123",
+    "schoolName": "GEMS Royal Dubai School - Dubai Branch",
+    "email": "principal_rds@gemsedu.com",
+    "domain": "gemsedu.com",
+    "institutional": true
+  },
+  {
+    "centerId": "505008",
+    "schoolName": "GEMS School of Research and Innovation",
+    "email": "sco_sri@gemsedu.com",
+    "domain": "gemsedu.com",
+    "institutional": true
+  },
+  {
+    "centerId": "667",
+    "schoolName": "GEMS Wellington Academy -Fze",
+    "email": "principal_wso@gemsedu.com",
+    "domain": "gemsedu.com",
+    "institutional": true
+  },
+  {
+    "centerId": "122",
+    "schoolName": "GEMS Wellington International School - Dubai Branch",
+    "email": "principal_wis@gemsedu.com",
+    "domain": "gemsedu.com",
+    "institutional": true
+  },
+  {
+    "centerId": "1458",
+    "schoolName": "Gems Wellington L.L.C - Dubai Hills",
+    "email": "principal_wek@gemsedu.com",
+    "domain": "gemsedu.com",
+    "institutional": true
+  },
+  {
+    "centerId": "688",
+    "schoolName": "GEMS Winchester School",
+    "email": "enquiries_wsd@gemsedu.com",
+    "domain": "gemsedu.com",
+    "institutional": true
+  },
+  {
+    "centerId": "369",
+    "schoolName": "GEMS WORLD ACADEMY",
+    "email": "principal_gwa@gemsedu.com",
+    "domain": "gemsedu.com",
+    "institutional": true
+  },
+  {
+    "centerId": "116",
+    "schoolName": "German International School Dubai",
+    "email": "info@germanschool.ae",
+    "domain": "germanschool.ae",
+    "institutional": true
+  },
+  {
+    "centerId": "503932",
+    "schoolName": "Glendale International School LLC",
+    "email": "secretary.glendaledxb@globalschools.com",
+    "domain": "globalschools.com",
+    "institutional": true
+  },
+  {
+    "centerId": "152540",
+    "schoolName": "Global Indian International School L.L.C",
+    "email": "giis.dubai@globalindianschool.org",
+    "domain": "globalindianschool.org",
+    "institutional": true
+  },
+  {
+    "centerId": "60",
+    "schoolName": "Grammar School",
+    "email": "info@grammarschool.ae",
+    "domain": "grammarschool.ae",
+    "institutional": true
+  },
+  {
+    "centerId": "142",
+    "schoolName": "Greenfield International School",
+    "email": "lgirven@gischool.ae",
+    "domain": "gischool.ae",
+    "institutional": true
+  },
+  {
+    "centerId": "139",
+    "schoolName": "Greenwood International School",
+    "email": "rbadri40@emirates.net.ae",
+    "domain": "emirates.net.ae",
+    "institutional": true
+  },
+  {
+    "centerId": "74",
+    "schoolName": "Gulf Indian High School",
+    "email": "gihs@gihsdubai.com",
+    "domain": "gihsdubai.com",
+    "institutional": true
+  },
+  {
+    "centerId": "94",
+    "schoolName": "Gulf Model School",
+    "email": "gmsprincipal@gmsdubai.ae",
+    "domain": "gmsdubai.ae",
+    "institutional": true
+  },
+  {
+    "centerId": "101",
+    "schoolName": "H.H.Shaikh Rashid Al Maktoum Pakistani School",
+    "email": "principal@sramps.sch.ae",
+    "domain": "sramps.sch.ae",
+    "institutional": true
+  },
+  {
+    "centerId": "505137",
+    "schoolName": "Hampton Heights International School",
+    "email": "principal@hamptonheights.ae",
+    "domain": "hamptonheights.ae",
+    "institutional": true
+  },
+  {
+    "centerId": "14633",
+    "schoolName": "Hartland International School - FZ",
+    "email": "fcottam@hartlandinternational.com",
+    "domain": "hartlandinternational.com",
+    "institutional": true
+  },
+  {
+    "centerId": "37",
+    "schoolName": "Himayah Kindergarten For Education- Karama",
+    "email": "kh.almulla@dubaipolice.gov.ae",
+    "domain": "dubaipolice.gov.ae",
+    "institutional": true
+  },
+  {
+    "centerId": "500573",
+    "schoolName": "Himayah School For Education Boys - Diera (Abu Hail)",
+    "email": "college@dubaipolice.gov.ae",
+    "domain": "dubaipolice.gov.ae",
+    "institutional": true
+  },
+  {
+    "centerId": "500572",
+    "schoolName": "Himayah School For Education Girls - Al Karama",
+    "email": "college@dubaipolice.gov.ae",
+    "domain": "dubaipolice.gov.ae",
+    "institutional": true
+  },
+  {
+    "centerId": "56",
+    "schoolName": "Horizons English School L.L.C",
+    "email": "arabicsec@horizonschooldubai.com",
+    "domain": "horizonschooldubai.com",
+    "institutional": true
+  },
+  {
+    "centerId": "338",
+    "schoolName": "Icademy Middle East Fz.Llc",
+    "email": "ealfarra@icademydubai.com",
+    "domain": "icademydubai.com",
+    "institutional": true
+  },
+  {
+    "centerId": "152884",
+    "schoolName": "Ignite School L.L.C",
+    "email": "director@igniteschool.ae",
+    "domain": "igniteschool.ae",
+    "institutional": true
+  },
+  {
+    "centerId": "141",
+    "schoolName": "International Academic School",
+    "email": "principal@ias-dubai.ae",
+    "domain": "ias-dubai.ae",
+    "institutional": true
+  },
+  {
+    "centerId": "1851",
+    "schoolName": "International School of Creative Science Nad Alshiba L.L.C",
+    "email": "linaa@nas.iscs.sch.ae",
+    "domain": "nas.iscs.sch.ae",
+    "institutional": true
+  },
+  {
+    "centerId": "16",
+    "schoolName": "Islamic School for Training & Education",
+    "email": "school@sslootah.com",
+    "domain": "sslootah.com",
+    "institutional": true
+  },
+  {
+    "centerId": "104",
+    "schoolName": "Japanese School",
+    "email": "djs_koch@emirates.net.ae",
+    "domain": "emirates.net.ae",
+    "institutional": true
+  },
+  {
+    "centerId": "14719",
+    "schoolName": "Jebel Ali School (Br of Taaleem Management (L L C))",
+    "email": "arabicao@jebelalischool.org",
+    "domain": "jebelalischool.org",
+    "institutional": true
+  },
+  {
+    "centerId": "370",
+    "schoolName": "JSS International School L.L.C",
+    "email": "info@jssisdubai.com",
+    "domain": "jssisdubai.com",
+    "institutional": true
+  },
+  {
+    "centerId": "518",
+    "schoolName": "JSS Private School L.L.C",
+    "email": "principal@jsspsdubai.com",
+    "domain": "jsspsdubai.com",
+    "institutional": true
+  },
+  {
+    "centerId": "509",
+    "schoolName": "Jumeira Baccalaureate School",
+    "email": "principal@jbschool.ae",
+    "domain": "jbschool.ae",
+    "institutional": true
+  },
+  {
+    "centerId": "71",
+    "schoolName": "Jumeirah College",
+    "email": "principal_jcd@gemsedu.com",
+    "domain": "gemsedu.com",
+    "institutional": true
+  },
+  {
+    "centerId": "51",
+    "schoolName": "Jumeirah English Speaking School",
+    "email": "headteacherjumeirah@jess.sch.ae",
+    "domain": "jess.sch.ae",
+    "institutional": true
+  },
+  {
+    "centerId": "131",
+    "schoolName": "Jumeirah English Speaking School (Br)",
+    "email": "director@jess.sch.ae",
+    "domain": "jess.sch.ae",
+    "institutional": true
+  },
+  {
+    "centerId": "152102",
+    "schoolName": "Kent College L.L.C - FZ",
+    "email": "principal@kentcollege.sch.ae",
+    "domain": "kentcollege.sch.ae",
+    "institutional": true
+  },
+  {
+    "centerId": "2409",
+    "schoolName": "Kings School Al Barsha L.L.C",
+    "email": "govtrelations@kingsdubai.com",
+    "domain": "kingsdubai.com",
+    "institutional": true
+  },
+  {
+    "centerId": "115",
+    "schoolName": "Kings School Dubai L.L.C",
+    "email": "principal@kingsdubai.com",
+    "domain": "kingsdubai.com",
+    "institutional": true
+  },
+  {
+    "centerId": "93",
+    "schoolName": "Little Flower English School",
+    "email": "info@littleflowerdubai.com",
+    "domain": "littleflowerdubai.com",
+    "institutional": true
+  },
+  {
+    "centerId": "341",
+    "schoolName": "Lycee Francais International",
+    "email": "proviseur.lfi@aflec-fr.org",
+    "domain": "aflec-fr.org",
+    "institutional": true
+  },
+  {
+    "centerId": "137",
+    "schoolName": "Lycee Francais International Georges Pompidou School (Dubai Branch)",
+    "email": "proviseur@lgp.ae",
+    "domain": "lgp.ae",
+    "institutional": true
+  },
+  {
+    "centerId": "371",
+    "schoolName": "Lycee Francais International Georges Pompidou School Oud Metha",
+    "email": "beatrice.mathevet@lfigp.org",
+    "domain": "lfigp.org",
+    "institutional": true
+  },
+  {
+    "centerId": "504953",
+    "schoolName": "LYCEE FRANCAIS INTERNATIONAL L.L.C (BRANCH)",
+    "email": "meriem.douiri@aflec-fr.org",
+    "domain": "aflec-fr.org",
+    "institutional": true
+  },
+  {
+    "centerId": "152343",
+    "schoolName": "Lycee Francais Jean Mermoz L.L.C",
+    "email": "head.school.north@lfjm.education",
+    "domain": "lfjm.education",
+    "institutional": true
+  },
+  {
+    "centerId": "504283",
+    "schoolName": "LYCEE FRANCAIS JEAN MERMOZ SOUTH L.L.C",
+    "email": "head.school.south@lfjm.education",
+    "domain": "lfjm.education",
+    "institutional": true
+  },
+  {
+    "centerId": "502308",
+    "schoolName": "Lycee Libanais Francophone Prive Meydan L.L.C - FZ",
+    "email": "direction@llfpm.com",
+    "domain": "llfpm.com",
+    "institutional": true
+  },
+  {
+    "centerId": "57",
+    "schoolName": "M S B Private School",
+    "email": "msbdubai@eim.ae",
+    "domain": "eim.ae",
+    "institutional": true
+  },
+  {
+    "centerId": "24",
+    "schoolName": "Mirdif American School",
+    "email": "mirdif98@emirates.net.ae",
+    "domain": "emirates.net.ae",
+    "institutional": true
+  },
+  {
+    "centerId": "502201",
+    "schoolName": "national charity school primary",
+    "email": "reem.hesein@charityschools.com",
+    "domain": "charityschools.com",
+    "institutional": true
+  },
+  {
+    "centerId": "31",
+    "schoolName": "New Academy School",
+    "email": "nasch@emirates.net.ae",
+    "domain": "emirates.net.ae",
+    "institutional": true
+  },
+  {
+    "centerId": "504994",
+    "schoolName": "New Dawn Private School",
+    "email": "principal@ndps.ae",
+    "domain": "ndps.ae",
+    "institutional": true
+  },
+  {
+    "centerId": "86",
+    "schoolName": "New Indian Model School",
+    "email": "principal@nimsdxb.com",
+    "domain": "nimsdxb.com",
+    "institutional": true
+  },
+  {
+    "centerId": "152441",
+    "schoolName": "Newlands School (BR of Beaconhouse Education Investments L.L.C)",
+    "email": "registrar@newlandsschool.ae",
+    "domain": "newlandsschool.ae",
+    "institutional": true
+  },
+  {
+    "centerId": "1833",
+    "schoolName": "Next Generation School L.L.C",
+    "email": "principal@nextgenerationschool.ae",
+    "domain": "nextgenerationschool.ae",
+    "institutional": true
+  },
+  {
+    "centerId": "2222",
+    "schoolName": "Nord Anglia International School L.L.C",
+    "email": "matthew.farthing@nasdubai.ae",
+    "domain": "nasdubai.ae",
+    "institutional": true
+  },
+  {
+    "centerId": "127",
+    "schoolName": "North American International School L.L.C",
+    "email": "principal@naischool.ae",
+    "domain": "naischool.ae",
+    "institutional": true
+  },
+  {
+    "centerId": "152520",
+    "schoolName": "North London Collegiate School Middle East L.L.C - FZ",
+    "email": "principal@nlcsdubai.ae",
+    "domain": "nlcsdubai.ae",
+    "institutional": true
+  },
+  {
+    "centerId": "151864",
+    "schoolName": "Oak Tree Primary School",
+    "email": "principal@oaktreeprimary.com",
+    "domain": "oaktreeprimary.com",
+    "institutional": true
+  },
+  {
+    "centerId": "119",
+    "schoolName": "Our Own High School - Dubai Branch",
+    "email": "anjuli.m1_oow@gemsedu.com",
+    "domain": "gemsedu.com",
+    "institutional": true
+  },
+  {
+    "centerId": "46",
+    "schoolName": "Oxford School",
+    "email": "oxfordsc@emirates.net.ae",
+    "domain": "emirates.net.ae",
+    "institutional": true
+  },
+  {
+    "centerId": "502182",
+    "schoolName": "Pace Modern British School L.L.C",
+    "email": "info@pacembs.com",
+    "domain": "pacembs.com",
+    "institutional": true
+  },
+  {
+    "centerId": "505020",
+    "schoolName": "Pace Springfield International School",
+    "email": "pa.salmanibrahim@gmail.com",
+    "domain": "gmail.com",
+    "institutional": false
+  },
+  {
+    "centerId": "100",
+    "schoolName": "Pakistan Education Academy",
+    "email": "principal@pea.ae",
+    "domain": "pea.ae",
+    "institutional": true
+  },
+  {
+    "centerId": "152213",
+    "schoolName": "Pearl Wisdom School L.L.C",
+    "email": "info@pearlwisdomschool.com",
+    "domain": "pearlwisdomschool.com",
+    "institutional": true
+  },
+  {
+    "centerId": "135",
+    "schoolName": "Philadelphia Private School",
+    "email": "pps.principal@ppsdubai.org",
+    "domain": "ppsdubai.org",
+    "institutional": true
+  },
+  {
+    "centerId": "144",
+    "schoolName": "Primus Private School L.L.C",
+    "email": "principal@primusschool.sch.ae",
+    "domain": "primusschool.sch.ae",
+    "institutional": true
+  },
+  {
+    "centerId": "61",
+    "schoolName": "Pristine Private School",
+    "email": "info@pristineschool.com",
+    "domain": "pristineschool.com",
+    "institutional": true
+  },
+  {
+    "centerId": "40",
+    "schoolName": "Queen International School",
+    "email": "queenint@emirates.net.ae",
+    "domain": "emirates.net.ae",
+    "institutional": true
+  },
+  {
+    "centerId": "344",
+    "schoolName": "Raffles International School L.L.C (Umm Suqeim South Br)",
+    "email": "rishead@rafflesis.com",
+    "domain": "rafflesis.com",
+    "institutional": true
+  },
+  {
+    "centerId": "343",
+    "schoolName": "Raffles World Academy",
+    "email": "rwahead@rwadubai.com",
+    "domain": "rwadubai.com",
+    "institutional": true
+  },
+  {
+    "centerId": "14450",
+    "schoolName": "Ranches Primary School",
+    "email": "steve.arnold@rpsdubai.com",
+    "domain": "rpsdubai.com",
+    "institutional": true
+  },
+  {
+    "centerId": "62",
+    "schoolName": "Regent International Private School L.L.C",
+    "email": "principal.ris@forteseducation.com",
+    "domain": "forteseducation.com",
+    "institutional": true
+  },
+  {
+    "centerId": "500447",
+    "schoolName": "Renaissance School L.L.C",
+    "email": "principal@renaissanceschool.ae",
+    "domain": "renaissanceschool.ae",
+    "institutional": true
+  },
+  {
+    "centerId": "1441",
+    "schoolName": "Repton Al Barsha Fz-Llc",
+    "email": "info@reptonalbarsha.org",
+    "domain": "reptonalbarsha.org",
+    "institutional": true
+  },
+  {
+    "centerId": "145",
+    "schoolName": "Repton School",
+    "email": "principal@reptondubai.org",
+    "domain": "reptondubai.org",
+    "institutional": true
+  },
+  {
+    "centerId": "500628",
+    "schoolName": "Royal Grammar School Guildford L.L.C",
+    "email": "principal@rgsgd.com",
+    "domain": "rgsgd.com",
+    "institutional": true
+  },
+  {
+    "centerId": "506012",
+    "schoolName": "Rugby School L.L.C-FZ",
+    "email": "hatem.mohamed@aldareducation.com",
+    "domain": "aldareducation.com",
+    "institutional": true
+  },
+  {
+    "centerId": "143",
+    "schoolName": "Russian International School",
+    "email": "info@dubairuschool.com",
+    "domain": "dubairuschool.com",
+    "institutional": true
+  },
+  {
+    "centerId": "1235",
+    "schoolName": "Sabari Indian School L.L.C",
+    "email": "principal@sisdubai.com",
+    "domain": "sisdubai.com",
+    "institutional": true
+  },
+  {
+    "centerId": "120",
+    "schoolName": "Safa British School",
+    "email": "principal@safabritishschool.com",
+    "domain": "safabritishschool.com",
+    "institutional": true
+  },
+  {
+    "centerId": "1281",
+    "schoolName": "Safa Community School",
+    "email": "sdaya@safacommunityschool.com",
+    "domain": "safacommunityschool.com",
+    "institutional": true
+  },
+  {
+    "centerId": "140",
+    "schoolName": "SCHOOL OF MODERN SKILLS",
+    "email": "principal@dubai-sms.com",
+    "domain": "dubai-sms.com",
+    "institutional": true
+  },
+  {
+    "centerId": "136",
+    "schoolName": "Sharjah American International Private School - Dubai Branch",
+    "email": "principal@saisdubai.com",
+    "domain": "saisdubai.com",
+    "institutional": true
+  },
+  {
+    "centerId": "17",
+    "schoolName": "Sheikh Rashid Bin Saeed Islamic Institute",
+    "email": "g_director@rid.ae",
+    "domain": "rid.ae",
+    "institutional": true
+  },
+  {
+    "centerId": "1838",
+    "schoolName": "Smart Vision School",
+    "email": "mona.s@svschool.ae",
+    "domain": "svschool.ae",
+    "institutional": true
+  },
+  {
+    "centerId": "152519",
+    "schoolName": "South View School L.L.C",
+    "email": "operations@southview.ae",
+    "domain": "southview.ae",
+    "institutional": true
+  },
+  {
+    "centerId": "1247",
+    "schoolName": "Springdales School L.L.C",
+    "email": "admin@springdalesdubai.com",
+    "domain": "springdalesdubai.com",
+    "institutional": true
+  },
+  {
+    "centerId": "14739",
+    "schoolName": "ST MARY HIGH SCHOOL MUHAISNAH L.L.C",
+    "email": "principal-smm@smgeducation.org",
+    "domain": "smgeducation.org",
+    "institutional": true
+  },
+  {
+    "centerId": "47",
+    "schoolName": "ST. Mary Catholic High School - Dubai",
+    "email": "maryscol@emirates.net.ae",
+    "domain": "emirates.net.ae",
+    "institutional": true
+  },
+  {
+    "centerId": "118",
+    "schoolName": "Star International School",
+    "email": "principal.altwar@starintlschools.com",
+    "domain": "starintlschools.com",
+    "institutional": true
+  },
+  {
+    "centerId": "346",
+    "schoolName": "Star International School (Branch)",
+    "email": "principal@starmirdif.com",
+    "domain": "starmirdif.com",
+    "institutional": true
+  },
+  {
+    "centerId": "152056",
+    "schoolName": "Sunmarke School FZE",
+    "email": "govtaffairs.sms@forteseducation.com",
+    "domain": "forteseducation.com",
+    "institutional": true
+  },
+  {
+    "centerId": "14567",
+    "schoolName": "Swiss International Scientific School FZ-LLC",
+    "email": "info@sisd.ae",
+    "domain": "sisd.ae",
+    "institutional": true
+  },
+  {
+    "centerId": "501709",
+    "schoolName": "The Apple International Community School",
+    "email": "info@applecommunityschool.ae",
+    "domain": "applecommunityschool.ae",
+    "institutional": true
+  },
+  {
+    "centerId": "152599",
+    "schoolName": "The Aquila School",
+    "email": "principal@theaquilaschool.com",
+    "domain": "theaquilaschool.com",
+    "institutional": true
+  },
+  {
+    "centerId": "151915",
+    "schoolName": "The Arbor School L.L.C",
+    "email": "hr@thearborschool.ae",
+    "domain": "thearborschool.ae",
+    "institutional": true
+  },
+  {
+    "centerId": "84",
+    "schoolName": "The Central School",
+    "email": "faisaljaber@centralschool.net",
+    "domain": "centralschool.net",
+    "institutional": true
+  },
+  {
+    "centerId": "49",
+    "schoolName": "The City School International Private",
+    "email": "info@tcsidxb.ae",
+    "domain": "tcsidxb.ae",
+    "institutional": true
+  },
+  {
+    "centerId": "45",
+    "schoolName": "The English College Dubai L.L.C",
+    "email": "ehopkinson@englishcollege.ac.ae",
+    "domain": "englishcollege.ac.ae",
+    "institutional": true
+  },
+  {
+    "centerId": "811",
+    "schoolName": "The Indian Academy",
+    "email": "principal@indianacademydubai.com",
+    "domain": "indianacademydubai.com",
+    "institutional": true
+  },
+  {
+    "centerId": "81",
+    "schoolName": "The Indian High School",
+    "email": "indiansc@emirates.net.ae",
+    "domain": "emirates.net.ae",
+    "institutional": true
+  },
+  {
+    "centerId": "82",
+    "schoolName": "The Indian High School-Branch",
+    "email": "indiansc@emirates.net.ae",
+    "domain": "emirates.net.ae",
+    "institutional": true
+  },
+  {
+    "centerId": "655",
+    "schoolName": "The Indian International School (Dso Branch)",
+    "email": "iis@iisdso.org",
+    "domain": "iisdso.org",
+    "institutional": true
+  },
+  {
+    "centerId": "85",
+    "schoolName": "The International School of Choueifat",
+    "email": "iscdubai@iscdxb.sabis.net",
+    "domain": "iscdxb.sabis.net",
+    "institutional": true
+  },
+  {
+    "centerId": "872",
+    "schoolName": "The International School of Choueifat (Branch)",
+    "email": "sghandour@iscdip.sabis.net",
+    "domain": "iscdip.sabis.net",
+    "institutional": true
+  },
+  {
+    "centerId": "91",
+    "schoolName": "The Millenium School",
+    "email": "ambika.g_tms@gemsedu.com",
+    "domain": "gemsedu.com",
+    "institutional": true
+  },
+  {
+    "centerId": "502213",
+    "schoolName": "The National Charity School for Boys L.L.C",
+    "email": "hassan.sawalmeh@charityschools.com",
+    "domain": "charityschools.com",
+    "institutional": true
+  },
+  {
+    "centerId": "2",
+    "schoolName": "The National Charity School for Girls (Br of The National Charity School for Boys L.L.C)",
+    "email": "weam.omar@charityschools.com",
+    "domain": "charityschools.com",
+    "institutional": true
+  },
+  {
+    "centerId": "265",
+    "schoolName": "The Philippine School",
+    "email": "principal@tpsdxb.com",
+    "domain": "tpsdxb.com",
+    "institutional": true
+  },
+  {
+    "centerId": "42",
+    "schoolName": "The School of Research Science L.L.C",
+    "email": "infor@srs.ae",
+    "domain": "srs.ae",
+    "institutional": true
+  },
+  {
+    "centerId": "501460",
+    "schoolName": "The School of Research Science US High School L.L.C",
+    "email": "ismaeel.e@srs.ae",
+    "domain": "srs.ae",
+    "institutional": true
+  },
+  {
+    "centerId": "73",
+    "schoolName": "The Sheffield Private School L.L.C",
+    "email": "principal@sheffield-school.com",
+    "domain": "sheffield-school.com",
+    "institutional": true
+  },
+  {
+    "centerId": "67",
+    "schoolName": "The Westminster School - DUBAI BRANCH",
+    "email": "gre_tws@gemsedu.com",
+    "domain": "gemsedu.com",
+    "institutional": true
+  },
+  {
+    "centerId": "72",
+    "schoolName": "The Winchester School - DUBAI BRANCH",
+    "email": "meenakshi.d_win@gemsedu.com",
+    "domain": "gemsedu.com",
+    "institutional": true
+  },
+  {
+    "centerId": "35",
+    "schoolName": "United International Private School L.L.C",
+    "email": "uipsprincipal@uips.ae",
+    "domain": "uips.ae",
+    "institutional": true
+  },
+  {
+    "centerId": "125",
+    "schoolName": "Universal American School - Branch",
+    "email": "uasdirector@uasdubai.ae",
+    "domain": "uasdubai.ae",
+    "institutional": true
+  },
+  {
+    "centerId": "1014",
+    "schoolName": "Uptown International School (Br. of Taaleem Management LLC)",
+    "email": "principal@uptownschool.ae",
+    "domain": "uptownschool.ae",
+    "institutional": true
+  },
+  {
+    "centerId": "506257",
+    "schoolName": "Victory Heights Primary School City of Arabia LLC",
+    "email": "info@vhprimarycoa.ae",
+    "domain": "vhprimarycoa.ae",
+    "institutional": true
+  },
+  {
+    "centerId": "1423",
+    "schoolName": "Victory Heights Primary School L.L.C",
+    "email": "info@vhprimary.com",
+    "domain": "vhprimary.com",
+    "institutional": true
+  },
+  {
+    "centerId": "1687",
+    "schoolName": "Woodlem Park School L.L.C",
+    "email": "principal@woodlemdubai.ae",
+    "domain": "woodlemdubai.ae",
+    "institutional": true
+  }
+]

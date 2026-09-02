@@ -6,13 +6,17 @@ const DB = (env as unknown as { DB: D1Database }).DB;
 const admin = Astro.locals.admin!;
 
 /**
- * The mailable set is deliberately narrow: an office address a school gave us,
- * held in school_details. KHDA's published address is a principal's personal
- * mailbox and is not collected, so it cannot appear here.
+ * Two address sources, and the school's own always wins over KHDA's:
+ *   school_details.official_email  the school sent it to us
+ *   schools.khda_email             KHDA published it in the directory
+ *
+ * Free-mail providers are filtered out at ingest, so what remains is an
+ * address on the school's own domain rather than a personal mailbox that
+ * happened to be listed.
  */
 const { results } = await DB.prepare(
   `SELECT s.id, s.name, s.area, s.curricula, s.khda_rating, s.fee_band,
-          s.website, s.phone, d.official_email
+          s.website, s.phone, s.khda_email, d.official_email
    FROM schools s
    LEFT JOIN school_details d ON d.school_id = s.id
    WHERE s.delisted_at IS NULL
@@ -24,9 +28,14 @@ const rows = results.map((r) => ({
   curricula: (() => {
     try { return JSON.parse(r.curricula) as string[]; } catch { return []; }
   })(),
+  // A school's own address wins over the one KHDA lists.
+  email: r.official_email || r.khda_email || null,
+  source: r.official_email ? "school" : r.khda_email ? "khda" : null,
 }));
 
-const mailable = rows.filter((r) => r.official_email).length;
+const mailable = rows.filter((r) => r.email).length;
+const fromSchool = rows.filter((r) => r.source === "school").length;
+const fromKhda = rows.filter((r) => r.source === "khda").length;
 const areas = [...new Set(rows.map((r) => r.area))].sort();
 const curricula = [...new Set(rows.flatMap((r) => r.curricula))].sort();
 const TIERS = ["Outstanding", "Very Good", "Good", "Acceptable", "Not rated"];
@@ -48,11 +57,11 @@ const bandLabel: Record<string, string> = {
     </div>
 
     <div class="mailnote">
-      <strong>{mailable} of {rows.length} schools have given us an office address.</strong>
-      Only those can be mailed. KHDA publishes a principal's personal mailbox,
-      which is deliberately not collected — schools supply an office address
-      themselves through <a href="/contribute?as=school">Contribute</a> or the
-      free Verified tier.
+      <strong>{mailable} of {rows.length} schools are contactable.</strong>
+      {fromKhda} from KHDA's published directory, {fromSchool} given to us
+      directly by the school. Free-mail addresses are filtered out at ingest —
+      a gmail.com mailbox is a personal one that happens to be listed, not an
+      institutional contact. A school's own address always wins over KHDA's.
     </div>
 
     <div class="filters">
@@ -73,8 +82,10 @@ const bandLabel: Record<string, string> = {
           <label for="f-mail">Contactable</label>
           <select id="f-mail">
             <option value="">All schools</option>
-            <option value="yes">Has an office email</option>
-            <option value="no">No email yet</option>
+            <option value="yes">Contactable</option>
+            <option value="no">No address</option>
+            <option value="school">Address from the school</option>
+            <option value="khda">Address from KHDA</option>
           </select>
         </div>
       </div>
@@ -92,7 +103,7 @@ const bandLabel: Record<string, string> = {
         <thead>
           <tr>
             <th style="width:34px"></th>
-            <th>School</th><th>Area</th><th>Curriculum</th><th>Rating</th><th>Office email</th>
+            <th>School</th><th>Area</th><th>Curriculum</th><th>Rating</th><th>Email</th><th>Source</th>
           </tr>
         </thead>
         <tbody id="tb">
@@ -101,14 +112,16 @@ const bandLabel: Record<string, string> = {
               data-area={r.area}
               data-cur={r.curricula.join("|")}
               data-rat={r.khda_rating}
-              data-mail={r.official_email ? "yes" : "no"}
+              data-mail={r.email ? "yes" : "no"}
+              data-src={r.source ?? ""}
             >
-              <td><input type="checkbox" class="pick" value={r.id} data-email={r.official_email ?? ""} data-name={r.name} disabled={!r.official_email} /></td>
+              <td><input type="checkbox" class="pick" value={r.id} data-email={r.email ?? ""} data-name={r.name} disabled={!r.email} /></td>
               <td>{r.name}</td>
               <td>{r.area}</td>
               <td>{r.curricula.join(", ")}</td>
               <td>{r.khda_rating}</td>
-              <td>{r.official_email ? r.official_email : <span class="missing">—</span>}</td>
+              <td>{r.email ? r.email : <span class="missing">—</span>}</td>
+              <td>{r.source === "school" ? <span class="srctag is-school">School</span> : r.source === "khda" ? <span class="srctag">KHDA</span> : <span class="missing">—</span>}</td>
             </tr>
           ))}
         </tbody>
@@ -162,7 +175,10 @@ const bandLabel: Record<string, string> = {
         (!cur.value || d.cur!.split("|").includes(cur.value)) &&
         (!area.value || d.area === area.value) &&
         (!rat.value || d.rat === rat.value) &&
-        (!mail.value || d.mail === mail.value);
+        (!mail.value ||
+          (mail.value === "yes" || mail.value === "no"
+            ? d.mail === mail.value
+            : d.src === mail.value));
       r.hidden = !ok;
       if (!ok) (r.querySelector(".pick") as HTMLInputElement).checked = false;
       if (ok) shown++;
