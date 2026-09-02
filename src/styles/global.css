@@ -944,26 +944,28 @@ a.adminlink:hover { border-color: var(--accent); }
    The four infographics used to be four cards, each paying for its own
    border, padding, radius and an 11px gap. They are now panes of a single
    card divided by 1px hairlines, which is most of the height back. */
+/* Each group is its own box: nothing shares an edge with its neighbour, so
+   the rating and the cost read as two separate statements rather than two
+   halves of one. The card itself is just the layout — no fill, no border. */
 .panelset {
   display: grid;
-  gap: 0;
+  gap: 12px;
+  background: transparent;
+  border: none;
+  margin: 0;
+}
+.pane {
   background: var(--surface);
   border: 1px solid var(--rule);
   border-radius: 8px;
-  overflow: hidden;
-  margin: 0;
+  padding: 10px 14px 12px;
+  min-width: 0;
 }
-.pane { background: transparent; padding: 10px 14px 12px; min-width: 0; }
 @media (min-width: 760px) {
   .panelset { grid-template-columns: repeat(4, 1fr); }
   .pane { grid-column: span 2; }
   .pane-wide { grid-column: span 3; }
   .pane-narrow { grid-column: span 1; }
-  /* Panes are divided by single lines rather than by each drawing a box.
-     Addressed by position, since "every pane after the first" would put a
-     left edge on the one that starts the second row. */
-  .pane:nth-child(2) { border-left: 1px solid var(--rule); }
-  .pane:nth-child(3) { border-top: 1px solid var(--rule); }
 }
 .pane h3 { display: flex; align-items: center; gap: 7px; margin-bottom: 8px; font-size: 14.5px; }
 .pane .sub { font-family: var(--display); font-size: 12.5px; color: var(--muted); margin: 0 0 10px; line-height: 1.4; }
@@ -976,6 +978,5 @@ a.adminlink:hover { border-color: var(--accent); }
 .pane-narrow {
   border: 3px solid var(--accent-2);
   border-radius: 8px;
-  margin: 8px;
   padding: 12px 14px;
 }
