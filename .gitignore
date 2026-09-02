@@ -7,8 +7,9 @@
 /.wrangler/
 *.tsbuildinfo
 
-# generated seed SQL (regenerate with: npm run db:seed)
+# generated seed SQL (regenerate with: npm run db:seed / db:seed:fees)
 /.seed.sql
+/.grade-fees.sql
 
 # env files
 .env*
