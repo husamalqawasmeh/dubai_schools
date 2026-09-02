@@ -1172,9 +1172,13 @@ a.adminlink:hover { border-color: var(--accent); }
 
 /* A line above the chat box explaining that the figures are links. The
    numbers look like statistics, so nothing else on the page says so. */
-.chatwrap { flex-direction: column; gap: 8px; }
+/* The hint sits beside the stat row, in the space the row leaves inside the
+   hero: the tiles take 530px of 801px, so the gap is already there. */
+.hero-row { display: flex; gap: 12px; align-items: stretch; margin-top: 14px; }
+.hero-row .stats { margin: 0; flex: none; }
 .hintbox {
-  flex: none;
+  flex: 1;
+  min-width: 0;
   display: flex;
   align-items: center;
   gap: 8px;
