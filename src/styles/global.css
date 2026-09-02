@@ -385,7 +385,8 @@ body:has(.listing) main { overflow: hidden; }
 }
 .band-grid .tier-n { padding-bottom: 3px; }
 @media (max-width: 460px) {
-  .band-coins { height: 44px; }
+  .band-coins { height: 28px; }
+  .band-coins .coins-lg { height: 26px; }
   .band-range { font-size: 10px; }
 }
 
