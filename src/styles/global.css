@@ -65,7 +65,10 @@ body {
   display: grid;
   grid-template-rows: auto minmax(0, 1fr);
   overflow: hidden;
-  background: var(--ground);
+  /* Doodles tile behind everything. Every box on the page is opaque, so this
+     only ever shows in the gaps between them — the colour is fixed inside the
+     SVG so it cannot compete with anything sitting on top. */
+  background: var(--ground) url("/doodles.svg") repeat 0 0;
   color: var(--ink);
   font-family: var(--body);
   font-size: 16px;
