@@ -40,7 +40,7 @@ const maxCur = top[0]?.n ?? 1;
     </div>
   </section>
 
-  <div class="wrap" style="padding-top:20px;padding-bottom:60px">
+  <div class="wrap" style="padding-top:13px;padding-bottom:22px">
     <div class="charts charts-first">
       <div class="chart">
         <h3><span class="chart-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="9" r="6"/><path d="M8.5 14.2 7 22l5-2.6L17 22l-1.5-7.8"/></svg></span>KHDA rating</h3>
@@ -92,7 +92,6 @@ const maxCur = top[0]?.n ?? 1;
 
       <div class="chart chart-wide">
         <h3><span class="chart-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4.5A1.5 1.5 0 0 1 4.5 3H10a3 3 0 0 1 2 5.2V21a3 3 0 0 0-2-.8H4.5A1.5 1.5 0 0 1 3 18.7z"/><path d="M21 4.5A1.5 1.5 0 0 0 19.5 3H14a3 3 0 0 0-2 5.2V21a3 3 0 0 1 2-.8h5.5a1.5 1.5 0 0 0 1.5-1.5z"/></svg></span>Curriculum mix</h3>
-        <p class="sub">Schools offering each curriculum. British leads by nearly 3&times;.</p>
         <div class="tier-grid cur-grid">
           {top.map((c) => (
             <a class="tier" href={`/schools?curriculum=${encodeURIComponent(c.name)}`}>
@@ -121,7 +120,7 @@ const maxCur = top[0]?.n ?? 1;
       <div class="chart chart-narrow" style="display:flex;flex-direction:column;justify-content:center">
         <h3><span class="chart-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5 21 21"/></svg></span>Browse, filter or search</h3>
         <p class="sub" style="margin-bottom:14px">
-          Search by name, area or curriculum.
+          Search by name, area, curriculum or fee.
         </p>
         <a class="btn" href="/schools" style="margin-top:0">Browse all {s.total}</a>
       </div>

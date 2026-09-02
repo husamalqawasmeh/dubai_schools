@@ -22,6 +22,22 @@ const ratedOnly = p.get("rated") === "1";
 
 const all: School[] = await allSchools();
 
+const bandLabel: Record<string, string> = {
+  acceptable: "Acceptable", medium: "Medium", high: "High", very_high: "Very high",
+};
+const bandDots: Record<string, number> = { acceptable: 1, medium: 2, high: 3, very_high: 4 };
+
+/** What the free-text box matches for fees: the band in words plus the real
+ *  figures, so "very high" and "89440" both land. */
+const feeText = (x: School) =>
+  [
+    x.fee_band ? bandLabel[x.fee_band] : "no fee not published",
+    x.fee_min_aed ?? "",
+    x.fee_max_aed ?? "",
+  ]
+    .join(" ")
+    .toLowerCase();
+
 // Filtered on the server so a link from the landing page works without
 // JavaScript and is indexable. The client script re-runs the same rules.
 // Within a facet the values are OR; across facets they are AND.
@@ -31,7 +47,8 @@ const shown = all.filter((x) => {
     (!text ||
       x.name.toLowerCase().includes(text) ||
       x.area.toLowerCase().includes(text) ||
-      x.curricula.join(" ").toLowerCase().includes(text)) &&
+      x.curricula.join(" ").toLowerCase().includes(text) ||
+      feeText(x).includes(text)) &&
     (sel.curriculum.length === 0 || x.curricula.some((c) => sel.curriculum.includes(c))) &&
     (sel.area.length === 0 || sel.area.includes(x.area)) &&
     (sel.rating.length === 0 || sel.rating.includes(x.khda_rating)) &&
@@ -81,11 +98,6 @@ const bandOptions = BANDS.filter((b) => bandCount.has(b.key)).map((b) => ({
   count: bandCount.get(b.key)!,
 }));
 
-const bandLabel: Record<string, string> = {
-  acceptable: "Acceptable", medium: "Medium", high: "High", very_high: "Very high",
-};
-const bandDots: Record<string, number> = { acceptable: 1, medium: 2, high: 3, very_high: 4 };
-
 // Name the active filters in the title so a filtered link reads correctly in
 // search results and when shared.
 const say = (xs: string[]) => xs.join(" or ");
@@ -114,7 +126,7 @@ const title = activeBits.length
       </div>
 
       <div class="searchbar">
-        <input id="q" type="search" value={q} placeholder="Search by school, area, or curriculum…" aria-label="Search schools" />
+        <input id="q" type="search" value={q} placeholder="Search by name, area, curriculum or fee…" aria-label="Search schools" />
         <span class="search-ico" aria-hidden="true">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <circle cx="10.5" cy="10.5" r="6.5" /><path d="M15.5 15.5 21 21" />
@@ -144,6 +156,7 @@ const title = activeBits.length
             data-cur={x.curricula.join("|")}
             data-rat={x.khda_rating}
             data-band={x.fee_band ?? "none"}
+            data-fee={feeText(x)}
           >
             <h3>{x.name}</h3>
             <p class="where">{x.area} · {x.curricula.join(" / ")}</p>
@@ -244,7 +257,8 @@ const title = activeBits.length
         !text ||
         d.name!.includes(text) ||
         d.area!.toLowerCase().includes(text) ||
-        d.cur!.toLowerCase().includes(text);
+        d.cur!.toLowerCase().includes(text) ||
+        d.fee!.includes(text);
 
       if (ok) {
         for (const { f, values } of picked) {
