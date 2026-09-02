@@ -327,7 +327,21 @@ body:has(.listing) main { overflow: hidden; }
   min-width: 0;
   transition: background 0.12s ease;
 }
-.tier:hover { background: var(--surface-2); }
+/* Hover moves the whole column together: the bar at the top and the cell
+   beneath it. Darkening only one made them look like two separate controls.
+   .tier-static is excluded — the "Other" column is not a link and should not
+   answer the pointer as though it were. */
+.tier { transition: background 0.12s ease; }
+.tier-swatch,
+.cur-bar > span,
+.coin-face,
+.coin-edge { transition: filter 0.12s ease; }
+
+a.tier:hover { background: var(--surface-2); }
+a.tier:hover .tier-swatch,
+a.tier:hover .cur-bar > span { filter: brightness(0.82); }
+a.tier:hover .coin-face,
+a.tier:hover .coin-edge { filter: brightness(0.9); }
 .tier-swatch { display: block; height: 4px; background: var(--c); }
 .tier-swatch.none {
   background: repeating-linear-gradient(135deg, var(--rule-firm) 0 3px, transparent 3px 6px);
