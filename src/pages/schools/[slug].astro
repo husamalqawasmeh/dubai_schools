@@ -51,11 +51,6 @@ const facts: { k: string; v: string | null }[] = [
     <div class="wrap">
       <a class="back" href="/">&larr; All schools</a>
       <h1 style="margin-top:14px">{school.name}</h1>
-      <p style="color:var(--muted);font-family:var(--display);font-size:14px;margin:10px 0 0">
-        {school.area} · {school.curricula.join(" / ")}
-        {school.grade_range ? ` · ${school.grade_range}` : ""}
-      </p>
-      {school.description && <p style="max-width:62ch;color:var(--ink-2);margin:16px 0 0">{school.description}</p>}
     </div>
   </div>
 
