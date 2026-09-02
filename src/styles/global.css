@@ -93,10 +93,10 @@ h3 { font-size: 17px; font-weight: 600; }
 p { margin: 0 0 14px; }
 
 /* ---------------- header ---------------- */
-.site-head {
-  border-bottom: 1px solid var(--rule);
-  background: var(--surface);
-}
+/* No full-bleed fill or rule: the header sits in the same column as
+   everything below it, so the nav ends where the boxes end. */
+.site-head { background: transparent; }
+.site-head .wrap { border-bottom: 1px solid var(--rule); }
 .site-head .wrap { display: flex; align-items: center; justify-content: space-between; height: 52px; gap: 16px; }
 .brand { font-family: var(--display); font-weight: 700; font-size: 15.5px; color: var(--ink); text-decoration: none; letter-spacing: -0.01em; }
 .brand span { color: var(--accent); }
@@ -105,19 +105,22 @@ p { margin: 0 0 14px; }
 .site-head nav a:hover { color: var(--ink); }
 
 /* ---------------- hero ---------------- */
-.hero { padding: 24px 0 18px; border-bottom: 1px solid var(--rule); background: var(--surface); }
+.hero { padding: 22px 0 4px; background: transparent; }
 .hero p.lede { font-size: 16.5px; color: var(--ink-2); max-width: 60ch; margin: 16px 0 0; }
 .eyebrow {
   font-family: var(--mono); font-size: 11.5px; letter-spacing: 0.1em;
   text-transform: uppercase; color: var(--accent); margin: 0 0 14px;
 }
 
+/* Same box as a .pane: one fill, one border, dividers between the cells
+   rather than each cell drawing its own. */
 .stats {
   display: grid; grid-template-columns: repeat(auto-fit, minmax(118px, 1fr));
-  gap: 1px; background: var(--rule); border: 1px solid var(--rule);
-  border-radius: 6px; overflow: hidden; margin: 15px 0 0;
+  gap: 0; background: var(--surface); border: 1px solid var(--rule);
+  border-radius: 8px; overflow: hidden; margin: 14px 0 0;
 }
-.stat { background: var(--surface); padding: 9px 13px; text-decoration: none; color: inherit; transition: background .12s ease; }
+.stat { background: transparent; padding: 10px 14px 12px; text-decoration: none; color: inherit; transition: background .12s ease; }
+.stat + .stat { border-left: 1px solid var(--rule); }
 .stat:hover { background: var(--surface-2); }
 .stat b {
   display: block; font-family: var(--display); font-weight: 700; font-size: 21px;
