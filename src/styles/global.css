@@ -313,7 +313,7 @@ body:has(.listing) main { overflow: hidden; }
   display: block;
   font-family: var(--display);
   font-size: 10.5px;
-  font-weight: 600;
+  font-weight: 700;
   line-height: 1.2;
   color: var(--muted);
   text-align: center;
@@ -417,3 +417,6 @@ body:has(.listing) main { overflow: hidden; }
 @media (max-width: 760px) {
   .cur-grid { grid-template-columns: repeat(4, 1fr); }
 }
+
+/* No heading above the charts any more, so they do not need the offset. */
+.charts-first { margin-top: 0; }
