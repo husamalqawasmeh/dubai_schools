@@ -196,7 +196,7 @@ a.bar-row:hover .bar-lab { color: var(--ink); }
   display: flex; align-items: center; justify-content: space-between; gap: 10px;
   margin-top: auto; padding-top: 10px; border-top: 1px solid var(--rule);
 }
-.fee { font-family: var(--display); font-size: 12.5px; color: var(--ink-2); display: flex; align-items: center; gap: 7px; }
+.fee { font-family: var(--display); font-size: 12.5px; color: var(--ink-2); display: flex; align-items: flex-end; gap: 7px; }
 
 .badge {
   font-family: var(--display); font-size: 11px; font-weight: 600; padding: 2px 8px;
@@ -313,7 +313,11 @@ body:has(.listing) main { overflow: hidden; }
   color: var(--muted);
   text-align: center;
   padding: 7px 7px 0;
-  overflow-wrap: anywhere;
+  /* Nothing here may wrap: one long label made every column in the row
+     taller, and these grids are all one row deep. */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .tier-n {
   display: block;
@@ -351,9 +355,6 @@ body:has(.listing) main { overflow: hidden; }
 .chart-ico { flex: none; width: 15px; height: 15px; color: var(--accent); }
 .chart-ico svg { display: block; width: 100%; height: 100%; }
 
-/* Fee cells align on the coin baseline rather than centre, so stacks of
-   different height still sit on a common floor. */
-.fee { align-items: flex-end; }
 
 /* ---------------- fee band: four columns, matching the rating panel ---------------- */
 .band-grid { grid-template-columns: repeat(5, 1fr); }
@@ -369,10 +370,10 @@ body:has(.listing) main { overflow: hidden; }
   display: flex;
   align-items: flex-end;
   justify-content: center;
-  height: 44px;
-  padding-top: 4px;
+  height: 34px;
+  padding-top: 2px;
 }
-.band-grid .tier-name { padding-top: 4px; }
+.band-grid .tier-name { padding-top: 4px; font-size: 11.5px; }
 .band-range {
   display: block;
   font-family: var(--mono);
@@ -898,3 +899,31 @@ a.adminlink:hover { border-color: var(--accent); }
   min-height: calc(15.5px * 1.6 * 2);
   max-width: 68ch;
 }
+
+/* ---------------- one card, four panes ----------------
+   The four infographics used to be four cards, each paying for its own
+   border, padding, radius and an 11px gap. They are now panes of a single
+   card divided by 1px hairlines, which is most of the height back. */
+.panelset {
+  display: grid;
+  gap: 1px;
+  background: var(--rule-firm);
+  border: 1px solid var(--rule-firm);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  margin: 0;
+}
+.pane { background: var(--surface); padding: 10px 14px 12px; min-width: 0; }
+@media (min-width: 760px) {
+  .panelset { grid-template-columns: repeat(4, 1fr); }
+  .pane { grid-column: span 2; }
+  .pane-wide { grid-column: span 3; }
+  .pane-narrow { grid-column: span 1; }
+}
+.pane h3 { display: flex; align-items: center; gap: 7px; margin-bottom: 8px; font-size: 14.5px; }
+.pane .sub { font-family: var(--display); font-size: 12.5px; color: var(--muted); margin: 0 0 10px; line-height: 1.4; }
+
+/* The coin stack set the height of the whole top row. */
+.band-coins .coins-lg { height: 32px; width: auto; }
+
