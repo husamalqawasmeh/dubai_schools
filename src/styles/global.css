@@ -131,7 +131,7 @@ p { margin: 0 0 14px; }
   display: block; font-family: var(--display); font-weight: 700; font-size: 21px;
   letter-spacing: -0.02em; font-variant-numeric: tabular-nums; line-height: 1.1;
 }
-.stat span { display: block; font-family: var(--display); font-size: 11px; color: var(--muted); margin-top: 4px; }
+.stat span { display: block; font-family: var(--display); font-size: 12.5px; color: var(--muted); margin-top: 4px; }
 
 /* ---------------- infographics ---------------- */
 .charts { display: grid; gap: 14px; margin: 16px 0 0; }
@@ -312,7 +312,7 @@ body:has(.listing) main { overflow: hidden; }
 .tier-name {
   display: block;
   font-family: var(--display);
-  font-size: 10.5px;
+  font-size: 12px;
   font-weight: 700;
   line-height: 1.2;
   color: var(--muted);
@@ -332,7 +332,7 @@ body:has(.listing) main { overflow: hidden; }
   line-height: 1.1;
 }
 @media (max-width: 460px) {
-  .tier-name { font-size: 9.5px; }
+  .tier-name { font-size: 11px; }
   .tier-n { font-size: 17px; }
 }
 
@@ -381,7 +381,7 @@ body:has(.listing) main { overflow: hidden; }
 .band-range {
   display: block;
   font-family: var(--mono);
-  font-size: 9.5px;
+  font-size: 11px;
   color: var(--muted);
   text-align: center;
   padding: 0 3px 10px;
@@ -390,7 +390,7 @@ body:has(.listing) main { overflow: hidden; }
 .band-grid .tier-n { padding-bottom: 3px; }
 @media (max-width: 460px) {
   .band-coins { height: 44px; }
-  .band-range { font-size: 8.5px; }
+  .band-range { font-size: 10px; }
 }
 
 /* ---------------- chart row spans ----------------
@@ -413,7 +413,7 @@ body:has(.listing) main { overflow: hidden; }
   background: repeating-linear-gradient(135deg, var(--rule-firm) 0 3px, transparent 3px 6px);
 }
 .tier-static { cursor: default; }
-.cur-grid .tier-name { font-size: 10px; }
+.cur-grid .tier-name { font-size: 11px; }
 @media (max-width: 760px) {
   .cur-grid { grid-template-columns: repeat(4, 1fr); }
 }
