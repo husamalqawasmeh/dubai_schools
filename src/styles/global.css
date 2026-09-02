@@ -112,15 +112,23 @@ p { margin: 0 0 14px; }
   text-transform: uppercase; color: var(--accent); margin: 0 0 14px;
 }
 
-/* Same box as a .pane: one fill, one border, dividers between the cells
-   rather than each cell drawing its own. */
+/* Four separate boxes rather than one divided row, each only as wide as it
+   needs: laid out with flex, not a stretch-to-fit grid, so they sit together
+   at the left instead of spreading across the column. */
 .stats {
-  display: grid; grid-template-columns: repeat(auto-fit, minmax(118px, 1fr));
-  gap: 0; background: var(--surface); border: 1px solid var(--rule);
-  border-radius: 8px; overflow: hidden; margin: 14px 0 0;
+  display: flex; flex-wrap: wrap; gap: 10px;
+  background: transparent; border: none; margin: 14px 0 0;
 }
-.stat { background: transparent; padding: 10px 14px 12px; text-decoration: none; color: inherit; transition: background .12s ease; }
-.stat + .stat { border-left: 1px solid var(--rule); }
+.stat {
+  flex: 0 0 auto; min-width: 128px;
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: 8px;
+  padding: 10px 14px 12px;
+  text-decoration: none; color: inherit;
+  transition: background .12s ease, border-color .12s ease;
+}
+.stat:hover { border-color: var(--rule-firm); }
 .stat:hover { background: var(--surface-2); }
 .stat b {
   display: block; font-family: var(--display); font-weight: 700; font-size: 21px;
