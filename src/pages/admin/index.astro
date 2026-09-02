@@ -1,0 +1,42 @@
+---
+import Base from "../../layouts/Base.astro";
+import { env } from "cloudflare:workers";
+
+const DB = (env as unknown as { DB: D1Database }).DB;
+const admin = Astro.locals.admin!;
+
+const [schools, subs, details, fees] = await DB.batch<any>([
+  DB.prepare("SELECT COUNT(*) n FROM schools WHERE delisted_at IS NULL"),
+  DB.prepare("SELECT COUNT(*) n FROM submissions WHERE status='pending'"),
+  DB.prepare("SELECT COUNT(*) n FROM school_details WHERE official_email IS NOT NULL"),
+  DB.prepare("SELECT COUNT(DISTINCT school_id) n FROM grade_fees WHERE school_id IS NOT NULL"),
+]);
+---
+<Base title="Admin — Dubai Schools">
+  <div class="wrap adminwrap">
+    <div class="admin-bar">
+      <div><h1>Admin</h1></div>
+      <form method="POST" action="/api/admin/logout">
+        <button class="btn sec" type="submit" style="margin:0;padding:6px 12px">Sign out {admin.email}</button>
+      </form>
+    </div>
+
+    <div class="ad-stats">
+      <div><b>{schools.results[0].n}</b><span>Schools</span></div>
+      <div><b>{subs.results[0].n}</b><span>Pending submissions</span></div>
+      <div><b>{details.results[0].n}</b><span>With an office email</span></div>
+      <div><b>{fees.results[0].n}</b><span>With per-grade fees</span></div>
+    </div>
+
+    <div class="adminlinks">
+      <a class="adminlink" href="/admin/schools">
+        <h2>Schools</h2>
+        <p>Filter the directory, select schools and export or mail the ones that gave us an address.</p>
+      </a>
+      <div class="adminlink is-soon">
+        <h2>Moderation queue</h2>
+        <p>{subs.results[0].n} submission{subs.results[0].n === 1 ? "" : "s"} waiting. Not built yet — they are safe in the database meanwhile.</p>
+      </div>
+    </div>
+  </div>
+</Base>

@@ -1,0 +1,214 @@
+---
+import Base from "../../layouts/Base.astro";
+import { env } from "cloudflare:workers";
+
+const DB = (env as unknown as { DB: D1Database }).DB;
+const admin = Astro.locals.admin!;
+
+/**
+ * The mailable set is deliberately narrow: an office address a school gave us,
+ * held in school_details. KHDA's published address is a principal's personal
+ * mailbox and is not collected, so it cannot appear here.
+ */
+const { results } = await DB.prepare(
+  `SELECT s.id, s.name, s.area, s.curricula, s.khda_rating, s.fee_band,
+          s.website, s.phone, d.official_email
+   FROM schools s
+   LEFT JOIN school_details d ON d.school_id = s.id
+   WHERE s.delisted_at IS NULL
+   ORDER BY s.name`
+).all<any>();
+
+const rows = results.map((r) => ({
+  ...r,
+  curricula: (() => {
+    try { return JSON.parse(r.curricula) as string[]; } catch { return []; }
+  })(),
+}));
+
+const mailable = rows.filter((r) => r.official_email).length;
+const areas = [...new Set(rows.map((r) => r.area))].sort();
+const curricula = [...new Set(rows.flatMap((r) => r.curricula))].sort();
+const TIERS = ["Outstanding", "Very Good", "Good", "Acceptable", "Not rated"];
+const bandLabel: Record<string, string> = {
+  acceptable: "Acceptable", medium: "Medium", high: "High", very_high: "Very high",
+};
+---
+
+<Base title="Schools — Dubai Schools admin">
+  <div class="wrap adminwrap">
+    <div class="admin-bar">
+      <div>
+        <a class="back" href="/admin">&larr; Admin</a>
+        <h1>Schools</h1>
+      </div>
+      <form method="POST" action="/api/admin/logout">
+        <button class="btn sec" type="submit" style="margin:0;padding:6px 12px">Sign out {admin.email}</button>
+      </form>
+    </div>
+
+    <div class="mailnote">
+      <strong>{mailable} of {rows.length} schools have given us an office address.</strong>
+      Only those can be mailed. KHDA publishes a principal's personal mailbox,
+      which is deliberately not collected — schools supply an office address
+      themselves through <a href="/contribute?as=school">Contribute</a> or the
+      free Verified tier.
+    </div>
+
+    <div class="filters">
+      <div class="row">
+        <div class="field">
+          <label for="f-cur">Curriculum</label>
+          <select id="f-cur"><option value="">All</option>{curricula.map((c) => <option value={c}>{c}</option>)}</select>
+        </div>
+        <div class="field">
+          <label for="f-area">Area</label>
+          <select id="f-area"><option value="">All</option>{areas.map((a) => <option value={a}>{a}</option>)}</select>
+        </div>
+        <div class="field">
+          <label for="f-rat">KHDA rating</label>
+          <select id="f-rat"><option value="">All</option>{TIERS.map((t) => <option value={t}>{t}</option>)}</select>
+        </div>
+        <div class="field">
+          <label for="f-mail">Contactable</label>
+          <select id="f-mail">
+            <option value="">All schools</option>
+            <option value="yes">Has an office email</option>
+            <option value="no">No email yet</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="admin-actions">
+      <label class="pickall"><input type="checkbox" id="all" /> Select all shown</label>
+      <span class="pickcount"><b id="picked">0</b> selected · <b id="shown">{rows.length}</b> shown</span>
+      <button class="btn sec" id="export" style="margin:0;padding:7px 13px" disabled>Export CSV</button>
+      <button class="btn" id="mail" style="margin:0;padding:7px 13px" disabled>Compose email</button>
+    </div>
+
+    <div class="tbl-wrap adminlist">
+      <table class="gradetbl">
+        <thead>
+          <tr>
+            <th style="width:34px"></th>
+            <th>School</th><th>Area</th><th>Curriculum</th><th>Rating</th><th>Office email</th>
+          </tr>
+        </thead>
+        <tbody id="tb">
+          {rows.map((r) => (
+            <tr
+              data-area={r.area}
+              data-cur={r.curricula.join("|")}
+              data-rat={r.khda_rating}
+              data-mail={r.official_email ? "yes" : "no"}
+            >
+              <td><input type="checkbox" class="pick" value={r.id} data-email={r.official_email ?? ""} data-name={r.name} disabled={!r.official_email} /></td>
+              <td>{r.name}</td>
+              <td>{r.area}</td>
+              <td>{r.curricula.join(", ")}</td>
+              <td>{r.khda_rating}</td>
+              <td>{r.official_email ? r.official_email : <span class="missing">—</span>}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+
+    <div class="composer" id="composer" hidden>
+      <h2>Compose</h2>
+      <p class="note" id="to"></p>
+      <div class="field">
+        <label for="subject">Subject</label>
+        <input id="subject" placeholder="Claim your school's listing on Dubai Schools" />
+      </div>
+      <div class="field">
+        <label for="bodytext">Message</label>
+        <textarea id="bodytext" rows="8" placeholder="Write the message. {'{'}{'{'}school{'}'}{'}'} is replaced with each school's name."></textarea>
+      </div>
+      <div class="form-foot">
+        <button class="btn" id="send" disabled>Sending not configured</button>
+        <p class="note">
+          Sending needs a verified domain. See the setup note in the repo README —
+          SPF, DKIM and DMARC on can-du-ai.com, plus a RESEND_API_KEY secret.
+        </p>
+      </div>
+    </div>
+  </div>
+</Base>
+
+<script>
+  const rows = Array.from(document.querySelectorAll("#tb tr")) as HTMLElement[];
+  const picks = () => rows.filter((r) => !r.hidden).map((r) => r.querySelector(".pick") as HTMLInputElement);
+  const chosen = () => picks().filter((c) => c.checked && !c.disabled);
+
+  const cur = document.getElementById("f-cur") as HTMLSelectElement;
+  const area = document.getElementById("f-area") as HTMLSelectElement;
+  const rat = document.getElementById("f-rat") as HTMLSelectElement;
+  const mail = document.getElementById("f-mail") as HTMLSelectElement;
+  const all = document.getElementById("all") as HTMLInputElement;
+  const pickedEl = document.getElementById("picked")!;
+  const shownEl = document.getElementById("shown")!;
+  const exportBtn = document.getElementById("export") as HTMLButtonElement;
+  const mailBtn = document.getElementById("mail") as HTMLButtonElement;
+  const composer = document.getElementById("composer")!;
+  const toEl = document.getElementById("to")!;
+
+  function apply() {
+    let shown = 0;
+    for (const r of rows) {
+      const d = r.dataset;
+      const ok =
+        (!cur.value || d.cur!.split("|").includes(cur.value)) &&
+        (!area.value || d.area === area.value) &&
+        (!rat.value || d.rat === rat.value) &&
+        (!mail.value || d.mail === mail.value);
+      r.hidden = !ok;
+      if (!ok) (r.querySelector(".pick") as HTMLInputElement).checked = false;
+      if (ok) shown++;
+    }
+    shownEl.textContent = String(shown);
+    all.checked = false;
+    count();
+  }
+
+  function count() {
+    const n = chosen().length;
+    pickedEl.textContent = String(n);
+    exportBtn.disabled = n === 0;
+    mailBtn.disabled = n === 0;
+    if (n === 0) composer.hidden = true;
+  }
+
+  for (const el of [cur, area, rat, mail]) el.addEventListener("change", apply);
+  all.addEventListener("change", () => {
+    for (const c of picks()) if (!c.disabled) c.checked = all.checked;
+    count();
+  });
+  document.getElementById("tb")!.addEventListener("change", count);
+
+  exportBtn.addEventListener("click", () => {
+    const head = "name,email\n";
+    const body = chosen()
+      .map((c) => `"${c.dataset.name!.replace(/"/g, '""')}","${c.dataset.email}"`)
+      .join("\n");
+    const blob = new Blob([head + body], { type: "text/csv" });
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = `dubai-schools-${chosen().length}-recipients.csv`;
+    a.click();
+    URL.revokeObjectURL(a.href);
+  });
+
+  mailBtn.addEventListener("click", () => {
+    const list = chosen();
+    composer.hidden = false;
+    toEl.textContent = `To ${list.length} school${list.length === 1 ? "" : "s"}: ${list
+      .slice(0, 4)
+      .map((c) => c.dataset.name)
+      .join(", ")}${list.length > 4 ? ` and ${list.length - 4} more` : ""}`;
+    composer.scrollIntoView({ behavior: "smooth", block: "start" });
+  });
+
+  apply();
+</script>

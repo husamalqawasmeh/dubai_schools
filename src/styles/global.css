@@ -753,3 +753,52 @@ button.btn:disabled { opacity: 0.55; cursor: default; }
 .faq-item p { margin: 10px 0 0; font-size: 14.5px; color: var(--ink-2); max-width: 72ch; }
 .ad-foot { margin-top: 34px; padding-top: 22px; border-top: 1px solid var(--rule); }
 .ad-foot p { color: var(--ink-2); max-width: 60ch; }
+
+/* ---------------- admin ---------------- */
+.adminwrap { padding: 20px 0 50px; }
+.adminlogin { max-width: 420px; padding: 48px 0; }
+.adminlogin h1 { font-size: 22px; margin-bottom: 6px; }
+.adminlogin .field { margin-bottom: 12px; }
+.adminlogin .field label,
+.adminwrap .field label {
+  display: block; font-family: var(--display); font-size: 10.5px; font-weight: 700;
+  letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 5px;
+}
+.adminlogin input {
+  width: 100%; height: 38px; padding: 0 11px; font-family: var(--display); font-size: 14.5px;
+  color: var(--ink); background: var(--surface); border: 1px solid var(--rule-firm); border-radius: 5px;
+}
+.admin-bar { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-bottom: 16px; }
+.admin-bar h1 { font-size: 24px; margin-top: 4px; }
+.mailnote {
+  border: 1px solid var(--rule-firm); border-left: 3px solid var(--warn);
+  border-radius: 6px; padding: 12px 15px; margin-bottom: 16px;
+  font-size: 14px; color: var(--ink-2); background: var(--surface);
+}
+.mailnote strong { color: var(--ink); }
+.admin-actions { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin: 14px 0 12px; }
+.pickall { font-family: var(--display); font-size: 13px; display: inline-flex; align-items: center; gap: 7px; cursor: pointer; }
+.pickall input { width: 15px; height: 15px; accent-color: var(--accent); }
+.pickcount { font-family: var(--display); font-size: 13px; color: var(--muted); }
+.pickcount b { color: var(--ink); }
+.adminlist { max-height: 52vh; overflow-y: auto; }
+.adminlist .pick { width: 15px; height: 15px; accent-color: var(--accent); }
+.adminlist .pick:disabled { opacity: 0.35; }
+.composer { margin-top: 22px; background: var(--surface); border: 1px solid var(--rule); border-radius: 6px; padding: 18px 20px; }
+.composer h2 { font-size: 18px; margin-bottom: 6px; }
+.composer input, .composer textarea {
+  width: 100%; font-family: var(--display); font-size: 14.5px; color: var(--ink);
+  background: var(--surface); border: 1px solid var(--rule-firm); border-radius: 5px; padding: 9px 11px;
+}
+.composer input { height: 38px; }
+.composer .field { margin-bottom: 12px; }
+.adminlinks { display: grid; gap: 12px; margin-top: 18px; }
+@media (min-width: 700px) { .adminlinks { grid-template-columns: 1fr 1fr; } }
+.adminlink {
+  background: var(--surface); border: 1px solid var(--rule); border-radius: 6px;
+  padding: 16px 18px; text-decoration: none; color: inherit; display: block;
+}
+a.adminlink:hover { border-color: var(--accent); }
+.adminlink h2 { font-size: 16px; margin-bottom: 4px; }
+.adminlink p { font-family: var(--display); font-size: 13.5px; color: var(--ink-2); margin: 0; }
+.adminlink.is-soon { opacity: 0.6; }

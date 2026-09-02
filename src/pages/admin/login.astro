@@ -1,0 +1,47 @@
+---
+import Base from "../../layouts/Base.astro";
+---
+<Base title="Sign in — Dubai Schools admin">
+  <div class="wrap adminlogin">
+    <div class="panel">
+      <h1>Admin sign in</h1>
+      <p class="muted-p">This area manages school data and outbound mail.</p>
+      <form id="lf">
+        <div class="field">
+          <label for="email">Email</label>
+          <input id="email" type="email" autocomplete="username" required />
+        </div>
+        <div class="field">
+          <label for="password">Password</label>
+          <input id="password" type="password" autocomplete="current-password" required />
+        </div>
+        <button class="btn" type="submit" id="go">Sign in</button>
+        <p class="note" id="msg"></p>
+      </form>
+    </div>
+  </div>
+</Base>
+<script>
+  const f = document.getElementById("lf") as HTMLFormElement;
+  const msg = document.getElementById("msg")!;
+  const go = document.getElementById("go") as HTMLButtonElement;
+  f.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    go.disabled = true;
+    msg.textContent = "Checking…";
+    msg.className = "note";
+    const res = await fetch("/api/admin/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        email: (document.getElementById("email") as HTMLInputElement).value,
+        password: (document.getElementById("password") as HTMLInputElement).value,
+      }),
+    });
+    const out = (await res.json()) as { ok: boolean; error?: string };
+    if (out.ok) { location.href = "/admin"; return; }
+    msg.textContent = out.error ?? "Could not sign in.";
+    msg.className = "note is-bad";
+    go.disabled = false;
+  });
+</script>
