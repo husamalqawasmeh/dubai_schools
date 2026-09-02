@@ -99,26 +99,26 @@ const maxCur = top[0]?.n ?? 1;
         </div>
       </div>
 
-      <div class="chart">
+      <div class="chart chart-wide">
         <h3><span class="chart-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4.5A1.5 1.5 0 0 1 4.5 3H10a3 3 0 0 1 2 5.2V21a3 3 0 0 0-2-.8H4.5A1.5 1.5 0 0 1 3 18.7z"/><path d="M21 4.5A1.5 1.5 0 0 0 19.5 3H14a3 3 0 0 0-2 5.2V21a3 3 0 0 1 2-.8h5.5a1.5 1.5 0 0 0 1.5-1.5z"/></svg></span>Curriculum mix</h3>
         <p class="sub">Schools offering each curriculum. British leads by nearly 3&times;.</p>
-        <div class="bars">
+        <div class="tier-grid cur-grid">
           {top.map((c) => (
-            <a class="bar-row" href={`/schools?curriculum=${encodeURIComponent(c.name)}`}>
-              <span class="bar-lab">{c.name}</span>
-              <span class="bar-track">
-                <span class="bar" style={`--w:${Math.round((c.n / maxCur) * 100)}%`}></span>
+            <a class="tier" href={`/schools?curriculum=${encodeURIComponent(c.name)}`}>
+              <span class="cur-bar" aria-hidden="true">
+                <span style={`width:${Math.round((c.n / maxCur) * 100)}%`}></span>
               </span>
-              <span class="bar-val">{c.n}</span>
+              <span class="tier-name">{c.name}</span>
+              <span class="tier-n">{c.n}</span>
             </a>
           ))}
           {tail.length > 0 && (
-            <div class="bar-row" style="cursor:default">
-              <span class="bar-lab" style="color:var(--muted)">Other &times;{tail.length}</span>
-              <span class="bar-track">
-                <span class="bar hatch" style={`--w:${Math.round((tailTotal / maxCur) * 100)}%`}></span>
+            <div class="tier tier-static">
+              <span class="cur-bar hatch" aria-hidden="true">
+                <span style={`width:${Math.round((tailTotal / maxCur) * 100)}%`}></span>
               </span>
-              <span class="bar-val">{tailTotal}</span>
+              <span class="tier-name">Other &times;{tail.length}</span>
+              <span class="tier-n">{tailTotal}</span>
             </div>
           )}
         </div>
@@ -128,17 +128,12 @@ const maxCur = top[0]?.n ?? 1;
         </p>
       </div>
 
-      <div class="chart" style="display:flex;flex-direction:column;justify-content:center">
+      <div class="chart chart-narrow" style="display:flex;flex-direction:column;justify-content:center">
         <h3><span class="chart-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5 21 21"/></svg></span>Looking for something specific?</h3>
-        <p class="sub" style="margin-bottom:16px">
-          Search all {s.total} schools by name, area or curriculum, and narrow
-          by rating and fee band.
+        <p class="sub" style="margin-bottom:14px">
+          Search by name, area or curriculum.
         </p>
-        <a class="btn" href="/schools" style="margin-top:0">Browse all schools</a>
-        <p class="sub" style="margin:14px 0 0">
-          Fees are as published by KHDA and are not all from the same academic
-          year — each school's page shows its own.
-        </p>
+        <a class="btn" href="/schools" style="margin-top:0">Browse all {s.total}</a>
       </div>
     </div>
   </div>

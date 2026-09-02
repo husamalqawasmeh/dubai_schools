@@ -392,3 +392,28 @@ body:has(.listing) main { overflow: hidden; }
   .band-coins { height: 44px; }
   .band-range { font-size: 8.5px; }
 }
+
+/* ---------------- chart row spans ----------------
+   Four tracks, so the first row splits evenly and the second gives the
+   curriculum panel three quarters and the search panel the remaining one. */
+@media (min-width: 760px) {
+  .charts { grid-template-columns: repeat(4, 1fr); }
+  .charts > .chart { grid-column: span 2; }
+  .charts > .chart-wide { grid-column: span 3; }
+  .charts > .chart-narrow { grid-column: span 1; }
+}
+
+/* Curriculum columns. Seven categories, so no colour scale — it is not an
+   ordinal scale like the rating. The bar keeps the magnitude readable, which
+   is what the old horizontal bars were for. */
+.cur-grid { grid-template-columns: repeat(7, 1fr); }
+.cur-bar { display: block; height: 4px; background: var(--surface-2); }
+.cur-bar > span { display: block; height: 100%; background: var(--accent); }
+.cur-bar.hatch > span {
+  background: repeating-linear-gradient(135deg, var(--rule-firm) 0 3px, transparent 3px 6px);
+}
+.tier-static { cursor: default; }
+.cur-grid .tier-name { font-size: 10px; }
+@media (max-width: 760px) {
+  .cur-grid { grid-template-columns: repeat(4, 1fr); }
+}
