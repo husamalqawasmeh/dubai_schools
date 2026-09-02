@@ -68,6 +68,9 @@ export interface Stats {
   curricula: number;
   bands: Record<string, number>;
   ratings: Record<string, number>;
+  /** Per-curriculum counts, descending. Sums to more than `total`, because a
+   *  school may run two curricula (British and IB, say). */
+  curriculaCounts: { name: string; n: number }[];
 }
 
 /** Counted in the database rather than in JavaScript, so the headline figures
@@ -101,10 +104,10 @@ export async function stats(): Promise<Stats> {
   const { results } = await DB.prepare(
     `SELECT curricula FROM schools WHERE delisted_at IS NULL`
   ).all<{ curricula: string }>();
-  const set = new Set<string>();
+  const counts = new Map<string, number>();
   for (const r of results) {
     try {
-      for (const c of JSON.parse(r.curricula)) set.add(c);
+      for (const c of JSON.parse(r.curricula)) counts.set(c, (counts.get(c) ?? 0) + 1);
     } catch {
       /* ignore a malformed row */
     }
@@ -115,8 +118,11 @@ export async function stats(): Promise<Stats> {
     rated: t.rated,
     priced: t.priced,
     areas: t.areas,
-    curricula: set.size,
+    curricula: counts.size,
     bands: bandMap,
     ratings: ratingMap,
+    curriculaCounts: [...counts.entries()]
+      .map(([name, n]) => ({ name, n }))
+      .sort((a, b) => b.n - a.n),
   };
 }

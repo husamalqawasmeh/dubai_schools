@@ -1,0 +1,198 @@
+---
+import Base from "../../layouts/Base.astro";
+import { allSchools, type School } from "../../lib/db";
+
+const p = Astro.url.searchParams;
+const f = {
+  q: p.get("q")?.trim() ?? "",
+  curriculum: p.get("curriculum") ?? "",
+  area: p.get("area") ?? "",
+  rating: p.get("rating") ?? "",
+  band: p.get("band") ?? "",
+  rated: p.get("rated") === "1",
+};
+
+const all: School[] = await allSchools();
+
+// Filtered on the server so a link from the landing page works without
+// JavaScript and is indexable. The client script re-runs the same rules.
+const shown = all.filter((x) => {
+  const text = f.q.toLowerCase();
+  return (
+    (!text ||
+      x.name.toLowerCase().includes(text) ||
+      x.area.toLowerCase().includes(text) ||
+      x.curricula.join(" ").toLowerCase().includes(text)) &&
+    (!f.curriculum || x.curricula.includes(f.curriculum)) &&
+    (!f.area || x.area === f.area) &&
+    (!f.rating || x.khda_rating === f.rating) &&
+    (!f.band || (x.fee_band ?? "none") === f.band) &&
+    (!f.rated || x.khda_rating !== "Not rated")
+  );
+});
+
+const TIERS = ["Outstanding", "Very Good", "Good", "Acceptable", "Weak", "Very Weak", "Not rated"];
+const tiersPresent = TIERS.filter((t) => all.some((x) => x.khda_rating === t));
+const areas = [...new Set(all.map((x) => x.area))].sort();
+const curricula = [...new Set(all.flatMap((x) => x.curricula))].sort();
+
+const BANDS = [
+  { key: "acceptable", label: "Acceptable", range: "under AED 25,000" },
+  { key: "medium", label: "Medium", range: "AED 25,000 – 49,999" },
+  { key: "high", label: "High", range: "AED 50,000 – 89,999" },
+  { key: "very_high", label: "Very high", range: "AED 90,000 and above" },
+];
+const bandLabel: Record<string, string> = {
+  acceptable: "Acceptable", medium: "Medium", high: "High", very_high: "Very high",
+};
+const bandDots: Record<string, number> = { acceptable: 1, medium: 2, high: 3, very_high: 4 };
+
+// Name the active filter in the title so a filtered link reads correctly in
+// search results and when shared.
+const activeBits = [f.curriculum, f.rating && `rated ${f.rating}`, f.area, f.band && bandLabel[f.band]].filter(Boolean);
+const title = activeBits.length
+  ? `${activeBits.join(", ")} schools in Dubai`
+  : "All Dubai schools — search and filter";
+---
+
+<Base title={title}>
+  <div class="wrap listing">
+    <div class="listing-top">
+      <div class="listing-head">
+        <div>
+          <a class="back" href="/">&larr; Overview</a>
+          <h1 style="font-size:22px;margin-top:6px">
+            {activeBits.length ? activeBits.join(" · ") : "All schools"}
+          </h1>
+        </div>
+        <p class="count"><b id="n">{shown.length}</b> <span id="noun">{shown.length === 1 ? "school" : "schools"}</span> of {all.length}</p>
+      </div>
+
+      <div class="filters">
+        <input id="q" type="search" value={f.q} placeholder="Search by school, area, or curriculum…" aria-label="Search schools" />
+        <div class="row">
+          <div class="field">
+            <label for="f-cur">Curriculum</label>
+            <select id="f-cur">
+              <option value="">All curricula</option>
+              {curricula.map((c) => <option value={c} selected={c === f.curriculum}>{c}</option>)}
+            </select>
+          </div>
+          <div class="field">
+            <label for="f-area">Area</label>
+            <select id="f-area">
+              <option value="">All areas</option>
+              {areas.map((a) => <option value={a} selected={a === f.area}>{a}</option>)}
+            </select>
+          </div>
+          <div class="field">
+            <label for="f-rat">KHDA rating</label>
+            <select id="f-rat">
+              <option value="">All ratings</option>
+              {tiersPresent.map((t) => <option value={t} selected={t === f.rating}>{t}</option>)}
+            </select>
+          </div>
+          <div class="field">
+            <label for="f-band">Fee band</label>
+            <select id="f-band">
+              <option value="">Any fee</option>
+              {BANDS.map((b) => <option value={b.key} selected={b.key === f.band}>{b.label} — {b.range}</option>)}
+              <option value="none" selected={f.band === "none"}>Not published</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="listing-results">
+      <div class="grid" id="grid">
+        {all.map((x) => (
+          <a
+            class="card"
+            href={`/schools/${x.slug}`}
+            hidden={!shown.includes(x)}
+            data-name={x.name.toLowerCase()}
+            data-area={x.area}
+            data-cur={x.curricula.join("|")}
+            data-rat={x.khda_rating}
+            data-band={x.fee_band ?? "none"}
+          >
+            <h3>{x.name}</h3>
+            <p class="where">{x.area} · {x.curricula.join(" / ")}</p>
+            <div class="foot">
+              <span class="fee">
+                {x.fee_band ? (
+                  <>
+                    <span class="meter" aria-hidden="true">
+                      {[1, 2, 3, 4].map((d) => <i class={d <= bandDots[x.fee_band!] ? "on" : ""}></i>)}
+                    </span>
+                    {bandLabel[x.fee_band]}
+                  </>
+                ) : (
+                  <span class="missing">Fee not published</span>
+                )}
+              </span>
+              <span class="badge" data-r={x.khda_rating}>{x.khda_rating}</span>
+            </div>
+          </a>
+        ))}
+      </div>
+
+      <div class="empty" id="empty" hidden={shown.length > 0}>
+        No schools match these filters. Try widening the fee band or clearing the area.
+      </div>
+    </div>
+  </div>
+</Base>
+
+<script>
+  // Every card is already in the DOM; filtering toggles them, so there is no
+  // round trip and no JSON payload. The URL is kept in step so a filtered
+  // view stays shareable and the back button behaves.
+  const q = document.getElementById("q") as HTMLInputElement;
+  const cur = document.getElementById("f-cur") as HTMLSelectElement;
+  const area = document.getElementById("f-area") as HTMLSelectElement;
+  const rat = document.getElementById("f-rat") as HTMLSelectElement;
+  const band = document.getElementById("f-band") as HTMLSelectElement;
+  const grid = document.getElementById("grid")!;
+  const empty = document.getElementById("empty")!;
+  const n = document.getElementById("n")!;
+  const noun = document.getElementById("noun")!;
+  const results = document.querySelector(".listing-results")!;
+  const cards = Array.from(grid.children) as HTMLElement[];
+
+  function apply() {
+    const text = q.value.trim().toLowerCase();
+    let shown = 0;
+    for (const c of cards) {
+      const d = c.dataset;
+      const ok =
+        (!text ||
+          d.name!.includes(text) ||
+          d.area!.toLowerCase().includes(text) ||
+          d.cur!.toLowerCase().includes(text)) &&
+        (!cur.value || d.cur!.split("|").includes(cur.value)) &&
+        (!area.value || d.area === area.value) &&
+        (!rat.value || d.rat === rat.value) &&
+        (!band.value || d.band === band.value);
+      c.hidden = !ok;
+      if (ok) shown++;
+    }
+    n.textContent = String(shown);
+    noun.textContent = shown === 1 ? "school" : "schools";
+    empty.hidden = shown > 0;
+    results.scrollTop = 0;
+
+    const u = new URL(location.href);
+    const set = (k: string, v: string) => (v ? u.searchParams.set(k, v) : u.searchParams.delete(k));
+    set("q", q.value.trim());
+    set("curriculum", cur.value);
+    set("area", area.value);
+    set("rating", rat.value);
+    set("band", band.value);
+    u.searchParams.delete("rated");
+    history.replaceState(null, "", u);
+  }
+
+  for (const el of [q, cur, area, rat, band]) el.addEventListener("input", apply);
+</script>

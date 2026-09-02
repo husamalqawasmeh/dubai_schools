@@ -3,6 +3,9 @@
   "name": "dubai-schools",
   "compatibility_date": "2026-09-01",
   "compatibility_flags": ["nodejs_compat"],
+  // Keep the workers.dev URL alive: defining `routes` turns it off by default,
+  // which would leave the Worker unreachable until the custom domain exists.
+  "workers_dev": true,
   "routes": [
     { "pattern": "dubai-schools.can-du-ai.com", "custom_domain": true }
   ],
