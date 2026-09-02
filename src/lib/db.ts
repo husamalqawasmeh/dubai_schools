@@ -126,3 +126,67 @@ export async function stats(): Promise<Stats> {
       .sort((a, b) => b.n - a.n),
   };
 }
+
+/* -------------------------------------------------------------------------- */
+/* Per-grade fees, from KHDA's fact sheets                                      */
+/* -------------------------------------------------------------------------- */
+
+export interface FeeItem {
+  name: string;
+  amount: string;
+}
+
+export interface GradeFee {
+  grade: string;
+  curriculum: string | null;
+  academic_year: string | null;
+  tuition_aed: number | null;
+  total_aed: number | null;
+  mandatory: FeeItem[];
+  supplies: FeeItem[];
+  optional: FeeItem[];
+  transport: string | null;
+  increase_policy: string | null;
+  discounts: string[];
+}
+
+const parseJson = <T,>(raw: string | null, fallback: T): T => {
+  if (!raw) return fallback;
+  try {
+    return JSON.parse(raw) as T;
+  } catch {
+    return fallback;
+  }
+};
+
+/**
+ * Every grade KHDA publishes a fee sheet for, cheapest first. Ordered by
+ * tuition rather than by grade name because KHDA's grade labels are not
+ * sortable text — "KG 1", "FS 2", "Year 10" and "Grade 3" all coexist, and
+ * fee order happens to track school stage closely enough to read naturally.
+ */
+export async function gradeFees(schoolId: number): Promise<GradeFee[]> {
+  const { results } = await DB.prepare(
+    `SELECT grade, curriculum, academic_year, tuition_aed, total_aed,
+            mandatory, supplies, optional, transport, increase_policy, discounts
+     FROM grade_fees
+     WHERE school_id = ?
+     ORDER BY COALESCE(tuition_aed, 0), grade`
+  )
+    .bind(schoolId)
+    .all<any>();
+
+  return results.map((r) => ({
+    grade: r.grade,
+    curriculum: r.curriculum,
+    academic_year: r.academic_year,
+    tuition_aed: r.tuition_aed,
+    total_aed: r.total_aed,
+    mandatory: parseJson<FeeItem[]>(r.mandatory, []),
+    supplies: parseJson<FeeItem[]>(r.supplies, []),
+    optional: parseJson<FeeItem[]>(r.optional, []),
+    transport: r.transport,
+    increase_policy: r.increase_policy,
+    discounts: parseJson<string[]>(r.discounts, []),
+  }));
+}

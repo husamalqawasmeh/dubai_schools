@@ -1,6 +1,6 @@
 ---
 import Base from "../../layouts/Base.astro";
-import { schoolBySlug } from "../../lib/db";
+import { schoolBySlug, gradeFees } from "../../lib/db";
 import Coins from "../../components/Coins.astro";
 
 const { slug } = Astro.params;
@@ -9,6 +9,13 @@ const school = await schoolBySlug(slug!);
 if (!school) {
   return new Response(null, { status: 404, statusText: "School not found" });
 }
+
+const grades = school ? await gradeFees(school.id) : [];
+
+// Everything below the per-grade table is the same on every sheet for a
+// school, so it is shown once rather than repeated fourteen times.
+const sample = grades.find((g) => g.transport || g.discounts.length || g.increase_policy);
+const feeYearFromSheets = grades[0]?.academic_year ?? null;
 
 const aed = (v: number) => "AED " + v.toLocaleString("en-AE");
 
@@ -67,12 +74,84 @@ const facts: { k: string; v: string | null }[] = [
           ></iframe>
         </div>
 
+        <h2 style="margin-top:34px">Fees by grade</h2>
+        {grades.length > 0 ? (
+          <>
+            <p style="color:var(--muted);font-size:14px;margin:6px 0 12px">
+              KHDA fee sheet{feeYearFromSheets ? `, academic year ${feeYearFromSheets}` : ""}.
+              Total is tuition plus the mandatory extras.
+            </p>
+            <div class="tbl-wrap">
+              <table class="gradetbl">
+                <thead>
+                  <tr><th>Grade</th><th class="num">Tuition</th><th class="num">Mandatory</th><th class="num">Total</th></tr>
+                </thead>
+                <tbody>
+                  {grades.map((g) => (
+                    <tr>
+                      <td>{g.grade}</td>
+                      <td class="num">{g.tuition_aed ? g.tuition_aed.toLocaleString("en-AE") : "—"}</td>
+                      <td class="num">
+                        {g.mandatory.length
+                          ? g.mandatory.map((m) => `${m.name} ${m.amount}`).join(", ")
+                          : "—"}
+                      </td>
+                      <td class="num strong">{g.total_aed ? g.total_aed.toLocaleString("en-AE") : "—"}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+
+            {sample && (
+              <div class="factgrid">
+                {sample.transport && (
+                  <div class="fact">
+                    <h3>School transport</h3>
+                    <p>AED {sample.transport} per year</p>
+                  </div>
+                )}
+                {sample.supplies.length > 0 && (
+                  <div class="fact">
+                    <h3>Supplies</h3>
+                    <p>{sample.supplies.map((s) => `${s.name} AED ${s.amount}`).join(" · ")}</p>
+                  </div>
+                )}
+                {sample.optional.filter((o) => !/transport/i.test(o.name)).length > 0 && (
+                  <div class="fact">
+                    <h3>Optional services</h3>
+                    <p>{sample.optional.filter((o) => !/transport/i.test(o.name)).map((o) => `${o.name} AED ${o.amount}`).join(" · ")}</p>
+                  </div>
+                )}
+                {sample.discounts.length > 0 && (
+                  <div class="fact">
+                    <h3>Discounts</h3>
+                    <p>{sample.discounts.join(" · ")}</p>
+                  </div>
+                )}
+                {sample.increase_policy && (
+                  <div class="fact wide">
+                    <h3>Fee increase policy</h3>
+                    <p>{sample.increase_policy}</p>
+                  </div>
+                )}
+              </div>
+            )}
+          </>
+        ) : (
+          <div class="panel" style="margin-top:12px">
+            <p class="missing" style="margin:0">
+              KHDA publishes no per-grade fee sheet for this school.
+            </p>
+          </div>
+        )}
+
         <h2 style="margin-top:34px">School details</h2>
         <div class="panel" style="margin-top:12px">
           <p class="missing" style="margin:0">
-            Official email, teacher and admin staff numbers, and school
-            transport are not published by KHDA. They are collected separately
-            and will appear here once confirmed with the school.
+            Office email, teacher and admin staff numbers are not published by
+            KHDA. Schools can send them through the
+            <a href="/contribute?as=school">Contribute</a> page.
           </p>
         </div>
 

@@ -12,7 +12,9 @@
     "db:migrate:local": "wrangler d1 migrations apply dubai-schools --local",
     "db:seed": "node --use-system-ca scripts/seed-d1.mts",
     "seed:schools": "node --use-system-ca scripts/seed-data/ingest.mts",
-    "export:schools": "node --use-system-ca scripts/seed-data/export.mts"
+    "export:schools": "node --use-system-ca scripts/seed-data/export.mts",
+    "seed:factsheets": "node --use-system-ca scripts/seed-data/factsheets.mts",
+    "db:seed:fees": "node scripts/seed-grade-fees.mts"
   },
   "dependencies": {
     "@astrojs/cloudflare": "^14.2.6",
