@@ -26,6 +26,7 @@
   --r4: #7fcbbf; /* Acceptable  */
 
   --warn: #8a5a12;
+  --coin: #a8781f;   /* brass; 3.91:1 on white, checked as a graphic */
   --shadow: 0 1px 2px rgba(16, 31, 29, 0.05), 0 1px 1px rgba(16, 31, 29, 0.04);
 
   --display: "Archivo", "Helvetica Neue", Arial, sans-serif;
@@ -51,6 +52,7 @@
     --r3: #2e9186;
     --r4: #1c6259;
     --warn: #d9a441;
+    --coin: #e0b65c;  /* 8.59:1 on the dark surface */
     --shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
   }
 }
@@ -276,3 +278,75 @@ a.bar-row:hover .bar-lab { color: var(--ink); }
 
 /* The listing manages its own scrolling, so main must not scroll too. */
 body:has(.listing) main { overflow: hidden; }
+
+/* ---------------- KHDA rating: five columns, two rows ----------------
+   Tier names on the first row, counts on the second. The ordinal ramp
+   survives as a swatch above each column, so the best-to-worst order is
+   still readable at a glance without a bar chart. */
+.tier-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 1px;
+  background: var(--rule);
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  overflow: hidden;
+}
+.tier {
+  background: var(--surface);
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  min-width: 0;
+  transition: background 0.12s ease;
+}
+.tier:hover { background: var(--surface-2); }
+.tier-swatch { display: block; height: 4px; background: var(--c); }
+.tier-swatch.none {
+  background: repeating-linear-gradient(135deg, var(--rule-firm) 0 3px, transparent 3px 6px);
+}
+.tier-name {
+  display: block;
+  font-family: var(--display);
+  font-size: 10.5px;
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--muted);
+  text-align: center;
+  padding: 9px 4px 0;
+  overflow-wrap: anywhere;
+}
+.tier-n {
+  display: block;
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 21px;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+  text-align: center;
+  padding: 3px 4px 11px;
+  line-height: 1.1;
+}
+@media (max-width: 460px) {
+  .tier-name { font-size: 9.5px; }
+  .tier-n { font-size: 17px; }
+}
+
+/* ---------------- coin stack (fee band) ----------------
+   Replaces the dot meter. Height is the encoding, so one coin reads as
+   cheap and four as dear without needing a legend. */
+.coins { display: block; flex: none; }
+.coins ellipse {
+  fill: var(--coin);
+  stroke: var(--surface);
+  stroke-width: 0.8;
+}
+
+/* ---------------- chart header icons ---------------- */
+.chart h3 { display: flex; align-items: center; gap: 7px; }
+.chart-ico { flex: none; width: 15px; height: 15px; color: var(--accent); }
+.chart-ico svg { display: block; width: 100%; height: 100%; }
+
+/* Fee cells align on the coin baseline rather than centre, so stacks of
+   different height still sit on a common floor. */
+.fee { align-items: flex-end; }

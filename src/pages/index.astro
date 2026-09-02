@@ -1,6 +1,7 @@
 ---
 import Base from "../layouts/Base.astro";
 import { stats } from "../lib/db";
+import Coins from "../components/Coins.astro";
 
 const s = await stats();
 
@@ -33,7 +34,7 @@ const maxCur = top[0]?.n ?? 1;
 
       <div class="stats">
         <a class="stat" href="/schools"><b>{s.total}</b><span>Schools listed</span></a>
-        <a class="stat" href="/schools?rated=1"><b>{s.rated}</b><span>Inspected &amp; rated</span></a>
+        <a class="stat" href="/schools?rated=1"><b>{s.rated}</b><span>Rated by KHDA</span></a>
         <a class="stat" href="/schools"><b>{s.areas}</b><span>Areas covered</span></a>
         <a class="stat" href="/schools"><b>{s.curricula}</b><span>Curricula</span></a>
       </div>
@@ -43,24 +44,23 @@ const maxCur = top[0]?.n ?? 1;
   <div class="wrap" style="padding-top:38px;padding-bottom:70px">
     <h2>The shape of Dubai's schools</h2>
     <p style="color:var(--muted);font-size:14.5px;margin:6px 0 0;max-width:62ch">
-      Every bar is a link. Click one to open the directory already filtered to it.
+      Every figure below is a link. Click one to open the directory already filtered to it.
     </p>
 
     <div class="charts">
       <div class="chart">
-        <h3>Where the ratings sit</h3>
-        <p class="sub">Schools per KHDA tier. Darker is a better inspection result.</p>
-        <div class="bars">
+        <h3><span class="chart-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="9" r="6"/><path d="M8.5 14.2 7 22l5-2.6L17 22l-1.5-7.8"/></svg></span>KHDA rating</h3>
+        <p class="sub">Each tier, and how many schools hold it.</p>
+        <div class="tier-grid">
           {tiersPresent.map((t, i) => (
-            <a class="bar-row" href={`/schools?rating=${encodeURIComponent(t)}`}>
-              <span class="bar-lab">{t}</span>
-              <span class="bar-track">
-                <span
-                  class={t === "Not rated" ? "bar hatch" : "bar"}
-                  style={`--w:${Math.round((s.ratings[t] / maxTier) * 100)}%;--c:var(--r${Math.min(i + 1, 4)})`}
-                ></span>
-              </span>
-              <span class="bar-val">{s.ratings[t]}</span>
+            <a class="tier" href={`/schools?rating=${encodeURIComponent(t)}`}>
+              <span
+                class={t === "Not rated" ? "tier-swatch none" : "tier-swatch"}
+                style={`--c:var(--r${Math.min(i + 1, 4)})`}
+                aria-hidden="true"
+              ></span>
+              <span class="tier-name">{t}</span>
+              <span class="tier-n">{s.ratings[t]}</span>
             </a>
           ))}
         </div>
@@ -71,15 +71,13 @@ const maxCur = top[0]?.n ?? 1;
       </div>
 
       <div class="chart">
-        <h3>What schools cost</h3>
+        <h3><span class="chart-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="6" rx="8" ry="3"/><path d="M4 6v5c0 1.7 3.6 3 8 3s8-1.3 8-3V6"/><path d="M4 11v5c0 1.7 3.6 3 8 3s8-1.3 8-3v-5"/></svg></span>What schools cost</h3>
         <p class="sub">Fee bands, cut on the real quartiles of the {s.priced} priced schools.</p>
         <div class="bars">
           {BANDS.map((b) => (
             <a class="bar-row" href={`/schools?band=${b.key}`} title={`${b.label} — ${b.range}`}>
-              <span class="bar-lab">
-                <span class="meter" aria-hidden="true">
-                  {[1, 2, 3, 4].map((d) => <i class={d <= b.dots ? "on" : ""}></i>)}
-                </span>
+              <span class="bar-lab" style="display:flex;align-items:flex-end;gap:7px">
+                <Coins n={b.dots} label={b.label} />
                 <span class="sr-only">{b.label}</span>
               </span>
               <span class="bar-track">
@@ -90,13 +88,13 @@ const maxCur = top[0]?.n ?? 1;
           ))}
         </div>
         <p class="sub" style="margin:13px 0 0">
-          One dot {BANDS[0].range}, four dots {BANDS[3].range}.
+          One coin {BANDS[0].range}, four coins {BANDS[3].range}.
           <a href="/schools?band=none">{s.bands["none"] ?? 0} schools</a> publish no fee at all.
         </p>
       </div>
 
       <div class="chart">
-        <h3>Curriculum mix</h3>
+        <h3><span class="chart-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4.5A1.5 1.5 0 0 1 4.5 3H10a3 3 0 0 1 2 5.2V21a3 3 0 0 0-2-.8H4.5A1.5 1.5 0 0 1 3 18.7z"/><path d="M21 4.5A1.5 1.5 0 0 0 19.5 3H14a3 3 0 0 0-2 5.2V21a3 3 0 0 1 2-.8h5.5a1.5 1.5 0 0 0 1.5-1.5z"/></svg></span>Curriculum mix</h3>
         <p class="sub">Schools offering each curriculum. British leads by nearly 3&times;.</p>
         <div class="bars">
           {top.map((c) => (
@@ -125,7 +123,7 @@ const maxCur = top[0]?.n ?? 1;
       </div>
 
       <div class="chart" style="display:flex;flex-direction:column;justify-content:center">
-        <h3>Looking for something specific?</h3>
+        <h3><span class="chart-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5 21 21"/></svg></span>Looking for something specific?</h3>
         <p class="sub" style="margin-bottom:16px">
           Search all {s.total} schools by name, area or curriculum, and narrow
           by rating and fee band.

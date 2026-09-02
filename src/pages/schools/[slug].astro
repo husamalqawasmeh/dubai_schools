@@ -1,6 +1,7 @@
 ---
 import Base from "../../layouts/Base.astro";
 import { schoolBySlug } from "../../lib/db";
+import Coins from "../../components/Coins.astro";
 
 const { slug } = Astro.params;
 const school = await schoolBySlug(slug!);
@@ -96,11 +97,9 @@ const facts: { k: string; v: string | null }[] = [
                 {school.fee_year ? `KHDA published, ${school.fee_year}` : "KHDA published, year not stated"}
               </span>
               {school.fee_band && (
-                <p style="margin:12px 0 0;display:flex;align-items:center;gap:8px;font-family:var(--display);font-size:13px;color:var(--ink-2)">
-                  <span class="meter" aria-hidden="true">
-                    {[1, 2, 3, 4].map((d) => <i class={d <= bandDots[school.fee_band!] ? "on" : ""}></i>)}
-                  </span>
-                  {bandLabel[school.fee_band]} for Dubai
+                <p style="margin:12px 0 0;display:flex;align-items:flex-end;gap:8px;font-family:var(--display);font-size:13px;color:var(--ink-2)">
+                  <Coins n={bandDots[school.fee_band]} label={bandLabel[school.fee_band]} />
+                  <span style="padding-bottom:2px">{bandLabel[school.fee_band]} for Dubai</span>
                 </p>
               )}
             </>

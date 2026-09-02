@@ -1,6 +1,7 @@
 ---
 import Base from "../../layouts/Base.astro";
 import { allSchools, type School } from "../../lib/db";
+import Coins from "../../components/Coins.astro";
 
 const p = Astro.url.searchParams;
 const f = {
@@ -123,9 +124,7 @@ const title = activeBits.length
               <span class="fee">
                 {x.fee_band ? (
                   <>
-                    <span class="meter" aria-hidden="true">
-                      {[1, 2, 3, 4].map((d) => <i class={d <= bandDots[x.fee_band!] ? "on" : ""}></i>)}
-                    </span>
+                    <Coins n={bandDots[x.fee_band]} label={bandLabel[x.fee_band]} />
                     {bandLabel[x.fee_band]}
                   </>
                 ) : (
