@@ -151,7 +151,7 @@ const title = activeBits.length
     <div class="listing-top">
       <div class="listing-head">
         <div>
-          <a class="back" href="/">&larr; Overview</a>
+          <a class="back" href="/">Overview</a>
           {activeBits.length ? (
             <h1 class="criteria">
               <span class="criteria-label">Filtering criteria:</span>
@@ -179,6 +179,9 @@ const title = activeBits.length
           <MultiSelect id="rating" label="KHDA rating" options={ratOptions} selected={sel.rating} allLabel="All ratings" />
           <MultiSelect id="band" label="Fee band" options={bandOptions} selected={sel.band} allLabel="Any fee" />
           <MultiSelect id="area" label="Area" groups={areaGroups} selected={sel.area} allLabel="All areas" scroll />
+          <div class="field clearall-cell">
+            <button type="button" id="clearall" class="clearall">Clear all filters</button>
+          </div>
         </div>
       </div>
     </div>
@@ -347,6 +350,19 @@ const title = activeBits.length
   }
 
   q.addEventListener("input", apply);
+
+  const clearAll = document.getElementById("clearall") as HTMLButtonElement;
+  clearAll.addEventListener("click", () => {
+    q.value = "";
+    for (const f of facets) for (const i of f.inputs) i.checked = false;
+    // Collapse any group that was opened to show a selection.
+    for (const g of document.querySelectorAll<HTMLElement>(".multi-kids")) g.hidden = true;
+    for (const t of document.querySelectorAll(".grp-name")) t.setAttribute("aria-expanded", "false");
+    for (const d of document.querySelectorAll<HTMLDetailsElement>(".multi")) d.open = false;
+    syncParents();
+    apply();
+  });
+
   for (const f of facets) {
     for (const i of f.inputs) i.addEventListener("change", () => { syncParents(); apply(); });
 

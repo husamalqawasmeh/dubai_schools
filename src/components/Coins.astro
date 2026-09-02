@@ -23,14 +23,18 @@ const count = Math.max(0, Math.min(4, n));
 
 // Geometry. The stack grows upward from a fixed baseline so stacks of
 // different heights sit on a common floor.
-const rx = big ? 14 : 6.6;
-const ry = big ? 4.8 : 2.4;
-const thick = big ? 5 : 2.2;
-const step = big ? 6.4 : 3.1;
-const cx = big ? 23 : 8.5;
-const baseY = big ? 38 : 15.6;
-const w = big ? 46 : 17;
-const h = big ? 48 : 20;
+// Wider and flatter than before, with a step larger than the coin's own
+// thickness so a rim of the coin beneath always shows. Stacked cylinders that
+// touch read as one lump; a visible ledge between them is what makes the
+// count legible at a glance.
+const rx = big ? 15 : 7;
+const ry = big ? 5 : 2.5;
+const thick = big ? 4.6 : 2;
+const step = big ? 7.4 : 3.3;
+const cx = big ? 24 : 9;
+const baseY = big ? 41 : 15.4;
+const w = big ? 48 : 18;
+const h = big ? 52 : 20;
 
 // Bottom coin first, so later (higher) coins paint over the ones beneath.
 const coins = Array.from({ length: count }, (_, i) => baseY - i * step);
@@ -52,6 +56,11 @@ const topY = coins.length ? coins[coins.length - 1] : baseY;
         class="coin-edge"
         d={`M ${cx - rx} ${y} v ${thick} a ${rx} ${ry} 0 0 0 ${rx * 2} 0 v ${-thick} z`}
       />
+      {/* the ledge where this coin meets the one below */}
+      <path
+        class="coin-lip"
+        d={`M ${cx - rx} ${y + thick} a ${rx} ${ry} 0 0 0 ${rx * 2} 0`}
+      />
       {/* top face */}
       <ellipse class="coin-face" cx={cx} cy={y} rx={rx} ry={ry} />
     </g>
@@ -60,7 +69,7 @@ const topY = coins.length ? coins[coins.length - 1] : baseY;
   {big && count > 0 && (
     /* Dirham mark on the top face. Squashed to match the ellipse, which is
        how a face actually sits when a coin is seen at this angle. */
-    <g class="coin-mark" transform={`translate(${cx} ${topY}) scale(1 0.42)`}>
+    <g class="coin-mark" transform={`translate(${cx} ${topY}) scale(1 0.4)`}>
       <path d="M -3.4 -6.6 L -3.4 6.6" />
       <path d="M -3.4 -6.6 C 4.6 -6.6, 6.2 -3.4, 6.2 0 C 6.2 3.4, 4.6 6.6, -3.4 6.6" />
       <path d="M -7.4 -2.4 L 7.6 -2.4" />

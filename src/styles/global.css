@@ -215,8 +215,25 @@ a.bar-row:hover .bar-lab { color: var(--ink); }
 
 /* ---------------- detail page ---------------- */
 .detail-head { background: var(--surface); border-bottom: 1px solid var(--rule); padding: 34px 0; }
-.back { font-family: var(--display); font-size: 13px; color: var(--muted); text-decoration: none; }
-.back:hover { color: var(--ink); }
+.back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--display);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--muted);
+  text-decoration: none;
+}
+/* The arrow is a pseudo-element so it can be sized past the label without
+   dragging the line-height with it. */
+.back::before {
+  content: "←";
+  font-size: 1.5em;
+  line-height: 0.8;
+  font-weight: 700;
+}
+.back:hover { color: var(--accent); }
 .detail-grid { display: grid; gap: 30px; padding: 34px 0 70px; }
 @media (min-width: 900px) { .detail-grid { grid-template-columns: minmax(0, 2fr) minmax(260px, 1fr); } }
 .panel { background: var(--surface); border: 1px solid var(--rule); border-radius: 6px; padding: 18px 20px; box-shadow: var(--shadow); }
@@ -339,16 +356,18 @@ body:has(.listing) main { overflow: hidden; }
    Height is the encoding, so one coin reads as cheap and four as dear
    without needing a legend. */
 .coins { display: block; flex: none; }
-.coin-face { fill: var(--coin); stroke: var(--coin-rim); stroke-width: 0.7; }
+.coin-face { fill: var(--coin); stroke: var(--coin-rim); stroke-width: 1; }
 .coin-edge { fill: var(--coin-rim); }
+/* The ledge between stacked coins. Without it the stack reads as one lump. */
+.coin-lip { fill: none; stroke: var(--coin-ink); stroke-width: 0.9; opacity: 0.5; }
 .coin-mark {
   fill: none;
   stroke: var(--coin-ink);
-  stroke-width: 3.4;
+  stroke-width: 4;
   stroke-linecap: round;
   stroke-linejoin: round;
 }
-.coins-lg .coin-face { stroke-width: 0.9; }
+.coins-lg .coin-face { stroke-width: 1.1; }
 
 /* ---------------- chart header icons ---------------- */
 .chart h3 { display: flex; align-items: center; gap: 7px; }
@@ -370,7 +389,7 @@ body:has(.listing) main { overflow: hidden; }
   display: flex;
   align-items: flex-end;
   justify-content: center;
-  height: 34px;
+  height: 40px;
   padding-top: 2px;
 }
 .band-grid .tier-name { padding-top: 4px; font-size: 11.5px; }
@@ -385,8 +404,8 @@ body:has(.listing) main { overflow: hidden; }
 }
 .band-grid .tier-n { padding-bottom: 3px; }
 @media (max-width: 460px) {
-  .band-coins { height: 28px; }
-  .band-coins .coins-lg { height: 26px; }
+  .band-coins { height: 32px; }
+  .band-coins .coins-lg { height: 30px; }
   .band-range { font-size: 10px; }
 }
 
@@ -830,8 +849,27 @@ a.adminlink:hover { border-color: var(--accent); }
 /* Area carries the longest values — "Jumeirah Village Circle (south)" — so it
    takes the extra width the other three give back, and sits last. */
 @media (min-width: 700px) {
-  .listing .filters .row { grid-template-columns: 0.85fr 0.85fr 0.9fr 1.5fr; }
+  /* Four narrower filters and the reset, on one row. Area keeps the most
+     width because its values are much the longest. */
+  .listing .filters .row { grid-template-columns: 0.72fr 0.72fr 0.78fr 1.15fr auto; }
 }
+.clearall-cell { display: flex; align-items: flex-end; }
+.clearall {
+  height: 34px;
+  padding: 0 14px;
+  white-space: nowrap;
+  font-family: var(--ui);
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--accent);
+  background: var(--surface);
+  border: 1px solid var(--rule-firm);
+  border-radius: 5px;
+  cursor: pointer;
+  transition: border-color 0.12s ease, background 0.12s ease;
+}
+.clearall:hover { border-color: var(--accent); background: var(--surface-2); }
+.clearall:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
 
 /* ---------------- grouped options ---------------- */
 .multi-group { border-bottom: 1px solid var(--rule); }
@@ -926,5 +964,5 @@ a.adminlink:hover { border-color: var(--accent); }
 .pane .sub { font-family: var(--display); font-size: 12.5px; color: var(--muted); margin: 0 0 10px; line-height: 1.4; }
 
 /* The coin stack set the height of the whole top row. */
-.band-coins .coins-lg { height: 32px; width: auto; }
+.band-coins .coins-lg { height: 38px; width: auto; }
 
