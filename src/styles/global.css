@@ -482,8 +482,8 @@ body:has(.listing) main { overflow: hidden; }
      what pins the count to the right edge however short the name is. */
   grid-template-columns: auto minmax(0, 1fr) auto;
   align-items: center;
-  column-gap: 12px;
-  padding: 5px 9px;
+  column-gap: 10px;
+  padding: 6px 10px;
   border-radius: 4px;
   font-family: var(--display);
   font-size: 13px;
@@ -493,7 +493,7 @@ body:has(.listing) main { overflow: hidden; }
 .multi-opt input {
   width: 14px;
   height: 14px;
-  margin: 0;
+  margin: 0 8px 0 0;   /* 18px of clear air before the label */
   accent-color: var(--accent);
   cursor: pointer;
   flex: none;
@@ -830,3 +830,9 @@ a.adminlink:hover { border-color: var(--accent); }
 .topsplit .mapcard iframe { height: 100%; min-height: 300px; }
 .belowsplit { padding: 28px 0 60px; }
 .belowsplit > h2:first-child { margin-top: 0; }
+
+/* Area carries the longest values — "Jumeirah Village Circle (south)" — so it
+   takes the extra width the other three give back, and sits last. */
+@media (min-width: 700px) {
+  .listing .filters .row { grid-template-columns: 0.85fr 0.85fr 0.9fr 1.5fr; }
+}
