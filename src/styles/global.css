@@ -984,26 +984,18 @@ a.adminlink:hover { border-color: var(--accent); }
   padding: 12px 14px;
 }
 
-/* ---------------- landing: main column and a right rail ----------------
-   The infographics give up the right quarter of the page so the rail can
-   run beside them, top to bottom. */
-.home { display: grid; gap: 14px; padding: 18px 0 34px; }
+/* ---------------- landing ----------------
+   Only the top row is split: the hero on the left, the chat box on the right.
+   Everything under it runs the full width of the page, as before. */
+.home { padding: 18px 0 34px; }
+.home-top { display: grid; gap: 14px; align-items: start; margin-bottom: 12px; }
 @media (min-width: 900px) {
-  .home { grid-template-columns: minmax(0, 1fr) 292px; align-items: start; }
+  .home-top { grid-template-columns: minmax(0, 1fr) 292px; }
 }
-.home-main { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
-.home-main h1 { margin-bottom: 2px; }
-.home-main .stats { margin: 0; }
-.home-rail { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
-
-/* Two panes across now that the row is narrower, curriculum under both. */
-.home .panelset { gap: 12px; margin: 0; }
-@media (min-width: 760px) {
-  .home .panelset { grid-template-columns: 1fr 1fr; }
-  .home .pane { grid-column: auto; }
-  .home .pane-wide { grid-column: 1 / -1; }
-}
-.home-rail .pane-narrow { grid-column: auto; margin: 0; }
+.home-hero { min-width: 0; }
+.home-hero h1 { margin-bottom: 2px; }
+.home-hero .stats { margin: 14px 0 0; }
+.chatwrap { min-width: 0; }
 
 /* ---------------- chat box ---------------- */
 .chatbox {
