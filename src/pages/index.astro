@@ -27,8 +27,8 @@ const maxCur = top[0]?.n ?? 1;
 ---
 
 <Base title="Dubai Schools — compare all 232 KHDA-registered schools">
-  <section class="hero">
-    <div class="wrap">
+  <div class="wrap home">
+    <div class="home-main">
       <h1>Every private school in Dubai, in one place.</h1>
 
       <div class="stats">
@@ -37,11 +37,8 @@ const maxCur = top[0]?.n ?? 1;
         <a class="stat" href="/schools"><b>{s.areas}</b><span>Areas covered</span></a>
         <a class="stat" href="/schools"><b>{s.curricula}</b><span>Curricula</span></a>
       </div>
-    </div>
-  </section>
 
-  <div class="wrap" style="padding-top:13px;padding-bottom:22px">
-    <div class="panelset">
+      <div class="panelset">
       <section class="pane">
         <h3><span class="chart-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="9" r="6"/><path d="M8.5 14.2 7 22l5-2.6L17 22l-1.5-7.8"/></svg></span>KHDA rating</h3>
         <div class="tier-grid">
@@ -116,14 +113,25 @@ const maxCur = top[0]?.n ?? 1;
           Some schools have more than one curricula, such as British and IB.
         </p>
       </section>
-
-      <section class="pane pane-narrow" style="display:flex;flex-direction:column;justify-content:center">
-        <h3><span class="chart-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5 21 21"/></svg></span>Browse, filter or search</h3>
-        <p class="sub" style="margin-bottom:14px">
-          Search by name, area, curriculum or fee.
-        </p>
-        <a class="btn" href="/schools" style="margin-top:0">Browse all {s.total}</a>
-      </section>
+      </div>
     </div>
+
+    <aside class="home-rail">
+      <div class="chatbox">
+        <p class="chatbox-q">Have a question?</p>
+        <p class="chatbox-sub">
+          Ask about fees, admissions, or a school you cannot find here.
+        </p>
+        <a class="btn chatbox-cta" href="/contribute?as=parent">Chat with us</a>
+      </div>
+
+        <section class="pane pane-narrow" style="display:flex;flex-direction:column;justify-content:center">
+          <h3><span class="chart-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5 21 21"/></svg></span>Browse, filter or search</h3>
+          <p class="sub" style="margin-bottom:14px">
+            Search by name, area, curriculum or fee.
+          </p>
+          <a class="btn" href="/schools" style="margin-top:0">Browse all {s.total}</a>
+        </section>
+    </aside>
   </div>
 </Base>

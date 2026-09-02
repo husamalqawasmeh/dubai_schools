@@ -983,3 +983,50 @@ a.adminlink:hover { border-color: var(--accent); }
   border-radius: 8px;
   padding: 12px 14px;
 }
+
+/* ---------------- landing: main column and a right rail ----------------
+   The infographics give up the right quarter of the page so the rail can
+   run beside them, top to bottom. */
+.home { display: grid; gap: 14px; padding: 18px 0 34px; }
+@media (min-width: 900px) {
+  .home { grid-template-columns: minmax(0, 1fr) 292px; align-items: start; }
+}
+.home-main { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+.home-main h1 { margin-bottom: 2px; }
+.home-main .stats { margin: 0; }
+.home-rail { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+
+/* Two panes across now that the row is narrower, curriculum under both. */
+.home .panelset { gap: 12px; margin: 0; }
+@media (min-width: 760px) {
+  .home .panelset { grid-template-columns: 1fr 1fr; }
+  .home .pane { grid-column: auto; }
+  .home .pane-wide { grid-column: 1 / -1; }
+}
+.home-rail .pane-narrow { grid-column: auto; margin: 0; }
+
+/* ---------------- chat box ---------------- */
+.chatbox {
+  border: 3px solid var(--accent-2);
+  border-radius: 8px;
+  background: var(--surface);
+  padding: 14px 16px 16px;
+  display: flex;
+  flex-direction: column;
+}
+.chatbox-q {
+  font-family: var(--ui);
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--ink);
+  margin: 0 0 6px;
+}
+.chatbox-sub {
+  font-family: var(--ui);
+  font-size: 13.5px;
+  font-weight: 500;
+  color: var(--ink-2);
+  line-height: 1.5;
+  margin: 0 0 14px;
+}
+.chatbox-cta { margin-top: auto; }
