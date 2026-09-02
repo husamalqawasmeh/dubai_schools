@@ -42,10 +42,14 @@
 
   --shadow: 0 1px 2px rgba(18, 36, 26, 0.07), 0 1px 1px rgba(18, 36, 26, 0.05);
 
-  --display: "Archivo", "Helvetica Neue", Arial, sans-serif;
-  --body: "Source Serif 4", Georgia, "Times New Roman", serif;
-  --mono: "IBM Plex Mono", ui-monospace, Consolas, monospace;
+  /* House rule: the rounded, humanist face carries everything. Archivo and
+     Source Serif are gone rather than left defined and unused — a token that
+     still resolves is a token someone will reach for by accident.
+     Mono is kept only where digits must line up in a column. */
   --ui: "Quicksand", "Trebuchet MS", "Segoe UI", sans-serif;
+  --display: var(--ui);
+  --body: var(--ui);
+  --mono: "IBM Plex Mono", ui-monospace, Consolas, monospace;
 }
 
 * { box-sizing: border-box; }
@@ -64,7 +68,8 @@ body {
   color: var(--ink);
   font-family: var(--body);
   font-size: 16px;
-  line-height: 1.55;
+  font-weight: 500;
+  line-height: 1.6;
   -webkit-font-smoothing: antialiased;
 }
 main { overflow-y: auto; min-height: 0; scrollbar-gutter: stable; }
