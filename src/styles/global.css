@@ -1374,7 +1374,8 @@ a.bar-row:hover,
 .clearall:hover,
 .chatclose:hover,
 .faq-item summary:hover,
-a.adminlink:hover {
+a.adminlink:hover,
+a.cur-note:hover {
   background: var(--accent-2);
   color: var(--on-accent);
   border-color: var(--accent-2);
@@ -1386,7 +1387,8 @@ a.tier:hover .tier-name, a.tier:hover .tier-n, a.tier:hover .band-range,
 a.bar-row:hover .bar-lab, a.bar-row:hover .bar-val,
 .multi-opt:hover .multi-name, .multi-opt:hover .multi-n,
 .tab:hover, .clearall:hover,
-.faq-item summary:hover, a.adminlink:hover h2, a.adminlink:hover p {
+.faq-item summary:hover, a.adminlink:hover h2, a.adminlink:hover p,
+a.cur-note:hover, a.cur-note:hover .star {
   color: var(--on-accent);
 }
 /* Icons take currentColor, but these two are painted explicitly. */
@@ -1407,4 +1409,17 @@ a.tier:hover .cur-bar > span { filter: none; }
 .card:hover {
   border-color: var(--accent-2);
   box-shadow: 0 3px 12px rgba(8, 74, 63, 0.16);
+}
+
+/* The footnote is a link now: it opens the directory on the schools it is
+   describing, so it takes the same fill on hover as every other control.
+   The padding gives that fill a shape, and the negative margin cancels it so
+   the line sits exactly where it did before it became clickable. */
+a.cur-note {
+  display: inline-block;
+  text-decoration: none;
+  padding: 3px 8px;
+  margin: -7px 0 0 -8px;
+  border-radius: 8px;
+  border: 1px solid transparent;
 }

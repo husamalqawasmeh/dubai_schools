@@ -38,6 +38,11 @@ const feeText = (x: School) =>
     .join(" ")
     .toLowerCase();
 
+// A pseudo-value in the curriculum facet: "has two or more" is a property of a
+// school's curriculum list rather than a curriculum, so it cannot be one of the
+// facet's real values, but it belongs in that dropdown.
+const MULTI = "__multi__";
+
 // Filtered on the server so a link from the landing page works without
 // JavaScript and is indexable. The client script re-runs the same rules.
 // Within a facet the values are OR; across facets they are AND.
@@ -50,7 +55,9 @@ const shown = all.filter((x) => {
       x.curricula.join(" ").toLowerCase().includes(text) ||
       x.khda_rating.toLowerCase().includes(text) ||
       feeText(x).includes(text)) &&
-    (sel.curriculum.length === 0 || x.curricula.some((c) => sel.curriculum.includes(c))) &&
+    (sel.curriculum.length === 0 ||
+      x.curricula.some((c) => sel.curriculum.includes(c)) ||
+      (sel.curriculum.includes(MULTI) && x.curricula.length > 1)) &&
     (sel.area.length === 0 || sel.area.includes(x.area)) &&
     (sel.rating.length === 0 || sel.rating.includes(x.khda_rating)) &&
     (sel.band.length === 0 || sel.band.includes(x.fee_band ?? "none")) &&
@@ -78,6 +85,7 @@ const curRanked = [...curCount.entries()].sort(
   (a, b) => b[1] - a[1] || a[0].localeCompare(b[0])
 );
 const curTail = curRanked.slice(TOP);
+const multiCount = all.filter((x) => x.curricula.length > 1).length;
 const curGroups = [
   ...curRanked.slice(0, TOP).map(([value, count]) => ({
     label: value,
@@ -93,6 +101,13 @@ const curGroups = [
         },
       ]
     : []),
+  {
+    label: "More than one curriculum",
+    count: multiCount,
+    children: [
+      { value: MULTI, label: "More than one curriculum", count: multiCount },
+    ],
+  },
 ];
 
 const areaCount = tally(all, (x) => [x.area]);
@@ -162,7 +177,7 @@ const bandOptions = BANDS.filter((b) => bandCount.has(b.key)).map((b) => ({
 // search results and when shared.
 const say = (xs: string[]) => xs.join(" or ");
 const activeBits = [
-  say(sel.curriculum),
+  say(sel.curriculum.map((v) => (v === MULTI ? "more than one curriculum" : v))),
   sel.rating.length ? `rated ${say(sel.rating)}` : "",
   say(sel.area),
   sel.band.length ? say(sel.band.map((b) => bandLabel[b] ?? "No fee published")) : "",
@@ -222,6 +237,7 @@ const title = activeBits.length
             data-name={x.name.toLowerCase()}
             data-area={x.area}
             data-cur={x.curricula.join("|")}
+            data-multi={x.curricula.length > 1 ? "1" : "0"}
             data-rat={x.khda_rating}
             data-band={x.fee_band ?? "none"}
             data-fee={feeText(x)}
@@ -335,7 +351,8 @@ const title = activeBits.length
           if (values.length === 0) continue;
           const cardVal = d[f.attr]!;
           const hit = f.listValued
-            ? cardVal.split("|").some((v) => values.includes(v))
+            ? cardVal.split("|").some((v) => values.includes(v)) ||
+              (values.includes("__multi__") && d.multi === "1")
             : values.includes(cardVal);
           if (!hit) { ok = false; break; }
         }
