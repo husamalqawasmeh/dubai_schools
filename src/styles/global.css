@@ -1019,28 +1019,24 @@ a.adminlink:hover { border-color: var(--accent); }
 }
 
 /* ---------------- landing ----------------
-   Only the top row is split: the hero on the left, the chat box on the right.
-   Everything under it runs the full width of the page, as before. */
-.home { padding-top: 18px; padding-bottom: 34px; }
-/* The same four tracks and the same 12px gap as the panelset below, so the
-   chat box and the Browse box are literally the same column — a fixed 292px
-   was 33px wider than a quarter of the row and threw their left edges out. */
-.home-top { display: grid; gap: 12px; align-items: stretch; margin-bottom: 12px; }
-/* 760px, the same breakpoint the panelset uses. At 900px the top row was
-   still stacked and running the full width while the row beneath it had
-   already gone to columns, so the two rows did not match between the two. */
+   A main column and a rail. The three data panels are siblings in the main
+   column, so they take one width and one gap with nothing to make them
+   differ. The rail carries the search box, then the chat box stretched to the
+   foot of the column. */
+.home { padding-top: 18px; padding-bottom: 34px; display: grid; gap: 12px; }
 @media (min-width: 760px) {
-  .home-top { grid-template-columns: repeat(4, 1fr); }
-  .home-hero { grid-column: span 3; }
-  .chatwrap { grid-column: span 1; }
+  .home { grid-template-columns: minmax(0, 1fr) 259px; align-items: stretch; }
 }
-.home-hero { min-width: 0; }
-.home-hero h1 { margin-bottom: 2px; }
-.home-hero .stats { margin: 14px 0 0; }
-/* Fills the row rather than sitting on the stat row's baseline, so its top
-   edge lines up with the top of the page title beside it. */
-.chatwrap { min-width: 0; display: flex; }
-.chatwrap > .chatbox { flex: 1; }
+.home-main { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+.home-main h1 { margin-bottom: 2px; }
+.home-main .stats { margin: 0; }
+.home-rail { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+/* The chat takes whatever the search box leaves, down to the last row. */
+.home-rail .chatbox { flex: 1; }
+.pane-search { display: flex; flex-direction: column; justify-content: center; }
+.pane-search .btn { margin-top: 0; }
+/* Out of the curriculum panel now, so all three panels end the same way. */
+.cur-note { margin: 2px 0 0; }
 
 /* ---------------- chat box ---------------- */
 .chatbox {
@@ -1281,7 +1277,6 @@ a.adminlink:hover { border-color: var(--accent); }
 /* The curriculum pane spans three columns, so its seven columns have room to
    spare beside the box — no size reduction needed here, unlike the rating
    pane which only spans two. */
-.panerow .cur-grid { flex: 1; min-width: 0; }
 /* Two tiles left in the row, so it takes its own width rather than holding
    open a gap the hint box could be using. */
 .stats { width: auto; }
@@ -1295,10 +1290,6 @@ a.adminlink:hover { border-color: var(--accent); }
    where the figure does in the other two. */
 .panebox-label > span { margin-top: 0; font-size: 13px; }
 
-/* Cost and curriculum each take the whole row, cost beneath curriculum. */
-@media (min-width: 760px) {
-  .pane-full { grid-column: 1 / -1; }
-}
 
 /* Those panels are three to five times wider than they were, so the label
    shrinking that kept their columns from clipping is no longer needed. */
@@ -1314,3 +1305,7 @@ a.adminlink:hover { border-color: var(--accent); }
    panel visually further away than the 12px grid gap the other rows get.
    Tightened so the three panels sit at an even rhythm. */
 .cur-note { margin: 6px 0 0; }
+
+.panerow .cur-grid,
+.panerow .band-grid,
+.panerow .rating-grid { flex: 1; min-width: 0; }

@@ -28,8 +28,7 @@ const maxCur = top[0]?.n ?? 1;
 
 <Base title="Dubai Schools — compare all 232 KHDA-registered schools">
   <div class="wrap home">
-    <div class="home-top">
-      <div class="home-hero">
+    <div class="home-main">
       <h1>Every private school in Dubai, in one place.</h1>
 
       <div class="hero-row">
@@ -47,10 +46,125 @@ const maxCur = top[0]?.n ?? 1;
         </p>
       </div>
 
-      </div>
+    <section class="pane">
+              <div class="panerow">
+        <a class="panebox" href="/schools?rated=1">
+          <b>{s.rated}</b>
+          <span>
+            <span class="stat-ico" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="9" r="6"/><path d="M8.5 14.2 7 22l5-2.6L17 22l-1.5-7.8"/>
+              </svg>
+            </span>
+            Rated by KHDA
+          </span>
+        </a>
 
-      <aside class="chatwrap">
-        <div class="chatbox" id="chatbox">
+        <div class="tier-grid rating-grid">
+          {tiersPresent.map((t, i) => (
+            <a class="tier" href={`/schools?rating=${encodeURIComponent(t)}`}>
+              <span
+                class={t === "Not rated" ? "tier-swatch none" : "tier-swatch"}
+                style={`--c:var(--r${Math.min(i + 1, 4)})`}
+                aria-hidden="true"
+              ></span>
+              <span class="tier-name">{t}</span>
+              <span class="tier-n">{s.ratings[t]}</span>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="pane">
+      <div class="panerow">
+        <a class="panebox" href="/schools">
+          <b>{s.curricula}</b>
+          <span>
+            <span class="stat-ico" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M5 21V4"/><path d="M5 5.2h9.6l-1.6 3.4 1.6 3.4H5"/><path d="M18.5 21v-9"/><path d="M18.5 12.6h3.2l-.9 1.9.9 1.9h-3.2"/>
+              </svg>
+            </span>
+            Curricula
+          </span>
+        </a>
+        <div class="tier-grid cur-grid">
+          {top.map((c) => (
+            <a class="tier" href={`/schools?curriculum=${encodeURIComponent(c.name)}`}>
+              <span class="cur-bar" aria-hidden="true">
+                <span style={`width:${Math.round((c.n / maxCur) * 100)}%`}></span>
+              </span>
+              <span class="tier-name">{c.name}</span>
+              <span class="tier-n">{c.n}</span>
+            </a>
+          ))}
+          {tail.length > 0 && (
+            <div class="tier tier-static">
+              <span class="cur-bar hatch" aria-hidden="true">
+                <span style={`width:${Math.round((tailTotal / maxCur) * 100)}%`}></span>
+              </span>
+              <span class="tier-name">Other &times;{tail.length}</span>
+              <span class="tier-n">{tailTotal}</span>
+            </div>
+          )}
+        </div>
+      </div>
+    </section>
+
+    <section class="pane">
+      <div class="panerow">
+        <div class="panebox panebox-label">
+          <span>
+            <span class="stat-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="6" rx="8" ry="3"/><path d="M4 6v5c0 1.7 3.6 3 8 3s8-1.3 8-3V6"/><path d="M4 11v5c0 1.7 3.6 3 8 3s8-1.3 8-3v-5"/></svg></span>
+            What schools cost
+          </span>
+        </div>
+        <div class="tier-grid band-grid">
+          {BANDS.map((b) => (
+            <a class="tier" href={`/schools?band=${b.key}`}>
+              <span class="band-coins"><Coins n={b.dots} size="lg" label={b.label} /></span>
+              <span class="tier-name">{b.label}</span>
+              <span class="tier-n">{s.bands[b.key] ?? 0}</span>
+              <span class="band-range">{b.short}</span>
+            </a>
+          ))}
+          <a class="tier" href="/schools?band=none">
+            <span class="band-coins">
+              <svg
+                class="coins coins-lg coin-empty"
+                viewBox="0 0 46 48"
+                width="46"
+                height="48"
+                role="img"
+                aria-label="No fee published"
+              >
+                <ellipse cx="23" cy="38" rx="14" ry="4.8" />
+              </svg>
+            </span>
+            <span class="tier-name">Not published</span>
+            <span class="tier-n">{s.bands["none"] ?? 0}</span>
+            <span class="band-range">&nbsp;</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+      <p class="sub cur-note">
+        Some schools have more than one curricula, such as British and IB.
+      </p>
+    </div>
+
+    <aside class="home-rail">
+      <section class="pane pane-search">
+        <h3><span class="chart-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5 21 21"/></svg></span>Browse, filter or search</h3>
+        <p class="sub">
+          Search by name, area, curriculum or fee.
+        </p>
+        <a class="btn" href="/schools">Browse all {s.total}</a>
+      </section>
+
+      <div class="chatbox" id="chatbox">
           <p class="chatbox-q">
             <span class="chatbox-ico" aria-hidden="true">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
@@ -67,247 +181,6 @@ const maxCur = top[0]?.n ?? 1;
           </form>
           <button type="button" class="btn chatbox-cta" id="chatopen">Chat with us</button>
         </div>
-      </aside>
-    </div>
-
-    <div class="panelset">
-      <section class="pane pane-wide">
-                <div class="panerow">
-          <a class="panebox" href="/schools?rated=1">
-            <b>{s.rated}</b>
-            <span>
-              <span class="stat-ico" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
-                  <circle cx="12" cy="9" r="6"/><path d="M8.5 14.2 7 22l5-2.6L17 22l-1.5-7.8"/>
-                </svg>
-              </span>
-              Rated by KHDA
-            </span>
-          </a>
-
-          <div class="tier-grid rating-grid">
-            {tiersPresent.map((t, i) => (
-              <a class="tier" href={`/schools?rating=${encodeURIComponent(t)}`}>
-                <span
-                  class={t === "Not rated" ? "tier-swatch none" : "tier-swatch"}
-                  style={`--c:var(--r${Math.min(i + 1, 4)})`}
-                  aria-hidden="true"
-                ></span>
-                <span class="tier-name">{t}</span>
-                <span class="tier-n">{s.ratings[t]}</span>
-              </a>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section class="pane pane-narrow" style="display:flex;flex-direction:column;justify-content:center">
-        <h3><span class="chart-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5 21 21"/></svg></span>Browse, filter or search</h3>
-        <p class="sub" style="margin-bottom:14px">
-          Search by name, area, curriculum or fee.
-        </p>
-        <a class="btn" href="/schools" style="margin-top:0">Browse all {s.total}</a>
-      </section>
-
-
-      <section class="pane pane-full">
-        <div class="panerow">
-          <a class="panebox" href="/schools">
-            <b>{s.curricula}</b>
-            <span>
-              <span class="stat-ico" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M5 21V4"/><path d="M5 5.2h9.6l-1.6 3.4 1.6 3.4H5"/><path d="M18.5 21v-9"/><path d="M18.5 12.6h3.2l-.9 1.9.9 1.9h-3.2"/>
-                </svg>
-              </span>
-              Curricula
-            </span>
-          </a>
-          <div class="tier-grid cur-grid">
-            {top.map((c) => (
-              <a class="tier" href={`/schools?curriculum=${encodeURIComponent(c.name)}`}>
-                <span class="cur-bar" aria-hidden="true">
-                  <span style={`width:${Math.round((c.n / maxCur) * 100)}%`}></span>
-                </span>
-                <span class="tier-name">{c.name}</span>
-                <span class="tier-n">{c.n}</span>
-              </a>
-            ))}
-            {tail.length > 0 && (
-              <div class="tier tier-static">
-                <span class="cur-bar hatch" aria-hidden="true">
-                  <span style={`width:${Math.round((tailTotal / maxCur) * 100)}%`}></span>
-                </span>
-                <span class="tier-name">Other &times;{tail.length}</span>
-                <span class="tier-n">{tailTotal}</span>
-              </div>
-            )}
-          </div>
-        </div>
-        <p class="sub cur-note">
-          Some schools have more than one curricula, such as British and IB.
-        </p>
-      </section>
-      </div>
-
-
-      <section class="pane pane-full">
-        <div class="panerow">
-          <div class="panebox panebox-label">
-            <span>
-              <span class="stat-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="6" rx="8" ry="3"/><path d="M4 6v5c0 1.7 3.6 3 8 3s8-1.3 8-3V6"/><path d="M4 11v5c0 1.7 3.6 3 8 3s8-1.3 8-3v-5"/></svg></span>
-              What schools cost
-            </span>
-          </div>
-          <div class="tier-grid band-grid">
-            {BANDS.map((b) => (
-              <a class="tier" href={`/schools?band=${b.key}`}>
-                <span class="band-coins"><Coins n={b.dots} size="lg" label={b.label} /></span>
-                <span class="tier-name">{b.label}</span>
-                <span class="tier-n">{s.bands[b.key] ?? 0}</span>
-                <span class="band-range">{b.short}</span>
-              </a>
-            ))}
-            <a class="tier" href="/schools?band=none">
-              <span class="band-coins">
-                <svg
-                  class="coins coins-lg coin-empty"
-                  viewBox="0 0 46 48"
-                  width="46"
-                  height="48"
-                  role="img"
-                  aria-label="No fee published"
-                >
-                  <ellipse cx="23" cy="38" rx="14" ry="4.8" />
-                </svg>
-              </span>
-              <span class="tier-name">Not published</span>
-              <span class="tier-n">{s.bands["none"] ?? 0}</span>
-              <span class="band-range">&nbsp;</span>
-            </a>
-          </div>
-        </div>
-      </section>
+    </aside>
   </div>
 </Base>
-
-<script>
-  const box = document.getElementById("chatbox")!;
-  const open = document.getElementById("chatopen") as HTMLButtonElement;
-  const form = document.getElementById("chatform") as HTMLFormElement;
-  const input = document.getElementById("chatinput") as HTMLInputElement;
-  const send = document.getElementById("chatsend") as HTMLButtonElement;
-  const log = document.getElementById("chatlog")!;
-  const history: { role: string; text: string }[] = [];
-
-  function bubble(role: "user" | "bot", text = "") {
-    const el = document.createElement("p");
-    el.className = "chatmsg is-" + role;
-    el.textContent = text;
-    log.appendChild(el);
-    log.scrollTop = log.scrollHeight;
-    return el;
-  }
-
-  const close = document.getElementById("chatclose") as HTMLButtonElement;
-  const wrap = box.parentElement as HTMLElement;
-
-  /**
-   * Expand over the column rather than inside it. The box goes absolute and
-   * its wrapper is frozen at the height it already had, so the grid row keeps
-   * its size and nothing below moves by a pixel. The height is measured to
-   * the bottom of the Browse box two rows down, which is the one thing CSS
-   * alone cannot express — they are in different grid rows.
-   */
-  function size() {
-    const browse = document.querySelector(".pane-narrow");
-    if (!browse) return;
-    const boxTop = box.getBoundingClientRect().top;
-    box.style.height = Math.round(browse.getBoundingClientRect().bottom - boxTop) + "px";
-  }
-
-  open.addEventListener("click", () => {
-    wrap.style.position = "relative";
-    wrap.style.height = wrap.getBoundingClientRect().height + "px";
-    box.style.position = "absolute";
-    box.style.insetInline = "0";
-    box.style.top = "0";
-
-    box.classList.add("is-open");
-    open.hidden = true;
-    close.hidden = false;
-    log.hidden = false;
-    form.hidden = false;
-    if (!log.childElementCount) {
-      bubble("bot", "Ask me about fees, curricula, areas or KHDA ratings across all 232 schools.");
-    }
-    size();
-    input.focus();
-  });
-
-  close.addEventListener("click", () => {
-    box.classList.remove("is-open");
-    box.removeAttribute("style");
-    wrap.removeAttribute("style");
-    close.hidden = true;
-    log.hidden = true;
-    form.hidden = true;
-    open.hidden = false;
-  });
-
-  addEventListener("resize", () => {
-    if (box.classList.contains("is-open")) size();
-  });
-
-  form.addEventListener("submit", async (e) => {
-    e.preventDefault();
-    const q = input.value.trim();
-    if (!q) return;
-    input.value = "";
-    bubble("user", q);
-    send.disabled = true;
-    const out = bubble("bot", "…");
-    let first = true;
-
-    // A share of calls come back with the upstream refusing the connection.
-    // Server-side retries reuse the same egress path, so a fresh request from
-    // here is what actually gets a different one.
-    async function ask(tries = 3): Promise<Response> {
-      const res = await fetch("/api/chat", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message: q, history }),
-      });
-      if (tries > 1 && res.headers.get("content-length")) {
-        const body = await res.clone().text();
-        if (/could not be reached|temporarily unavailable/i.test(body)) {
-          await new Promise((r) => setTimeout(r, 400));
-          return ask(tries - 1);
-        }
-      }
-      return res;
-    }
-
-    try {
-      const res = await ask();
-      if (!res.body) {
-        out.textContent = await res.text();
-      } else {
-        const reader = res.body.getReader();
-        const dec = new TextDecoder();
-        for (;;) {
-          const { done, value } = await reader.read();
-          if (done) break;
-          if (first) { out.textContent = ""; first = false; }
-          out.textContent += dec.decode(value, { stream: true });
-          log.scrollTop = log.scrollHeight;
-        }
-      }
-      history.push({ role: "user", text: q }, { role: "assistant", text: out.textContent ?? "" });
-    } catch {
-      out.textContent = "That did not send — check your connection and try again.";
-    }
-    send.disabled = false;
-    input.focus();
-  });
-</script>
