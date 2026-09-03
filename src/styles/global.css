@@ -25,7 +25,9 @@
   --accent: #0c6455;
   --accent-2: #084a3f;
   --on-accent: #ffffff;
-  --divider: #ffffff;   /* column separators, deliberately off the green scale */
+  --divider: #ffffff;
+  --stat-w: 173px;      /* one stat tile: (530 - 2 gaps) / 3 */
+  --surface-3: #cfe2d3; /* a step darker than a tile */   /* column separators, deliberately off the green scale */
 
   /* KHDA's scale, re-stepped for a light-green ground. Each step is both a
      3:1 graphic against the card and dark enough to carry white text, which
@@ -132,7 +134,7 @@ p { margin: 0 0 14px; }
   /* Sized by content, then grown to fill the target. The old 128px floor was
      padding all four out to the same width and pushing the row 93px past the
      box below it. */
-  flex: 1 1 auto; min-width: 0;
+  flex: 0 0 var(--stat-w); min-width: 0;
   background: var(--surface);
   border: 1px solid var(--rule);
   border-radius: 8px;
@@ -1232,3 +1234,30 @@ a.adminlink:hover { border-color: var(--accent); }
 .pill-fee .coins { margin-bottom: -2px; }
 /* The badge is already a pill; it only needs to stop setting its own metrics. */
 .card .badge { padding: 3px 10px; font-size: 11.5px; }
+
+/* The rated count sits at the top of the rating panel rather than in the stat
+   row, directly under the schools-listed tile and the same width as it, so the
+   two read as a pair down the page. A step darker than a tile, because it
+   belongs to the panel it introduces rather than to the row above. */
+.ratedbox {
+  display: block;
+  width: var(--stat-w);
+  background: var(--surface-3);
+  border: 1px solid var(--rule-firm);
+  border-radius: 8px;
+  padding: 10px 14px 12px;
+  text-decoration: none;
+  color: inherit;
+  transition: background 0.12s ease, border-color 0.12s ease;
+}
+.ratedbox:hover { border-color: var(--accent); }
+.ratedbox b {
+  display: block; font-family: var(--display); font-weight: 700; font-size: 21px;
+  letter-spacing: -0.02em; font-variant-numeric: tabular-nums; line-height: 1.1;
+}
+.ratedbox > span {
+  display: flex; align-items: center; gap: 6px; margin-top: 4px;
+  font-family: var(--display); font-size: 12.5px; font-weight: 700; color: var(--ink-2);
+}
+/* No heading above the table now, so it takes its spacing from the box. */
+.rating-grid { margin-top: 14px; }
