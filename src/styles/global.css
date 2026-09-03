@@ -1250,11 +1250,12 @@ a.adminlink:hover { border-color: var(--accent); }
   gap: 8px;
   margin: 0;
   padding: 9px 12px;
-  /* Rests on the same pale green as the tiles beside it and fills on hover,
-     like every other control here. It was the darkest thing on the page while
-     being the one thing you could not click, which read backwards. */
-  background: var(--surface-3);
-  border: 1px solid var(--rule-firm);
+  /* One step lighter than the counted tiles beside it, on the same edge, so
+     the row reads tile / tile / caption rather than three tiles. It had been
+     matching them exactly, and still looked the heavier of the two: it is a
+     much wider block of the same colour, and it carried the firmer edge. */
+  background: var(--surface-2);
+  border: 1px solid var(--rule);
   border-radius: 8px;
   font-family: var(--ui);
   font-size: 11.5px;
