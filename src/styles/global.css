@@ -1261,3 +1261,21 @@ a.adminlink:hover { border-color: var(--accent); }
 }
 /* No heading above the table now, so it takes its spacing from the box. */
 .rating-grid { margin-top: 14px; }
+
+/* The rated count sits beside the breakdown, not above it. Its width is the
+   binding constraint: five rating columns share whatever is left, and at
+   173px — the stat-tile width — "Outstanding" clips. 122px is the largest
+   that still leaves each column room for the longest tier name. */
+.ratingpane { display: flex; align-items: stretch; gap: 10px; }
+.ratingpane .ratedbox {
+  flex: 0 0 122px;
+  width: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 10px 12px;
+}
+/* Below that width the label takes two lines, which is fine beside a table. */
+.ratingpane .ratedbox > span { white-space: normal; line-height: 1.3; }
+.ratingpane .rating-grid { flex: 1; min-width: 0; margin-top: 0; }
+.rating-grid .tier-name { font-size: 10px; padding-left: 5px; padding-right: 5px; }
