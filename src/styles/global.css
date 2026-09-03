@@ -1024,8 +1024,8 @@ a.adminlink:hover { border-color: var(--accent); }
    both sit on the same rows. display:contents lifts the children of the two
    wrappers into that grid without moving any markup.
 
-     row 1   title, across both
-     row 2   page head        | search      <- bottoms meet
+     row 1   title            | search, standing beside both rows so its
+     row 2   page head        |   height matches title plus head
      row 3   KHDA rating      | chat
      row 4   curriculum       |   spanning down
      row 5   cost             |   to the last panel
@@ -1039,14 +1039,16 @@ a.adminlink:hover { border-color: var(--accent); }
   .home { grid-template-columns: minmax(0, 1fr) 259px; align-items: stretch; }
   .home-main, .home-rail { display: contents; }
 
-  .home-main > h1     { grid-column: 1 / -1; grid-row: 1; }
+  /* The title keeps to the left column so the search box can stand beside
+     both it and the head, matching their combined height. */
+  .home-main > h1     { grid-column: 1; grid-row: 1; }
   .page-head          { grid-column: 1; grid-row: 2; }
   .pane-rating        { grid-column: 1; grid-row: 3; }
   .pane-curriculum    { grid-column: 1; grid-row: 4; }
   .pane-cost          { grid-column: 1; grid-row: 5; }
   .cur-note           { grid-column: 1; grid-row: 6; }
 
-  .pane-search        { grid-column: 2; grid-row: 2; }
+  .pane-search        { grid-column: 2; grid-row: 1 / 3; }  /* title + head */
   .chatbox            { grid-column: 2; grid-row: 3 / 6; }
 }
 
