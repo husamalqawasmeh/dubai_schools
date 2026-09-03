@@ -1250,16 +1250,20 @@ a.adminlink:hover { border-color: var(--accent); }
   gap: 8px;
   margin: 0;
   padding: 9px 12px;
-  background: var(--accent-2);
-  border: 1px solid var(--accent-2);
+  /* Rests on the same pale green as the tiles beside it and fills on hover,
+     like every other control here. It was the darkest thing on the page while
+     being the one thing you could not click, which read backwards. */
+  background: var(--surface-3);
+  border: 1px solid var(--rule-firm);
   border-radius: 8px;
   font-family: var(--ui);
   font-size: 11.5px;
   font-weight: 700;
   line-height: 1.35;
-  color: var(--on-accent);
+  color: var(--ink);
+  transition: background .12s ease, border-color .12s ease, color .12s ease;
 }
-.hintbox-ico { flex: none; width: 15px; height: 15px; color: var(--on-accent); }
+.hintbox-ico { flex: none; width: 15px; height: 15px; color: var(--accent); }
 .hintbox-ico svg { display: block; width: 100%; height: 100%; }
 
 /* ---------------- school card: three pills on the bottom row ----------------
@@ -1391,7 +1395,8 @@ a.bar-row:hover,
 .chatclose:hover,
 .faq-item summary:hover,
 a.adminlink:hover,
-a.cur-note:hover {
+a.cur-note:hover,
+.hintbox:hover {
   background: var(--accent-2);
   color: var(--on-accent);
   border-color: var(--accent-2);
@@ -1404,7 +1409,8 @@ a.bar-row:hover .bar-lab, a.bar-row:hover .bar-val,
 .multi-opt:hover .multi-name, .multi-opt:hover .multi-n,
 .tab:hover, .clearall:hover,
 .faq-item summary:hover, a.adminlink:hover h2, a.adminlink:hover p,
-a.cur-note:hover, a.cur-note:hover .star {
+a.cur-note:hover, a.cur-note:hover .star,
+.hintbox:hover, .hintbox:hover .hintbox-ico {
   color: var(--on-accent);
 }
 /* Icons take currentColor, but these two are painted explicitly. */
@@ -1438,4 +1444,36 @@ a.cur-note {
   margin: -7px 0 0 -8px;
   border-radius: 8px;
   border: 1px solid transparent;
+}
+
+
+/* Hovering the hint lights up every number it is talking about, so the
+   sentence demonstrates itself instead of only asserting it. :has() reads the
+   hover from inside .page-head and paints siblings further down the column —
+   no script, and nothing to keep in step with the markup but these selectors.
+
+   The figures are what you click, so the figures are what glow: the box each
+   one sits in already has its own hover, and lighting those too would say
+   everything is active rather than pointing at anything. */
+.stat b,
+.panebox b,
+.tier-n {
+  transition: color .15s ease, text-shadow .15s ease;
+}
+.home-main:has(.hintbox:hover) .stat b,
+.home-main:has(.hintbox:hover) .panebox b,
+.home-main:has(.hintbox:hover) .tier-n {
+  color: var(--accent);
+  text-shadow:
+    0 0 4px rgba(12, 100, 85, 0.45),
+    0 0 14px rgba(12, 100, 85, 0.35);
+}
+
+/* The glow is decoration, so it goes away for anyone who has asked for less
+   motion — and the hint still reads correctly without it. */
+@media (prefers-reduced-motion: reduce) {
+  .stat b, .panebox b, .tier-n { transition: none; }
+  .home-main:has(.hintbox:hover) .stat b,
+  .home-main:has(.hintbox:hover) .panebox b,
+  .home-main:has(.hintbox:hover) .tier-n { text-shadow: none; }
 }
