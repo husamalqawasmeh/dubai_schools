@@ -27,6 +27,11 @@
   --on-accent: #ffffff;
   --divider: #ffffff;
   --stat-w: 168px;      /* every counted box: what "What schools cost" needs on one line */
+  /* Halfway between the button green and the tile green, in sRGB. The three
+     boxes on the landing page that fill on hover rest here: it is dark enough
+     to group them and light enough to carry ink, which white cannot do at this
+     value (3:1 against it, where the ink is 5.4:1). */
+  --midtone: #679f8f;
   --surface-3: #c2d9c9; /* the panel boxes: darker than a tile, far lighter than a button */   /* column separators, deliberately off the green scale */
 
   /* KHDA's scale, re-stepped for a light-green ground. Each step is both a
@@ -1250,12 +1255,10 @@ a.adminlink:hover { border-color: var(--accent); }
   gap: 8px;
   margin: 0;
   padding: 9px 12px;
-  /* One step lighter than the counted tiles beside it, on the same edge, so
-     the row reads tile / tile / caption rather than three tiles. It had been
-     matching them exactly, and still looked the heavier of the two: it is a
-     much wider block of the same colour, and it carried the firmer edge. */
-  background: var(--surface-2);
-  border: 1px solid var(--rule);
+  /* One of the three midtone boxes — see --midtone. The counted tiles beside
+     it stay pale, so the row still reads tile / tile / caption. */
+  background: var(--midtone);
+  border: 1px solid var(--midtone);
   border-radius: 8px;
   font-family: var(--ui);
   font-size: 11.5px;
@@ -1264,7 +1267,7 @@ a.adminlink:hover { border-color: var(--accent); }
   color: var(--ink);
   transition: background .12s ease, border-color .12s ease, color .12s ease;
 }
-.hintbox-ico { flex: none; width: 15px; height: 15px; color: var(--accent); }
+.hintbox-ico { flex: none; width: 15px; height: 15px; color: var(--ink); }
 .hintbox-ico svg { display: block; width: 100%; height: 100%; }
 
 /* ---------------- school card: three pills on the bottom row ----------------
@@ -1482,4 +1485,26 @@ a.cur-note {
   .home-main:has(.hintbox:hover) .stat b,
   .home-main:has(.hintbox:hover) .panebox b,
   .home-main:has(.hintbox:hover) .tier-n { text-shadow: none; }
+}
+
+
+/* The three boxes you can act on from the landing page — the hint, the browse
+   button and the chat button — share one resting colour so they read as a set,
+   and fill to the button green on hover like everything else here.
+
+   Only these two buttons move: .btn stays on --accent everywhere else, because
+   a form's submit or a school page's "Visit school website" is the one action
+   on its page and should stay the strongest thing on it.
+
+   Ink, not white: at this value white is 3:1 and fails, where ink is 5.4:1. */
+.pane-search .btn,
+.chatbox-cta {
+  background: var(--midtone);
+  color: var(--ink);
+  transition: background .12s ease, color .12s ease;
+}
+.pane-search .btn:hover,
+.chatbox-cta:hover {
+  background: var(--accent-2);
+  color: var(--on-accent);
 }
