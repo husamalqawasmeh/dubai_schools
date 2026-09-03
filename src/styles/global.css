@@ -26,7 +26,7 @@
   --accent-2: #084a3f;
   --on-accent: #ffffff;
   --divider: #ffffff;
-  --stat-w: 148px;      /* every counted box: what "Schools listed" needs on one line */
+  --stat-w: 168px;      /* every counted box: what "What schools cost" needs on one line */
   --surface-3: #c2d9c9; /* the panel boxes: darker than a tile, far lighter than a button */   /* column separators, deliberately off the green scale */
 
   /* KHDA's scale, re-stepped for a light-green ground. Each step is both a
@@ -106,9 +106,24 @@ p { margin: 0 0 14px; }
 .site-head .wrap { display: flex; align-items: center; justify-content: space-between; height: 52px; gap: 16px; }
 .brand { font-family: var(--display); font-weight: 700; font-size: 15.5px; color: var(--ink); text-decoration: none; letter-spacing: -0.01em; }
 .brand span { color: var(--accent); }
-.site-head nav { display: flex; gap: 16px; font-family: var(--display); font-size: 12px; font-weight: 700; }
-.site-head nav a { color: var(--ink-2); text-decoration: none; }
-.site-head nav a:hover { color: var(--ink); }
+.site-head nav { display: flex; gap: 6px; font-family: var(--display); font-size: 12px; font-weight: 700; }
+/* The padding is what spaces them now, so the hover has something to fill. */
+.site-head nav a,
+.partof {
+  padding: 6px 11px;
+  border-radius: 6px;
+  color: var(--ink-2);
+  text-decoration: none;
+  transition: background 0.12s ease, color 0.12s ease, box-shadow 0.12s ease;
+}
+.site-head nav a:hover,
+.partof:hover {
+  background: var(--accent-2);
+  color: var(--on-accent);
+  box-shadow: 0 2px 10px rgba(8, 74, 63, 0.28);
+}
+.site-head nav a:focus-visible,
+.partof:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
 
 /* ---------------- hero ---------------- */
 .hero { padding: 22px 0 4px; background: transparent; }
@@ -131,11 +146,10 @@ p { margin: 0 0 14px; }
   width: calc((200% - 12px) / 3);
 }
 .stat {
-  /* Sized by content, then grown to fill the target. The old 128px floor was
-     padding all four out to the same width and pushing the row 93px past the
-     box below it. */
+  /* Same width and same fill as the panel boxes below, so a counted figure
+     looks the same wherever it appears on the page. */
   flex: 0 0 var(--stat-w); min-width: 0;
-  background: var(--surface);
+  background: var(--surface-3);
   border: 1px solid var(--rule);
   border-radius: 8px;
   padding: 10px 12px 12px;
@@ -1107,12 +1121,8 @@ a.adminlink:hover { border-color: var(--accent); }
 .chatbox-cta { margin-top: auto; }
 
 /* ---------------- header: brand and origin together on the left ---------------- */
-.brandwrap { display: flex; align-items: baseline; gap: 12px; min-width: 0; }
-.partof {
-  font-family: var(--ui); font-size: 12px; font-weight: 700;
-  color: var(--muted); text-decoration: none; white-space: nowrap;
-}
-.partof:hover { color: var(--accent); }
+.brandwrap { display: flex; align-items: baseline; gap: 6px; min-width: 0; }
+.partof { font-family: var(--ui); font-size: 12px; font-weight: 700; white-space: nowrap; }
 @media (max-width: 620px) { .partof { display: none; } }
 
 /* ---------------- chat, inside the box ---------------- */
