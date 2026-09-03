@@ -1019,24 +1019,64 @@ a.adminlink:hover { border-color: var(--accent); }
 }
 
 /* ---------------- landing ----------------
-   A main column and a rail. The three data panels are siblings in the main
-   column, so they take one width and one gap with nothing to make them
-   differ. The rail carries the search box, then the chat box stretched to the
-   foot of the column. */
+   The two columns share one grid rather than being two independent stacks —
+   a rail box can only meet the bottom edge of a particular panel opposite if
+   both sit on the same rows. display:contents lifts the children of the two
+   wrappers into that grid without moving any markup.
+
+     row 1   title, across both
+     row 2   page head        | search      <- bottoms meet
+     row 3   KHDA rating      | chat
+     row 4   curriculum       |   spanning down
+     row 5   cost             |   to the last panel
+     row 6   footnote
+   --------------------------------------------------------------------- */
 .home { padding-top: 18px; padding-bottom: 34px; display: grid; gap: 12px; }
+.home h1 { margin-bottom: 2px; }
+.home-main, .home-rail { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+
 @media (min-width: 760px) {
   .home { grid-template-columns: minmax(0, 1fr) 259px; align-items: stretch; }
+  .home-main, .home-rail { display: contents; }
+
+  .home-main > h1     { grid-column: 1 / -1; grid-row: 1; }
+  .page-head          { grid-column: 1; grid-row: 2; }
+  .pane-rating        { grid-column: 1; grid-row: 3; }
+  .pane-curriculum    { grid-column: 1; grid-row: 4; }
+  .pane-cost          { grid-column: 1; grid-row: 5; }
+  .cur-note           { grid-column: 1; grid-row: 6; }
+
+  .pane-search        { grid-column: 2; grid-row: 2; }
+  .chatbox            { grid-column: 2; grid-row: 3 / 6; }
 }
-.home-main { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
-.home-main h1 { margin-bottom: 2px; }
-.home-main .stats { margin: 0; }
-.home-rail { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
-/* The chat takes whatever the search box leaves, down to the last row. */
-.home-rail .chatbox { flex: 1; }
+
+/* The head is a panel like the ones beneath it, carrying the two counts and
+   the hint instead of a table. */
+.page-head {
+  display: flex;
+  align-items: stretch;
+  gap: 12px;
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: 8px;
+  padding: 10px 14px 12px;
+  min-width: 0;
+}
+.page-head .stats { margin: 0; flex: none; }
+.page-head .hintbox { flex: 1; min-width: 0; }
 .pane-search { display: flex; flex-direction: column; justify-content: center; }
 .pane-search .btn { margin-top: 0; }
-/* Out of the curriculum panel now, so all three panels end the same way. */
-.cur-note { margin: 2px 0 0; }
+
+/* Footnote marker: in the box, and on the line it points at. */
+.star { color: var(--accent); font-weight: 700; }
+.cur-note {
+  margin: 0;
+  font-family: var(--ui);
+  font-size: 10.5px;
+  font-weight: 500;
+  line-height: 1.4;
+  color: var(--muted);
+}
 
 /* ---------------- chat box ---------------- */
 .chatbox {
