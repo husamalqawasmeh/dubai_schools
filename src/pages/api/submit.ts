@@ -1,5 +1,6 @@
 import type { APIRoute } from "astro";
 import { env } from "cloudflare:workers";
+import { notify } from "../../lib/notify";
 
 const DB = (env as unknown as { DB: D1Database }).DB;
 
@@ -71,6 +72,7 @@ export const POST: APIRoute = async ({ request }) => {
   }
 
   const schoolName = clean(body.school_name, MAX_SHORT);
+  const contact = clean(body.contact, MAX_SHORT);
   let schoolId: number | null = null;
   if (schoolName) {
     const row = await DB.prepare("SELECT id FROM schools WHERE name = ? LIMIT 1")
@@ -91,13 +93,31 @@ export const POST: APIRoute = async ({ request }) => {
       schoolId,
       schoolName || null,
       clean(body.author_name, MAX_SHORT) || null,
-      clean(body.contact, MAX_SHORT) || null,
+      contact || null,
       message,
       ipHash,
       (request.headers.get("User-Agent") ?? "").slice(0, 300),
       new Date().toISOString()
     )
     .run();
+
+  // The row is already saved, so this is the last thing that happens and its
+  // failure is logged rather than raised: a mail outage must not tell someone
+  // their message was lost when it was not.
+  await notify(
+    `${audience} submission — ${kind}`,
+    [
+      `Audience: ${audience}`,
+      `Kind:     ${kind}`,
+      `School:   ${schoolName || "(not given)"}`,
+      `Contact:  ${contact || "(none given)"}`,
+      "",
+      message,
+      "",
+      "--",
+      "Review at https://dubai-schools.can-du-ai.com/admin",
+    ]
+  );
 
   return json({ ok: true });
 };

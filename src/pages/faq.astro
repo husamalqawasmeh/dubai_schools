@@ -1,0 +1,182 @@
+---
+import Base from "../layouts/Base.astro";
+
+/**
+ * Orientation, not authority. Every rule here is set by KHDA or the Ministry of
+ * Education and most of them move — fee caps are re-set annually, document
+ * lists vary by country of origin — so the answers say where the current
+ * version lives rather than pretending this page is it. Anything that would be
+ * stale within a year is described as a mechanism, not a number.
+ */
+const GROUPS = [
+  {
+    title: "Getting a place",
+    items: [
+      {
+        q: "We are moving to Dubai from another country. What documents do we need?",
+        a: [
+          "Schools generally ask for the child's passport and residence visa (or the application for one), Emirates ID once issued, a birth certificate, passport photographs, immunisation records, and the last two years of school reports.",
+          "The document that causes the most trouble is the transfer certificate from the previous school. Depending on the country you are leaving, it may need attesting by that country's education authority and then by the UAE embassy there. Start this before you leave — it is far harder to arrange once you have gone.",
+          "Requirements differ by curriculum and by the grade being entered, so confirm the list with the school itself rather than assuming this one is complete.",
+        ],
+      },
+      {
+        q: "We are already in the UAE, moving from another emirate. Is it different?",
+        a: [
+          "Simpler. You need a transfer certificate from the current school, recent report cards, and the usual identity documents. No embassy attestation is involved in a move within the UAE.",
+          "Ask the current school to settle the account first. Schools may withhold a transfer certificate while fees are outstanding, and that is the most common reason a move stalls.",
+        ],
+      },
+      {
+        q: "When can a child actually start?",
+        a: [
+          "Most schools admit at the start of a term. Mid-year entry happens, particularly for relocating families, but seats in popular year groups are limited and some schools hold waiting lists years deep.",
+          "An assessment before admission is normal — usually English and mathematics, with an interview for older students.",
+        ],
+      },
+    ],
+  },
+  {
+    title: "Curriculum and language",
+    items: [
+      {
+        q: "How do we switch from one curriculum to another, and what does it involve?",
+        a: [
+          "It is allowed and it is common, but it is not administratively neutral. The receiving school decides which year group the child enters, and that may not match the year just finished: curricula divide content differently and age cut-offs vary between systems.",
+          "The switches needing most thought are the late ones. Moving into the IB Diploma or A-levels after those two-year programmes have started is difficult, because the subjects chosen at the beginning determine what can be completed at the end.",
+          "Expect a placement assessment, and expect gaps. A child moving from an Indian to a British curriculum, or from American to IB, will meet the same topics in a different order. Ask the new school what it will do to close them.",
+        ],
+      },
+      {
+        q: "What language will my child be taught in?",
+        a: [
+          "Most private schools in Dubai teach in English. The exceptions follow the curriculum: French schools teach in French, German in German, and MOE-curriculum schools teach largely in Arabic.",
+          "Arabic is compulsory in every private school whatever the curriculum — as a first language for Arabic-speaking students and as a second language for everyone else. Islamic Studies is compulsory for Muslim students. Both are KHDA requirements rather than a school's choice.",
+          "Each school's page here lists its curriculum, which is the best single indicator of the language of instruction.",
+        ],
+      },
+      {
+        q: "Are there boys-only or girls-only schools, or separated classes?",
+        a: [
+          "Yes to both. Some schools are single-sex throughout. Others are mixed in the early years and separate from a certain grade, which is common in MOE-curriculum schools and in some Indian and Pakistani schools.",
+          "KHDA does not publish this in a form we can list reliably, so it is not a filter on this site. Ask the school directly — and ask at which grade any separation begins, because a school that is mixed at Grade 1 may not be at Grade 6.",
+        ],
+      },
+    ],
+  },
+  {
+    title: "Fees and money",
+    items: [
+      {
+        q: "Can a school raise its fees whenever it likes?",
+        a: [
+          "No. KHDA sets an Education Cost Index each year, and how much a school may add on top of it is tied to its inspection rating — better-rated schools are permitted larger increases, weaker ones smaller. Going beyond the permitted level needs KHDA approval and is the exception.",
+          "The index and the multipliers are re-set annually, so any percentage quoted here would be wrong within a year. KHDA publishes the current figures at khda.gov.ae.",
+          "The fees on this site are the ones KHDA publishes, shown with the academic year they belong to. Treat them as a guide and confirm the current figure with the school.",
+        ],
+      },
+      {
+        q: "How is payment usually structured?",
+        a: [
+          "Typically three instalments across the year, each paid before the term it covers. Many schools discount paying in full, and most charge a registration or seat-reservation fee to hold a place.",
+          "Ask what the tuition figure excludes. Transport, uniform, books, examination entry, trips and after-school activities are usually separate, and together they are not a small number.",
+          "Sibling discounts are common and not always advertised. Ask.",
+        ],
+      },
+      {
+        q: "What happens to fees if we leave mid-year?",
+        a: [
+          "KHDA sets refund rules based on how long the child attended before withdrawing, and schools are required to follow them. Give notice in writing and keep a copy.",
+          "A school may withhold the transfer certificate until the account is settled, so a dispute about fees can block the next school. Resolve it before you need the certificate.",
+        ],
+      },
+    ],
+  },
+  {
+    title: "Transport",
+    items: [
+      {
+        q: "How is school transport regulated?",
+        a: [
+          "Jointly: the RTA licenses the vehicles and drivers, and KHDA oversees the schools that use them. Buses must carry a trained supervisor as well as a driver, and are subject to requirements covering seatbelts, cameras, speed limiting and door safety.",
+          "Transport is charged separately from tuition and KHDA publishes the figure alongside the fees. Where we hold it, it is on the school's page.",
+        ],
+      },
+      {
+        q: "Do we have to use the school bus?",
+        a: [
+          "No — transport is optional and many families drive. If you do use it, the route and pick-up point are set by the operator, and a long route can mean a much earlier start than the school day suggests. Ask what the actual pick-up time would be from your address before committing.",
+        ],
+      },
+    ],
+  },
+  {
+    title: "Who regulates what",
+    items: [
+      {
+        q: "What is the difference between KHDA and the Ministry of Education?",
+        a: [
+          "KHDA — the Knowledge and Human Development Authority — is Dubai's regulator. It licenses private schools in the emirate, inspects them and publishes the ratings, governs fee increases, and takes complaints about them. Everything on this site comes from KHDA's published data.",
+          "The Ministry of Education is federal. It sets the national curriculum, runs the public school system, and handles what crosses emirates or leaves the country: equivalency of foreign qualifications, attestation of certificates, and recognition of degrees.",
+          "In short: a question about a private school in Dubai is usually KHDA's. A question about a qualification's standing in the UAE is usually the Ministry's.",
+        ],
+      },
+      {
+        q: "How do I complain about a school?",
+        a: [
+          "Start with the school. Put it in writing, address it to the principal, and keep the reply. Most complaints end here, and KHDA will ask whether you did this first.",
+          "If that fails, KHDA takes parent complaints about licensed private schools through its own channels at khda.gov.ae. Fees, refunds, transfer certificates and the conduct of a school are all within its remit.",
+          "Keep records throughout — dates, who you spoke to, copies of correspondence. A complaint with a paper trail is treated very differently from one without.",
+        ],
+      },
+      {
+        q: "What about government schools? Are we eligible?",
+        a: [
+          "Public schools are run by the Ministry of Education, are free for UAE nationals, and teach principally in Arabic. Expatriate children are generally not eligible, with limited exceptions, and where a place is available it is fee-paying.",
+          "This site covers Dubai's private schools only, because that is what KHDA licenses and publishes. For the public system, moe.gov.ae is the source.",
+        ],
+      },
+    ],
+  },
+];
+
+const total = GROUPS.reduce((n, g) => n + g.items.length, 0);
+---
+
+<Base
+  title="Good to know — questions about schooling in Dubai"
+  description="Straight answers on admission documents, switching curriculum, how fees are allowed to rise, school transport, complaints, and what KHDA and the Ministry of Education each do."
+>
+  <div class="wrap pick">
+    <a class="back" href="/">&larr; Overview</a>
+    <h1 style="margin-top:14px">Good to know</h1>
+    <p class="sub" style="max-width:70ch">
+      {total} questions parents ask before choosing a school in Dubai — the
+      paperwork, switching curriculum, how fees are allowed to rise, transport,
+      and who to go to when something goes wrong.
+    </p>
+
+    {GROUPS.map((g) => (
+      <section style="margin-top:26px">
+        <h2 style="margin:0 0 10px">{g.title}</h2>
+        <div class="faq">
+          {g.items.map((f) => (
+            <details class="faq-item">
+              <summary>{f.q}</summary>
+              {f.a.map((para) => <p>{para}</p>)}
+            </details>
+          ))}
+        </div>
+      </section>
+    ))}
+
+    <p class="note-foot">
+      This page is orientation, not authority. The rules behind these answers are
+      set by <a href="https://www.khda.gov.ae" target="_blank" rel="noopener noreferrer">KHDA</a>
+      and the <a href="https://www.moe.gov.ae" target="_blank" rel="noopener noreferrer">Ministry of Education</a>,
+      and several of them — fee caps in particular — are re-set every year. Check
+      with them, or with the school, before acting on anything here. Something
+      wrong or missing? <a href="/contribute">Tell us</a>.
+    </p>
+  </div>
+</Base>

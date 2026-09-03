@@ -1108,7 +1108,7 @@ a.adminlink:hover { border-color: var(--accent); }
   line-height: 1.4;
   color: var(--ink-2);
 }
-.cur-note .star { font-size: 1.35em; padding-right: 2px; }
+.cur-note .star { font-size: 1.6em; font-weight: 800; padding-right: 3px; }
 
 /* ---------------- chat box ---------------- */
 .chatbox {
@@ -1512,3 +1512,50 @@ a.cur-note {
   background: var(--accent-2);
   color: var(--on-accent);
 }
+
+/* The label and figure sat a little high in their cells. Three pixels move from
+   the bottom padding to the top, so the pair reads as centred without the row
+   changing height — these grids are one row deep and share their height with
+   the box beside them, so growing them would push that out of line. Scoped to
+   the two label-over-figure grids; the cost row has coins and a range line
+   under it and balances differently. */
+.rating-grid .tier-name,
+.cur-grid .tier-name { padding-top: 10px; }
+.rating-grid .tier-n,
+.cur-grid .tier-n { padding-bottom: 5px; }
+
+/* ---------------- good to know / supplies ---------------- */
+.note-foot {
+  margin: 30px 0 0;
+  padding-top: 14px;
+  border-top: 1px solid var(--rule);
+  font-family: var(--display);
+  font-size: 12.5px;
+  line-height: 1.55;
+  color: var(--muted);
+  max-width: 74ch;
+}
+.note-foot a { color: var(--accent); }
+.supply-grid { display: grid; gap: 12px; margin-top: 12px; }
+@media (min-width: 720px) { .supply-grid { grid-template-columns: 1fr 1fr; } }
+.supply-card {
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: 8px;
+  padding: 14px 16px 16px;
+}
+.supply-card h3 {
+  margin: 0 0 6px;
+  font-family: var(--display);
+  font-size: 14.5px;
+  font-weight: 700;
+}
+.supply-card p { margin: 0 0 8px; font-family: var(--display); font-size: 13px; line-height: 1.55; }
+.supply-card ul { margin: 0; padding-left: 18px; font-family: var(--display); font-size: 13px; line-height: 1.7; }
+.supply-card li::marker { color: var(--accent); }
+
+
+/* The asterisk has to be findable twice — once inside the Curricula box and
+   once at the head of the note it points to — and at body weight it read as a
+   speck of dust rather than a mark tying the two together. */
+.star { font-size: 1.6em; font-weight: 800; line-height: 0; }
