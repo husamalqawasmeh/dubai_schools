@@ -1286,3 +1286,12 @@ a.adminlink:hover { border-color: var(--accent); }
 /* Two tiles left in the row, so it takes its own width rather than holding
    open a gap the hint box could be using. */
 .stats { width: auto; }
+
+/* The cost panel spans two columns like the rating one, so its five columns
+   need the same treatment: smaller labels and less side padding to survive
+   beside the box. */
+.panerow .band-grid { flex: 1; min-width: 0; }
+.band-grid .tier-name { font-size: 10px; padding-left: 4px; padding-right: 4px; }
+/* This box labels its panel rather than counting anything, so the label sits
+   where the figure does in the other two. */
+.panebox-label > span { margin-top: 0; font-size: 13px; }
