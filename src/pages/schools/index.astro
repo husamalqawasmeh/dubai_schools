@@ -65,10 +65,35 @@ const tally = <T,>(items: T[], key: (t: T) => string[]) => {
   return m;
 };
 
+/**
+ * Curriculum options mirror the landing page's panel: the six commonest are
+ * listed on their own, and the long tail folds into one "Other" group that
+ * ticks all of them at once. TOP must stay in step with the same constant in
+ * index.astro, or the panel would say "Other x8" and the filter would offer a
+ * different eight.
+ */
+const TOP = 6;
 const curCount = tally(all, (x) => x.curricula);
-const curOptions = [...curCount.entries()]
-  .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
-  .map(([value, count]) => ({ value, label: value, count }));
+const curRanked = [...curCount.entries()].sort(
+  (a, b) => b[1] - a[1] || a[0].localeCompare(b[0])
+);
+const curTail = curRanked.slice(TOP);
+const curGroups = [
+  ...curRanked.slice(0, TOP).map(([value, count]) => ({
+    label: value,
+    count,
+    children: [{ value, label: value, count }],
+  })),
+  ...(curTail.length
+    ? [
+        {
+          label: `Other ×${curTail.length}`,
+          count: curTail.reduce((a, [, n]) => a + n, 0),
+          children: curTail.map(([value, count]) => ({ value, label: value, count })),
+        },
+      ]
+    : []),
+];
 
 const areaCount = tally(all, (x) => [x.area]);
 
@@ -176,7 +201,7 @@ const title = activeBits.length
 
       <div class="filters">
         <div class="row">
-          <MultiSelect id="curriculum" label="Curriculum" options={curOptions} selected={sel.curriculum} allLabel="All curricula" />
+          <MultiSelect id="curriculum" label="Curriculum" groups={curGroups} selected={sel.curriculum} allLabel="All curricula" />
           <MultiSelect id="rating" label="KHDA rating" options={ratOptions} selected={sel.rating} allLabel="All ratings" />
           <MultiSelect id="band" label="Fee band" options={bandOptions} selected={sel.band} allLabel="Any fee" />
           <MultiSelect id="area" label="Area" groups={areaGroups} selected={sel.area} allLabel="All areas" scroll />

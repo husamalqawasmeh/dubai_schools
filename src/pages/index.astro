@@ -18,7 +18,8 @@ const BANDS = [
 ];
 
 // Top curricula by name, with the long tail folded into one row rather than
-// drawn as eight bars of one or two schools each.
+// drawn as eight bars of one or two schools each. TOP must stay in step with
+// the same constant in schools/index.astro, which groups the filter the same way.
 const TOP = 6;
 const top = s.curriculaCounts.slice(0, TOP);
 const tail = s.curriculaCounts.slice(TOP);
@@ -100,13 +101,16 @@ const maxCur = top[0]?.n ?? 1;
             </a>
           ))}
           {tail.length > 0 && (
-            <div class="tier tier-static">
+            <a
+              class="tier"
+              href={`/schools?curriculum=${tail.map((c) => encodeURIComponent(c.name)).join(",")}`}
+            >
               <span class="cur-bar hatch" aria-hidden="true">
                 <span style={`width:${Math.round((tailTotal / maxCur) * 100)}%`}></span>
               </span>
               <span class="tier-name">Other &times;{tail.length}</span>
               <span class="tier-n">{tailTotal}</span>
-            </div>
+            </a>
           )}
         </div>
       </div>
