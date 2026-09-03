@@ -1170,7 +1170,6 @@ a.adminlink:hover { border-color: var(--accent); }
 }
 /* Close the row up: the curriculum note and the pane floor were carrying the
    height that the search pane beside them did not need. */
-.pane-wide .sub { margin-top: 8px !important; }
 .home .panelset .pane { padding-bottom: 9px; }
 .cur-grid .tier-name { padding-top: 5px; }
 .cur-grid .tier-n { padding-bottom: 5px; }
@@ -1310,3 +1309,8 @@ a.adminlink:hover { border-color: var(--accent); }
   padding-left: 7px;
   padding-right: 7px;
 }
+
+/* The curriculum panel is the only one ending in prose, which pushed the cost
+   panel visually further away than the 12px grid gap the other rows get.
+   Tightened so the three panels sit at an even rhythm. */
+.cur-note { margin: 6px 0 0; }
