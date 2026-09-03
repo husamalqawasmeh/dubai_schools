@@ -71,7 +71,7 @@ const maxCur = top[0]?.n ?? 1;
     </div>
 
     <div class="panelset">
-      <section class="pane">
+      <section class="pane pane-wide">
                 <div class="panerow">
           <a class="panebox" href="/schools?rated=1">
             <b>{s.rated}</b>
@@ -101,45 +101,16 @@ const maxCur = top[0]?.n ?? 1;
         </div>
       </section>
 
-      <section class="pane">
-        <div class="panerow">
-          <div class="panebox panebox-label">
-            <span>
-              <span class="stat-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="6" rx="8" ry="3"/><path d="M4 6v5c0 1.7 3.6 3 8 3s8-1.3 8-3V6"/><path d="M4 11v5c0 1.7 3.6 3 8 3s8-1.3 8-3v-5"/></svg></span>
-              What schools cost
-            </span>
-          </div>
-          <div class="tier-grid band-grid">
-            {BANDS.map((b) => (
-              <a class="tier" href={`/schools?band=${b.key}`}>
-                <span class="band-coins"><Coins n={b.dots} size="lg" label={b.label} /></span>
-                <span class="tier-name">{b.label}</span>
-                <span class="tier-n">{s.bands[b.key] ?? 0}</span>
-                <span class="band-range">{b.short}</span>
-              </a>
-            ))}
-            <a class="tier" href="/schools?band=none">
-              <span class="band-coins">
-                <svg
-                  class="coins coins-lg coin-empty"
-                  viewBox="0 0 46 48"
-                  width="46"
-                  height="48"
-                  role="img"
-                  aria-label="No fee published"
-                >
-                  <ellipse cx="23" cy="38" rx="14" ry="4.8" />
-                </svg>
-              </span>
-              <span class="tier-name">No fee</span>
-              <span class="tier-n">{s.bands["none"] ?? 0}</span>
-              <span class="band-range">&nbsp;</span>
-            </a>
-          </div>
-        </div>
+      <section class="pane pane-narrow" style="display:flex;flex-direction:column;justify-content:center">
+        <h3><span class="chart-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5 21 21"/></svg></span>Browse, filter or search</h3>
+        <p class="sub" style="margin-bottom:14px">
+          Search by name, area, curriculum or fee.
+        </p>
+        <a class="btn" href="/schools" style="margin-top:0">Browse all {s.total}</a>
       </section>
 
-      <section class="pane pane-wide">
+
+      <section class="pane pane-full">
         <div class="panerow">
           <a class="panebox" href="/schools">
             <b>{s.curricula}</b>
@@ -177,15 +148,46 @@ const maxCur = top[0]?.n ?? 1;
           Some schools have more than one curricula, such as British and IB.
         </p>
       </section>
-      <section class="pane pane-narrow" style="display:flex;flex-direction:column;justify-content:center">
-        <h3><span class="chart-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5 21 21"/></svg></span>Browse, filter or search</h3>
-        <p class="sub" style="margin-bottom:14px">
-          Search by name, area, curriculum or fee.
-        </p>
-        <a class="btn" href="/schools" style="margin-top:0">Browse all {s.total}</a>
-      </section>
       </div>
 
+
+      <section class="pane pane-full">
+        <div class="panerow">
+          <div class="panebox panebox-label">
+            <span>
+              <span class="stat-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="6" rx="8" ry="3"/><path d="M4 6v5c0 1.7 3.6 3 8 3s8-1.3 8-3V6"/><path d="M4 11v5c0 1.7 3.6 3 8 3s8-1.3 8-3v-5"/></svg></span>
+              What schools cost
+            </span>
+          </div>
+          <div class="tier-grid band-grid">
+            {BANDS.map((b) => (
+              <a class="tier" href={`/schools?band=${b.key}`}>
+                <span class="band-coins"><Coins n={b.dots} size="lg" label={b.label} /></span>
+                <span class="tier-name">{b.label}</span>
+                <span class="tier-n">{s.bands[b.key] ?? 0}</span>
+                <span class="band-range">{b.short}</span>
+              </a>
+            ))}
+            <a class="tier" href="/schools?band=none">
+              <span class="band-coins">
+                <svg
+                  class="coins coins-lg coin-empty"
+                  viewBox="0 0 46 48"
+                  width="46"
+                  height="48"
+                  role="img"
+                  aria-label="No fee published"
+                >
+                  <ellipse cx="23" cy="38" rx="14" ry="4.8" />
+                </svg>
+              </span>
+              <span class="tier-name">Not published</span>
+              <span class="tier-n">{s.bands["none"] ?? 0}</span>
+              <span class="band-range">&nbsp;</span>
+            </a>
+          </div>
+        </div>
+      </section>
   </div>
 </Base>
 

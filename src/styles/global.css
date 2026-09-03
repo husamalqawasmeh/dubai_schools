@@ -27,7 +27,7 @@
   --on-accent: #ffffff;
   --divider: #ffffff;
   --stat-w: 173px;      /* one stat tile: (530 - 2 gaps) / 3 */
-  --surface-3: #cfe2d3; /* a step darker than a tile */   /* column separators, deliberately off the green scale */
+  --surface-3: #c2d9c9; /* the panel boxes: darker than a tile, far lighter than a button */   /* column separators, deliberately off the green scale */
 
   /* KHDA's scale, re-stepped for a light-green ground. Each step is both a
      3:1 graphic against the card and dark enough to carry white text, which
@@ -1295,3 +1295,18 @@ a.adminlink:hover { border-color: var(--accent); }
 /* This box labels its panel rather than counting anything, so the label sits
    where the figure does in the other two. */
 .panebox-label > span { margin-top: 0; font-size: 13px; }
+
+/* Cost and curriculum each take the whole row, cost beneath curriculum. */
+@media (min-width: 760px) {
+  .pane-full { grid-column: 1 / -1; }
+}
+
+/* Those panels are three to five times wider than they were, so the label
+   shrinking that kept their columns from clipping is no longer needed. */
+.rating-grid .tier-name,
+.band-grid .tier-name,
+.cur-grid .tier-name {
+  font-size: 12px;
+  padding-left: 7px;
+  padding-right: 7px;
+}
