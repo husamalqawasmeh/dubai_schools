@@ -1239,9 +1239,8 @@ a.adminlink:hover { border-color: var(--accent); }
    row, directly under the schools-listed tile and the same width as it, so the
    two read as a pair down the page. A step darker than a tile, because it
    belongs to the panel it introduces rather than to the row above. */
-.ratedbox {
+.panebox {
   display: block;
-  width: var(--stat-w);
   background: var(--surface-3);
   border: 1px solid var(--rule-firm);
   border-radius: 8px;
@@ -1250,12 +1249,12 @@ a.adminlink:hover { border-color: var(--accent); }
   color: inherit;
   transition: background 0.12s ease, border-color 0.12s ease;
 }
-.ratedbox:hover { border-color: var(--accent); }
-.ratedbox b {
+.panebox:hover { border-color: var(--accent); }
+.panebox b {
   display: block; font-family: var(--display); font-weight: 700; font-size: 21px;
   letter-spacing: -0.02em; font-variant-numeric: tabular-nums; line-height: 1.1;
 }
-.ratedbox > span {
+.panebox > span {
   display: flex; align-items: center; gap: 6px; margin-top: 4px;
   font-family: var(--display); font-size: 12.5px; font-weight: 700; color: var(--ink-2);
 }
@@ -1266,8 +1265,8 @@ a.adminlink:hover { border-color: var(--accent); }
    binding constraint: five rating columns share whatever is left, and at
    173px — the stat-tile width — "Outstanding" clips. 122px is the largest
    that still leaves each column room for the longest tier name. */
-.ratingpane { display: flex; align-items: stretch; gap: 10px; }
-.ratingpane .ratedbox {
+.panerow { display: flex; align-items: stretch; gap: 10px; }
+.panerow .panebox {
   flex: 0 0 122px;
   width: auto;
   display: flex;
@@ -1276,6 +1275,14 @@ a.adminlink:hover { border-color: var(--accent); }
   padding: 10px 12px;
 }
 /* Below that width the label takes two lines, which is fine beside a table. */
-.ratingpane .ratedbox > span { white-space: normal; line-height: 1.3; }
-.ratingpane .rating-grid { flex: 1; min-width: 0; margin-top: 0; }
+.panerow .panebox > span { white-space: normal; line-height: 1.3; }
+.panerow .rating-grid { flex: 1; min-width: 0; margin-top: 0; }
 .rating-grid .tier-name { font-size: 10px; padding-left: 5px; padding-right: 5px; }
+
+/* The curriculum pane spans three columns, so its seven columns have room to
+   spare beside the box — no size reduction needed here, unlike the rating
+   pane which only spans two. */
+.panerow .cur-grid { flex: 1; min-width: 0; }
+/* Two tiles left in the row, so it takes its own width rather than holding
+   open a gap the hint box could be using. */
+.stats { width: auto; }
