@@ -1198,3 +1198,37 @@ a.adminlink:hover { border-color: var(--accent); }
 }
 .hintbox-ico { flex: none; width: 15px; height: 15px; color: var(--on-accent); }
 .hintbox-ico svg { display: block; width: 100%; height: 100%; }
+
+/* ---------------- school card: three pills on the bottom row ----------------
+   Curriculum, KHDA rating, cost. Only the rating is filled: three solid pills
+   compete, and the inspection result is the one a parent scans for. */
+.card .foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  border-radius: 999px;
+  padding: 3px 10px;
+  font-family: var(--ui);
+  font-size: 11.5px;
+  font-weight: 700;
+  white-space: nowrap;
+  min-width: 0;
+}
+.pill-cur,
+.pill-fee {
+  border: 1px solid var(--rule-firm);
+  color: var(--ink-2);
+  background: var(--surface);
+}
+.pill-cur { overflow: hidden; text-overflow: ellipsis; display: inline-block; }
+.pill-fee { padding-left: 8px; }
+.pill-fee .coins { margin-bottom: -2px; }
+/* The badge is already a pill; it only needs to stop setting its own metrics. */
+.card .badge { padding: 3px 10px; font-size: 11.5px; }

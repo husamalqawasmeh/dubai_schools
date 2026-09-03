@@ -201,19 +201,20 @@ const title = activeBits.length
             data-fee={feeText(x)}
           >
             <h3>{x.name}</h3>
-            <p class="where">{x.area} · {x.curricula.join(" / ")}</p>
+            <p class="where">{x.area}</p>
             <div class="foot">
-              <span class="fee">
+              <span class="pill pill-cur">{x.curricula.join(" / ")}</span>
+              <span class="pill badge" data-r={x.khda_rating}>{x.khda_rating}</span>
+              <span class="pill pill-fee">
                 {x.fee_band ? (
                   <>
                     <Coins n={bandDots[x.fee_band]} label={bandLabel[x.fee_band]} />
                     {bandLabel[x.fee_band]}
                   </>
                 ) : (
-                  <span class="missing">Fee not published</span>
+                  "No fee"
                 )}
               </span>
-              <span class="badge" data-r={x.khda_rating}>{x.khda_rating}</span>
             </div>
           </a>
         ))}
