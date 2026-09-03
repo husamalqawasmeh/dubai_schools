@@ -1463,10 +1463,15 @@ a.cur-note {
 .home-main:has(.hintbox:hover) .stat b,
 .home-main:has(.hintbox:hover) .panebox b,
 .home-main:has(.hintbox:hover) .tier-n {
-  color: var(--accent);
+  /* Amber, not the page's green: the glow has to separate the figures from a
+     green ground, and green-on-green only changes their shade. The text takes
+     the deep end of the ramp because it still has to be read — 4.6:1 on the
+     tiles, the tightest of the three grounds these numbers sit on — while the
+     halo above it can be as bright as it likes, being decoration. */
+  color: var(--warn);
   text-shadow:
-    0 0 4px rgba(12, 100, 85, 0.45),
-    0 0 14px rgba(12, 100, 85, 0.35);
+    0 0 4px rgba(196, 138, 0, 0.55),
+    0 0 14px rgba(224, 180, 0, 0.45);
 }
 
 /* The glow is decoration, so it goes away for anyone who has asked for less
