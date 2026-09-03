@@ -48,6 +48,7 @@ const shown = all.filter((x) => {
       x.name.toLowerCase().includes(text) ||
       x.area.toLowerCase().includes(text) ||
       x.curricula.join(" ").toLowerCase().includes(text) ||
+      x.khda_rating.toLowerCase().includes(text) ||
       feeText(x).includes(text)) &&
     (sel.curriculum.length === 0 || x.curricula.some((c) => sel.curriculum.includes(c))) &&
     (sel.area.length === 0 || sel.area.includes(x.area)) &&
@@ -165,7 +166,7 @@ const title = activeBits.length
       </div>
 
       <div class="searchbar">
-        <input id="q" type="search" value={q} placeholder="Search by name, area, curriculum or fee…" aria-label="Search schools" />
+        <input id="q" type="search" value={q} placeholder="Search by school name, area, curriculum, KHDA rating or fee…" aria-label="Search schools" />
         <span class="search-ico" aria-hidden="true">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <circle cx="10.5" cy="10.5" r="6.5" /><path d="M15.5 15.5 21 21" />
@@ -301,6 +302,7 @@ const title = activeBits.length
         d.name!.includes(text) ||
         d.area!.toLowerCase().includes(text) ||
         d.cur!.toLowerCase().includes(text) ||
+        d.rat!.toLowerCase().includes(text) ||
         d.fee!.includes(text);
 
       if (ok) {
