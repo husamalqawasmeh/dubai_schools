@@ -23,6 +23,7 @@ export interface SchoolRow {
   phone: string | null;
   address: string | null;
   description: string | null;
+  principal: string | null;
 }
 
 export interface School extends Omit<SchoolRow, "curricula"> {
@@ -42,7 +43,7 @@ function hydrate(row: SchoolRow): School {
 
 const COLUMNS = `id, slug, name, area, curricula, khda_rating, fee_min_aed,
   fee_max_aed, fee_year, fee_note, fee_band, grade_range, students_total,
-  website, phone, address, description`;
+  website, phone, address, description, principal`;
 
 export async function allSchools(): Promise<School[]> {
   const { results } = await DB.prepare(

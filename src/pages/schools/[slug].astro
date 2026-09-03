@@ -34,12 +34,27 @@ const bandDots: Record<string, number> = { acceptable: 1, medium: 2, high: 3, ve
 
 const mapQuery = encodeURIComponent(`${school.name}, ${school.address ?? "Dubai"}`);
 
-const facts: { k: string; v: string | null }[] = [
+/** The address without scheme or trailing slash: nobody reads "https://" and
+ *  it costs a third of the room on a line that has to fit beside its label. */
+function domain(url: string | null): string | null {
+  if (!url) return null;
+  try {
+    return new URL(url).host.replace(/^www\./, "");
+  } catch {
+    return url.replace(/^https?:\/\//, "").replace(/\/$/, "");
+  }
+}
+
+const facts: { k: string; v: string | null; href?: string }[] = [
   { k: school.curricula.length > 1 ? "Curricula" : "Curriculum", v: school.curricula.join(", ") },
   { k: "Grades", v: school.grade_range },
   { k: "Area", v: school.area },
   { k: "KHDA rating", v: school.khda_rating },
   { k: "Students", v: school.students_total ? school.students_total.toLocaleString("en-AE") : null },
+  // Both published by KHDA. The principal changes hands more often than
+  // anything else here, so it is labelled as their figure rather than ours.
+  { k: "Principal", v: school.principal },
+  { k: "Website", v: domain(school.website), href: school.website ?? undefined },
 ];
 ---
 
@@ -80,7 +95,16 @@ const facts: { k: string; v: string | null }[] = [
 
         <dl style="margin-top:16px;padding-top:15px;border-top:1px solid var(--rule)">
           {facts.filter((f) => f.v).map((f) => (
-            <div class="kv"><dt>{f.k}</dt><dd>{f.v}</dd></div>
+            <div class="kv">
+              <dt>{f.k}</dt>
+              <dd>
+                {f.href ? (
+                  <a href={f.href} target="_blank" rel="noopener noreferrer">{f.v}</a>
+                ) : (
+                  f.v
+                )}
+              </dd>
+            </div>
           ))}
         </dl>
 

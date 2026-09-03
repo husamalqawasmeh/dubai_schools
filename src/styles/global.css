@@ -1063,7 +1063,7 @@ a.adminlink:hover { border-color: var(--accent); }
 .page-head {
   display: flex;
   align-items: stretch;
-  gap: 12px;
+  gap: 14px;
   background: var(--surface);
   border: 1px solid var(--rule);
   border-radius: 8px;
@@ -1071,6 +1071,15 @@ a.adminlink:hover { border-color: var(--accent); }
   min-width: 0;
 }
 .page-head .stats { margin: 0; flex: none; }
+/* Two equal columns rather than two flex items: flex-basis alone left the
+   tiles free to differ, and "Areas covered" is the wider label. The gap
+   matches .page-head's, so all three boxes in the row are spaced alike. */
+.page-head .stats {
+  display: grid;
+  grid-template-columns: repeat(2, var(--stat-w));
+  gap: 14px;
+  width: auto;
+}
 .page-head .hintbox { flex: 1; min-width: 0; }
 .pane-search { display: flex; flex-direction: column; justify-content: center; }
 .pane-search .btn { margin-top: 0; }
@@ -1234,6 +1243,10 @@ a.adminlink:hover { border-color: var(--accent); }
   min-width: 0;
   display: flex;
   align-items: center;
+  /* Centred in its own box: it is a caption for the whole page rather than a
+     label for whatever sits to its left. */
+  justify-content: center;
+  text-align: left;
   gap: 8px;
   margin: 0;
   padding: 9px 12px;
