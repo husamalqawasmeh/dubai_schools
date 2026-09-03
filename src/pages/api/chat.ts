@@ -52,7 +52,7 @@ const safeJson = (s: string): any => {
  */
 async function callAnthropic(key: string, payload: unknown): Promise<Response> {
   let last!: Response;
-  for (let attempt = 1; attempt <= 5; attempt++) {
+  for (let attempt = 1; attempt <= 3; attempt++) {
     last = await fetch("https://api.anthropic.com/v1/messages", {
       method: "POST",
       headers: {
@@ -66,7 +66,14 @@ async function callAnthropic(key: string, payload: unknown): Promise<Response> {
       body: JSON.stringify(payload),
     });
     if (last.ok || last.status !== 403) return last;
-    await new Promise((r) => setTimeout(r, 120 * attempt));
+    // Deliberately few, and deliberately short. Measured: five fast retries
+    // answered 4 of 6, six retries spread over six seconds answered 3 of 12.
+    // Retrying does not help, because the refusal follows the egress this
+    // Worker leaves from rather than the request — so more attempts down the
+    // same path only make the visitor wait longer to be told no. These two
+    // cover a genuinely transient blip; anything past that is AI Gateway's
+    // job, and that needs a gateway created in the dashboard.
+    await new Promise((r) => setTimeout(r, 250 * attempt + Math.random() * 150));
   }
   return last;
 }
