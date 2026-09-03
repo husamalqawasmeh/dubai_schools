@@ -1,0 +1,221 @@
+---
+import Base from "../layouts/Base.astro";
+import { allSchools } from "../lib/db";
+
+/**
+ * Home-to-school travel time.
+ *
+ * WHY THIS HANDS OFF RATHER THAN PRINTING MINUTES
+ * -----------------------------------------------
+ * A number of minutes is only worth having if it accounts for traffic, and
+ * traffic is exactly what makes the Dubai school run hard: the same trip at
+ * 07:15 and at 10:00 are different journeys. Producing that needs a routing
+ * API, a key and a per-request bill.
+ *
+ * So this does the part that is genuinely tedious — finding each school's
+ * address, and getting several of them lined up against one home address —
+ * and hands the routing to Maps, which does it properly and for free. You pick
+ * up to five schools, type your address once, and get one link per school with
+ * both ends already filled in.
+ *
+ * If a Maps API key is added later, the minutes can be shown inline here and
+ * the layout below already has the column for them.
+ */
+const schools = (await allSchools())
+  .map((s) => ({ n: s.name, a: s.area, d: s.address ?? "", g: s.slug }))
+  .sort((x, y) => x.n.localeCompare(y.n));
+
+const areas = [...new Set(schools.map((s) => s.a))].sort();
+---
+
+<Base
+  title="School travel time — how far is each school from home"
+  description="Pick up to five Dubai schools, enter your home address once, and get door-to-door directions and travel time for each of them."
+>
+  <div class="wrap pick">
+    <a class="back" href="/">&larr; Overview</a>
+    <h1 style="margin-top:14px">Travel time</h1>
+    <p class="sub" style="max-width:70ch">
+      The school run happens twice a day for a decade, and it is the thing most
+      often underestimated when choosing. Pick up to five schools, enter your
+      home address once, and check each journey at the hour you would actually
+      be driving it.
+    </p>
+
+    <div class="tt-grid">
+      <section class="tt-panel">
+        <h2 class="tt-h">1 · Where do you live?</h2>
+        <label class="tt-label" for="home">Home address, or the nearest landmark</label>
+        <input
+          id="home"
+          class="tt-input"
+          placeholder="e.g. Al Barsha 2, or The Springs 4"
+          autocomplete="street-address"
+        />
+        <p class="tt-hint">
+          A community name is enough. The more precise it is, the closer the
+          time will be to your actual journey.
+        </p>
+      </section>
+
+      <section class="tt-panel">
+        <h2 class="tt-h">2 · Which schools?</h2>
+        <div class="tt-filters">
+          <input id="q" class="tt-input" placeholder="Search by school name" autocomplete="off" />
+          <select id="area" class="tt-input tt-select">
+            <option value="">All areas</option>
+            {areas.map((a) => <option value={a}>{a}</option>)}
+          </select>
+        </div>
+        <p class="tt-hint" id="picked">None selected — up to five.</p>
+        <div class="tt-list" id="list"></div>
+      </section>
+    </div>
+
+    <section class="tt-results" id="results" hidden>
+      <h2 class="tt-h">3 · The journeys</h2>
+      <div class="tt-rows" id="rows"></div>
+      <p class="tt-hint">
+        Each link opens Google Maps with both ends filled in. Set the departure
+        time to your real one — 07:15 on a weekday is a different road from the
+        same trip at 10:00.
+      </p>
+    </section>
+
+    <p class="note-foot">
+      Travel times come from Google Maps, not from us, so they account for live
+      and typical traffic. Addresses are the ones KHDA publishes for each school;
+      if one is wrong, <a href="/contribute">tell us</a> and we will fix it.
+    </p>
+  </div>
+
+  <script is:inline set:html={`window.__SCHOOLS__ = ${JSON.stringify(schools)};`} />
+
+  <script is:inline>
+    (function () {
+      var all = window.__SCHOOLS__ || [];
+      var MAX = 5;
+      var chosen = [];
+
+      var q = document.getElementById("q");
+      var area = document.getElementById("area");
+      var list = document.getElementById("list");
+      var home = document.getElementById("home");
+      var picked = document.getElementById("picked");
+      var results = document.getElementById("results");
+      var rows = document.getElementById("rows");
+
+      function matches() {
+        var t = q.value.trim().toLowerCase();
+        var a = area.value;
+        return all.filter(function (s) {
+          return (!t || s.n.toLowerCase().indexOf(t) > -1) && (!a || s.a === a);
+        });
+      }
+
+      function drawList() {
+        var found = matches();
+        // Capped on purpose: rendering 232 rows on every keystroke is slower
+        // than the typing, and nobody scrolls past the first screen anyway.
+        var show = found.slice(0, 40);
+        list.innerHTML = "";
+        show.forEach(function (s) {
+          var on = chosen.indexOf(s.g) > -1;
+          var el = document.createElement("label");
+          el.className = "tt-opt" + (on ? " is-on" : "");
+          var cb = document.createElement("input");
+          cb.type = "checkbox";
+          cb.checked = on;
+          cb.disabled = !on && chosen.length >= MAX;
+          cb.addEventListener("change", function () {
+            if (cb.checked) {
+              if (chosen.length < MAX) chosen.push(s.g);
+            } else {
+              chosen = chosen.filter(function (g) { return g !== s.g; });
+            }
+            drawList();
+            drawResults();
+          });
+          var name = document.createElement("span");
+          name.className = "tt-opt-n";
+          name.textContent = s.n;
+          var ar = document.createElement("span");
+          ar.className = "tt-opt-a";
+          ar.textContent = s.a;
+          el.appendChild(cb);
+          el.appendChild(name);
+          el.appendChild(ar);
+          list.appendChild(el);
+        });
+        if (!show.length) {
+          var none = document.createElement("p");
+          none.className = "tt-hint";
+          none.textContent = "No school matches that.";
+          list.appendChild(none);
+        } else if (found.length > show.length) {
+          var more = document.createElement("p");
+          more.className = "tt-hint";
+          more.textContent = found.length - show.length + " more — keep typing to narrow it.";
+          list.appendChild(more);
+        }
+        picked.textContent = chosen.length
+          ? chosen.length + " of " + MAX + " selected"
+          : "None selected — up to five.";
+      }
+
+      function drawResults() {
+        rows.innerHTML = "";
+        if (!chosen.length) { results.hidden = true; return; }
+        results.hidden = false;
+        var from = home.value.trim();
+        chosen.forEach(function (g) {
+          var s = all.filter(function (x) { return x.g === g; })[0];
+          if (!s) return;
+          var row = document.createElement("div");
+          row.className = "tt-row";
+
+          var left = document.createElement("div");
+          left.className = "tt-row-main";
+          var a = document.createElement("a");
+          a.className = "tt-row-name";
+          a.href = "/schools/" + s.g;
+          a.textContent = s.n;
+          var sub = document.createElement("span");
+          sub.className = "tt-row-sub";
+          sub.textContent = s.d || s.a;
+          left.appendChild(a);
+          left.appendChild(sub);
+
+          var go = document.createElement("a");
+          go.className = "btn tt-go";
+          go.target = "_blank";
+          go.rel = "noopener noreferrer";
+          if (from) {
+            go.href =
+              "https://www.google.com/maps/dir/?api=1&origin=" +
+              encodeURIComponent(from) +
+              "&destination=" +
+              encodeURIComponent((s.d ? s.d + ", " : "") + s.n + ", Dubai") +
+              "&travelmode=driving";
+            go.textContent = "Directions";
+          } else {
+            // Without an origin the link would open a half-built route, which
+            // looks broken. Say what is missing instead.
+            go.href = "#home";
+            go.textContent = "Enter your address";
+            go.addEventListener("click", function (e) { e.preventDefault(); home.focus(); });
+          }
+
+          row.appendChild(left);
+          row.appendChild(go);
+          rows.appendChild(row);
+        });
+      }
+
+      q.addEventListener("input", drawList);
+      area.addEventListener("change", drawList);
+      home.addEventListener("input", drawResults);
+      drawList();
+    })();
+  </script>
+</Base>

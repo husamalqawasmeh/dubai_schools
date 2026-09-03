@@ -902,7 +902,7 @@ a.adminlink:hover { border-color: var(--accent); }
      — "More than one curriculum" is the longest label any of them carries, and
      it was the one closest to being clipped. Area still takes the most width
      because its values are much the longest. */
-  .listing .filters .row { grid-template-columns: 0.79fr 0.68fr 0.74fr 1.09fr auto; }
+  .listing .filters .row { grid-template-columns: 0.87fr 0.65fr 0.70fr 1.04fr auto; }
 }
 .clearall-cell { display: flex; align-items: flex-end; }
 .clearall {
@@ -1559,3 +1559,68 @@ a.cur-note {
    once at the head of the note it points to — and at body weight it read as a
    speck of dust rather than a mark tying the two together. */
 .star { font-size: 1.6em; font-weight: 800; line-height: 0; }
+
+/* ---------------- travel time ---------------- */
+.tt-grid { display: grid; gap: 12px; margin-top: 14px; }
+@media (min-width: 780px) { .tt-grid { grid-template-columns: 1fr 1.15fr; align-items: start; } }
+.tt-panel {
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: 8px;
+  padding: 14px 16px 16px;
+  min-width: 0;
+}
+.tt-h { margin: 0 0 10px; font-family: var(--display); font-size: 14.5px; font-weight: 700; }
+.tt-label {
+  display: block; margin-bottom: 5px;
+  font-family: var(--display); font-size: 12.5px; font-weight: 700; color: var(--ink-2);
+}
+.tt-input {
+  width: 100%; height: 38px; padding: 0 11px; box-sizing: border-box;
+  font-family: var(--ui); font-size: 13.5px; color: var(--ink);
+  background: var(--surface-2); border: 1px solid var(--rule-firm); border-radius: 6px;
+}
+.tt-input:focus { border-color: var(--accent); outline: none; }
+.tt-select { cursor: pointer; }
+.tt-filters { display: grid; gap: 8px; }
+@media (min-width: 520px) { .tt-filters { grid-template-columns: 1.3fr 1fr; } }
+.tt-hint { margin: 7px 0 0; font-family: var(--display); font-size: 12px; color: var(--muted); line-height: 1.5; }
+/* Fixed height, not max-height: the list shrinking as you narrow the search
+   made the whole page jump under the pointer. */
+.tt-list {
+  margin-top: 9px; height: 268px; overflow-y: auto;
+  border: 1px solid var(--rule); border-radius: 6px; background: var(--ground);
+}
+.tt-opt {
+  display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 9px;
+  padding: 7px 10px; cursor: pointer;
+  font-family: var(--display); font-size: 13px;
+  border-bottom: 1px solid var(--rule);
+}
+.tt-opt:last-child { border-bottom: none; }
+.tt-opt input { width: 15px; height: 15px; accent-color: var(--accent); flex: none; }
+.tt-opt-n { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.tt-opt-a { font-size: 11.5px; color: var(--muted); white-space: nowrap; }
+.tt-opt:hover { background: var(--accent-2); color: var(--on-accent); }
+.tt-opt:hover .tt-opt-a { color: var(--on-accent); }
+.tt-opt.is-on { background: var(--surface-2); font-weight: 700; }
+.tt-opt:has(input:disabled) { opacity: 0.45; cursor: default; }
+.tt-results { margin-top: 22px; }
+.tt-rows { display: grid; gap: 8px; }
+.tt-row {
+  display: flex; align-items: center; justify-content: space-between; gap: 14px;
+  background: var(--surface); border: 1px solid var(--rule); border-radius: 8px;
+  padding: 11px 14px;
+}
+.tt-row-main { min-width: 0; }
+.tt-row-name {
+  display: block; font-family: var(--display); font-size: 14px; font-weight: 700;
+  color: var(--ink); text-decoration: none;
+}
+.tt-row-name:hover { color: var(--accent); text-decoration: underline; }
+.tt-row-sub {
+  display: block; margin-top: 2px;
+  font-family: var(--display); font-size: 12px; color: var(--muted);
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.tt-go { margin-top: 0; flex: none; padding: 8px 14px; font-size: 13px; }
