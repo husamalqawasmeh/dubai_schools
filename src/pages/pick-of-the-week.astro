@@ -4,17 +4,29 @@ import Coins from "../components/Coins.astro";
 import { allSchools, gradeFees, type School } from "../lib/db";
 
 /**
- * One school a day, chosen by the date rather than at random, so everyone
- * looking on the same day sees the same school and it changes exactly once at
- * midnight. Rated schools only: featuring a school KHDA has not inspected
- * would be presenting an unknown as a recommendation.
+ * One school a week, chosen by the date rather than at random, so everyone
+ * looking in the same week sees the same school and it changes exactly once,
+ * at the start of the week. Rated schools only: featuring a school KHDA has
+ * not inspected would be presenting an unknown as a recommendation.
+ *
+ * At 210 eligible schools a weekly rotation takes just over four years to
+ * come round again, which is the point — every school gets a turn and none of
+ * it is for sale.
  */
 const all: School[] = await allSchools();
 const eligible = all.filter((s) => s.khda_rating !== "Not rated" && s.fee_max_aed);
 
 const today = new Date();
-const dayNumber = Math.floor(Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate()) / 86_400_000);
-const school = eligible[dayNumber % eligible.length];
+const dayNumber = Math.floor(
+  Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate()) / 86_400_000
+);
+// Day 0 of the epoch was a Thursday, so shift by 4 to land week boundaries on
+// a Monday rather than mid-week.
+const weekNumber = Math.floor((dayNumber + 4) / 7);
+const school = eligible[weekNumber % eligible.length];
+
+// The Monday that this week's pick started on.
+const monday = new Date((weekNumber * 7 - 4) * 86_400_000);
 const grades = await gradeFees(school.id);
 
 const aed = (v: number) => "AED " + v.toLocaleString("en-AE");
@@ -27,14 +39,16 @@ const cheapest = grades.find((g) => g.tuition_aed);
 const dearest = [...grades].reverse().find((g) => g.tuition_aed);
 const transport = grades.find((g) => g.transport)?.transport ?? null;
 
-const dateLabel = today.toLocaleDateString("en-GB", {
-  weekday: "long", day: "numeric", month: "long", year: "numeric", timeZone: "Asia/Dubai",
-});
+const dateLabel =
+  "Week of " +
+  monday.toLocaleDateString("en-GB", {
+    day: "numeric", month: "long", year: "numeric", timeZone: "UTC",
+  });
 ---
 
 <Base
-  title={`Pick of the day — ${school.name}`}
-  description={`Today's featured Dubai school: ${school.name} in ${school.area}.`}
+  title={`Pick-of-the-week-School — ${school.name}`}
+  description={`This week's featured Dubai school: ${school.name} in ${school.area}.`}
 >
   <div class="wrap pick">
     <a class="back" href="/">Overview</a>
@@ -47,7 +61,7 @@ const dateLabel = today.toLocaleDateString("en-GB", {
 
     <div class="pick-grid">
       <div class="pane">
-        <h3>Why it is today's pick</h3>
+        <h3>Why it is this week's pick</h3>
         <p class="pick-body">
           Rated <strong>{school.khda_rating}</strong> by KHDA, teaching the
           {school.curricula.length > 1 ? " " : " "}{school.curricula.join(" and ")} curriculum
@@ -57,8 +71,8 @@ const dateLabel = today.toLocaleDateString("en-GB", {
             : ""}
         </p>
         <p class="pick-note">
-          Picked by the date, not by anyone paying for it. Every school in the
-          directory takes its turn.
+          Picked by the date, not by anyone paying for it. Every rated school in
+          the directory takes its turn.
         </p>
       </div>
 
