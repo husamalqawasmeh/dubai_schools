@@ -1467,15 +1467,19 @@ a.cur-note {
 .home-main:has(.hintbox:hover) .stat b,
 .home-main:has(.hintbox:hover) .panebox b,
 .home-main:has(.hintbox:hover) .tier-n {
-  /* Amber, not the page's green: the glow has to separate the figures from a
-     green ground, and green-on-green only changes their shade. The text takes
-     the deep end of the ramp because it still has to be read — 4.6:1 on the
-     tiles, the tightest of the three grounds these numbers sit on — while the
-     halo above it can be as bright as it likes, being decoration. */
-  color: var(--warn);
+  /* Red, which is the furthest thing on the wheel from the page's green and so
+     separates the figures from their ground most cleanly. The text takes the
+     deep end of the ramp because it still has to be read while lit — 4.9:1 on
+     the tiles, the tightest of the three grounds these numbers sit on — while
+     the halo above it can be as bright as it likes, being decoration.
+
+     Three radii rather than two: the wide one carries the spread, the middle
+     gives it body, and the tight one keeps the digits' edges crisp under it. */
+  color: #a81d17;
   text-shadow:
-    0 0 4px rgba(196, 138, 0, 0.55),
-    0 0 14px rgba(224, 180, 0, 0.45);
+    0 0 5px rgba(168, 29, 23, 0.55),
+    0 0 13px rgba(224, 49, 39, 0.5),
+    0 0 26px rgba(255, 68, 56, 0.42);
 }
 
 /* The glow is decoration, so it goes away for anyone who has asked for less
