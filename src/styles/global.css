@@ -26,7 +26,7 @@
   --accent-2: #084a3f;
   --on-accent: #ffffff;
   --divider: #ffffff;
-  --stat-w: 173px;      /* one stat tile: (530 - 2 gaps) / 3 */
+  --stat-w: 148px;      /* every counted box: what "Schools listed" needs on one line */
   --surface-3: #c2d9c9; /* the panel boxes: darker than a tile, far lighter than a button */   /* column separators, deliberately off the green scale */
 
   /* KHDA's scale, re-stepped for a light-green ground. Each step is both a
@@ -1304,7 +1304,7 @@ a.adminlink:hover { border-color: var(--accent); }
    that still leaves each column room for the longest tier name. */
 .panerow { display: flex; align-items: stretch; gap: 10px; }
 .panerow .panebox {
-  flex: 0 0 122px;
+  flex: 0 0 var(--stat-w);
   width: auto;
   display: flex;
   flex-direction: column;
@@ -1312,7 +1312,7 @@ a.adminlink:hover { border-color: var(--accent); }
   padding: 10px 12px;
 }
 /* Below that width the label takes two lines, which is fine beside a table. */
-.panerow .panebox > span { white-space: normal; line-height: 1.3; }
+.panerow .panebox > span { white-space: nowrap; line-height: 1.3; }
 .panerow .rating-grid { flex: 1; min-width: 0; margin-top: 0; }
 .rating-grid .tier-name { font-size: 10px; padding-left: 5px; padding-right: 5px; }
 
