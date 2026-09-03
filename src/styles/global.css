@@ -106,7 +106,7 @@ p { margin: 0 0 14px; }
 .site-head .wrap { display: flex; align-items: center; justify-content: space-between; height: 52px; gap: 16px; }
 .brand { font-family: var(--display); font-weight: 700; font-size: 15.5px; color: var(--ink); text-decoration: none; letter-spacing: -0.01em; }
 .brand span { color: var(--accent); }
-.site-head nav { display: flex; gap: 6px; font-family: var(--display); font-size: 12px; font-weight: 700; }
+.site-head nav { display: flex; gap: 6px; font-family: var(--display); font-size: 13.5px; font-weight: 700; }
 /* The padding is what spaces them now, so the hover has something to fill. */
 .site-head nav a,
 .partof {
@@ -156,8 +156,6 @@ p { margin: 0 0 14px; }
   text-decoration: none; color: inherit;
   transition: background .12s ease, border-color .12s ease;
 }
-.stat:hover { border-color: var(--rule-firm); }
-.stat:hover { background: var(--surface-2); }
 .stat b {
   display: block; font-family: var(--display); font-weight: 700; font-size: 21px;
   letter-spacing: -0.02em; font-variant-numeric: tabular-nums; line-height: 1.1;
@@ -180,7 +178,6 @@ p { margin: 0 0 14px; }
   padding: 1px 3px; margin: 0 -3px;
   transition: background .12s ease;
 }
-a.bar-row:hover { background: var(--surface-2); }
 a.bar-row:hover .bar { filter: brightness(1.1); }
 a.bar-row:hover .bar-lab { color: var(--ink); }
 .bar-lab { font-family: var(--display); font-size: 12px; color: var(--ink-2); white-space: nowrap; }
@@ -227,7 +224,6 @@ a.bar-row:hover .bar-lab { color: var(--ink); }
   padding: 16px 17px; box-shadow: var(--shadow); display: flex; flex-direction: column;
   gap: 9px; text-decoration: none; color: inherit; transition: border-color 0.12s ease;
 }
-.card:hover { border-color: var(--rule-firm); }
 .card h3 { font-size: 15.5px; line-height: 1.25; }
 .card .where { font-family: var(--display); font-size: 12.5px; color: var(--muted); margin: 0; }
 .card .foot {
@@ -271,7 +267,6 @@ a.bar-row:hover .bar-lab { color: var(--ink); }
   line-height: 0.8;
   font-weight: 700;
 }
-.back:hover { color: var(--accent); }
 .detail-grid { display: grid; gap: 30px; padding: 34px 0 70px; }
 @media (min-width: 900px) { .detail-grid { grid-template-columns: minmax(0, 2fr) minmax(260px, 1fr); } }
 .panel { background: var(--surface); border: 1px solid var(--rule); border-radius: 6px; padding: 18px 20px; box-shadow: var(--shadow); }
@@ -365,7 +360,6 @@ body:has(.listing) main { overflow: hidden; }
 .coin-face,
 .coin-edge { transition: filter 0.12s ease; }
 
-a.tier:hover { background: var(--surface-2); }
 a.tier:hover .tier-swatch,
 a.tier:hover .cur-bar > span { filter: brightness(0.82); }
 a.tier:hover .coin-face,
@@ -551,7 +545,6 @@ a.tier:hover .coin-edge { filter: brightness(0.9); }
   font-size: 13px;
   cursor: pointer;
 }
-.multi-opt:hover { background: var(--surface-2); }
 .multi-opt input {
   width: 14px;
   height: 14px;
@@ -590,7 +583,6 @@ a.tier:hover .coin-edge { filter: brightness(0.9); }
   background: var(--surface);
   z-index: 1;
 }
-.multi-clear:hover { color: var(--ink); background: var(--surface-2); }
 
 /* The panels overflow the filter card, so it must not clip them. */
 .filters, .listing-top { overflow: visible; }
@@ -653,7 +645,6 @@ a.tier:hover .coin-edge { filter: brightness(0.9); }
   text-decoration: none;
   transition: background 0.12s ease, color 0.12s ease;
 }
-.tab:hover { background: var(--surface-2); color: var(--ink); }
 .tab.is-on { background: var(--accent); color: var(--on-accent); }
 
 .contribute .panel h2 { font-size: 19px; margin-bottom: 6px; }
@@ -920,7 +911,6 @@ a.adminlink:hover { border-color: var(--accent); }
   cursor: pointer;
   transition: border-color 0.12s ease, background 0.12s ease;
 }
-.clearall:hover { border-color: var(--accent); background: var(--surface-2); }
 .clearall:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
 
 /* ---------------- grouped options ---------------- */
@@ -947,7 +937,6 @@ a.adminlink:hover { border-color: var(--accent); }
   justify-self: start;
 }
 .grp-name > span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.grp-name:hover { color: var(--accent); }
 .grp-name:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 3px; }
 .tri {
   width: 10px; height: 10px; flex: none; color: var(--muted);
@@ -1084,15 +1073,25 @@ a.adminlink:hover { border-color: var(--accent); }
 .pane-search .btn { margin-top: 0; }
 
 /* Footnote marker: in the box, and on the line it points at. */
-.star { color: var(--accent); font-weight: 700; }
+/* The marker has to carry across a whole panel to the line below it, so it
+   is set larger than the text it sits in and lifted onto the cap line. */
+.star {
+  color: var(--accent);
+  font-weight: 700;
+  font-size: 1.25em;
+  line-height: 0;
+  vertical-align: 0.15em;
+  padding-left: 1px;
+}
 .cur-note {
-  margin: 0;
+  margin: -4px 0 0;
   font-family: var(--ui);
-  font-size: 10.5px;
+  font-size: 12px;
   font-weight: 500;
   line-height: 1.4;
-  color: var(--muted);
+  color: var(--ink-2);
 }
+.cur-note .star { font-size: 1.35em; padding-right: 2px; }
 
 /* ---------------- chat box ---------------- */
 .chatbox {
@@ -1122,7 +1121,7 @@ a.adminlink:hover { border-color: var(--accent); }
 
 /* ---------------- header: brand and origin together on the left ---------------- */
 .brandwrap { display: flex; align-items: baseline; gap: 6px; min-width: 0; }
-.partof { font-family: var(--ui); font-size: 12px; font-weight: 700; white-space: nowrap; }
+.partof { font-family: var(--ui); font-size: 13.5px; font-weight: 700; white-space: nowrap; }
 @media (max-width: 620px) { .partof { display: none; } }
 
 /* ---------------- chat, inside the box ---------------- */
@@ -1194,7 +1193,6 @@ a.adminlink:hover { border-color: var(--accent); }
   font-size: 17px; line-height: 1; cursor: pointer;
   color: var(--muted); background: none; border: none; border-radius: 5px;
 }
-.chatclose:hover { color: var(--ink); background: var(--surface-2); }
 .chatbox.is-open {
   z-index: 30;
   box-shadow: 0 8px 26px rgba(18, 36, 26, 0.16);
@@ -1296,7 +1294,6 @@ a.adminlink:hover { border-color: var(--accent); }
   color: inherit;
   transition: background 0.12s ease, border-color 0.12s ease;
 }
-.panebox:hover { border-color: var(--accent); }
 .panebox b {
   display: block; font-family: var(--display); font-weight: 700; font-size: 21px;
   letter-spacing: -0.02em; font-variant-numeric: tabular-nums; line-height: 1.1;
@@ -1356,8 +1353,58 @@ a.adminlink:hover { border-color: var(--accent); }
 /* The curriculum panel is the only one ending in prose, which pushed the cost
    panel visually further away than the 12px grid gap the other rows get.
    Tightened so the three panels sit at an even rhythm. */
-.cur-note { margin: 6px 0 0; }
 
 .panerow .cur-grid,
 .panerow .band-grid,
 .panerow .rating-grid { flex: 1; min-width: 0; }
+
+/* ---------------- one hover language ----------------
+   Anything clickable fills with the dark green, the way the header links do.
+   Text inside has to be told to invert: these controls set their own colours
+   on children, so inheriting alone would leave grey labels on a dark ground. */
+.stat:hover,
+.panebox:hover,
+a.tier:hover,
+a.bar-row:hover,
+.back:hover,
+.multi-opt:hover,
+.multi-clear:hover,
+.grp-name:hover,
+.tab:hover,
+.clearall:hover,
+.chatclose:hover,
+.faq-item summary:hover,
+a.adminlink:hover {
+  background: var(--accent-2);
+  color: var(--on-accent);
+  border-color: var(--accent-2);
+}
+
+.stat:hover b, .stat:hover span,
+.panebox:hover b, .panebox:hover span,
+a.tier:hover .tier-name, a.tier:hover .tier-n, a.tier:hover .band-range,
+a.bar-row:hover .bar-lab, a.bar-row:hover .bar-val,
+.multi-opt:hover .multi-name, .multi-opt:hover .multi-n,
+.tab:hover, .clearall:hover,
+.faq-item summary:hover, a.adminlink:hover h2, a.adminlink:hover p {
+  color: var(--on-accent);
+}
+/* Icons take currentColor, but these two are painted explicitly. */
+.stat:hover .stat-ico,
+.panebox:hover .stat-ico,
+.faq-item summary:hover::before { color: var(--on-accent); }
+/* The tier swatch and the coins are data, not decoration — leave them alone
+   and let the darker ground carry the hover instead of tinting them. */
+a.tier:hover .tier-swatch,
+a.tier:hover .cur-bar > span { filter: none; }
+
+/* The dropdown trigger is a field, so it gets the accent edge rather than a
+   fill — filling a closed select reads as "selected", which it is not. */
+.multi > summary:hover { border-color: var(--accent-2); }
+
+/* A school card is mostly type: filling it would bury the name and the three
+   pills. It takes the accent edge and lifts instead. */
+.card:hover {
+  border-color: var(--accent-2);
+  box-shadow: 0 3px 12px rgba(8, 74, 63, 0.16);
+}
