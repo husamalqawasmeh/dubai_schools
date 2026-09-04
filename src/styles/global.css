@@ -731,7 +731,9 @@ a.tier:hover .coin-edge { filter: brightness(0.9); }
 .listing .searchbar { margin-bottom: 10px; }
 
 /* ---------------- contribute ---------------- */
-.contribute { padding-top: 22px; padding-bottom: 40px; max-width: 980px; }
+/* No max-width of its own, for the same reason as .pick: it takes the
+   1120px the wrap gives every other page. */
+.contribute { padding-top: 22px; padding-bottom: 40px; }
 .contribute-head { margin-bottom: 16px; }
 .contribute-head h1 { font-size: 28px; margin-top: 6px; }
 
