@@ -66,13 +66,6 @@ const TIERS = [
   },
 ];
 
-const FAQ = [
-  {
-    q: "How do parents find us today?",
-    a: `Every school has a page, and the directory is filterable by curriculum, area, KHDA rating and fee band. There are ${s.total} schools listed, so a parent narrowing to one curriculum in one area is already seeing a short list.`,
-  },
-];
-
 const hidePaid = await getFlag(HIDE_PAID_TIERS);
 // The free tier is what the page is for; the priced ones are what an admin can
 // take down while they are being decided.
@@ -89,10 +82,6 @@ const tiers = hidePaid ? TIERS.filter((t) => t.price === "Free") : TIERS;
       <h1>Reach parents who are already looking</h1>
       <p class="ad-lede">
         Every one of the {s.total} schools KHDA registers has a page here.
-        Claiming yours costs nothing.
-        {hidePaid
-          ? " Paid placement is not open at the moment; claim your listing and we will tell you when it is."
-          : " The packages below are for schools that want to be found first by the parents filtering for exactly what they offer."}
       </p>
       <p class="faq-line">Correcting your own school data is free and always will be.</p>
       <div class="ad-stats">
@@ -120,15 +109,6 @@ const tiers = hidePaid ? TIERS.filter((t) => t.price === "Free") : TIERS;
           </ul>
           <a class="btn ad-cta" href={t.href}>{t.cta}</a>
         </div>
-      ))}
-    </div>
-
-    <div class="faq">
-      {FAQ.map((f) => (
-        <details class="faq-item">
-          <summary>{f.q}</summary>
-          <p>{f.a}</p>
-        </details>
       ))}
     </div>
   </div>
