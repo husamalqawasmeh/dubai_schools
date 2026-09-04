@@ -947,7 +947,7 @@ button.btn:disabled { opacity: 0.55; cursor: default; }
   gap: 2px; background: var(--rule-firm); border: 1px solid var(--rule-firm);
   border-radius: 6px; overflow: hidden; margin-top: 10px;
 }
-.ad-stats > div { background: var(--surface); padding: 11px 14px; }
+.ad-stats > div { background: var(--surface); padding: 7px 14px; }
 .ad-stats b {
   display: block; font-family: var(--display); font-weight: 700; font-size: 21px;
   letter-spacing: -0.02em; font-variant-numeric: tabular-nums; line-height: 1.1;
@@ -1002,7 +1002,7 @@ button.btn:disabled { opacity: 0.55; cursor: default; }
 /* A statement, not a question: it sits with the items but does not fold, so it
    carries their padding without their disclosure marker. */
 .faq-line {
-  margin: 12px 0 0; padding: 12px 14px; line-height: 1.55;
+  margin: 12px 0 0; padding: 8px 14px; line-height: 1.5;
   background: var(--surface); border: 1px solid var(--rule); border-radius: 6px;
   font-family: var(--display); font-size: 14.5px; font-weight: 600; color: var(--ink);
 }
