@@ -761,6 +761,16 @@ a.tier:hover .coin-edge { filter: brightness(0.9); }
 .form-foot .btn { margin-top: 0; min-width: 168px; }
 .note { font-family: var(--display); font-size: 12.5px; color: var(--muted); margin: 0; }
 .admin-bar-actions { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+
+/* A settings row: the box, then the claim, then what it actually does. The
+   explanation is not a tooltip — someone flipping a switch that changes a
+   public page should be able to read the consequence first. */
+.setting { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 12px; align-items: start; cursor: pointer; }
+.setting input { width: 16px; height: 16px; margin: 2px 0 0; accent-color: var(--accent); cursor: pointer; }
+.setting > span { display: grid; gap: 4px; }
+.setting b { font-family: var(--display); font-size: 14.5px; }
+.setting-note { font-family: var(--display); font-size: 13px; line-height: 1.55; color: var(--muted); }
+.setting-note a { color: var(--accent); }
 .note.is-bad { color: var(--crit-ink, #98392b); }
 .note.is-good { color: var(--ok-ink, #2f6b4f); }
 .thanks {

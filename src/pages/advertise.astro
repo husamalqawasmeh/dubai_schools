@@ -1,6 +1,7 @@
 ---
 import Base from "../layouts/Base.astro";
 import { stats } from "../lib/db";
+import { HIDE_PAID_TIERS, getFlag } from "../lib/settings";
 
 const s = await stats();
 
@@ -83,6 +84,11 @@ const FAQ = [
     a: "The directory follows KHDA's register, so if you are registered with KHDA you are already here. If you are not listed, tell us and we will look at why.",
   },
 ];
+
+const hidePaid = await getFlag(HIDE_PAID_TIERS);
+// The free tier is what the page is for; the priced ones are what an admin can
+// take down while they are being decided.
+const tiers = hidePaid ? TIERS.filter((t) => t.price === "Free") : TIERS;
 ---
 
 <Base
@@ -95,9 +101,10 @@ const FAQ = [
       <h1>Reach parents who are already looking</h1>
       <p class="ad-lede">
         Every one of the {s.total} schools KHDA registers has a page here.
-        Claiming yours costs nothing. The packages below are for schools that
-        want to be found first by the parents filtering for exactly what they
-        offer.
+        Claiming yours costs nothing.
+        {hidePaid
+          ? " Paid placement is not open at the moment; claim your listing and we will tell you when it is."
+          : " The packages below are for schools that want to be found first by the parents filtering for exactly what they offer."}
       </p>
       <div class="ad-stats">
         <div><b>{s.total}</b><span>Schools listed</span></div>
@@ -108,7 +115,7 @@ const FAQ = [
     </div>
 
     <div class="tiers">
-      {TIERS.map((t) => (
+      {tiers.map((t) => (
         <div class={t.feature ? "tier-card is-feature" : "tier-card"}>
           {t.feature && <span class="tier-flag">Most visible</span>}
           <h2>{t.name}</h2>

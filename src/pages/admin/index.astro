@@ -17,6 +17,7 @@ const [schools, subs, details, fees] = await DB.batch<any>([
     <div class="admin-bar">
       <div><h1>Admin</h1></div>
       <div class="admin-bar-actions">
+        <a class="btn sec" href="/admin/settings" style="margin:0;padding:6px 12px">Settings</a>
         <a class="btn sec" href="/admin/account" style="margin:0;padding:6px 12px">Your account</a>
         <form method="POST" action="/api/admin/logout" style="display:inline">
           <button class="btn sec" type="submit" style="margin:0;padding:6px 12px">Sign out {admin.email}</button>

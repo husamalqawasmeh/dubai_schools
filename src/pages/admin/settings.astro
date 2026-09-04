@@ -1,0 +1,72 @@
+---
+import Base from "../../layouts/Base.astro";
+import { HIDE_PAID_TIERS, getFlag, settingMeta } from "../../lib/settings";
+
+const hidePaid = await getFlag(HIDE_PAID_TIERS);
+const meta = await settingMeta(HIDE_PAID_TIERS);
+const lastSet =
+  meta?.updated_at
+    ? new Date(meta.updated_at).toLocaleDateString("en-GB", {
+        day: "numeric", month: "long", year: "numeric", timeZone: "UTC",
+      }) + (meta.email ? ` by ${meta.email}` : "")
+    : null;
+---
+<Base title="Settings — Dubai Schools admin">
+  <div class="wrap adminwrap">
+    <div class="admin-bar">
+      <div><h1>Settings</h1></div>
+      <a class="btn sec" href="/admin" style="margin:0;padding:6px 12px">Back to admin</a>
+    </div>
+
+    <div class="panel" style="max-width:38rem">
+      <label class="setting">
+        <input type="checkbox" id="hidePaidTiers" checked={hidePaid} />
+        <span>
+          <b>Hide the paid packages on the advertising page</b>
+          <span class="setting-note">
+            Enhanced (AED 2,400) and Featured (AED 7,200) come off
+            <a href="/advertise">/advertise</a> while this is on. The free
+            Verified tier stays: claiming a listing costs nothing, and that is
+            what the page is for. Nothing else on the site changes.
+          </span>
+        </span>
+      </label>
+
+      <p class="note" id="msg">
+        {lastSet ? `Last changed ${lastSet}.` : "Not changed yet."}
+      </p>
+    </div>
+  </div>
+</Base>
+
+<script>
+  const box = document.getElementById("hidePaidTiers") as HTMLInputElement;
+  const msg = document.getElementById("msg")!;
+
+  box.addEventListener("change", async () => {
+    box.disabled = true;
+    msg.textContent = "Saving…";
+    msg.className = "note";
+
+    try {
+      const res = await fetch("/api/admin/settings", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ hidePaidTiers: box.checked }),
+      });
+      const out = (await res.json()) as { ok: boolean; error?: string };
+      if (!out.ok) throw new Error(out.error ?? "Could not save that.");
+      msg.textContent = box.checked
+        ? "Saved. The paid packages are hidden."
+        : "Saved. All three packages are showing.";
+      msg.className = "note is-good";
+    } catch (err) {
+      // Put the switch back where it was: the page should not claim a state
+      // the database did not accept.
+      box.checked = !box.checked;
+      msg.textContent = err instanceof Error ? err.message : "Could not save that.";
+      msg.className = "note is-bad";
+    }
+    box.disabled = false;
+  });
+</script>
