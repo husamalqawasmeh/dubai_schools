@@ -928,7 +928,9 @@ button.btn:disabled { opacity: 0.55; cursor: default; }
 .fact p { font-family: var(--display); font-size: 13.5px; color: var(--ink); margin: 0; line-height: 1.45; }
 
 /* ---------------- advertise ---------------- */
-.advertise { padding-top: 22px; padding-bottom: 50px; max-width: 1060px; }
+/* The last page with a cap of its own. Like .pick and .contribute it now
+   takes the 1120px the wrap gives, so every page on the site is one width. */
+.advertise { padding-top: 22px; padding-bottom: 50px; }
 .ad-head { margin-bottom: 22px; }
 .ad-head h1 { font-size: 30px; margin-top: 6px; }
 /* Full container width, not a reading measure: at 66ch this ran to three
