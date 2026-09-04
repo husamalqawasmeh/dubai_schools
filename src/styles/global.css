@@ -398,7 +398,10 @@ body:has(.listing) main { overflow: hidden; }
    still readable at a glance without a bar chart. */
 .tier-grid {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  /* minmax(0,…) rather than a bare 1fr: a plain fr track will not shrink below
+     its own content, so the column holding the longest label — "Not published"
+     — took more than its fifth and the five stopped being equal. */
+  grid-template-columns: repeat(5, minmax(0, 1fr));
   /* No surrounding box and no fill: the columns sit straight on the card, so
      the only lines left are the ones that separate one category from the next. */
   gap: 0;
@@ -488,7 +491,7 @@ a.tier:hover .coin-edge { filter: brightness(0.9); }
 
 
 /* ---------------- fee band: four columns, matching the rating panel ---------------- */
-.band-grid { grid-template-columns: repeat(5, 1fr); }
+.band-grid { grid-template-columns: repeat(5, minmax(0, 1fr)); }
 /* The absence of a fee gets an empty coin outline, the same way the rating
    panel hatches "Not rated" — absence reads as absence, not as cheapest. */
 .coin-empty ellipse {
