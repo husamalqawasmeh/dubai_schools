@@ -33,9 +33,13 @@
 
      Turned from the green scale toward teal: at 163 degrees it sat between the
      button green and the tile green and read as a third green among two. At
-     180 it is plainly its own colour, at the same saturation and lightness, so
-     nothing else on the page had to move with it. */
-  --midtone: #679f9f;
+     180 it is plainly its own colour.
+
+     Lightness has since gone 51 to 58 per cent at that same hue. Lighter cuts
+     both ways here — the ink on it gains (4.8:1 to 5.7:1) while the box loses
+     edge against the page (2.6:1 to 2.2:1), which is the cost of the lift and
+     the reason it stops here rather than going further. */
+  --midtone: #7badad;
   /* What the three midtone boxes carry. Lifted off the page ink, which sat
      heavier on this ground than it needed to. This is as light as it goes:
      4.7:1 against the midtone, and the hint box sets 11.5px, so the 4.5:1
