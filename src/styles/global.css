@@ -1804,12 +1804,14 @@ a.cur-note {
    Dark on light, not white on green: at this value white is 3:1 and fails.
    See --on-midtone for how far the dark can be lifted. */
 .pane-search .btn,
+.ad-cta,
 .chatbox-cta {
   background: var(--midtone);
   color: var(--on-midtone);
   transition: background .12s ease, color .12s ease;
 }
 .pane-search .btn:hover,
+.ad-cta:hover,
 .chatbox-cta:hover {
   background: var(--accent-2);
   color: var(--on-accent);

@@ -24,7 +24,7 @@ const TIERS = [
       "Add transport routes and fees",
       "A “Verified by the school” mark on your listing",
     ],
-    cta: "Claim your school",
+    cta: "Update your school details",
     href: "/contribute?as=school",
     feature: false,
   },
@@ -129,7 +129,7 @@ const tiers = hidePaid ? TIERS.filter((t) => t.price === "Free") : TIERS;
               <li>{f}</li>
             ))}
           </ul>
-          <a class={t.feature ? "btn" : "btn sec"} href={t.href}>{t.cta}</a>
+          <a class="btn ad-cta" href={t.href}>{t.cta}</a>
         </div>
       ))}
     </div>
@@ -157,7 +157,7 @@ const tiers = hidePaid ? TIERS.filter((t) => t.price === "Free") : TIERS;
         Tell us which school you are, and what you want parents to see. We will
         come back with what fits.
       </p>
-      <a class="btn" href="/contribute?as=school" style="max-width:230px">Start with your school</a>
+      <a class="btn ad-cta" href="/contribute?as=school" style="max-width:260px">Update your school details</a>
     </div>
   </div>
 </Base>
