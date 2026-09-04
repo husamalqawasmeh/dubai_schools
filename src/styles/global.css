@@ -114,7 +114,7 @@ p { margin: 0 0 14px; }
 .site-head { background: transparent; }
 .site-head .wrap { border-bottom: 1px solid var(--rule); }
 .site-head .wrap { display: flex; align-items: center; justify-content: space-between; height: 52px; gap: 16px; }
-.brand { font-family: var(--display); font-weight: 700; font-size: 15.5px; color: var(--ink); text-decoration: none; letter-spacing: -0.01em; }
+.brand { font-family: var(--display); font-weight: 700; font-size: 14px; color: var(--ink); text-decoration: none; letter-spacing: -0.01em; }
 .brand span { color: var(--accent); }
 .site-head nav { display: flex; gap: 6px; font-family: var(--display); font-size: 13.5px; font-weight: 700; }
 /* The padding is what spaces them now, so the hover has something to fill. */
@@ -1144,9 +1144,20 @@ a.adminlink:hover { border-color: var(--accent); }
 .chatbox-cta { margin-top: auto; }
 
 /* ---------------- header: brand and origin together on the left ---------------- */
-.brandwrap { display: flex; align-items: baseline; gap: 6px; min-width: 0; }
-.partof { font-family: var(--ui); font-size: 13.5px; font-weight: 700; white-space: nowrap; }
-@media (max-width: 620px) { .partof { display: none; } }
+/* The name and the credit read as one line — "Dubai Schools : Part of
+   can-du-ai.com" — so the gap is tight and the colon carries the join. They
+   stay two links because they go to two different places. */
+.brandwrap { display: flex; align-items: baseline; gap: 2px; min-width: 0; }
+.brandsep { font-family: var(--ui); font-size: 13px; font-weight: 700; color: var(--ink-2); }
+.partof { font-family: var(--ui); font-size: 12px; font-weight: 700; white-space: nowrap; }
+/* The pill padding that spaces the nav items would break the line up here. */
+.brandwrap .partof { padding: 4px 6px; }
+/* Below this the header has no room for the credit; the colon goes with it,
+   rather than dangling after the name. */
+@media (max-width: 620px) {
+  .partof,
+  .brandsep { display: none; }
+}
 
 /* ---------------- chat, inside the box ---------------- */
 .chatlog {
@@ -1645,14 +1656,19 @@ a.cur-note {
   font-size: 14px;
   line-height: 1;
   color: var(--nav-mark);
-  /* Optical, not metric: the glyph's own bounding box is bottom-heavy and it
-     sits low against the cap height of the labels either side. The nudge grew
-     with the glyph. */
-  transform: translateY(-1px);
+  /* Stretched rather than enlarged: font-size would grow the width too, and
+     the width is already right. scaleY leaves it untouched.
+     The translate is optical, not metric — the glyph's own bounding box is
+     bottom-heavy and it sits low against the cap height of the labels either
+     side. It runs before the scale, so it is not stretched along with it. */
+  transform: translateY(-1px) scaleY(1.85);
 }
 .nav-mark {
+  display: inline-block;
   margin-left: 4px;
   font-size: 11px;
+  /* Widened, not enlarged: font-size would take the height with it. */
+  transform: scaleX(1.4);
   color: var(--nav-mark);
   /* The one mark that lives inside a link, so it has to survive the hover
      fill: on dark green the deep red goes almost black. */
