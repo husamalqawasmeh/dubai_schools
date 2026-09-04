@@ -57,11 +57,13 @@
   --r4: #118372; /* Acceptable  */
 
   --warn: #7d5210;
-  /* The nav separators and the chatbot caret. Deep enough to read on the
-     header ground at 4.9:1, with a lighter partner for when a hovered link
-     fills dark green underneath it. */
-  --nav-mark: #c0261f;
-  --nav-mark-on: #ff9f97;
+  /* The nav separators, the chatbot caret and the mark after the parent-site
+     link. Dark brown rather than the red they were: red on a green ground is
+     the one pairing that reads as a warning rather than as punctuation. It
+     measures 7.9:1 on the header ground, where the red managed 5.2:1, with a
+     lighter partner for when a hovered link fills dark green underneath. */
+  --nav-mark: #6b3f1d;
+  --nav-mark-on: #e8c39a;
   --coin: #d9a327;
   --coin-rim: #8a6210;
   --coin-ink: #4a3406;
@@ -1870,7 +1872,9 @@ a.cur-note {
 /* Eight items and seven separators do not fit a 52px bar at the old size, so
    the nav tightens rather than wrapping — the header height is part of the
    app shell and growing it would push the page below out of one screen. */
-.site-head nav { gap: 1px; min-width: 0; overflow-x: auto; scrollbar-width: none; }
+/* The row scrolls rather than wraps, so the gap can breathe without the nav
+   ever becoming two lines. */
+.site-head nav { gap: 6px; min-width: 0; overflow-x: auto; scrollbar-width: none; }
 .site-head nav::-webkit-scrollbar { display: none; }
 .site-head nav a { padding: 6px 7px; font-size: 12.5px; white-space: nowrap; }
 .nav-sep {
@@ -1897,7 +1901,8 @@ a.cur-note {
      fill: on dark green the deep red goes almost black. */
   transition: color 0.12s ease;
 }
-.site-head nav a:hover .nav-mark { color: var(--nav-mark-on); }
+.site-head nav a:hover .nav-mark,
+.partof:hover .nav-mark { color: var(--nav-mark-on); }
 
 /* The box is taller than the question needs, and the gap under it said
    nothing. This says what the assistant can be asked, which is the thing
