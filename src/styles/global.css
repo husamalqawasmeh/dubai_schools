@@ -259,7 +259,8 @@ a.bar-row:hover .bar-lab { color: var(--ink); }
 .card {
   background: var(--surface); border: 1px solid var(--rule); border-radius: 6px;
   padding: 16px 17px; box-shadow: var(--shadow); display: flex; flex-direction: column;
-  gap: 9px; text-decoration: none; color: inherit; transition: border-color 0.12s ease;
+  gap: 9px; text-decoration: none; color: inherit;
+  transition: border-color 0.12s ease, background 0.12s ease, box-shadow 0.12s ease;
 }
 .card h3 { font-size: 15.5px; line-height: 1.25; }
 .card .where { font-family: var(--display); font-size: 12.5px; color: var(--muted); margin: 0; }
@@ -287,14 +288,23 @@ a.bar-row:hover .bar-lab { color: var(--ink); }
 /* ---------------- detail page ---------------- */
 .detail-head { background: var(--surface); border-bottom: 1px solid var(--rule); padding: 34px 0; }
 .back {
+  position: relative;
   display: inline-flex;
   align-items: center;
-  gap: 6px;
   font-family: var(--display);
   font-size: 14px;
   font-weight: 700;
   color: var(--muted);
   text-decoration: none;
+  /* The fill on hover should read as a button around the word, not around the
+     word and its pointer. The pointer is lifted out of the box below, and this
+     is the room it needs to sit in; the padding is cancelled by the negative
+     margins so the line rests exactly where it did before. */
+  margin-left: 1.5em;
+  padding: 2px 7px;
+  margin-top: -2px;
+  margin-bottom: -2px;
+  border-radius: 5px;
 }
 /* The arrow is a pseudo-element so it can be sized past the label without
    dragging the line-height with it — which is what lets it run this far ahead
@@ -305,10 +315,17 @@ a.bar-row:hover .bar-lab { color: var(--ink); }
   content: "◄";
   font-size: 1.15em;
   line-height: 1;
+  /* Taken out of the flow and set beside the link rather than inside it, so
+     the hover fill stops at the word. It still belongs to the link, so it is
+     still part of what a click lands on. */
+  position: absolute;
+  right: 100%;
+  top: 50%;
+  margin-right: 0.5em;
   /* Doubled in height only. The triangle is already as wide as it should be
      beside a word; stretching it is what makes it read as a direction rather
-     than a bullet. */
-  transform: scaleY(2);
+     than a bullet. Applied right to left: scaled first, then centred. */
+  transform: translateY(-50%) scaleY(2);
 }
 .detail-grid { display: grid; gap: 30px; padding: 34px 0 70px; }
 @media (min-width: 900px) { .detail-grid { grid-template-columns: minmax(0, 2fr) minmax(260px, 1fr); } }
@@ -1582,12 +1599,43 @@ a.tier:hover .cur-bar > span { filter: none; }
    fill — filling a closed select reads as "selected", which it is not. */
 .multi > summary:hover { border-color: var(--accent-2); }
 
-/* A school card is mostly type: filling it would bury the name and the three
-   pills. It takes the accent edge and lifts instead. */
+/* The card fills like every other thing that can be clicked. It is mostly
+   type, so nothing inside can be left to inherit: the name, the area, the rule
+   above the chips and all three chips are each told what to be on the dark
+   ground, or they would sit on it in their own colours and disappear. */
 .card:hover {
+  background: var(--accent-2);
   border-color: var(--accent-2);
   box-shadow: 0 3px 12px rgba(8, 74, 63, 0.16);
 }
+.card:hover h3 { color: var(--on-accent); }
+.card:hover .where { color: rgba(255, 255, 255, 0.72); }
+.card:hover .foot { border-top-color: rgba(255, 255, 255, 0.22); }
+
+/* The two outlined chips keep their shape and swap what fills it. */
+.card:hover .pill-cur,
+.card:hover .pill-fee {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.38);
+  color: var(--on-accent);
+}
+.card:hover .pill-cur .pill-ico { color: var(--on-accent); }
+
+/* The rating badge is the one thing here already carrying a dark fill, and
+   Outstanding's is darker than the card's. It inverts instead — white pill,
+   rating colour as the type — so the step stays readable rather than turning
+   into a dark patch on a dark ground. */
+.card:hover .badge { background: var(--on-accent); }
+.card:hover .badge[data-r="Outstanding"] { color: var(--r1); }
+.card:hover .badge[data-r="Very Good"]   { color: var(--r2); }
+.card:hover .badge[data-r="Good"]        { color: var(--r3); }
+.card:hover .badge[data-r="Acceptable"]  { color: var(--r4); }
+.card:hover .badge[data-r="Not rated"] {
+  background: transparent;
+  border-color: rgba(255, 255, 255, 0.45);
+  color: rgba(255, 255, 255, 0.8);
+}
+.card:hover .badge .pill-ico { color: currentColor; }
 
 /* The footnote is a link now: it opens the directory on the schools it is
    describing, so it takes the same fill on hover as every other control.
