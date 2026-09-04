@@ -1,10 +1,16 @@
 /**
- * Creates the first admin user.
+ * Creates or resets an admin user.
  *
- *   node scripts/create-admin.mts <email> [--local]
+ *   node scripts/create-admin.mts <email> [--role owner|editor|moderator] [--local]
  *
- * Prints a generated password once, to the terminal, and never stores it. The
- * hash uses the same PBKDF2 parameters as src/lib/auth.ts so the two agree.
+ * Generates a password and prints it once, to the terminal, and never stores
+ * it. To set a chosen password instead, pass it in the environment rather
+ * than on the command line, which would leave it in shell history and in the
+ * process list:
+ *
+ *   ADMIN_PASSWORD='...' node scripts/create-admin.mts someone@example.com
+ *
+ * The hash uses the same PBKDF2 parameters as src/lib/auth.ts so the two agree.
  */
 import { spawnSync } from "node:child_process";
 import { writeFileSync, unlinkSync } from "node:fs";
@@ -13,10 +19,17 @@ import { webcrypto as crypto } from "node:crypto";
 
 const email = process.argv[2];
 if (!email || email.startsWith("--")) {
-  console.error("usage: node scripts/create-admin.mts <email> [--local]");
+  console.error("usage: node scripts/create-admin.mts <email> [--role owner|editor|moderator] [--local]");
   process.exit(1);
 }
 const LOCAL = process.argv.includes("--local");
+
+const roleFlag = process.argv.indexOf("--role");
+const ROLE = roleFlag > -1 ? process.argv[roleFlag + 1] : "owner";
+if (!["owner", "editor", "moderator"].includes(ROLE)) {
+  console.error(`unknown role: ${ROLE}`);
+  process.exit(1);
+}
 // Workers caps PBKDF2 at 100k iterations, so the work factor comes from
 // chaining rounds. Must stay in step with src/lib/auth.ts.
 const ITER = 100_000;
@@ -26,8 +39,19 @@ const b64 = (b: ArrayBuffer) => Buffer.from(new Uint8Array(b)).toString("base64"
 
 // Ambiguous glyphs left out: this gets read off a screen and typed back in.
 const ALPHABET = "abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ23456789";
-const bytes = crypto.getRandomValues(new Uint8Array(20));
-const password = [...bytes].map((b) => ALPHABET[b % ALPHABET.length]).join("");
+// A supplied password comes through the environment, never argv: argv shows
+// up in shell history and in the process list.
+const supplied = process.env.ADMIN_PASSWORD;
+const generated = !supplied;
+if (supplied && supplied.length < 8) {
+  console.error("that password is too short to protect an admin account");
+  process.exit(1);
+}
+const password =
+  supplied ??
+  [...crypto.getRandomValues(new Uint8Array(20))]
+    .map((b) => ALPHABET[b % ALPHABET.length])
+    .join("");
 
 const salt = crypto.getRandomValues(new Uint8Array(16));
 let material: BufferSource = new TextEncoder().encode(password);
@@ -41,7 +65,7 @@ const hash = `pbkdf2r${ROUNDS}$${ITER}$${b64(salt.buffer)}$${b64(bits)}`;
 
 const sql =
   `INSERT INTO admin_users (email, password_hash, role, created_at) ` +
-  `VALUES ('${email.toLowerCase().replace(/'/g, "''")}', '${hash}', 'owner', '${new Date().toISOString()}') ` +
+  `VALUES ('${email.toLowerCase().replace(/'/g, "''")}', '${hash}', '${ROLE}', '${new Date().toISOString()}') ` +
   `ON CONFLICT(email) DO UPDATE SET password_hash=excluded.password_hash, failed_count=0, locked_until=NULL;`;
 
 // Via a file, not --command: on Windows the shell splits the statement on
@@ -61,5 +85,11 @@ if (res.status !== 0) {
 
 console.log("\n  admin created / password reset");
 console.log("  email    :", email);
-console.log("  password :", password);
-console.log("\n  Shown once. Store it in a password manager now.\n");
+console.log("  role     :", ROLE);
+if (generated) {
+  console.log("  password :", password);
+  console.log("\n  Shown once. Store it in a password manager now.\n");
+} else {
+  // Not echoed: it came from the caller, who has it already.
+  console.log("  password : (the one you supplied)\n");
+}
