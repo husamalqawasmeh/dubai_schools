@@ -245,8 +245,25 @@ const title = activeBits.length
             <h3>{x.name}</h3>
             <p class="where">{x.area}</p>
             <div class="foot">
-              <span class="pill pill-cur">{x.curricula.join(" / ")}</span>
-              <span class="pill badge" data-r={x.khda_rating}>{x.khda_rating}</span>
+              <span class="pill pill-cur">
+                <span class="pill-ico" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M5 21V4" />
+                    <path d="M5 4.5h11.5l-2.2 3.6 2.2 3.6H5z" />
+                  </svg>
+                </span>
+                <span class="pill-cur-text">{x.curricula.join(" / ")}</span>
+              </span>
+              <span class="pill badge" data-r={x.khda_rating}>
+                <span class="pill-ico" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="8.6" r="4.4" />
+                    <path d="M9.6 12.6 9 16h6l-.6-3.4" />
+                    <path d="M5.5 19.5h13" />
+                  </svg>
+                </span>
+                {x.khda_rating}
+              </span>
               <span class="pill pill-fee">
                 {x.fee_band ? (
                   <>

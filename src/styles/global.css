@@ -1074,21 +1074,28 @@ a.adminlink:hover { border-color: var(--accent); }
 .titlerow > h1 { margin: 0; flex: 1 1 15rem; min-width: 0; }
 .titlerow > .soonbox { flex: 0 0 auto; }
 .soonbox {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
   margin: 0;
-  padding: 8px 14px;
+  padding: 9px 16px;
   border: 1px dashed var(--rule-firm);
   border-radius: 10px;
   background: var(--surface);
   font-family: var(--display);
-  font-size: 13px;
+  font-size: 15px;
   font-weight: 700;
   line-height: 1.35;
   color: var(--ink-2);
   /* Not a promise with a date on it: stated quietly, beside the thing that is
      actually finished. */
-  max-width: 15rem;
-  text-align: center;
+  max-width: 16rem;
+  transition: background 0.12s ease, color 0.12s ease, border-color 0.12s ease;
 }
+/* The lead hangs at the left margin and the subject centres under it, so the
+   eye lands on what is coming rather than on the words announcing it. */
+.soonbox-lead { align-self: flex-start; }
+.soonbox-main { align-self: center; }
 .home-main, .home-rail { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
 
 @media (min-width: 760px) {
@@ -1354,7 +1361,20 @@ a.adminlink:hover { border-color: var(--accent); }
   color: var(--ink-2);
   background: var(--surface);
 }
-.pill-cur { overflow: hidden; text-overflow: ellipsis; display: inline-block; }
+/* Was inline-block so the curriculum list could ellipsis. The truncation
+   moves to the text itself now that an icon sits beside it, which must not be
+   clipped away with the overflow. */
+.pill-cur { display: inline-flex; min-width: 0; }
+.pill-cur-text { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+/* Same idea as the coins on the fee chip: the mark says which of the three
+   the chip is, before the word is read. Sized in em so it tracks the chip. */
+.pill-ico { flex: none; width: 1.05em; height: 1.05em; }
+.pill-ico svg { display: block; width: 100%; height: 100%; }
+.pill-cur .pill-ico { color: var(--accent); }
+/* The badge fills dark and carries white text, so the stamp takes that instead
+   of the green, which would disappear into the fill. */
+.card .badge .pill-ico { color: currentColor; opacity: 0.9; }
 .pill-fee { padding-left: 8px; }
 .pill-fee .coins { margin-bottom: -2px; }
 /* The badge is already a pill; it only needs to stop setting its own metrics. */
@@ -1456,7 +1476,8 @@ a.bar-row:hover,
 .faq-item summary:hover,
 a.adminlink:hover,
 a.cur-note:hover,
-.hintbox:hover {
+.hintbox:hover,
+.soonbox:hover {
   background: var(--accent-2);
   color: var(--on-accent);
   border-color: var(--accent-2);
@@ -1470,7 +1491,8 @@ a.bar-row:hover .bar-lab, a.bar-row:hover .bar-val,
 .tab:hover, .clearall:hover,
 .faq-item summary:hover, a.adminlink:hover h2, a.adminlink:hover p,
 a.cur-note:hover, a.cur-note:hover .star,
-.hintbox:hover, .hintbox:hover .hintbox-ico {
+.hintbox:hover, .hintbox:hover .hintbox-ico,
+.soonbox:hover, .soonbox:hover span {
   color: var(--on-accent);
 }
 /* Icons take currentColor, but these two are painted explicitly. */
