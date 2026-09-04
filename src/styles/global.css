@@ -959,7 +959,7 @@ button.btn:disabled { opacity: 0.55; cursor: default; }
 .tier-card {
   position: relative; display: flex; flex-direction: column;
   background: var(--surface); border: 1px solid var(--rule);
-  border-radius: 8px; padding: 20px 20px 22px; box-shadow: var(--shadow);
+  border-radius: 8px; padding: 20px 20px 14px; box-shadow: var(--shadow);
 }
 .tier-card.is-feature { border-color: var(--accent); border-width: 2px; }
 .tier-flag {
@@ -985,7 +985,7 @@ button.btn:disabled { opacity: 0.55; cursor: default; }
    land its pitch on the same place. Keyed on the period line itself, so a
    tier that gains or loses one is spaced correctly without another rule. */
 .tier-card:has(.tier-price span) .tier-pitch { margin-top: 8px; }
-.tier-card ul { list-style: none; margin: 0 0 18px; padding: 0; display: grid; gap: 7px; }
+.tier-card ul { list-style: none; margin: 0 0 11px; padding: 0; display: grid; gap: 7px; }
 .tier-card li {
   font-family: var(--display); font-size: 13.5px; color: var(--ink-2);
   padding-left: 20px; position: relative; line-height: 1.4;
