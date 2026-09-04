@@ -42,7 +42,17 @@ export const OVERRIDABLE = [
 ] as const;
 
 /** Ours alone: nothing upstream publishes these. */
-export const EXTRA = ["motto", "highlights", "logo_url"] as const;
+export const EXTRA = [
+  "motto",
+  "highlights",
+  "logo_url",
+  /** The supplier a school appoints for its uniform, and how to reach them.
+   *  KHDA does not publish either, and the appointment changes between
+   *  years, so both are held here and shown with no claim of currency
+   *  beyond what an admin last confirmed. */
+  "uniform_supplier",
+  "uniform_contact",
+] as const;
 
 export type OverridableField = (typeof OVERRIDABLE)[number] | (typeof EXTRA)[number];
 

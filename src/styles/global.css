@@ -1466,7 +1466,7 @@ a.adminlink:hover { border-color: var(--accent); }
 .pick-where { font-family: var(--ui); font-size: 14.5px; color: var(--muted); margin: 8px 0 18px; }
 .pick-grid { display: grid; gap: 12px; }
 @media (min-width: 760px) { .pick-grid { grid-template-columns: 1fr 1fr; align-items: start; } }
-.pick-body { font-size: 15.5px; color: var(--ink-2); margin: 0 0 12px; }
+.pick-body { font-size: 13.5px; color: var(--ink-2); margin: 0 0 12px; }
 
 /* ---------------- schools news ----------------
    None of these classes had a rule, so the page fell back to the 16px/1.6 the
@@ -1906,6 +1906,29 @@ a.cur-note {
 .supply-card p { margin: 0 0 8px; font-family: var(--display); font-size: 13px; line-height: 1.55; }
 .supply-card ul { margin: 0; padding-left: 18px; font-family: var(--display); font-size: 13px; line-height: 1.7; }
 .supply-card li::marker { color: var(--accent); }
+
+/* Uniform lookup. Sits above the advice because it is the one question on this
+   page with a per-school answer; everything below it is the same for everyone. */
+.uniform-ask {
+  background: var(--surface); border: 1px solid var(--rule); border-radius: 8px;
+  padding: 12px 14px; margin-bottom: 12px;
+}
+.uniform-ask label {
+  display: block; font-family: var(--display); font-size: 13px; font-weight: 700;
+  color: var(--ink); margin-bottom: 6px;
+}
+.uniform-ask input {
+  width: 100%; height: 36px; padding: 0 10px;
+  font-family: var(--display); font-size: 14px; color: var(--ink);
+  background: var(--ground); border: 1px solid var(--rule-firm); border-radius: 5px;
+}
+.uniform-ask input:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+.uniform-answer {
+  margin: 8px 0 0; font-family: var(--display); font-size: 13px;
+  line-height: 1.55; color: var(--ink-2); min-height: calc(13px * 1.55);
+}
+.uniform-answer b { color: var(--ink); }
+.uniform-answer a { color: var(--accent); }
 
 
 /* The asterisk has to be findable twice — once inside the Curricula box and

@@ -1,5 +1,15 @@
 ---
 import Base from "../layouts/Base.astro";
+import { allSchools } from "../lib/db";
+
+// Name, supplier and contact only: the picker needs nothing else, and sending
+// the whole directory into the page would be 232 rows of fees nobody reads.
+const uniforms = (await allSchools()).map((s) => ({
+  n: s.name,
+  s: (s as any).uniform_supplier ?? null,
+  c: (s as any).uniform_contact ?? null,
+}));
+const known = uniforms.filter((u) => u.s).length;
 
 /**
  * Where to buy the things a school year needs.
@@ -58,6 +68,21 @@ const SECTIONS = [
   <div class="wrap pick">
     <a class="back" href="/">Overview</a>
     <h1 style="margin-top:14px">School supplies</h1>
+
+    <section class="uniform-ask">
+      <label for="uschool">Who supplies a school's uniform?</label>
+      <input id="uschool" type="search" list="uniform-schools" autocomplete="off"
+             placeholder="Start typing a school name" />
+      <datalist id="uniform-schools">
+        {uniforms.map((u) => <option value={u.n} />)}
+      </datalist>
+      <p class="uniform-answer" id="uanswer">
+        {known > 0
+          ? `Appointed suppliers are recorded for ${known} of ${uniforms.length} schools. Pick a school to see what we hold.`
+          : "No supplier is recorded yet. Pick a school and you can ask us to find out."}
+      </p>
+    </section>
+
     <div class="supply-grid">
       {SECTIONS.map((s) => (
         <section class="supply-card">
@@ -78,3 +103,37 @@ const SECTIONS = [
     </p>
   </div>
 </Base>
+
+<script define:vars={{ uniforms }}>
+  const box = document.getElementById("uschool");
+  const out = document.getElementById("uanswer");
+  const byName = new Map(uniforms.map((u) => [u.n.toLowerCase(), u]));
+
+  const ask = (name) =>
+    `/contribute?as=parent&about=${encodeURIComponent(name)}`;
+
+  box.addEventListener("input", () => {
+    const q = box.value.trim();
+    if (!q) { out.textContent = ""; return; }
+
+    const hit = byName.get(q.toLowerCase());
+    if (!hit) {
+      // Still typing, or a name that is not on the register.
+      out.textContent = "Keep typing, or pick a school from the list.";
+      return;
+    }
+
+    if (hit.s) {
+      out.innerHTML =
+        `<b>${hit.n}</b> appoints <b>${hit.s}</b>.` +
+        (hit.c ? ` ${hit.c}` : "") +
+        ` <a href="${ask(hit.n)}">Tell us if this has changed</a>.`;
+      return;
+    }
+
+    // Nothing held: say so plainly and offer the one thing that helps.
+    out.innerHTML =
+      `We do not hold a uniform supplier for <b>${hit.n}</b> yet. ` +
+      `<a href="${ask(hit.n)}">Ask us to find out</a>, and we will publish it once it is confirmed.`;
+  });
+</script>
