@@ -296,16 +296,15 @@ a.bar-row:hover .bar-lab { color: var(--ink); }
    dragging the line-height with it — which is what lets it run this far ahead
    of the word beside it. */
 .back::before {
-  content: "←";
-  font-size: 2.8em;
-  line-height: 0.7;
-  font-weight: 700;
-  /* Narrowed and drawn up: at 2.8em the glyph is as long as the word beside
-     it. Scaling rather than resizing keeps the height that size bought. */
-  transform: scaleX(0.66) scaleY(1.14);
-  /* Optical: the glyph sits high in its box, and at this size that reads as
-     floating above the label rather than pointing from it. */
-  margin-top: -0.06em;
+  /* A solid pointer rather than a drawn arrow — the same mark the nav uses
+     between its items, turned the other way. */
+  content: "◄";
+  font-size: 1.15em;
+  line-height: 1;
+  /* Doubled in height only. The triangle is already as wide as it should be
+     beside a word; stretching it is what makes it read as a direction rather
+     than a bullet. */
+  transform: scaleY(2);
 }
 .detail-grid { display: grid; gap: 30px; padding: 34px 0 70px; }
 @media (min-width: 900px) { .detail-grid { grid-template-columns: minmax(0, 2fr) minmax(260px, 1fr); } }
