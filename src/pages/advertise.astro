@@ -68,10 +68,6 @@ const TIERS = [
 
 const FAQ = [
   {
-    q: "We only want to fix wrong information. Does that cost anything?",
-    a: "No. Correcting your own data is free and always will be — a directory with wrong fees in it is worth less to everyone, including us. Use the Contribute page.",
-  },
-  {
     q: "How do parents find us today?",
     a: `Every school has a page, and the directory is filterable by curriculum, area, KHDA rating and fee band. There are ${s.total} schools listed, so a parent narrowing to one curriculum in one area is already seeing a short list.`,
   },
@@ -128,6 +124,7 @@ const tiers = hidePaid ? TIERS.filter((t) => t.price === "Free") : TIERS;
 
     <h2 class="ad-h2">Questions</h2>
     <div class="faq">
+      <p class="faq-line">Correcting your own school data is free and always will be.</p>
       {FAQ.map((f) => (
         <details class="faq-item">
           <summary>{f.q}</summary>

@@ -993,6 +993,13 @@ button.btn:disabled { opacity: 0.55; cursor: default; }
 
 .ad-h2 { margin: 34px 0 12px; }
 .faq { display: grid; gap: 8px; }
+/* A statement, not a question: it sits with the items but does not fold, so it
+   carries their padding without their disclosure marker. */
+.faq-line {
+  margin: 0; padding: 12px 14px;
+  background: var(--surface); border: 1px solid var(--rule); border-radius: 6px;
+  font-family: var(--display); font-size: 14.5px; font-weight: 600; color: var(--ink);
+}
 .faq-item {
   background: var(--surface); border: 1px solid var(--rule);
   border-radius: 6px; padding: 12px 16px;
