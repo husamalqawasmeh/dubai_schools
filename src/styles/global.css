@@ -739,7 +739,7 @@ a.tier:hover .coin-edge { filter: brightness(0.9); }
    1120px the wrap gives every other page. */
 .contribute { padding-top: 22px; padding-bottom: 40px; }
 .contribute-head { margin-bottom: 16px; }
-.contribute-head h1 { font-size: 23px; margin-top: 6px; }
+.contribute-head h1 { font-size: 20px; margin-top: 6px; }
 
 .tabs {
   display: flex;
@@ -936,7 +936,7 @@ button.btn:disabled { opacity: 0.55; cursor: default; }
    takes the 1120px the wrap gives, so every page on the site is one width. */
 .advertise { padding-top: 22px; padding-bottom: 50px; }
 .ad-head { margin-bottom: 22px; }
-.ad-head h1 { font-size: 23px; margin-top: 6px; }
+.ad-head h1 { font-size: 20px; margin-top: 6px; }
 /* Full container width, not a reading measure: at 66ch this ran to three
    lines, and it is a standfirst rather than body copy. */
 .ad-lede { font-size: 16.5px; color: var(--ink-2); margin: 12px 0 0; max-width: none; text-wrap: pretty; }
@@ -1449,8 +1449,9 @@ a.adminlink:hover { border-color: var(--accent); }
   text-transform: uppercase; color: var(--accent); margin: 10px 0 4px;
 }
 /* 30px was set when these pages were 900px wide and had less around the
-   heading. At full width it shouted. */
-.pick h1 { font-size: 23px; }
+   heading. At full width it shouted; 20px sits a step above the 17px h3s
+   below it, which is enough to lead a page that carries no other title. */
+.pick h1 { font-size: 20px; }
 .pick-where { font-family: var(--ui); font-size: 14.5px; color: var(--muted); margin: 8px 0 18px; }
 .pick-grid { display: grid; gap: 12px; }
 @media (min-width: 760px) { .pick-grid { grid-template-columns: 1fr 1fr; align-items: start; } }
