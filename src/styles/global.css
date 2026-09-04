@@ -1656,3 +1656,16 @@ a.cur-note {
   transition: color 0.12s ease;
 }
 .site-head nav a:hover .nav-mark { color: var(--nav-mark-on); }
+
+/* The box is taller than the question needs, and the gap under it said
+   nothing. This says what the assistant can be asked, which is the thing
+   people guess wrong about — most assume it only knows what the listing shows.
+   It goes when the chat opens: once there are messages, the space is theirs. */
+.chatbox-hint {
+  margin: 8px 0 0;
+  font-family: var(--display);
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--ink-2);
+}
+.chatbox.is-open .chatbox-hint { display: none; }

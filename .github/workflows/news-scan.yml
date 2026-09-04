@@ -1,0 +1,39 @@
+name: Morning news scan
+
+# 03:10 UTC is 07:10 in Dubai — after the local papers have published and
+# before the school run, so the digest is waiting when it is worth reading.
+# GitHub's scheduler is best-effort and can run late under load; nothing here
+# depends on the exact minute.
+on:
+  schedule:
+    - cron: "10 3 * * *"
+  workflow_dispatch:
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      # Fetching happens here rather than in the Worker: Google answers
+      # Cloudflare's egress with 503, and this runner's egress it will serve.
+      - name: Fetch the morning's headlines
+        run: node scripts/fetch-news.mjs > items.json
+
+      - name: Send them for review
+        run: |
+          code=$(curl -s -o body.json -w '%{http_code}' \
+            --max-time 300 \
+            -X POST https://dubai-schools.can-du-ai.com/api/news/scan \
+            -H "Origin: https://dubai-schools.can-du-ai.com" \
+            -H "Content-Type: application/json" \
+            -H "Authorization: Bearer ${{ secrets.NEWS_SCAN_TOKEN }}" \
+            --data-binary @items.json)
+          echo "HTTP $code"
+          cat body.json
+          # A non-2xx is a real failure worth a red tick in the Actions tab.
+          test "$code" -ge 200 -a "$code" -lt 300
