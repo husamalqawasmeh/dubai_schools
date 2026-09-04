@@ -980,12 +980,6 @@ button.btn:disabled { opacity: 0.55; cursor: default; }
 }
 .tier-card .btn { margin-top: auto; }
 
-.ad-note {
-  border: 1px solid var(--rule-firm); border-left: 3px solid var(--accent);
-  border-radius: 6px; padding: 14px 17px; margin: 22px 0 0;
-  font-size: 14.5px; color: var(--ink-2); background: var(--surface);
-}
-.ad-note strong { color: var(--ink); }
 .ad-h2 { margin: 34px 0 12px; }
 .faq { display: grid; gap: 8px; }
 .faq-item {
