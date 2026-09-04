@@ -198,3 +198,100 @@ export async function audit(
     .bind(new Date().toISOString(), userId, action, detail.slice(0, 500), ip.slice(0, 60))
     .run();
 }
+
+/* -------------------------------------------------------------------------- */
+/* account maintenance                                                         */
+/* -------------------------------------------------------------------------- */
+
+/** Longer than the floor the seeding script accepts. A password chosen at a
+ *  keyboard is guessed more easily than one a generator produced, so the one
+ *  people pick themselves is held to more. */
+export const MIN_PASSWORD = 10;
+
+export interface AccountUpdate {
+  email?: string;
+  newPassword?: string;
+}
+
+export type AccountResult = { ok: true; email: string } | { ok: false; error: string };
+
+/** Ends every session for this user except the one asking, so a password
+ *  change logs out anyone else holding a cookie without bouncing the person
+ *  making the change back to the login form. */
+export async function destroyOtherSessions(
+  userId: number,
+  keepToken: string | undefined
+): Promise<void> {
+  const keep = keepToken ? await sha256(keepToken) : "";
+  await DB.prepare("DELETE FROM admin_sessions WHERE user_id = ? AND token_hash <> ?")
+    .bind(userId, keep)
+    .run();
+}
+
+/**
+ * Changes an admin's own email address, password, or both.
+ *
+ * Both take the current password. A session cookie alone is not enough: if one
+ * is ever borrowed, it should not be able to lock the owner out of the account
+ * by changing what they sign in with.
+ */
+export async function updateAccount(
+  userId: number,
+  currentPassword: string,
+  update: AccountUpdate,
+  currentToken: string | undefined,
+  ip: string
+): Promise<AccountResult> {
+  const row = await DB.prepare("SELECT id, email, password_hash FROM admin_users WHERE id = ?")
+    .bind(userId)
+    .first<{ id: number; email: string; password_hash: string }>();
+  if (!row) return { ok: false, error: "That account no longer exists." };
+
+  if (!(await verifyPassword(currentPassword, row.password_hash))) {
+    await audit(userId, "account_change_denied", "wrong current password", ip);
+    return { ok: false, error: "Your current password is not right." };
+  }
+
+  const sets: string[] = [];
+  const args: unknown[] = [];
+  const changed: string[] = [];
+
+  const email = update.email?.trim().toLowerCase();
+  if (email && email !== row.email) {
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      return { ok: false, error: "That email address does not look right." };
+    }
+    sets.push("email = ?");
+    args.push(email);
+    changed.push("email");
+  }
+
+  if (update.newPassword) {
+    if (update.newPassword.length < MIN_PASSWORD) {
+      return { ok: false, error: `Use at least ${MIN_PASSWORD} characters.` };
+    }
+    if (await verifyPassword(update.newPassword, row.password_hash)) {
+      return { ok: false, error: "That is already your password." };
+    }
+    sets.push("password_hash = ?");
+    args.push(await hashPassword(update.newPassword));
+    changed.push("password");
+  }
+
+  if (!sets.length) return { ok: false, error: "Nothing to change." };
+
+  try {
+    await DB.prepare(`UPDATE admin_users SET ${sets.join(", ")} WHERE id = ?`)
+      .bind(...args, userId)
+      .run();
+  } catch {
+    // email is the only UNIQUE column on the table, so this is the only
+    // constraint an update can trip.
+    return { ok: false, error: "Another admin already uses that email address." };
+  }
+
+  if (update.newPassword) await destroyOtherSessions(userId, currentToken);
+
+  await audit(userId, "account_changed", changed.join(","), ip);
+  return { ok: true, email: email ?? row.email };
+}

@@ -1,0 +1,98 @@
+---
+import Base from "../../layouts/Base.astro";
+import { MIN_PASSWORD } from "../../lib/auth";
+
+const admin = Astro.locals.admin!;
+---
+<Base title="Your account — Dubai Schools admin">
+  <div class="wrap adminwrap">
+    <div class="admin-bar">
+      <div><h1>Your account</h1></div>
+      <a class="btn sec" href="/admin" style="margin:0;padding:6px 12px">Back to admin</a>
+    </div>
+
+    <div class="panel" style="max-width:34rem">
+      <p class="muted-p">
+        Signed in as <b>{admin.email}</b> ({admin.role}). Changing either field
+        needs your current password, so a borrowed session cannot take the
+        account over.
+      </p>
+
+      <form id="af">
+        <div class="field">
+          <label for="email">Email address</label>
+          <input id="email" type="email" autocomplete="username" value={admin.email} required />
+        </div>
+
+        <div class="field">
+          <label for="newPassword">New password</label>
+          <input id="newPassword" type="password" autocomplete="new-password"
+                 minlength={MIN_PASSWORD} placeholder="leave blank to keep the current one" />
+        </div>
+
+        <div class="field">
+          <label for="confirm">Repeat the new password</label>
+          <input id="confirm" type="password" autocomplete="new-password" />
+        </div>
+
+        <div class="field">
+          <label for="currentPassword">Your current password</label>
+          <input id="currentPassword" type="password" autocomplete="current-password" required />
+        </div>
+
+        <button class="btn" type="submit" id="go">Save changes</button>
+        <p class="note" id="msg">
+          A new password must run to at least {MIN_PASSWORD} characters, and signs
+          out every other device.
+        </p>
+      </form>
+    </div>
+  </div>
+</Base>
+
+<script>
+  const f = document.getElementById("af") as HTMLFormElement;
+  const msg = document.getElementById("msg")!;
+  const go = document.getElementById("go") as HTMLButtonElement;
+  const val = (id: string) => (document.getElementById(id) as HTMLInputElement).value;
+
+  f.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const newPassword = val("newPassword");
+    if (newPassword && newPassword !== val("confirm")) {
+      msg.textContent = "The two new passwords do not match.";
+      msg.className = "note is-bad";
+      return;
+    }
+
+    go.disabled = true;
+    msg.textContent = "Saving…";
+    msg.className = "note";
+
+    const res = await fetch("/api/admin/account", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        currentPassword: val("currentPassword"),
+        email: val("email"),
+        newPassword: newPassword || undefined,
+      }),
+    });
+    const out = (await res.json()) as { ok: boolean; error?: string; email?: string };
+
+    if (out.ok) {
+      msg.textContent = newPassword
+        ? "Saved. Any other device signed in as you has been signed out."
+        : "Saved.";
+      msg.className = "note is-good";
+      (document.getElementById("newPassword") as HTMLInputElement).value = "";
+      (document.getElementById("confirm") as HTMLInputElement).value = "";
+      (document.getElementById("currentPassword") as HTMLInputElement).value = "";
+    } else {
+      msg.textContent = out.error ?? "Could not save that.";
+      msg.className = "note is-bad";
+    }
+    go.disabled = false;
+  });
+</script>
