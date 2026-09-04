@@ -1313,8 +1313,13 @@ a.adminlink:hover { border-color: var(--accent); }
 /* ---------------- header: brand and origin together on the left ---------------- */
 /* The name and the credit read as one line — "Dubai Schools : Part of
    can-du-ai.com" — so the gap is tight and the colon carries the join. They
-   stay two links because they go to two different places. */
-.brandwrap { display: flex; align-items: baseline; gap: 2px; min-width: 0; }
+   stay two links because they go to two different places.
+
+   flex: none, so the header shrinks the nav rather than the name: the nav can
+   scroll and the name cannot, and a wrapped brand is the one thing in this bar
+   that would look broken. */
+.brandwrap { display: flex; align-items: baseline; gap: 2px; flex: none; }
+.brand, .partof { white-space: nowrap; }
 .brandsep { font-family: var(--ui); font-size: 13px; font-weight: 700; color: var(--ink-2); }
 .partof { font-family: var(--ui); font-size: 12px; font-weight: 700; white-space: nowrap; }
 /* The pill padding that spaces the nav items would break the line up here. */
@@ -1873,8 +1878,9 @@ a.cur-note {
    the nav tightens rather than wrapping — the header height is part of the
    app shell and growing it would push the page below out of one screen. */
 /* The row scrolls rather than wraps, so the gap can breathe without the nav
-   ever becoming two lines. */
-.site-head nav { gap: 6px; min-width: 0; overflow-x: auto; scrollbar-width: none; }
+   ever becoming two lines. Three pixels, not six: at six the row grew wide
+   enough to squeeze the brand beside it onto two lines. */
+.site-head nav { gap: 3px; min-width: 0; overflow-x: auto; scrollbar-width: none; }
 .site-head nav::-webkit-scrollbar { display: none; }
 .site-head nav a { padding: 6px 7px; font-size: 12.5px; white-space: nowrap; }
 .nav-sep {
