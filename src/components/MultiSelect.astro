@@ -26,7 +26,7 @@ interface Props {
   label: string;
   /** Drawn before the label. Marks what the filter is about at a glance, the
    *  way the coins already mark the fee band. */
-  icon?: "flag" | "stamp";
+  icon?: "flag" | "stamp" | "coins" | "map";
   options?: Option[];
   groups?: Group[];
   selected: string[];
@@ -55,6 +55,24 @@ const allSelected = (g: Group) => g.children.every((c) => selected.includes(c.va
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
           <path d="M5 21V4" />
           <path d="M5 4.5h11.5l-2.2 3.6 2.2 3.6H5z" />
+        </svg>
+      </span>
+    )}
+    {icon === "coins" && (
+      <span class="field-ico" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+          <ellipse cx="12" cy="7" rx="7" ry="3" />
+          <path d="M5 7v4.5c0 1.7 3.1 3 7 3s7-1.3 7-3V7" />
+          <path d="M5 12.5V17c0 1.7 3.1 3 7 3s7-1.3 7-3v-4.5" />
+        </svg>
+      </span>
+    )}
+    {icon === "map" && (
+      <span class="field-ico" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M9 3 3 5.4v15.1L9 18l6 2.5 6-2.4V3l-6 2.4z" />
+          <path d="M9 3v15" />
+          <path d="M15 5.4v15.1" />
         </svg>
       </span>
     )}

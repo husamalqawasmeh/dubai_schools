@@ -32,6 +32,12 @@
      to group them and light enough to carry ink, which white cannot do at this
      value (3:1 against it, where the ink is 5.4:1). */
   --midtone: #679f8f;
+  /* What the three midtone boxes carry. Lifted off the page ink, which sat
+     heavier on this ground than it needed to. This is as light as it goes:
+     4.7:1 against the midtone, and the hint box sets 11.5px, so the 4.5:1
+     floor for normal text is the ceiling on lifting it further. White is
+     3:1 here and was never an option. */
+  --on-midtone: #17301f;
   --surface-3: #c2d9c9; /* the panel boxes: darker than a tile, far lighter than a button */   /* column separators, deliberately off the green scale */
 
   /* KHDA's scale, re-stepped for a light-green ground. Each step is both a
@@ -220,6 +226,14 @@ a.bar-row:hover .bar-lab { color: var(--ink); }
    tracks the text if that size ever changes. */
 .field-ico { flex: none; width: 1.15em; height: 1.15em; color: var(--accent); }
 .field-ico svg { display: block; width: 100%; height: 100%; }
+
+/* The filter labels darken to the accent on hover, the way every other thing
+   on this bar answers the pointer. The label sits over its own control, so the
+   whole field is the target rather than the strip of text alone, which is four
+   pixels tall and easy to miss. */
+.filters .field { transition: color 0.12s ease; }
+.filters .field > label { transition: color 0.12s ease; }
+.filters .field:hover > label { color: var(--accent); }
 .field select, .field input {
   width: 100%; height: 38px; padding: 0 10px; font-family: var(--display); font-size: 14px;
   color: var(--ink); background: var(--surface); border: 1px solid var(--rule-firm);
@@ -275,12 +289,16 @@ a.bar-row:hover .bar-lab { color: var(--ink); }
   text-decoration: none;
 }
 /* The arrow is a pseudo-element so it can be sized past the label without
-   dragging the line-height with it. */
+   dragging the line-height with it — which is what lets it run this far ahead
+   of the word beside it. */
 .back::before {
   content: "←";
-  font-size: 1.5em;
-  line-height: 0.8;
+  font-size: 2.8em;
+  line-height: 0.7;
   font-weight: 700;
+  /* Optical: the glyph sits high in its box, and at this size that reads as
+     floating above the label rather than pointing from it. */
+  margin-top: -0.06em;
 }
 .detail-grid { display: grid; gap: 30px; padding: 34px 0 70px; }
 @media (min-width: 900px) { .detail-grid { grid-template-columns: minmax(0, 2fr) minmax(260px, 1fr); } }
@@ -929,7 +947,9 @@ a.adminlink:hover { border-color: var(--accent); }
   border: 1px solid var(--rule-firm);
   border-radius: 5px;
   cursor: pointer;
-  transition: border-color 0.12s ease, background 0.12s ease;
+  /* colour included so the label fades with the fill rather than snapping
+     to white a frame ahead of it. */
+  transition: border-color 0.12s ease, background 0.12s ease, color 0.12s ease;
 }
 .clearall:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
 
@@ -1327,7 +1347,7 @@ a.adminlink:hover { border-color: var(--accent); }
   font-size: 11.5px;
   font-weight: 700;
   line-height: 1.35;
-  color: var(--ink);
+  color: var(--on-midtone);
   transition: background .12s ease, border-color .12s ease, color .12s ease;
 }
 .hintbox-ico { flex: none; width: 15px; height: 15px; color: var(--ink); }
@@ -1578,11 +1598,12 @@ a.cur-note {
    a form's submit or a school page's "Visit school website" is the one action
    on its page and should stay the strongest thing on it.
 
-   Ink, not white: at this value white is 3:1 and fails, where ink is 5.4:1. */
+   Dark on light, not white on green: at this value white is 3:1 and fails.
+   See --on-midtone for how far the dark can be lifted. */
 .pane-search .btn,
 .chatbox-cta {
   background: var(--midtone);
-  color: var(--ink);
+  color: var(--on-midtone);
   transition: background .12s ease, color .12s ease;
 }
 .pane-search .btn:hover,
@@ -1637,6 +1658,18 @@ a.cur-note {
    once at the head of the note it points to — and at body weight it read as a
    speck of dust rather than a mark tying the two together. */
 .star { font-size: 1.6em; font-weight: 800; line-height: 0; }
+
+/* The two are the same mark doing two jobs. After "Curricula" it is a footnote
+   marker and belongs up on the cap line, where it stays. At the head of the
+   note it is the first character of a sentence, so it drops onto the line and
+   reads with the words rather than hovering over them.
+
+   The glyph sits high in its own em box, so meeting the text means pulling it
+   down by roughly half its size — optical, not a metric anyone can derive. */
+.cur-note .star {
+  font-size: 1.8em;
+  vertical-align: -0.4em;
+}
 
 /* ---------------- travel time ---------------- */
 .tt-grid { display: grid; gap: 12px; margin-top: 14px; }
