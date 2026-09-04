@@ -999,6 +999,31 @@ button.btn:disabled { opacity: 0.55; cursor: default; }
 
 .ad-h2 { margin: 34px 0 12px; }
 .faq { display: grid; gap: 8px; }
+
+/* The section name sits beside its questions rather than above them: at full
+   width a heading on its own line left a band of empty page to its right, and
+   the name is a label for the group, not a step in a sequence.
+   It stacks back on top below 720px, where two columns would leave neither
+   enough room. */
+.faq-group { display: grid; gap: 10px; margin-top: 14px; }
+@media (min-width: 720px) {
+  .faq-group { grid-template-columns: 200px minmax(0, 1fr); gap: 14px; }
+}
+.faq-group-title {
+  background: var(--surface); border: 1px solid var(--rule); border-radius: 8px;
+  padding: 12px 14px;
+  /* Stretches to the height of the questions beside it — a short box against a
+     tall stack read as a stray label rather than as the group's own edge. The
+     name stays at the top of it, where the eye enters the row. */
+}
+.faq-group-title h2 {
+  margin: 0; font-family: var(--display); font-size: 15px; font-weight: 700;
+  line-height: 1.25; color: var(--ink);
+}
+.faq-group-n {
+  display: block; margin-top: 3px;
+  font-family: var(--display); font-size: 12px; color: var(--muted);
+}
 /* A statement, not a question: it sits with the items but does not fold, so it
    carries their padding without their disclosure marker. */
 .faq-line {
@@ -1464,9 +1489,12 @@ a.adminlink:hover { border-color: var(--accent); }
    below it, which is enough to lead a page that carries no other title. */
 .pick h1 { font-size: 20px; }
 .pick-where { font-family: var(--ui); font-size: 14.5px; color: var(--muted); margin: 8px 0 18px; }
-.pick-grid { display: grid; gap: 12px; }
+.pick-grid { display: grid; gap: 8px; }
 @media (min-width: 760px) { .pick-grid { grid-template-columns: 1fr 1fr; align-items: start; } }
-.pick-body { font-size: 13.5px; color: var(--ink-2); margin: 0 0 12px; }
+.pick-body { font-size: 13.5px; color: var(--ink-2); margin: 0 0 8px; }
+/* The panels are tight now; the button does not need the 14px the base
+   .btn gives it on a page with more room. */
+.pick .pane .btn { margin-top: 6px; }
 
 /* ---------------- schools news ----------------
    None of these classes had a rule, so the page fell back to the 16px/1.6 the
@@ -1493,7 +1521,7 @@ a.adminlink:hover { border-color: var(--accent); }
 
 /* The news prose runs the width of the page; nothing caps it. */
 .pick-note { font-family: var(--ui); font-size: 12.5px; color: var(--muted); margin: 0; }
-.pick-facts { margin: 0 0 14px; display: grid; gap: 7px; }
+.pick-facts { margin: 0 0 8px; display: grid; gap: 2px; }
 .pick-facts dt { font-family: var(--ui); font-size: 13px; color: var(--muted); }
 .pick-facts dd { margin: 0; font-family: var(--ui); font-size: 13.5px; font-weight: 700; text-align: right; }
 
