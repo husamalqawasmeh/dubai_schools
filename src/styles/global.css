@@ -1432,7 +1432,10 @@ a.adminlink:hover { border-color: var(--accent); }
 .chatform button:disabled { opacity: 0.5; cursor: default; }
 
 /* ---------------- pick of the day ---------------- */
-.pick { padding-top: 20px; padding-bottom: 50px; max-width: 900px; }
+/* No max-width of its own: these five pages take the 1120px the wrap gives
+   every other page, rather than sitting in a narrower column than the one
+   they are reached from. */
+.pick { padding-top: 20px; padding-bottom: 50px; }
 .pick-date {
   font-family: var(--mono); font-size: 11.5px; letter-spacing: 0.08em;
   text-transform: uppercase; color: var(--accent); margin: 10px 0 4px;
