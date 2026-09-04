@@ -1011,7 +1011,7 @@ button.btn:disabled { opacity: 0.55; cursor: default; }
 }
 .faq-group-title {
   background: var(--surface); border: 1px solid var(--rule); border-radius: 8px;
-  padding: 7px 11px;
+  padding: 6px 11px;
   /* Stretches to the height of the questions beside it — a short box against a
      tall stack read as a stray label rather than as the group's own edge. The
      name stays at the top of it, where the eye enters the row. */
@@ -1021,7 +1021,7 @@ button.btn:disabled { opacity: 0.55; cursor: default; }
   line-height: 1.25; color: var(--ink);
 }
 .faq-group-n {
-  display: block; margin-top: 3px;
+  display: block; margin-top: 1px;
   font-family: var(--display); font-size: 11px; color: var(--muted);
 }
 /* A statement, not a question: it sits with the items but does not fold, so it
@@ -1033,11 +1033,11 @@ button.btn:disabled { opacity: 0.55; cursor: default; }
 }
 .faq-item {
   background: var(--surface); border: 1px solid var(--rule);
-  border-radius: 6px; padding: 6px 12px;
+  border-radius: 6px; padding: 4px 12px;
 }
 .faq-item summary {
   cursor: pointer; font-family: var(--display); font-size: 13px;
-  font-weight: 600; color: var(--ink); list-style: none;
+  font-weight: 600; color: var(--ink); list-style: none; line-height: 1.3;
 }
 .faq-item summary::-webkit-details-marker { display: none; }
 .faq-item summary::before { content: "+ "; color: var(--accent); font-weight: 700; }
