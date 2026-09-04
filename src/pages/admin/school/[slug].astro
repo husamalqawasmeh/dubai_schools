@@ -1,0 +1,270 @@
+---
+import { env } from "cloudflare:workers";
+import Base from "../../../layouts/Base.astro";
+import { rawSchoolBySlug } from "../../../lib/db";
+import { EXTRA, OVERRIDABLE, displayValue, overridesFor } from "../../../lib/overrides";
+
+const DB = (env as unknown as { DB: D1Database }).DB;
+
+const { slug } = Astro.params;
+const school = await rawSchoolBySlug(slug!);
+if (!school) return Astro.redirect("/admin/schools", 302);
+
+const rows = await overridesFor(school.id);
+const byField = new Map(rows.map((r) => [r.field, r]));
+
+const detail = await DB.prepare(
+  "SELECT official_email FROM school_details WHERE school_id = ?"
+)
+  .bind(school.id)
+  .first<{ official_email: string | null }>();
+
+const { results: photos } = await DB.prepare(
+  `SELECT id, image_url, caption, source, review_state
+   FROM school_photos WHERE school_id = ? ORDER BY id DESC`
+)
+  .bind(school.id)
+  .all<{ id: number; image_url: string | null; caption: string | null; source: string; review_state: string }>();
+
+/** What KHDA gave us, for the box to sit beside. */
+const scraped: Record<string, string> = {
+  name: school.name,
+  area: school.area,
+  curricula: school.curricula.join(", "),
+  khda_rating: school.khda_rating,
+  fee_min_aed: school.fee_min_aed?.toString() ?? "",
+  fee_max_aed: school.fee_max_aed?.toString() ?? "",
+  fee_year: school.fee_year ?? "",
+  fee_note: school.fee_note ?? "",
+  grade_range: school.grade_range ?? "",
+  students_total: school.students_total?.toString() ?? "",
+  website: school.website ?? "",
+  phone: school.phone ?? "",
+  address: school.address ?? "",
+  lat: school.lat?.toString() ?? "",
+  lng: school.lng?.toString() ?? "",
+  description: school.description ?? "",
+  principal: school.principal ?? "",
+};
+
+const LABELS: Record<string, string> = {
+  name: "Name",
+  area: "Area",
+  curricula: "Curricula (comma separated)",
+  khda_rating: "KHDA rating",
+  fee_min_aed: "Lowest fee (AED)",
+  fee_max_aed: "Highest fee (AED)",
+  fee_year: "Fee year",
+  fee_note: "Fee note",
+  grade_range: "Grade range",
+  students_total: "Students",
+  website: "Website",
+  phone: "Phone",
+  address: "Address",
+  lat: "Latitude",
+  lng: "Longitude",
+  description: "Description",
+  principal: "Principal",
+  motto: "Motto",
+  highlights: "Highlights",
+  logo_url: "Logo image address",
+};
+
+const hidden = !!school.delisted_at;
+---
+<Base title={`${school.name} — Dubai Schools admin`}>
+  <div class="wrap adminwrap">
+    <div class="admin-bar">
+      <div>
+        <h1>{school.name}</h1>
+        <p class="muted-p" style="margin:2px 0 0">
+          {school.area} · <a href={`/schools/${school.slug}`}>see the public page</a>
+        </p>
+      </div>
+      <a class="btn sec" href="/admin/schools" style="margin:0;padding:6px 12px">All schools</a>
+    </div>
+
+    <div class="panel" style="margin-bottom:16px">
+      <label class="setting">
+        <input type="checkbox" id="hide" checked={hidden} />
+        <span>
+          <b>Hide this school from the site</b>
+          <span class="setting-note">
+            It comes off the listing, the search, the counts and its own page.
+            Nothing is deleted — untick to put it back.
+            {hidden && school.delisted_at
+              ? ` Hidden since ${school.delisted_at.slice(0, 10)}.`
+              : ""}
+          </span>
+        </span>
+      </label>
+      <p class="note" id="hidemsg"></p>
+    </div>
+
+    <div class="panel" style="margin-bottom:16px">
+      <h2 class="ad-h2" style="margin-top:0">Corrections</h2>
+      <p class="muted-p">
+        A correction sits on top of what KHDA published; the scraped value is
+        kept and shown beside it, and the next scrape cannot overwrite your
+        version. Every correction needs a reason. Empty the box and save to
+        blank the field; use Clear to go back to what was scraped.
+      </p>
+
+      <div class="edits">
+        {[...OVERRIDABLE, ...EXTRA].map((field) => {
+          const row = byField.get(field);
+          const isExtra = (EXTRA as readonly string[]).includes(field);
+          return (
+            <div class="edit" data-field={field}>
+              <label class="edit-label" for={`f-${field}`}>
+                {LABELS[field] ?? field}
+                {isExtra && <span class="edit-tag">ours</span>}
+                {row && <span class="edit-tag is-on">corrected</span>}
+              </label>
+              <input
+                id={`f-${field}`}
+                class="edit-value"
+                type="text"
+                value={row ? displayValue(row.value) : (isExtra ? "" : scraped[field] ?? "")}
+              />
+              {!isExtra && (
+                <p class="edit-was">KHDA: {scraped[field] || "—"}</p>
+              )}
+              <input class="edit-reason" type="text" placeholder="Why is this being changed?" value={row?.reason ?? ""} />
+              <div class="edit-actions">
+                <button type="button" class="btn sec edit-save">Save</button>
+                {row && <button type="button" class="btn sec edit-clear">Clear</button>}
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+
+    <div class="panel" style="margin-bottom:16px">
+      <h2 class="ad-h2" style="margin-top:0">Office email</h2>
+      <p class="muted-p">
+        KHDA publishes only the principal's personal address, so this one is
+        ours. It is held with the other details rather than as a correction.
+      </p>
+      <div class="field">
+        <label for="email">Official email</label>
+        <input id="email" type="email" value={detail?.official_email ?? ""} />
+      </div>
+      <div class="edit-actions">
+        <button type="button" class="btn sec" id="emailsave">Save email</button>
+      </div>
+      <p class="note" id="emailmsg"></p>
+    </div>
+
+    <div class="panel">
+      <h2 class="ad-h2" style="margin-top:0">Photographs</h2>
+      <p class="muted-p">
+        Added by address. Nothing here reaches a visitor: every row starts
+        unpublished and stays that way until a review clears it, which is the
+        table's own rule and not something this screen overrides.
+      </p>
+
+      <div class="field">
+        <label for="photourl">Image address</label>
+        <input id="photourl" type="url" placeholder="https://…" />
+      </div>
+      <div class="field">
+        <label for="photocap">Caption</label>
+        <input id="photocap" type="text" />
+      </div>
+      <div class="edit-actions">
+        <button type="button" class="btn sec" id="photoadd">Add photograph</button>
+      </div>
+      <p class="note" id="photomsg"></p>
+
+      {photos.length > 0 && (
+        <ul class="photolist">
+          {photos.map((p) => (
+            <li>
+              <span class="photo-src">{p.source}</span>
+              <a href={p.image_url ?? "#"} target="_blank" rel="noopener">{p.image_url ?? "(street view)"}</a>
+              <span class="badge">{p.review_state}</span>
+              <button type="button" class="btn sec photo-del" data-id={p.id}>Remove</button>
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  </div>
+</Base>
+
+<script define:vars={{ slug }}>
+  const post = async (payload) => {
+    const res = await fetch("/api/admin/school", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ slug, ...payload }),
+    });
+    return await res.json();
+  };
+
+  const say = (el, text, good) => {
+    el.textContent = text;
+    el.className = good ? "note is-good" : "note is-bad";
+  };
+
+  /* hide / show */
+  const hide = document.getElementById("hide");
+  const hidemsg = document.getElementById("hidemsg");
+  hide.addEventListener("change", async () => {
+    hide.disabled = true;
+    const out = await post({ action: "delist", hide: hide.checked });
+    if (out.ok) say(hidemsg, hide.checked ? "Hidden from the site." : "Showing again.", true);
+    else { hide.checked = !hide.checked; say(hidemsg, out.error ?? "Could not save.", false); }
+    hide.disabled = false;
+  });
+
+  /* corrections */
+  document.querySelectorAll(".edit").forEach((box) => {
+    const field = box.dataset.field;
+    const value = box.querySelector(".edit-value");
+    const reason = box.querySelector(".edit-reason");
+    const actions = box.querySelector(".edit-actions");
+
+    box.querySelector(".edit-save").addEventListener("click", async () => {
+      const out = await post({ action: "override", field, value: value.value, reason: reason.value });
+      let msg = box.querySelector(".edit-msg");
+      if (!msg) { msg = document.createElement("p"); msg.className = "edit-msg"; actions.after(msg); }
+      msg.textContent = out.ok ? "Saved." : (out.error ?? "Could not save.");
+      msg.dataset.bad = out.ok ? "" : "1";
+    });
+
+    const clear = box.querySelector(".edit-clear");
+    if (clear) clear.addEventListener("click", async () => {
+      const out = await post({ action: "clear", field });
+      if (out.ok) location.reload();
+    });
+  });
+
+  /* office email — held on school_details, not as a correction */
+  document.getElementById("emailsave").addEventListener("click", async () => {
+    const msg = document.getElementById("emailmsg");
+    const out = await post({ action: "email", email: document.getElementById("email").value });
+    say(msg, out.ok ? "Saved." : (out.error ?? "Could not save."), out.ok);
+  });
+
+  /* photographs */
+  document.getElementById("photoadd").addEventListener("click", async () => {
+    const msg = document.getElementById("photomsg");
+    const out = await post({
+      action: "photo",
+      url: document.getElementById("photourl").value,
+      caption: document.getElementById("photocap").value,
+    });
+    if (out.ok) location.reload();
+    else say(msg, out.error ?? "Could not add that.", false);
+  });
+
+  document.querySelectorAll(".photo-del").forEach((b) => {
+    b.addEventListener("click", async () => {
+      const out = await post({ action: "photo_delete", photoId: Number(b.dataset.id) });
+      if (out.ok) location.reload();
+    });
+  });
+</script>

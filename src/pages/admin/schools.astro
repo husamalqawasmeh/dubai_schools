@@ -15,11 +15,10 @@ const admin = Astro.locals.admin!;
  * happened to be listed.
  */
 const { results } = await DB.prepare(
-  `SELECT s.id, s.name, s.area, s.curricula, s.khda_rating, s.fee_band,
-          s.website, s.phone, s.khda_email, d.official_email
+  `SELECT s.id, s.slug, s.name, s.area, s.curricula, s.khda_rating, s.fee_band,
+          s.website, s.phone, s.khda_email, s.delisted_at, d.official_email
    FROM schools s
    LEFT JOIN school_details d ON d.school_id = s.id
-   WHERE s.delisted_at IS NULL
    ORDER BY s.name`
 ).all<any>();
 
@@ -103,7 +102,7 @@ const bandLabel: Record<string, string> = {
         <thead>
           <tr>
             <th style="width:34px"></th>
-            <th>School</th><th>Area</th><th>Curriculum</th><th>Rating</th><th>Email</th><th>Source</th>
+            <th>School</th><th>Area</th><th>Curriculum</th><th>Rating</th><th>Email</th><th>Source</th><th></th>
           </tr>
         </thead>
         <tbody id="tb">
@@ -116,12 +115,16 @@ const bandLabel: Record<string, string> = {
               data-src={r.source ?? ""}
             >
               <td><input type="checkbox" class="pick" value={r.id} data-email={r.email ?? ""} data-name={r.name} disabled={!r.email} /></td>
-              <td>{r.name}</td>
+              <td>
+                {r.name}
+                {r.delisted_at && <span class="srctag is-hidden">Hidden</span>}
+              </td>
               <td>{r.area}</td>
               <td>{r.curricula.join(", ")}</td>
               <td>{r.khda_rating}</td>
               <td>{r.email ? r.email : <span class="missing">—</span>}</td>
               <td>{r.source === "school" ? <span class="srctag is-school">School</span> : r.source === "khda" ? <span class="srctag">KHDA</span> : <span class="missing">—</span>}</td>
+              <td><a class="rowedit" href={`/admin/school/${r.slug}`}>Edit</a></td>
             </tr>
           ))}
         </tbody>

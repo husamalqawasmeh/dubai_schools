@@ -821,6 +821,69 @@ a.tier:hover .coin-edge { filter: brightness(0.9); }
 .setting b { font-family: var(--display); font-size: 14.5px; }
 .setting-note { font-family: var(--display); font-size: 13px; line-height: 1.55; color: var(--muted); }
 .setting-note a { color: var(--accent); }
+
+/* ---------------- admin: one school ---------------- */
+/* Each field is its own small form: a value, what was scraped, and why it is
+   being changed. Saving one field at a time rather than the page at once —
+   a correction carries a reason, and one reason cannot cover twelve edits. */
+.edits { display: grid; gap: 14px; }
+@media (min-width: 780px) { .edits { grid-template-columns: 1fr 1fr; } }
+.edit {
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  padding: 10px 12px 12px;
+  background: var(--ground);
+  display: grid;
+  gap: 6px;
+}
+.edit-label {
+  display: flex; align-items: center; gap: 6px;
+  font-family: var(--display); font-size: 11.5px; font-weight: 700;
+  letter-spacing: 0.01em; color: var(--muted);
+}
+.edit-tag {
+  font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.08em;
+  text-transform: uppercase; padding: 1px 5px; border-radius: 999px;
+  border: 1px solid var(--rule-firm); color: var(--muted);
+}
+.edit-tag.is-on { color: var(--accent); border-color: var(--accent); }
+.edit input {
+  width: 100%; height: 32px; padding: 0 8px;
+  font-family: var(--display); font-size: 13px; color: var(--ink);
+  background: var(--surface); border: 1px solid var(--rule-firm); border-radius: 4px;
+}
+.edit input:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+.edit-reason { font-style: italic; }
+.edit-was {
+  margin: 0; font-family: var(--mono); font-size: 10.5px; color: var(--muted);
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.edit-actions { display: flex; gap: 8px; margin-top: 2px; }
+.edit-actions .btn { margin: 0; padding: 4px 12px; font-size: 12px; }
+.edit-msg { margin: 4px 0 0; font-family: var(--display); font-size: 12px; color: var(--accent); }
+.edit-msg[data-bad="1"] { color: var(--crit-ink, #98392b); }
+
+.photolist { list-style: none; margin: 14px 0 0; padding: 0; display: grid; gap: 8px; }
+.photolist li {
+  display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+  font-family: var(--display); font-size: 12.5px;
+  border-top: 1px solid var(--rule); padding-top: 8px;
+}
+.photolist a { color: var(--accent); overflow-wrap: anywhere; min-width: 0; }
+.photo-src {
+  font-family: var(--mono); font-size: 10.5px; text-transform: uppercase;
+  letter-spacing: 0.08em; color: var(--muted);
+}
+.photolist .btn { margin: 0; padding: 3px 10px; font-size: 11.5px; }
+
+.rowedit {
+  font-family: var(--display); font-size: 12px; font-weight: 700;
+  color: var(--accent); text-decoration: none; white-space: nowrap;
+}
+.rowedit:hover { text-decoration: underline; }
+/* A hidden school still appears in the admin list — hiding it from here too
+   would leave no way to put it back. */
+.srctag.is-hidden { background: var(--warn); color: var(--on-accent); margin-left: 6px; }
 .note.is-bad { color: var(--crit-ink, #98392b); }
 .note.is-good { color: var(--ok-ink, #2f6b4f); }
 .thanks {

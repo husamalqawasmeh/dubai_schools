@@ -1,4 +1,5 @@
 import { env } from "cloudflare:workers";
+import { applyOverrides, overridesBySchool, overridesFor } from "./overrides";
 
 /** The D1 binding, declared in wrangler.jsonc. */
 const DB = (env as unknown as { DB: D1Database }).DB;
@@ -28,6 +29,10 @@ export interface SchoolRow {
 
 export interface School extends Omit<SchoolRow, "curricula"> {
   curricula: string[];
+  /** Ours, not KHDA's: set by an admin, absent until one is. */
+  motto?: string | null;
+  highlights?: string | null;
+  logo_url?: string | null;
 }
 
 function hydrate(row: SchoolRow): School {
@@ -46,10 +51,15 @@ const COLUMNS = `id, slug, name, area, curricula, khda_rating, fee_min_aed,
   website, phone, address, description, principal`;
 
 export async function allSchools(): Promise<School[]> {
-  const { results } = await DB.prepare(
-    `SELECT ${COLUMNS} FROM schools WHERE delisted_at IS NULL ORDER BY name`
-  ).all<SchoolRow>();
-  return results.map(hydrate);
+  // Two queries rather than a join: every school is wanted, and at this size
+  // the corrections table is smaller than the rows it decorates.
+  const [{ results }, overrides] = await Promise.all([
+    DB.prepare(
+      `SELECT ${COLUMNS} FROM schools WHERE delisted_at IS NULL ORDER BY name`
+    ).all<SchoolRow>(),
+    overridesBySchool(),
+  ]);
+  return results.map((row) => applyOverrides(hydrate(row), overrides.get(row.id)));
 }
 
 export async function schoolBySlug(slug: string): Promise<School | null> {
@@ -58,7 +68,22 @@ export async function schoolBySlug(slug: string): Promise<School | null> {
   )
     .bind(slug)
     .first<SchoolRow>();
-  return row ? hydrate(row) : null;
+  if (!row) return null;
+  return applyOverrides(hydrate(row), await overridesFor(row.id));
+}
+
+/** The row as scraped, corrections and delisting ignored — what the admin
+ *  screen has to show beside each correction to make it worth reading. */
+export async function rawSchoolBySlug(slug: string): Promise<
+  (School & { delisted_at: string | null; lat: number | null; lng: number | null }) | null
+> {
+  const row = await DB.prepare(
+    `SELECT ${COLUMNS}, lat, lng, delisted_at FROM schools WHERE slug = ?`
+  )
+    .bind(slug)
+    .first<SchoolRow & { lat: number | null; lng: number | null; delisted_at: string | null }>();
+  if (!row) return null;
+  return { ...hydrate(row), lat: row.lat, lng: row.lng, delisted_at: row.delisted_at };
 }
 
 export interface Stats {
