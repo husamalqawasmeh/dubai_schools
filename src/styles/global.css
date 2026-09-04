@@ -1012,11 +1012,6 @@ button.btn:disabled { opacity: 0.55; cursor: default; }
 .faq-item summary::before { content: "+ "; color: var(--accent); font-weight: 700; }
 .faq-item[open] summary::before { content: "– "; }
 .faq-item p { margin: 10px 0 0; font-size: 14.5px; color: var(--ink-2); }
-.ad-foot { margin-top: 34px; padding-top: 22px; border-top: 1px solid var(--rule); }
-/* 60ch is the measure the rest of the page reads at, but this one sentence
-   is 97 characters and was breaking two words onto a second line. Given the
-   room it holds one line on a desktop, and still wraps where it has to. */
-.ad-foot p { color: var(--ink-2); }
 
 /* ---------------- admin ---------------- */
 .adminwrap { padding-top: 20px; padding-bottom: 50px; }

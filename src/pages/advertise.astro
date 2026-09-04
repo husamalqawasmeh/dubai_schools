@@ -94,6 +94,7 @@ const tiers = hidePaid ? TIERS.filter((t) => t.price === "Free") : TIERS;
           ? " Paid placement is not open at the moment; claim your listing and we will tell you when it is."
           : " The packages below are for schools that want to be found first by the parents filtering for exactly what they offer."}
       </p>
+      <p class="faq-line">Correcting your own school data is free and always will be.</p>
       <div class="ad-stats">
         <div><b>{s.total}</b><span>Schools listed</span></div>
         <div><b>{s.areas}</b><span>Areas covered</span></div>
@@ -122,24 +123,13 @@ const tiers = hidePaid ? TIERS.filter((t) => t.price === "Free") : TIERS;
       ))}
     </div>
 
-    <h2 class="ad-h2">Questions</h2>
     <div class="faq">
-      <p class="faq-line">Correcting your own school data is free and always will be.</p>
       {FAQ.map((f) => (
         <details class="faq-item">
           <summary>{f.q}</summary>
           <p>{f.a}</p>
         </details>
       ))}
-    </div>
-
-    <div class="ad-foot">
-      <h2>Talk to us</h2>
-      <p>
-        Tell us which school you are, and what you want parents to see. We will
-        come back with what fits.
-      </p>
-      <a class="btn ad-cta" href="/contribute?as=school" style="max-width:260px">Update your school details</a>
     </div>
   </div>
 </Base>
