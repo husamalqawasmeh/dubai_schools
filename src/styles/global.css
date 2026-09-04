@@ -1463,7 +1463,7 @@ a.adminlink:hover { border-color: var(--accent); }
    sits between 13 and 15.5px; this brings the news into that range. */
 .pick .sub { font-family: var(--display); font-size: 14.5px; color: var(--ink-2); line-height: 1.55; margin: 6px 0 18px; }
 
-.news-empty { font-size: 14px; color: var(--ink-2); max-width: 78ch; }
+.news-empty { font-size: 14px; color: var(--ink-2); }
 .news-empty p { margin: 0 0 11px; line-height: 1.6; }
 .news-empty p:last-child { margin-bottom: 0; }
 .news-empty strong { color: var(--ink); }
@@ -1480,11 +1480,7 @@ a.adminlink:hover { border-color: var(--accent); }
 .news-body { font-size: 14px; color: var(--ink-2); line-height: 1.6; margin: 0 0 6px; max-width: 78ch; }
 .news-src { font-family: var(--mono); font-size: 11px; color: var(--muted); }
 
-/* One line, which takes both changes: the 74ch cap has to go, and 199
-   characters need about 1045px at this size against the 1072px the page
-   gives. At 11px it would be 1095px and wrap again. It still wraps on a
-   narrow window, where no size would keep it on one line. */
-.note-foot { max-width: none; font-size: 10.5px; }
+/* The news prose runs the width of the page; nothing caps it. */
 .pick-note { font-family: var(--ui); font-size: 12.5px; color: var(--muted); margin: 0; }
 .pick-facts { margin: 0 0 14px; display: grid; gap: 7px; }
 .pick-facts dt { font-family: var(--ui); font-size: 13px; color: var(--muted); }
@@ -1874,10 +1870,12 @@ a.cur-note {
   padding-top: 14px;
   border-top: 1px solid var(--rule);
   font-family: var(--display);
-  font-size: 12.5px;
+  /* 199 characters need about 1045px at 10.5px, against the 1072px the page
+     gives — so it holds one line here, and wraps only on a narrow window
+     where no size would keep it. */
+  font-size: 10.5px;
   line-height: 1.55;
   color: var(--muted);
-  max-width: 74ch;
 }
 .note-foot a { color: var(--accent); }
 .supply-grid { display: grid; gap: 12px; margin-top: 12px; }
