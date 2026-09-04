@@ -296,6 +296,9 @@ a.bar-row:hover .bar-lab { color: var(--ink); }
   font-size: 2.8em;
   line-height: 0.7;
   font-weight: 700;
+  /* Narrowed and drawn up: at 2.8em the glyph is as long as the word beside
+     it. Scaling rather than resizing keeps the height that size bought. */
+  transform: scaleX(0.66) scaleY(1.14);
   /* Optical: the glyph sits high in its box, and at this size that reads as
      floating above the label rather than pointing from it. */
   margin-top: -0.06em;
@@ -539,10 +542,18 @@ a.tier:hover .coin-edge { filter: brightness(0.9); }
   user-select: none;
 }
 .multi > summary::-webkit-details-marker { display: none; }
-.multi > summary:hover { border-color: var(--muted); }
 .multi > summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
 .multi[open] > summary { border-color: var(--accent); }
 .multi.has-picks > summary { border-color: var(--accent); color: var(--accent); font-weight: 600; }
+/* The whole control fills, the way every other thing on this bar does. Listed
+   after .has-picks because that rule sets its own colour at the same
+   specificity, and would otherwise win on source order alone. */
+.multi > summary:hover,
+.multi.has-picks > summary:hover {
+  background: var(--accent-2);
+  border-color: var(--accent-2);
+  color: var(--on-accent);
+}
 .multi-summary { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .multi-caret { width: 12px; height: 12px; flex: none; color: var(--muted); transition: transform 0.12s ease; }
 .multi[open] .multi-caret { transform: rotate(180deg); }
@@ -1105,10 +1116,12 @@ a.adminlink:hover { border-color: var(--accent); }
   font-family: var(--display);
   font-size: 15px;
   font-weight: 700;
+  font-style: italic;
   line-height: 1.35;
   color: var(--ink-2);
   /* Not a promise with a date on it: stated quietly, beside the thing that is
-     actually finished. */
+     actually finished. Italic because it is the one thing on the page that
+     has not happened yet. */
   max-width: 16rem;
   transition: background 0.12s ease, color 0.12s ease, border-color 0.12s ease;
 }
