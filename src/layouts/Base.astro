@@ -8,6 +8,22 @@ interface Props {
 
 const { title, description = "Search and compare all 232 KHDA-registered private schools in Dubai: curriculum, fees, inspection rating, and location." } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site);
+
+/**
+ * The separators are real elements rather than ::after on each link, because
+ * every nav item fills on hover — a pseudo-element would sit inside that fill
+ * and light up with the item before it, making one link look two wide.
+ */
+const NAV = [
+  { href: "/faq", label: "FAQ" },
+  { href: "/pick-of-the-week", label: "Pick-of-the-week-School" },
+  { href: "/supplies", label: "School Supplies" },
+  { href: "/travel-time", label: "Travel Time" },
+  { href: "/news", label: "Schools News" },
+  { href: "/contribute", label: "Contribute" },
+  { href: "/advertise", label: "Advertise" },
+  { href: "/#chatbox", label: "Chatbot", mark: "▼" },
+];
 ---
 
 <!doctype html>
@@ -36,13 +52,15 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
           <a class="partof" href="https://www.can-du-ai.com">Part of can-du-ai.com</a>
         </div>
         <nav>
-          <a href="/#chatbox">Chatbot</a>
-          <a href="/pick-of-the-week">Pick-of-the-week-School</a>
-          <a href="/faq">FAQ</a>
-          <a href="/supplies">School Supplies</a>
-          <a href="/travel-time">Travel Time</a>
-          <a href="/contribute">Contribute</a>
-          <a href="/advertise">Advertise</a>
+          {NAV.map((item, i) => (
+            <>
+              {i > 0 && <span class="nav-sep" aria-hidden="true">&#9658;</span>}
+              <a href={item.href}>
+                {item.label}
+                {item.mark && <span class="nav-mark" aria-hidden="true">{item.mark}</span>}
+              </a>
+            </>
+          ))}
         </nav>
       </div>
     </header>

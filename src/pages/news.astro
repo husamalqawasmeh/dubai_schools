@@ -1,0 +1,89 @@
+---
+import Base from "../layouts/Base.astro";
+import { env } from "cloudflare:workers";
+
+const DB = (env as unknown as { DB: D1Database }).DB;
+
+/**
+ * Only published rows, newest first. A draft has no published_at, which is what
+ * keeps a half-written item off the page — the filter is the publishing gate,
+ * so there is no way to forget to apply it.
+ */
+const { results } = await DB.prepare(
+  `SELECT n.headline, n.body, n.source_name, n.source_url, n.published_at,
+          s.name AS school_name, s.slug AS school_slug
+   FROM school_news n
+   LEFT JOIN schools s ON s.id = n.school_id
+   WHERE n.published_at IS NOT NULL
+   ORDER BY n.published_at DESC
+   LIMIT 60`
+).all<any>();
+
+const items = results ?? [];
+
+const when = (iso: string) =>
+  new Date(iso).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" });
+---
+
+<Base
+  title="Schools news — what is changing in Dubai schools"
+  description="Term dates, fee decisions, inspection results, openings and closures across Dubai's private schools."
+>
+  <div class="wrap pick">
+    <a class="back" href="/">&larr; Overview</a>
+    <h1 style="margin-top:14px">Schools news</h1>
+    <p class="sub" style="max-width:70ch">
+      What is changing across Dubai's private schools — term dates, fee
+      decisions, inspection results, openings and closures.
+    </p>
+
+    {items.length > 0 ? (
+      <div class="news-list">
+        {items.map((n) => (
+          <article class="news-item">
+            <p class="news-meta">
+              {n.published_at && <time>{when(n.published_at)}</time>}
+              {n.school_name && (
+                <>
+                  <span class="news-dot">·</span>
+                  <a href={`/schools/${n.school_slug}`}>{n.school_name}</a>
+                </>
+              )}
+            </p>
+            <h2 class="news-head">{n.headline}</h2>
+            <p class="news-body">{n.body}</p>
+            {n.source_url && (
+              <p class="news-src">
+                <a href={n.source_url} target="_blank" rel="noopener noreferrer">
+                  {n.source_name || "Source"}
+                </a>
+              </p>
+            )}
+          </article>
+        ))}
+      </div>
+    ) : (
+      <div class="news-empty">
+        <p><b>Nothing published yet.</b></p>
+        <p>
+          This page will carry term-date changes, KHDA fee and inspection
+          decisions, and schools opening or closing — the things that change
+          between one school year and the next and are easy to miss.
+        </p>
+        <p>
+          If you run a school and have something worth listing, or you have
+          spotted something we should cover, send it through the
+          <a href="/contribute">Contribute</a> page. Nothing is published
+          without being checked first.
+        </p>
+      </div>
+    )}
+
+    <p class="note-foot">
+      Items are checked before they appear, and each carries its source where
+      there is one. For anything official — inspection reports, fee rules, the
+      parent charter — <a href="https://www.khda.gov.ae" target="_blank" rel="noopener noreferrer">KHDA</a>
+      is the authority, not this page.
+    </p>
+  </div>
+</Base>

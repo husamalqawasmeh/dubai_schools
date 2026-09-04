@@ -43,6 +43,11 @@
   --r4: #118372; /* Acceptable  */
 
   --warn: #7d5210;
+  /* The nav separators and the chatbot caret. Deep enough to read on the
+     header ground at 4.9:1, with a lighter partner for when a hovered link
+     fills dark green underneath it. */
+  --nav-mark: #c0261f;
+  --nav-mark-on: #ff9f97;
   --coin: #d9a327;
   --coin-rim: #8a6210;
   --coin-ink: #4a3406;
@@ -1624,3 +1629,30 @@ a.cur-note {
   overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
 }
 .tt-go { margin-top: 0; flex: none; padding: 8px 14px; font-size: 13px; }
+
+/* ---------------- nav separators ---------------- */
+/* Eight items and seven separators do not fit a 52px bar at the old size, so
+   the nav tightens rather than wrapping — the header height is part of the
+   app shell and growing it would push the page below out of one screen. */
+.site-head nav { gap: 1px; min-width: 0; overflow-x: auto; scrollbar-width: none; }
+.site-head nav::-webkit-scrollbar { display: none; }
+.site-head nav a { padding: 6px 7px; font-size: 12.5px; white-space: nowrap; }
+.nav-sep {
+  align-self: center;
+  flex: none;
+  font-size: 9px;
+  line-height: 1;
+  color: var(--nav-mark);
+  /* Optical, not metric: the glyph's own bounding box is bottom-heavy and it
+     sits low against the cap height of the labels either side. */
+  transform: translateY(-0.5px);
+}
+.nav-mark {
+  margin-left: 4px;
+  font-size: 9px;
+  color: var(--nav-mark);
+  /* The one mark that lives inside a link, so it has to survive the hover
+     fill: on dark green the deep red goes almost black. */
+  transition: color 0.12s ease;
+}
+.site-head nav a:hover .nav-mark { color: var(--nav-mark-on); }
