@@ -968,10 +968,10 @@ button.btn:disabled { opacity: 0.55; cursor: default; }
   font-family: var(--ui); font-size: 11px; font-weight: 700;
   padding: 3px 10px; border-radius: 999px;
 }
-.tier-card h2 { font-size: 18px; margin-bottom: 4px; }
+.tier-card h2 { font-size: 15px; margin-bottom: 4px; }
 .tier-price {
-  font-family: var(--display); font-weight: 700; font-size: 26px;
-  letter-spacing: -0.02em; margin: 0 0 4px; line-height: 1.1;
+  font-family: var(--display); font-weight: 700; font-size: 19px;
+  letter-spacing: -0.02em; margin: 0 0 4px; line-height: 1.15;
 }
 .tier-price span {
   display: block; font-size: 11.5px; font-weight: 500;
