@@ -337,7 +337,11 @@ a.bar-row:hover .bar-lab { color: var(--ink); }
 @media (min-width: 900px) { .detail-grid { grid-template-columns: minmax(0, 2fr) minmax(260px, 1fr); } }
 .panel { background: var(--surface); border: 1px solid var(--rule); border-radius: 6px; padding: 18px 20px; box-shadow: var(--shadow); }
 .panel dl { margin: 0; display: grid; gap: 11px; }
-.panel .kv { display: flex; justify-content: space-between; gap: 14px; align-items: baseline; }
+/* A key/value row is a key/value row wherever it appears. This was scoped to
+   .panel, so the same markup inside .pane never became a row at all: the
+   label and its value stacked, each taking a line and doubling the height
+   of the block they sit in. */
+.kv { display: flex; justify-content: space-between; gap: 14px; align-items: baseline; }
 .panel dt { font-family: var(--display); font-size: 12.5px; color: var(--muted); }
 .panel dd { margin: 0; font-family: var(--display); font-size: 13px; font-weight: 600; text-align: right; }
 .feebig { font-family: var(--display); font-weight: 700; font-size: 23px; font-variant-numeric: tabular-nums; letter-spacing: -0.02em; }
@@ -1449,8 +1453,37 @@ a.adminlink:hover { border-color: var(--accent); }
 .pick-grid { display: grid; gap: 12px; }
 @media (min-width: 760px) { .pick-grid { grid-template-columns: 1fr 1fr; align-items: start; } }
 .pick-body { font-size: 15.5px; color: var(--ink-2); margin: 0 0 12px; }
+
+/* ---------------- schools news ----------------
+   None of these classes had a rule, so the page fell back to the 16px/1.6 the
+   body sets and read a size larger than every other page. The site's prose
+   sits between 13 and 15.5px; this brings the news into that range. */
+.pick .sub { font-family: var(--display); font-size: 14.5px; color: var(--ink-2); line-height: 1.55; margin: 6px 0 18px; }
+
+.news-empty { font-size: 14px; color: var(--ink-2); max-width: 78ch; }
+.news-empty p { margin: 0 0 11px; line-height: 1.6; }
+.news-empty p:last-child { margin-bottom: 0; }
+.news-empty strong { color: var(--ink); }
+
+.news-list { display: grid; gap: 14px; }
+.news-item { border-top: 1px solid var(--rule); padding-top: 12px; }
+.news-item:first-child { border-top: none; padding-top: 0; }
+.news-head { font-size: 16px; font-weight: 700; margin: 0 0 4px; line-height: 1.3; }
+.news-meta {
+  font-family: var(--mono); font-size: 11px; letter-spacing: 0.04em;
+  color: var(--muted); margin: 0 0 6px;
+}
+.news-dot { padding: 0 5px; }
+.news-body { font-size: 14px; color: var(--ink-2); line-height: 1.6; margin: 0 0 6px; max-width: 78ch; }
+.news-src { font-family: var(--mono); font-size: 11px; color: var(--muted); }
+
+/* One line, which takes both changes: the 74ch cap has to go, and 199
+   characters need about 1045px at this size against the 1072px the page
+   gives. At 11px it would be 1095px and wrap again. It still wraps on a
+   narrow window, where no size would keep it on one line. */
+.note-foot { max-width: none; font-size: 10.5px; }
 .pick-note { font-family: var(--ui); font-size: 12.5px; color: var(--muted); margin: 0; }
-.pick-facts { margin: 0 0 14px; display: grid; gap: 10px; }
+.pick-facts { margin: 0 0 14px; display: grid; gap: 7px; }
 .pick-facts dt { font-family: var(--ui); font-size: 13px; color: var(--muted); }
 .pick-facts dd { margin: 0; font-family: var(--ui); font-size: 13.5px; font-weight: 700; text-align: right; }
 
