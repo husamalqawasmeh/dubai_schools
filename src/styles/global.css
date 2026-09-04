@@ -27,11 +27,15 @@
   --on-accent: #ffffff;
   --divider: #ffffff;
   --stat-w: 168px;      /* every counted box: what "What schools cost" needs on one line */
-  /* Halfway between the button green and the tile green, in sRGB. The three
-     boxes on the landing page that fill on hover rest here: it is dark enough
-     to group them and light enough to carry ink, which white cannot do at this
-     value (3:1 against it, where the ink is 5.4:1). */
-  --midtone: #679f8f;
+  /* The three boxes on the landing page that fill on hover rest here. Dark
+     enough to group them, light enough to carry ink — which white cannot do
+     at this value, reading 3:1 against it.
+
+     Turned from the green scale toward teal: at 163 degrees it sat between the
+     button green and the tile green and read as a third green among two. At
+     180 it is plainly its own colour, at the same saturation and lightness, so
+     nothing else on the page had to move with it. */
+  --midtone: #679f9f;
   /* What the three midtone boxes carry. Lifted off the page ink, which sat
      heavier on this ground than it needed to. This is as light as it goes:
      4.7:1 against the midtone, and the hint box sets 11.5px, so the 4.5:1
@@ -579,7 +583,10 @@ a.tier:hover .coin-edge { filter: brightness(0.9); }
 .multi-opt {
   display: grid;
   /* Box, then the name taking every spare pixel, then the count. The 1fr is
-     what pins the count to the right edge however short the name is. */
+     what pins the count to the right edge however short the name is, and the
+     explicit width is what stops the row shrinking to its content and taking
+     the count in with it. */
+  width: 100%;
   grid-template-columns: auto minmax(0, 1fr) auto;
   align-items: center;
   column-gap: 10px;
@@ -605,6 +612,9 @@ a.tier:hover .coin-edge { filter: brightness(0.9); }
   color: var(--muted);
   text-align: right;
   justify-self: end;
+  /* Belt and braces with justify-self: whatever the row's own sizing turns
+     out to be, the auto margin eats the slack ahead of the number. */
+  margin-left: auto;
   padding-left: 8px;
 }
 .multi-opt:has(input:checked) .multi-name { font-weight: 600; }
@@ -614,8 +624,12 @@ a.tier:hover .coin-edge { filter: brightness(0.9); }
   width: 100%;
   margin: 0 0 4px;
   padding: 5px 6px;
+  /* Left, not centred: it reads down the same edge as the options under it,
+     rather than floating over the middle of the list. */
+  text-align: left;
   font-family: var(--display);
   font-size: 12px;
+  font-weight: 700;
   color: var(--muted);
   background: none;
   border: none;
@@ -1114,7 +1128,7 @@ a.adminlink:hover { border-color: var(--accent); }
   border-radius: 10px;
   background: var(--surface);
   font-family: var(--display);
-  font-size: 15px;
+  font-size: 13.5px;
   font-weight: 700;
   font-style: italic;
   line-height: 1.35;
@@ -1129,6 +1143,21 @@ a.adminlink:hover { border-color: var(--accent); }
    eye lands on what is coming rather than on the words announcing it. */
 .soonbox-lead { align-self: flex-start; }
 .soonbox-main { align-self: center; }
+
+/* Everything else on the page turns white on the dark fill. This one lights
+   up instead — it is the only thing here that is a promise rather than a fact,
+   and the glow says so without another line of copy.
+
+   #ffd766 rather than the coin gold: on the accent-2 ground the coin reads
+   7.4:1 against 4.5:1, and a glow that has to be squinted at is not one. */
+.soonbox:hover,
+.soonbox:hover span {
+  color: #ffd766;
+  text-shadow:
+    0 0 4px rgba(255, 215, 102, 0.75),
+    0 0 14px rgba(255, 215, 102, 0.45);
+}
+.soonbox span { transition: color 0.12s ease, text-shadow 0.18s ease; }
 .home-main, .home-rail { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
 
 @media (min-width: 760px) {
@@ -1357,13 +1386,13 @@ a.adminlink:hover { border-color: var(--accent); }
   border: 1px solid var(--midtone);
   border-radius: 8px;
   font-family: var(--ui);
-  font-size: 11.5px;
+  font-size: 12.5px;
   font-weight: 700;
-  line-height: 1.35;
+  line-height: 1.4;
   color: var(--on-midtone);
   transition: background .12s ease, border-color .12s ease, color .12s ease;
 }
-.hintbox-ico { flex: none; width: 15px; height: 15px; color: var(--ink); }
+.hintbox-ico { flex: none; width: 15px; height: 15px; color: var(--on-midtone); }
 .hintbox-ico svg { display: block; width: 100%; height: 100%; }
 
 /* ---------------- school card: three pills on the bottom row ----------------
@@ -1524,8 +1553,7 @@ a.bar-row:hover .bar-lab, a.bar-row:hover .bar-val,
 .tab:hover, .clearall:hover,
 .faq-item summary:hover, a.adminlink:hover h2, a.adminlink:hover p,
 a.cur-note:hover, a.cur-note:hover .star,
-.hintbox:hover, .hintbox:hover .hintbox-ico,
-.soonbox:hover, .soonbox:hover span {
+.hintbox:hover, .hintbox:hover .hintbox-ico {
   color: var(--on-accent);
 }
 /* Icons take currentColor, but these two are painted explicitly. */

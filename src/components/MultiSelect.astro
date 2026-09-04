@@ -96,7 +96,7 @@ const allSelected = (g: Group) => g.children.every((c) => selected.includes(c.va
     </summary>
 
     <div class={scroll ? "multi-panel multi-scroll" : "multi-panel"} role="group" aria-labelledby={`${id}-label`}>
-      <button type="button" class="multi-clear">Clear</button>
+      <button type="button" class="multi-clear">Clear the filter selections</button>
       {groups
         ? groups.map((g) =>
             g.children.length === 1 ? (
