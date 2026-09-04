@@ -684,9 +684,33 @@ a.tier:hover .coin-edge { filter: brightness(0.9); }
   border: 1px solid var(--rule-firm);
   border-radius: 6px;
   box-shadow: var(--shadow);
+  transition: background 0.12s ease, color 0.12s ease, border-color 0.12s ease;
 }
 .searchbar input::placeholder { color: var(--muted); }
-.searchbar input:focus { border-color: var(--accent); outline: none; box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 18%, transparent); }
+
+/* Fills like every other control here — and stays filled once focused, not
+   only while the pointer is on it. Typing is the point of the box: the fill
+   must not flicker back to pale the moment the hand leaves the mouse.
+
+   Everything the field draws is restated for the dark ground: the text, the
+   placeholder, the caret, and the clear button the browser draws for a
+   type=search input, which is a dark glyph that would otherwise vanish. */
+.searchbar input:hover,
+.searchbar input:focus {
+  background: var(--accent-2);
+  border-color: var(--accent-2);
+  color: var(--on-accent);
+  caret-color: var(--on-accent);
+}
+.searchbar input:hover::placeholder,
+.searchbar input:focus::placeholder { color: rgba(255, 255, 255, 0.72); }
+.searchbar input:hover::-webkit-search-cancel-button,
+.searchbar input:focus::-webkit-search-cancel-button { filter: invert(1); }
+.searchbar:hover .search-ico,
+.searchbar:focus-within .search-ico { color: var(--on-accent); }
+
+/* The ring stays: the fill says "pointed at", the ring says "typing here". */
+.searchbar input:focus { outline: none; box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 30%, transparent); }
 .searchbar input::-webkit-search-cancel-button { margin-right: 4px; }
 .search-ico {
   position: absolute;
