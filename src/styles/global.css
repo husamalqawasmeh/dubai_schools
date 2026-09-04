@@ -998,20 +998,20 @@ button.btn:disabled { opacity: 0.55; cursor: default; }
 .tier-card .btn { margin-top: auto; }
 
 .ad-h2 { margin: 34px 0 12px; }
-.faq { display: grid; gap: 8px; }
+.faq { display: grid; gap: 5px; }
 
 /* The section name sits beside its questions rather than above them: at full
    width a heading on its own line left a band of empty page to its right, and
    the name is a label for the group, not a step in a sequence.
    It stacks back on top below 720px, where two columns would leave neither
    enough room. */
-.faq-group { display: grid; gap: 10px; margin-top: 14px; }
+.faq-group { display: grid; gap: 8px; margin-top: 9px; }
 @media (min-width: 720px) {
-  .faq-group { grid-template-columns: 200px minmax(0, 1fr); gap: 14px; }
+  .faq-group { grid-template-columns: 190px minmax(0, 1fr); gap: 10px; }
 }
 .faq-group-title {
   background: var(--surface); border: 1px solid var(--rule); border-radius: 8px;
-  padding: 12px 14px;
+  padding: 9px 12px;
   /* Stretches to the height of the questions beside it — a short box against a
      tall stack read as a stray label rather than as the group's own edge. The
      name stays at the top of it, where the eye enters the row. */
@@ -1033,7 +1033,7 @@ button.btn:disabled { opacity: 0.55; cursor: default; }
 }
 .faq-item {
   background: var(--surface); border: 1px solid var(--rule);
-  border-radius: 6px; padding: 12px 16px;
+  border-radius: 6px; padding: 8px 14px;
 }
 .faq-item summary {
   cursor: pointer; font-family: var(--display); font-size: 14.5px;
