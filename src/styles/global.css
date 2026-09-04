@@ -1640,16 +1640,17 @@ a.cur-note {
 .nav-sep {
   align-self: center;
   flex: none;
-  font-size: 9px;
+  font-size: 14px;
   line-height: 1;
   color: var(--nav-mark);
   /* Optical, not metric: the glyph's own bounding box is bottom-heavy and it
-     sits low against the cap height of the labels either side. */
-  transform: translateY(-0.5px);
+     sits low against the cap height of the labels either side. The nudge grew
+     with the glyph. */
+  transform: translateY(-1px);
 }
 .nav-mark {
   margin-left: 4px;
-  font-size: 9px;
+  font-size: 11px;
   color: var(--nav-mark);
   /* The one mark that lives inside a link, so it has to survive the hover
      fill: on dark green the deep red goes almost black. */
