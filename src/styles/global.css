@@ -1051,6 +1051,35 @@ a.adminlink:hover { border-color: var(--accent); }
    --------------------------------------------------------------------- */
 .home { padding-top: 18px; padding-bottom: 34px; display: grid; gap: 12px; }
 .home h1 { margin-bottom: 2px; }
+
+/* The headline never fills its column, so the notice sits in the space it
+   leaves rather than taking a row of its own. It drops under the headline
+   when the two no longer fit side by side. */
+.titlerow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px 18px;
+  min-width: 0;
+}
+.titlerow > h1 { margin: 0; }
+.soonbox {
+  margin: 0;
+  padding: 8px 14px;
+  border: 1px dashed var(--rule-firm);
+  border-radius: 10px;
+  background: var(--surface);
+  font-family: var(--display);
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.35;
+  color: var(--ink-2);
+  /* Not a promise with a date on it: stated quietly, beside the thing that is
+     actually finished. */
+  white-space: nowrap;
+}
+@media (max-width: 520px) { .soonbox { white-space: normal; } }
 .home-main, .home-rail { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
 
 @media (min-width: 760px) {
@@ -1059,7 +1088,7 @@ a.adminlink:hover { border-color: var(--accent); }
 
   /* The title keeps to the left column so the search box can stand beside
      both it and the head, matching their combined height. */
-  .home-main > h1     { grid-column: 1; grid-row: 1; }
+  .home-main > .titlerow { grid-column: 1; grid-row: 1; }
   .page-head          { grid-column: 1; grid-row: 2; }
   .pane-rating        { grid-column: 1; grid-row: 3; }
   .pane-curriculum    { grid-column: 1; grid-row: 4; }
