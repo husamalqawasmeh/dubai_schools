@@ -942,7 +942,6 @@ button.btn:disabled { opacity: 0.55; cursor: default; }
 .ad-head h1 { font-size: 20px; margin-top: 6px; }
 /* Full container width, not a reading measure: at 66ch this ran to three
    lines, and it is a standfirst rather than body copy. */
-.ad-lede { font-size: 16.5px; color: var(--ink-2); margin: 12px 0 0; max-width: none; text-wrap: pretty; }
 .ad-stats {
   display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
   gap: 2px; background: var(--rule-firm); border: 1px solid var(--rule-firm);
@@ -996,7 +995,7 @@ button.btn:disabled { opacity: 0.55; cursor: default; }
 /* A statement, not a question: it sits with the items but does not fold, so it
    carries their padding without their disclosure marker. */
 .faq-line {
-  margin: 0; padding: 12px 14px;
+  margin: 12px 0 0; padding: 12px 14px; line-height: 1.55;
   background: var(--surface); border: 1px solid var(--rule); border-radius: 6px;
   font-family: var(--display); font-size: 14.5px; font-weight: 600; color: var(--ink);
 }
