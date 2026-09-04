@@ -322,6 +322,10 @@ a.bar-row:hover .bar-lab { color: var(--ink); }
   right: 100%;
   top: 50%;
   margin-right: 0.5em;
+  /* Its own colour, not the link's. The link turns its text white for the dark
+     fill, and an inherited white pointer would vanish — it sits outside that
+     fill, on the pale page. Stated here, it is immune to the hover. */
+  color: var(--accent-2);
   /* Doubled in height only. The triangle is already as wide as it should be
      beside a word; stretching it is what makes it read as a direction rather
      than a bullet. Applied right to left: scaled first, then centred. */
