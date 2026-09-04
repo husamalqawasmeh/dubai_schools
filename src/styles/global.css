@@ -980,6 +980,11 @@ button.btn:disabled { opacity: 0.55; cursor: default; }
 /* A line's worth of air under the price: 8px read as the pitch belonging to
    the number above it rather than starting the card's description. */
 .tier-pitch { font-family: var(--display); font-size: 13.5px; color: var(--ink-2); margin: 29px 0 14px; }
+/* A priced tier already has a line under its number — the "per year" — so
+   it starts a line ahead of the free one and needs that much less air to
+   land its pitch on the same place. Keyed on the period line itself, so a
+   tier that gains or loses one is spaced correctly without another rule. */
+.tier-card:has(.tier-price span) .tier-pitch { margin-top: 8px; }
 .tier-card ul { list-style: none; margin: 0 0 18px; padding: 0; display: grid; gap: 7px; }
 .tier-card li {
   font-family: var(--display); font-size: 13.5px; color: var(--ink-2);
