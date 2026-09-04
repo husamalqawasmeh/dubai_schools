@@ -216,8 +216,8 @@ const title = activeBits.length
 
       <div class="filters">
         <div class="row">
-          <MultiSelect id="curriculum" label="Curriculum" groups={curGroups} selected={sel.curriculum} allLabel="All curricula" />
-          <MultiSelect id="rating" label="KHDA rating" options={ratOptions} selected={sel.rating} allLabel="All ratings" />
+          <MultiSelect id="curriculum" icon="flag" label="Curriculum" groups={curGroups} selected={sel.curriculum} allLabel="All curricula" />
+          <MultiSelect id="rating" icon="stamp" label="KHDA rating" options={ratOptions} selected={sel.rating} allLabel="All ratings" />
           <MultiSelect id="band" label="Fee band" options={bandOptions} selected={sel.band} allLabel="Any fee" />
           <MultiSelect id="area" label="Area" groups={areaGroups} selected={sel.area} allLabel="All areas" scroll />
           <div class="field clearall-cell">

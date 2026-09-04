@@ -24,13 +24,16 @@ export interface Group {
 interface Props {
   id: string;          // also the query-string key
   label: string;
+  /** Drawn before the label. Marks what the filter is about at a glance, the
+   *  way the coins already mark the fee band. */
+  icon?: "flag" | "stamp";
   options?: Option[];
   groups?: Group[];
   selected: string[];
   allLabel: string;
   scroll?: boolean;
 }
-const { id, label, options = [], groups, selected, allLabel, scroll = false } = Astro.props;
+const { id, label, icon, options = [], groups, selected, allLabel, scroll = false } = Astro.props;
 
 const flat: Option[] = groups ? groups.flatMap((g) => g.children) : options;
 
@@ -46,7 +49,26 @@ const allSelected = (g: Group) => g.children.every((c) => selected.includes(c.va
 ---
 
 <div class="field">
-  <label id={`${id}-label`}>{label}</label>
+  <label id={`${id}-label`}>
+    {icon === "flag" && (
+      <span class="field-ico" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M5 21V4" />
+          <path d="M5 4.5h11.5l-2.2 3.6 2.2 3.6H5z" />
+        </svg>
+      </span>
+    )}
+    {icon === "stamp" && (
+      <span class="field-ico" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="8.6" r="4.4" />
+          <path d="M9.6 12.6 9 16h6l-.6-3.4" />
+          <path d="M5.5 19.5h13" />
+        </svg>
+      </span>
+    )}
+    {label}
+  </label>
   <details class="multi" data-key={id}>
     <summary aria-label={`${label}, choose one or more`}>
       <span class="multi-summary">{summary}</span>

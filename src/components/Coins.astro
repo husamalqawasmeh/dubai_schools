@@ -4,6 +4,11 @@
  * for the dearest. Height carries the meaning, so empty slots are not drawn —
  * a taller stack is more money, the way a pile of coins actually reads.
  *
+ * One and two are centred in the box rather than sat on its floor: at that
+ * height the empty space above read as the coins having sunk in their chip.
+ * Three and four keep the common floor, which is where the height comparison
+ * actually does its work.
+ *
  * Deliberately not a second colour scale: the teal ramp already means "KHDA
  * rating", and two coloured ordinal scales on one card would compete.
  *
@@ -36,9 +41,18 @@ const baseY = big ? 41 : 15.4;
 const w = big ? 48 : 18;
 const h = big ? 52 : 20;
 
+// A stack of one or two leaves most of the box empty above it, which reads as
+// the coins having sunk rather than as a short stack. Those two are centred in
+// the box instead. Three and four still sit on the floor, where the difference
+// between them is what the height is saying.
+const stackTop = baseY - (count - 1) * step - ry;
+const stackBottom = baseY + thick + ry;
+const shift =
+  count > 0 && count <= 2 ? (h - (stackBottom - stackTop)) / 2 - stackTop : 0;
+
 // Bottom coin first, so later (higher) coins paint over the ones beneath.
-const coins = Array.from({ length: count }, (_, i) => baseY - i * step);
-const topY = coins.length ? coins[coins.length - 1] : baseY;
+const coins = Array.from({ length: count }, (_, i) => baseY - i * step + shift);
+const topY = coins.length ? coins[coins.length - 1] : baseY + shift;
 ---
 
 <svg
