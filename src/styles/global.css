@@ -977,7 +977,9 @@ button.btn:disabled { opacity: 0.55; cursor: default; }
   display: block; font-size: 11.5px; font-weight: 500;
   color: var(--muted); letter-spacing: 0; margin-top: 2px;
 }
-.tier-pitch { font-family: var(--display); font-size: 13.5px; color: var(--ink-2); margin: 8px 0 14px; }
+/* A line's worth of air under the price: 8px read as the pitch belonging to
+   the number above it rather than starting the card's description. */
+.tier-pitch { font-family: var(--display); font-size: 13.5px; color: var(--ink-2); margin: 29px 0 14px; }
 .tier-card ul { list-style: none; margin: 0 0 18px; padding: 0; display: grid; gap: 7px; }
 .tier-card li {
   font-family: var(--display); font-size: 13.5px; color: var(--ink-2);
