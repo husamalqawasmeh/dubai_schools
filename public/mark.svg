@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img" aria-label="Dubai Schools">
+  <!--
+    The site mark: a mortarboard whose tassel is a spire.
+
+    Two ideas had to fit in one shape. The board says school and reads at any
+    size — it is the most recognisable silhouette in education, and it survives
+    being 16 pixels wide in a browser tab, which a skyline does not. The tassel
+    is where Dubai gets in: instead of hanging as a cord it stands as a slender
+    spire with a bead at the tip, the proportion the city is known for.
+
+    Solid, not the hand-drawn line of the background doodles. Those live behind
+    opaque boxes at a large size and can afford a 1.6px stroke; a favicon
+    cannot, and a mark that dissolves in the tab is not a mark.
+
+    Geometry is built on a 64 grid with the board's centre at 32,26 so the whole
+    thing sits optically centred — a mortarboard is top-heavy, so centring it
+    metrically leaves it looking like it is falling out of the tile.
+  -->
+  <rect width="64" height="64" rx="14" fill="#0c6455"/>
+
+  <g fill="none" stroke="#ffffff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round">
+    <!-- the board -->
+    <path d="M32 15 L52 24 L32 33 L12 24 Z" fill="#ffffff" stroke-linejoin="round"/>
+    <!-- the cap beneath it, tucked so the board reads as one plane -->
+    <path d="M21 28.5 V39.5 C21 44.5 43 44.5 43 39.5 V28.5"/>
+    <!-- the tassel, standing as a spire rather than hanging as a cord -->
+    <path d="M50 25.5 V37"/>
+  </g>
+  <circle cx="50" cy="40.5" r="3.1" fill="#ffffff"/>
+</svg>

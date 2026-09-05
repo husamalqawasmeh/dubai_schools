@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <!--
+    The tab icon. Same mark as mark.svg with the strokes thickened and the
+    tassel dropped: at 16px the spire is a single grey pixel and the bead
+    disappears entirely, so keeping them only muddies the board. What is left
+    is the one shape that still reads at that size.
+  -->
+  <rect width="64" height="64" rx="14" fill="#0c6455"/>
+  <path d="M32 16 L53 25 L32 34 L11 25 Z" fill="#ffffff"/>
+  <path d="M20 29 V40 C20 45.6 44 45.6 44 40 V29"
+        fill="none" stroke="#ffffff" stroke-width="4.2"
+        stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

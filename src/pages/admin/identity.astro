@@ -1,0 +1,65 @@
+---
+import Base from "../../layouts/Base.astro";
+
+/**
+ * The identity demo — the mark drawing itself, then the two sentences that say
+ * why the site exists.
+ *
+ * Under /admin, so the middleware already requires a session. It is not linked
+ * from the public nav and is not meant to be: this is the thing you open in
+ * front of a school, not a page a parent wanders into.
+ *
+ * The animation is CSS and SVG only. A logo reveal that needs a script is a
+ * logo reveal that shows nothing while the script loads, which is the one
+ * moment it exists for.
+ */
+---
+
+<Base title="Dubai Schools — identity">
+  <div class="idwrap">
+    <div class="idstage">
+      <svg class="idmark" viewBox="0 0 64 64" role="img" aria-label="Dubai Schools">
+        <rect class="id-tile" width="64" height="64" rx="14" fill="var(--accent)" />
+        <path class="id-board" d="M32 15 L52 24 L32 33 L12 24 Z" fill="#fff" />
+        <path
+          class="id-cap"
+          d="M21 28.5 V39.5 C21 44.5 43 44.5 43 39.5 V28.5"
+          fill="none" stroke="#fff" stroke-width="3.2"
+          stroke-linecap="round" stroke-linejoin="round"
+        />
+        <path class="id-spire" d="M50 25.5 V37" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round" />
+        <circle class="id-bead" cx="50" cy="40.5" r="3.1" fill="#fff" />
+      </svg>
+
+      <h1 class="idword">Dubai<span>Schools</span></h1>
+
+      <p class="idline idline-1">
+        Every private school in Dubai in one place — curriculum, fees, KHDA
+        rating and area, searchable side by side, free and without an account.
+      </p>
+      <p class="idline idline-2">
+        Parents stop opening a dozen sites to compare four schools.
+        Schools get a listing they can correct, fill out and be found through.
+      </p>
+
+      <p class="idfoot">dubai-schools.can-du-ai.com</p>
+    </div>
+
+    <div class="idbar">
+      <button type="button" class="btn idreplay" id="replay">Play again</button>
+      <a class="btn sec" href="/admin">Back to admin</a>
+    </div>
+  </div>
+
+  <script is:inline>
+    // Replay works by taking the class off and forcing a reflow before putting
+    // it back. Without the reflow the browser coalesces both changes into no
+    // change at all, and the button appears dead.
+    document.getElementById("replay").addEventListener("click", function () {
+      var stage = document.querySelector(".idstage");
+      stage.classList.remove("is-running");
+      void stage.offsetWidth;
+      stage.classList.add("is-running");
+    });
+  </script>
+</Base>

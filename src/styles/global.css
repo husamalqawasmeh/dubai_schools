@@ -2152,3 +2152,105 @@ a.cur-note {
   color: var(--ink-2);
 }
 .chatbox.is-open .chatbox-hint { display: none; }
+
+/* ---------------- brand mark ---------------- */
+.brand { display: inline-flex; align-items: center; gap: 8px; }
+.brand-mark {
+  width: 26px; height: 26px; flex: none; display: block;
+  /* The board is top-heavy, so the mark sits a hair low against the cap height
+     of the word beside it. Metric centring reads as though it is sinking. */
+  transform: translateY(-0.5px);
+}
+.brand-word { line-height: 1; }
+
+/* ---------------- identity demo (admin only) ---------------- */
+.idwrap {
+  min-height: calc(100dvh - 52px);
+  display: grid;
+  grid-template-rows: 1fr auto;
+  place-items: center;
+  padding: 20px 24px 26px;
+  box-sizing: border-box;
+}
+.idstage { text-align: center; max-width: 46rem; }
+
+/* Each element waits its turn. The delays are the whole design: the mark lands
+   first and alone, the name arrives under it, then the two sentences — so a
+   viewer reads them in that order rather than all at once. */
+.idmark { width: 128px; height: 128px; display: block; margin: 0 auto; }
+.id-tile {
+  transform-origin: 50% 50%;
+  animation: id-tile 620ms cubic-bezier(.2, .8, .25, 1) both;
+}
+/* The board and cap draw themselves. dasharray equal to the path length means
+   the line starts fully "used up" and the offset walks it back into view. */
+.id-board {
+  animation: id-fade 460ms ease 420ms both;
+  transform-origin: 50% 38%;
+}
+.id-cap {
+  stroke-dasharray: 74;
+  stroke-dashoffset: 74;
+  animation: id-draw 620ms ease 640ms both;
+}
+.id-spire {
+  stroke-dasharray: 12;
+  stroke-dashoffset: 12;
+  animation: id-draw 320ms ease 1080ms both;
+}
+.id-bead { animation: id-pop 340ms cubic-bezier(.2, 1.5, .4, 1) 1300ms both; transform-origin: 50px 40.5px; }
+
+.idword {
+  margin: 18px 0 0;
+  font-family: var(--display);
+  font-size: clamp(30px, 6vw, 46px);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  animation: id-rise 560ms cubic-bezier(.2, .8, .25, 1) 1420ms both;
+}
+.idword span { color: var(--accent); }
+
+.idline {
+  margin: 14px auto 0;
+  max-width: 40rem;
+  font-family: var(--display);
+  font-size: clamp(14px, 2.1vw, 17px);
+  line-height: 1.6;
+  color: var(--ink-2);
+}
+.idline-1 { animation: id-rise 560ms cubic-bezier(.2, .8, .25, 1) 1820ms both; }
+.idline-2 { animation: id-rise 560ms cubic-bezier(.2, .8, .25, 1) 2180ms both; }
+.idfoot {
+  margin: 22px 0 0;
+  font-family: var(--ui);
+  font-size: 12.5px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: var(--muted);
+  animation: id-fade 620ms ease 2600ms both;
+}
+.idbar { display: flex; gap: 10px; align-items: center; }
+.idbar .btn { margin-top: 0; }
+
+@keyframes id-tile {
+  from { opacity: 0; transform: scale(.72) rotate(-8deg); }
+  to   { opacity: 1; transform: scale(1) rotate(0); }
+}
+@keyframes id-fade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes id-draw { to { stroke-dashoffset: 0; } }
+@keyframes id-pop { from { opacity: 0; transform: scale(0); } to { opacity: 1; transform: scale(1); } }
+@keyframes id-rise {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* An identity reel is decoration by definition, so it is the first thing to go
+   when someone has asked for less motion. Everything still arrives — it just
+   arrives already there. */
+@media (prefers-reduced-motion: reduce) {
+  .id-tile, .id-board, .id-cap, .id-spire, .id-bead,
+  .idword, .idline, .idfoot { animation: none; opacity: 1; transform: none; }
+  .id-cap, .id-spire { stroke-dashoffset: 0; }
+  .idreplay { display: none; }
+}

@@ -38,6 +38,10 @@ const [schools, subs, details, fees] = await DB.batch<any>([
         <h2>Schools</h2>
         <p>Filter the directory, select schools and export or mail the ones that gave us an address.</p>
       </a>
+      <a class="adminlink" href="/admin/identity">
+        <h2>Demo the logo</h2>
+        <p>The mark drawing itself, then what the site is for in two lines. Admin only — this is the one to open in front of a school.</p>
+      </a>
       <div class="adminlink is-soon">
         <h2>Moderation queue</h2>
         <p>{subs.results[0].n} submission{subs.results[0].n === 1 ? "" : "s"} waiting. Not built yet — they are safe in the database meanwhile.</p>

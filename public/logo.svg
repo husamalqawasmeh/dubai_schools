@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 64" width="260" height="64" role="img" aria-label="Dubai Schools">
+  <!--
+    The horizontal lockup, for sharing cards and anywhere the mark needs its
+    name beside it.
+
+    The wordmark is live text in Quicksand rather than outlines, because the
+    site already loads that face — so this file stays editable and small. The
+    fallback stack matters: if it renders somewhere Quicksand is absent, a
+    rounded grotesque keeps the character rather than dropping to Times.
+
+    "Dubai" is ink and "Schools" is the accent green, the same split the HTML
+    brand uses, so the lockup and the header cannot drift apart.
+  -->
+  <rect width="64" height="64" rx="14" fill="#0c6455"/>
+  <path d="M32 15 L52 24 L32 33 L12 24 Z" fill="#ffffff"/>
+  <path d="M21 28.5 V39.5 C21 44.5 43 44.5 43 39.5 V28.5"
+        fill="none" stroke="#ffffff" stroke-width="3.2"
+        stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M50 25.5 V37" fill="none" stroke="#ffffff" stroke-width="3.2" stroke-linecap="round"/>
+  <circle cx="50" cy="40.5" r="3.1" fill="#ffffff"/>
+
+  <text x="80" y="40.5"
+        font-family="Quicksand, 'Nunito', 'Avenir Next', 'Segoe UI', system-ui, sans-serif"
+        font-size="25" font-weight="700" letter-spacing="-0.3">
+    <tspan fill="#12241a">Dubai</tspan><tspan fill="#0c6455" dx="7">Schools</tspan>
+  </text>
+</svg>
