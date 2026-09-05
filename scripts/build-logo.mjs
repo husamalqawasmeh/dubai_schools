@@ -138,14 +138,15 @@ const MARK = {
   // The UAE dirham: a D-bowl on a stem with two bars through it. Worth checking
   // against the Central Bank's own artwork before this goes on anything
   // printed — it is drawn from the shape, not from the official file.
-  // Thinner than it was. Weight and clarity are not the same thing: at 3.8 the
-  // stem and the bars nearly closed the counters between them, and a symbol
-  // reads by its gaps as much as by its ink.
+  // Thinner again. Every stroke came down together — stem, bars and the bowl's
+  // wall — because thinning only the stem would have left the bowl looking
+  // swollen beside it. The symbol keeps its size and its contrast; only the
+  // ink came off, which is what opens the counters.
   coins:
-    "M8.6 3.4h2.8v17.2H8.6z" +
-    "M10.6 3.4c6 0 10 3.4 10 8.6s-4 8.6-10 8.6v-2.8c4.3 0 7.2-2.3 7.2-5.8s-2.9-5.8-7.2-5.8z" +
-    "M3.4 8.6h11.2v2.6H3.4z" +
-    "M3.4 12.8h11.2v2.6H3.4z",
+    "M8.9 3.4h2.2v17.2H8.9z" +
+    "M10.6 3.4c6 0 10 3.4 10 8.6s-4 8.6-10 8.6v-2.2c4.6 0 7.8-2.6 7.8-6.4s-3.2-6.4-7.8-6.4z" +
+    "M3.4 8.9h11.2v2H3.4z" +
+    "M3.4 13.1h11.2v2H3.4z",
 };
 
 /**
