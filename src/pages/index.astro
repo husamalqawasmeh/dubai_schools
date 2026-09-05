@@ -10,6 +10,10 @@ import LensLogo from "../components/LensLogo.astro";
  * site now returns to the overview rather than here, because that is the page
  * people are actually working in.
  *
+ * No header. Every nav item leads somewhere behind this page, so offering them
+ * here would be two ways past the same point, and the one button would stop
+ * looking like the way in. The nav comes back the moment you are through.
+ *
  * WHAT A SPLASH COSTS, AND HOW IT IS PAID FOR HERE
  * ------------------------------------------------
  * A front page with a logo on it has almost no text for a search engine to
@@ -28,6 +32,7 @@ const ACCENT_FROM = 5;
 ---
 
 <Base
+  bare
   title="Dubai Schools — every private school in Dubai, in one place"
   description="Compare all 232 KHDA-registered private schools in Dubai: curriculum, fees, inspection rating, area and grade range, side by side. Free, and without an account."
 >
@@ -62,11 +67,12 @@ const ACCENT_FROM = 5;
           </section>
         </div>
 
-        <div class="idgo">
-          <a class="btn idgo-btn" href="/overview">Start the journey</a>
-          <span class="idgo-note">232 schools · 78 areas · no sign-up</span>
-        </div>
       </div>
+    </div>
+
+    <div class="idgo">
+      <a class="btn idgo-btn" href="/overview">Start the journey</a>
+      <span class="idgo-note">232 schools · 78 areas · no sign-up</span>
     </div>
   </div>
 

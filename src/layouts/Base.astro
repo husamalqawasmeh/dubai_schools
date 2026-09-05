@@ -5,9 +5,14 @@ import LensLogo from "../components/LensLogo.astro";
 interface Props {
   title: string;
   description?: string;
+  /** Drop the header entirely. The front page is a door, not a place to
+   *  navigate from — every nav item leads somewhere behind that door, so
+   *  offering them before it is opened is offering two ways past the same
+   *  point and makes the one button stop looking like the way in. */
+  bare?: boolean;
 }
 
-const { title, description = "Search and compare all 232 KHDA-registered private schools in Dubai: curriculum, fees, inspection rating, and location." } = Astro.props;
+const { title, description = "Search and compare all 232 KHDA-registered private schools in Dubai: curriculum, fees, inspection rating, and location.", bare = false } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site);
 
 /**
@@ -61,7 +66,8 @@ const isHere = (href: string) => {
       href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Quicksand:wght@400;500;600;700&display=swap"
     />
   </head>
-  <body>
+  <body class={bare ? "is-bare" : undefined}>
+{!bare && (
     <header class="site-head">
       <div class="wrap">
         <div class="brandwrap">
@@ -103,6 +109,7 @@ const isHere = (href: string) => {
         </nav>
       </div>
     </header>
+    )}
 
     <main>
       <slot />

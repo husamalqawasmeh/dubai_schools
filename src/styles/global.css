@@ -2418,3 +2418,21 @@ a.cur-note {
 @media (prefers-reduced-motion: reduce) {
   .idgo { animation: none; opacity: 1; transform: none; }
 }
+
+/* ---------------- the front door ---------------- */
+/* No header on this page, so the shell is one row instead of two and the stage
+   gets the whole screen. */
+body.is-bare { grid-template-rows: minmax(0, 1fr); }
+body.is-bare .idwrap { min-height: 100dvh; }
+
+/* The button is the bottom row of the page grid rather than the last thing in
+   the text column, so it sits at the foot of the screen whatever the lens is
+   doing above it. Centred, because it is the only thing on its line and
+   ranging it left would leave it looking dropped rather than placed. */
+.idwrap > .idgo {
+  justify-self: center;
+  flex-direction: column;
+  gap: 8px;
+  margin: 0 0 6px;
+  text-align: center;
+}
