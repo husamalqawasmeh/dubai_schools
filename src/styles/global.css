@@ -2073,6 +2073,12 @@ a.cur-note {
      side. It runs before the scale, so it is not stretched along with it. */
   transform: translateY(-1px) scaleY(1.85);
 }
+/* Pointing down, at the page it belongs to. The right pointer is stretched
+   tall; this one is stretched wide, which is the same idea turned through
+   ninety degrees rather than the same transform reused. */
+.nav-sep.is-down {
+  transform: translateY(-1px) scaleX(1.4);
+}
 .nav-mark {
   display: inline-block;
   margin-left: 4px;
