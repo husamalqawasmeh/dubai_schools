@@ -2395,3 +2395,26 @@ a.cur-note {
 /* 0.35em is half a cap height in this face, not half an em. Half an em would
    drop them below the descenders and read as broken rather than as bounced. */
 .idch.is-low { transform: translateY(0.35em); }
+
+/* ---------------- the way in ---------------- */
+.idgo { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-top: 20px; }
+.idgo-btn {
+  margin-top: 0;
+  padding: 12px 26px;
+  font-size: 16px;
+  background: var(--accent);
+  border-radius: 7px;
+}
+.idgo-btn:hover { background: var(--accent-2); }
+.idgo-note {
+  font-family: var(--display);
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--muted);
+}
+/* It arrives before the panels, not after. Someone who already knows the site
+   should not have to watch the whole reveal to find the door. */
+.idgo { animation: id-rise 460ms cubic-bezier(.2, .8, .25, 1) 900ms both; }
+@media (prefers-reduced-motion: reduce) {
+  .idgo { animation: none; opacity: 1; transform: none; }
+}

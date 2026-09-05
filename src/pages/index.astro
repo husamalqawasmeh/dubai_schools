@@ -1,205 +1,176 @@
 ---
 import Base from "../layouts/Base.astro";
-import { stats } from "../lib/db";
-import Coins from "../components/Coins.astro";
+import LensLogo from "../components/LensLogo.astro";
 
-const s = await stats();
-
-// KHDA's tiers in their official order, best first, keeping only those present.
-const TIERS = ["Outstanding", "Very Good", "Good", "Acceptable", "Weak", "Very Weak", "Not rated"];
-const tiersPresent = TIERS.filter((t) => s.ratings[t]);
-const maxTier = Math.max(...tiersPresent.map((t) => s.ratings[t]));
-
-const BANDS = [
-  { key: "acceptable", label: "Acceptable", dots: 1, range: "under AED 25,000", short: "< 25k" },
-  { key: "medium", label: "Medium", dots: 2, range: "AED 25,000 – 49,999", short: "25–50k" },
-  { key: "high", label: "Higher", dots: 3, range: "AED 50,000 – 89,999", short: "50–90k" },
-  { key: "very_high", label: "Highest", dots: 4, range: "AED 90,000 and above", short: "90k +" },
-];
-
-// Top curricula by name, with the long tail folded into one row rather than
-// drawn as eight bars of one or two schools each. TOP must stay in step with
-// the same constant in schools/index.astro, which groups the filter the same way.
-const TOP = 6;
-const top = s.curriculaCounts.slice(0, TOP);
-const tail = s.curriculaCounts.slice(TOP);
-const tailTotal = tail.reduce((a, c) => a + c.n, 0);
-const maxCur = top[0]?.n ?? 1;
+/**
+ * The front of the site: the mark, who it is for, and the way in.
+ *
+ * This was the admin demo. Moving it to "/" makes it the first thing anyone
+ * sees, and pushes the overview to /overview — so every "back" link on the
+ * site now returns to the overview rather than here, because that is the page
+ * people are actually working in.
+ *
+ * WHAT A SPLASH COSTS, AND HOW IT IS PAID FOR HERE
+ * ------------------------------------------------
+ * A front page with a logo on it has almost no text for a search engine to
+ * read, and "/" is the page that ranks. So the description below carries the
+ * substance, the two panels are real prose rather than images, and the way in
+ * is a plain <a href> — a crawler follows it to the overview and finds all 232
+ * schools behind that. A button that needed JavaScript would have made this
+ * site's front door invisible.
+ *
+ * The bubbles bounce, and that is the only part needing a script. If it never
+ * runs, the mark is still a mark and "Start the journey" still works.
+ */
+const WORD = "DubaiSchools";
+const DROPPED = new Set([2, 5, 7, 11]);   // b, S, h, s
+const ACCENT_FROM = 5;
 ---
 
-<Base title="Dubai Schools — compare all 232 KHDA-registered schools">
-  <div class="wrap home">
-    <div class="home-main">
-      <div class="titlerow">
-        <h1>Every private school in Dubai, in one place.</h1>
-        <p class="soonbox">
-          <span class="soonbox-lead">Coming soon :</span>
-          <span class="soonbox-main">Schools in other Emirates</span>
-        </p>
-      </div>
+<Base
+  title="Dubai Schools — every private school in Dubai, in one place"
+  description="Compare all 232 KHDA-registered private schools in Dubai: curriculum, fees, inspection rating, area and grade range, side by side. Free, and without an account."
+>
+  <div class="idwrap">
+    <div class="idstage">
+      <LensLogo size={403} class="idmark is-reveal" />
 
-      <div class="page-head">
-        <div class="stats">
-          <a class="stat" href="/schools"><b>{s.total}</b><span><span class="stat-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6h11M9 12h11M9 18h11"/><circle cx="4.5" cy="6" r="1.3"/><circle cx="4.5" cy="12" r="1.3"/><circle cx="4.5" cy="18" r="1.3"/></svg></span>Schools listed</span></a>
-                    <a class="stat" href="/schools"><b>{s.areas}</b><span><span class="stat-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3 3 5.4v15.1L9 18l6 2.5 6-2.4V3l-6 2.4z"/><path d="M9 3v15"/><path d="M15 5.4v15.1"/></svg></span>Areas covered</span></a>
-                  </div>
-        <p class="hintbox">
-          <span class="hintbox-ico" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M5.5 3.4 18 11.2l-5.2 1.2 3 5.4-2.4 1.3-3-5.4-3.9 3.6z"/>
-            </svg>
-          </span>
-          You can click any number on this page to filter the schools in the
-          category indicated by that number.
-        </p>
-      </div>
-
-    <section class="pane pane-rating">
-              <div class="panerow">
-        <a class="panebox" href="/schools?rated=1">
-          <b>{s.rated}</b>
-          <span>
-            <span class="stat-ico" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="12" cy="9" r="6"/><path d="M8.5 14.2 7 22l5-2.6L17 22l-1.5-7.8"/>
-              </svg>
-            </span>
-            Rated by KHDA
-          </span>
-        </a>
-
-        <div class="tier-grid rating-grid">
-          {tiersPresent.map((t, i) => (
-            <a class="tier" href={`/schools?rating=${encodeURIComponent(t)}`}>
-              <span
-                class={t === "Not rated" ? "tier-swatch none" : "tier-swatch"}
-                style={`--c:var(--r${Math.min(i + 1, 4)})`}
-                aria-hidden="true"
-              ></span>
-              <span class="tier-name">{t}</span>
-              <span class="tier-n">{s.ratings[t]}</span>
-            </a>
+      <div class="idside">
+        <h1 class="idword">
+          {[...WORD].map((ch, i) => (
+            <span
+              class={`idch${DROPPED.has(i) ? " is-low" : ""}${i >= ACCENT_FROM ? " is-accent" : ""}`}
+            >{ch}</span>
           ))}
+        </h1>
+
+        <div class="idsplit">
+          <section class="idcard idcard-parents">
+            <h2>For parents</h2>
+            <p>
+              Every private school in one place — curriculum, fees, KHDA rating
+              and area, side by side. Free, and without an account.
+            </p>
+          </section>
+
+          <section class="idcard idcard-schools">
+            <h2>For schools</h2>
+            <p>
+              A listing you can correct, fill out and be found through — in
+              front of every parent comparing schools in Dubai, at no cost.
+            </p>
+          </section>
+        </div>
+
+        <div class="idgo">
+          <a class="btn idgo-btn" href="/overview">Start the journey</a>
+          <span class="idgo-note">232 schools · 78 areas · no sign-up</span>
         </div>
       </div>
-    </section>
-
-    <section class="pane pane-curriculum">
-      <div class="panerow">
-        <a class="panebox" href="/schools">
-          <b>{s.curricula}</b>
-          <span>
-            <span class="stat-ico" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M5 21V4"/><path d="M5 5.2h9.6l-1.6 3.4 1.6 3.4H5"/><path d="M18.5 21v-9"/><path d="M18.5 12.6h3.2l-.9 1.9.9 1.9h-3.2"/>
-              </svg>
-            </span>
-            Curricula<span class="star">*</span>
-          </span>
-        </a>
-        <div class="tier-grid cur-grid">
-          {top.map((c) => (
-            <a class="tier" href={`/schools?curriculum=${encodeURIComponent(c.name)}`}>
-              <span class="cur-bar" aria-hidden="true">
-                <span style={`width:${Math.round((c.n / maxCur) * 100)}%`}></span>
-              </span>
-              <span class="tier-name">{c.name}</span>
-              <span class="tier-n">{c.n}</span>
-            </a>
-          ))}
-          {tail.length > 0 && (
-            <a
-              class="tier"
-              href={`/schools?curriculum=${tail.map((c) => encodeURIComponent(c.name)).join(",")}`}
-            >
-              <span class="cur-bar hatch" aria-hidden="true">
-                <span style={`width:${Math.round((tailTotal / maxCur) * 100)}%`}></span>
-              </span>
-              <span class="tier-name">Other &times;{tail.length}</span>
-              <span class="tier-n">{tailTotal}</span>
-            </a>
-          )}
-        </div>
-      </div>
-    </section>
-
-    <section class="pane pane-cost">
-      <div class="panerow">
-        <div class="panebox panebox-label">
-          <span>
-            <span class="stat-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="6" rx="8" ry="3"/><path d="M4 6v5c0 1.7 3.6 3 8 3s8-1.3 8-3V6"/><path d="M4 11v5c0 1.7 3.6 3 8 3s8-1.3 8-3v-5"/></svg></span>
-            What schools cost
-          </span>
-        </div>
-        <div class="tier-grid band-grid">
-          {BANDS.map((b) => (
-            <a class="tier" href={`/schools?band=${b.key}`}>
-              <span class="band-coins"><Coins n={b.dots} size="lg" label={b.label} /></span>
-              <span class="tier-name">{b.label}</span>
-              <span class="tier-n">{s.bands[b.key] ?? 0}</span>
-              <span class="band-range">{b.short}</span>
-            </a>
-          ))}
-          <a class="tier" href="/schools?band=none">
-            <span class="band-coins">
-              <svg
-                class="coins coins-lg coin-empty"
-                viewBox="0 0 46 48"
-                width="46"
-                height="48"
-                role="img"
-                aria-label="No fee published"
-              >
-                <ellipse cx="23" cy="38" rx="14" ry="4.8" />
-              </svg>
-            </span>
-            <span class="tier-name">Not published</span>
-            <span class="tier-n">{s.bands["none"] ?? 0}</span>
-            <span class="band-range">&nbsp;</span>
-          </a>
-        </div>
-      </div>
-    </section>
-
-      <a class="cur-note" href="/schools?curriculum=__multi__">
-        <span class="star">*</span> Some schools have more than one curricula, such as
-        British and IB, so the counts total more than {s.total}.
-      </a>
     </div>
-
-    <aside class="home-rail">
-      <section class="pane pane-search">
-        <h3><span class="chart-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5 21 21"/></svg></span>Browse, filter or search</h3>
-        <p class="sub">
-          Search by School Name, Area, Curriculum, KHDA rating or Fee.
-        </p>
-        <a class="btn" href="/schools">Browse all {s.total}</a>
-      </section>
-
-      <div class="chatbox" id="chatbox">
-          <p class="chatbox-q">
-            <span class="chatbox-ico" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M21 11.5a8.4 8.4 0 0 1-9 8.4 9.9 9.9 0 0 1-2.8-.4L3 21l1.6-4.6A8.2 8.2 0 0 1 3.6 11.5 8.4 8.4 0 0 1 12 3.1a8.4 8.4 0 0 1 9 8.4z"/>
-              </svg>
-            </span>
-            Have a question?
-            <button type="button" class="chatclose" id="chatclose" hidden aria-label="Close chat">&times;</button>
-          </p>
-          <p class="chatbox-hint">
-            Ask about anything the listing does not cover — indoor and outdoor
-            facilities, class sizes, school transport and bus routes, how many
-            students and teachers a school has, the make-up of its student
-            population, curriculum certifications and accreditations, term dates,
-            admissions, and so on.
-          </p>
-          <div class="chatlog" id="chatlog" hidden></div>
-          <form class="chatform" id="chatform" hidden>
-            <input id="chatinput" placeholder="Ask about fees, curricula or areas…" autocomplete="off" />
-            <button type="submit" id="chatsend" aria-label="Send">&rarr;</button>
-          </form>
-          <button type="button" class="btn chatbox-cta" id="chatopen">Chat with us</button>
-        </div>
-    </aside>
   </div>
+
+  <script is:inline>
+    (function () {
+      var svg = document.querySelector(".idmark");
+      if (!svg) return;
+
+      var still = window.matchMedia("(prefers-reduced-motion: reduce)");
+      if (still.matches) return;
+
+      // The wall comes from the artwork's own clip circle, so resizing the logo
+      // cannot leave the physics bouncing off where the glass used to be.
+      var bounds = svg.querySelector("clipPath circle");
+      if (!bounds) return;
+      var CX = +bounds.getAttribute("cx");
+      var CY = +bounds.getAttribute("cy");
+      var WALL = +bounds.getAttribute("r") - 1.5;
+
+      var balls = [];
+      svg.querySelectorAll(".bub").forEach(function (g, i) {
+        var c = g.querySelector("circle");
+        var x0 = +c.getAttribute("cx");
+        var y0 = +c.getAttribute("cy");
+        // Headings spread around the circle rather than random: random ones
+        // clump, and a clump drifts as one mass.
+        var a = (i / 11) * Math.PI * 2 + 0.7;
+        // Slow enough to read as suspended rather than as a screensaver.
+        var speed = 0.052 + (i % 4) * 0.011;
+        balls.push({
+          g: g, x0: x0, y0: y0, x: x0, y: y0,
+          vx: Math.cos(a) * speed, vy: Math.sin(a) * speed,
+          r: +c.getAttribute("r"),
+        });
+      });
+
+      var last = 0;
+      function step(now) {
+        // Scaled to a 60fps frame so speed does not depend on the display, and
+        // clamped so a backgrounded tab does not resume with one jump that
+        // teleports a bubble through a wall.
+        var dt = last ? Math.min((now - last) / 16.7, 3) : 1;
+        last = now;
+
+        for (var i = 0; i < balls.length; i++) {
+          var b = balls[i];
+          b.x += b.vx * dt;
+          b.y += b.vy * dt;
+
+          var dx = b.x - CX, dy = b.y - CY;
+          var d = Math.hypot(dx, dy);
+          var max = WALL - b.r;
+          if (d > max) {
+            var nx = dx / d, ny = dy / d;
+            var dot = b.vx * nx + b.vy * ny;
+            b.vx -= 2 * dot * nx;
+            b.vy -= 2 * dot * ny;
+            b.x = CX + nx * max;
+            b.y = CY + ny * max;
+          }
+        }
+
+        // Equal masses, so a collision is a swap of the velocity along the line
+        // of centres. Overlapping pairs are separated first, or two bubbles
+        // stick together and jitter.
+        for (var a2 = 0; a2 < balls.length; a2++) {
+          for (var b2 = a2 + 1; b2 < balls.length; b2++) {
+            var p = balls[a2], q = balls[b2];
+            var ex = q.x - p.x, ey = q.y - p.y;
+            var dist = Math.hypot(ex, ey) || 0.0001;
+            var need = p.r + q.r;
+            if (dist >= need) continue;
+
+            var ux = ex / dist, uy = ey / dist;
+            var push = (need - dist) / 2;
+            p.x -= ux * push; p.y -= uy * push;
+            q.x += ux * push; q.y += uy * push;
+
+            var pn = p.vx * ux + p.vy * uy;
+            var qn = q.vx * ux + q.vy * uy;
+            if (pn - qn <= 0) continue;
+            var swap = pn - qn;
+            p.vx -= swap * ux; p.vy -= swap * uy;
+            q.vx += swap * ux; q.vy += swap * uy;
+          }
+        }
+
+        for (var k = 0; k < balls.length; k++) {
+          var t = balls[k];
+          t.g.setAttribute(
+            "transform",
+            "translate(" + (t.x - t.x0).toFixed(2) + " " + (t.y - t.y0).toFixed(2) + ")"
+          );
+        }
+        requestAnimationFrame(step);
+      }
+
+      // The last bubble starts at 300 + 10x90 and takes 520ms, so the reveal is
+      // over at 1720 — not before, or CSS is still animating a bubble the
+      // script has started writing to.
+      setTimeout(function () {
+        svg.classList.add("is-bouncing");
+        requestAnimationFrame(step);
+      }, 1720);
+    })();
+  </script>
 </Base>

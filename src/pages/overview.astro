@@ -1,0 +1,205 @@
+---
+import Base from "../layouts/Base.astro";
+import { stats } from "../lib/db";
+import Coins from "../components/Coins.astro";
+
+const s = await stats();
+
+// KHDA's tiers in their official order, best first, keeping only those present.
+const TIERS = ["Outstanding", "Very Good", "Good", "Acceptable", "Weak", "Very Weak", "Not rated"];
+const tiersPresent = TIERS.filter((t) => s.ratings[t]);
+const maxTier = Math.max(...tiersPresent.map((t) => s.ratings[t]));
+
+const BANDS = [
+  { key: "acceptable", label: "Acceptable", dots: 1, range: "under AED 25,000", short: "< 25k" },
+  { key: "medium", label: "Medium", dots: 2, range: "AED 25,000 – 49,999", short: "25–50k" },
+  { key: "high", label: "Higher", dots: 3, range: "AED 50,000 – 89,999", short: "50–90k" },
+  { key: "very_high", label: "Highest", dots: 4, range: "AED 90,000 and above", short: "90k +" },
+];
+
+// Top curricula by name, with the long tail folded into one row rather than
+// drawn as eight bars of one or two schools each. TOP must stay in step with
+// the same constant in schools/index.astro, which groups the filter the same way.
+const TOP = 6;
+const top = s.curriculaCounts.slice(0, TOP);
+const tail = s.curriculaCounts.slice(TOP);
+const tailTotal = tail.reduce((a, c) => a + c.n, 0);
+const maxCur = top[0]?.n ?? 1;
+---
+
+<Base title="Dubai Schools — compare all 232 KHDA-registered schools">
+  <div class="wrap home">
+    <div class="home-main">
+      <div class="titlerow">
+        <h1>Every private school in Dubai, in one place.</h1>
+        <p class="soonbox">
+          <span class="soonbox-lead">Coming soon :</span>
+          <span class="soonbox-main">Schools in other Emirates</span>
+        </p>
+      </div>
+
+      <div class="page-head">
+        <div class="stats">
+          <a class="stat" href="/schools"><b>{s.total}</b><span><span class="stat-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6h11M9 12h11M9 18h11"/><circle cx="4.5" cy="6" r="1.3"/><circle cx="4.5" cy="12" r="1.3"/><circle cx="4.5" cy="18" r="1.3"/></svg></span>Schools listed</span></a>
+                    <a class="stat" href="/schools"><b>{s.areas}</b><span><span class="stat-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3 3 5.4v15.1L9 18l6 2.5 6-2.4V3l-6 2.4z"/><path d="M9 3v15"/><path d="M15 5.4v15.1"/></svg></span>Areas covered</span></a>
+                  </div>
+        <p class="hintbox">
+          <span class="hintbox-ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M5.5 3.4 18 11.2l-5.2 1.2 3 5.4-2.4 1.3-3-5.4-3.9 3.6z"/>
+            </svg>
+          </span>
+          You can click any number on this page to filter the schools in the
+          category indicated by that number.
+        </p>
+      </div>
+
+    <section class="pane pane-rating">
+              <div class="panerow">
+        <a class="panebox" href="/schools?rated=1">
+          <b>{s.rated}</b>
+          <span>
+            <span class="stat-ico" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="9" r="6"/><path d="M8.5 14.2 7 22l5-2.6L17 22l-1.5-7.8"/>
+              </svg>
+            </span>
+            Rated by KHDA
+          </span>
+        </a>
+
+        <div class="tier-grid rating-grid">
+          {tiersPresent.map((t, i) => (
+            <a class="tier" href={`/schools?rating=${encodeURIComponent(t)}`}>
+              <span
+                class={t === "Not rated" ? "tier-swatch none" : "tier-swatch"}
+                style={`--c:var(--r${Math.min(i + 1, 4)})`}
+                aria-hidden="true"
+              ></span>
+              <span class="tier-name">{t}</span>
+              <span class="tier-n">{s.ratings[t]}</span>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="pane pane-curriculum">
+      <div class="panerow">
+        <a class="panebox" href="/schools">
+          <b>{s.curricula}</b>
+          <span>
+            <span class="stat-ico" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M5 21V4"/><path d="M5 5.2h9.6l-1.6 3.4 1.6 3.4H5"/><path d="M18.5 21v-9"/><path d="M18.5 12.6h3.2l-.9 1.9.9 1.9h-3.2"/>
+              </svg>
+            </span>
+            Curricula<span class="star">*</span>
+          </span>
+        </a>
+        <div class="tier-grid cur-grid">
+          {top.map((c) => (
+            <a class="tier" href={`/schools?curriculum=${encodeURIComponent(c.name)}`}>
+              <span class="cur-bar" aria-hidden="true">
+                <span style={`width:${Math.round((c.n / maxCur) * 100)}%`}></span>
+              </span>
+              <span class="tier-name">{c.name}</span>
+              <span class="tier-n">{c.n}</span>
+            </a>
+          ))}
+          {tail.length > 0 && (
+            <a
+              class="tier"
+              href={`/schools?curriculum=${tail.map((c) => encodeURIComponent(c.name)).join(",")}`}
+            >
+              <span class="cur-bar hatch" aria-hidden="true">
+                <span style={`width:${Math.round((tailTotal / maxCur) * 100)}%`}></span>
+              </span>
+              <span class="tier-name">Other &times;{tail.length}</span>
+              <span class="tier-n">{tailTotal}</span>
+            </a>
+          )}
+        </div>
+      </div>
+    </section>
+
+    <section class="pane pane-cost">
+      <div class="panerow">
+        <div class="panebox panebox-label">
+          <span>
+            <span class="stat-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="6" rx="8" ry="3"/><path d="M4 6v5c0 1.7 3.6 3 8 3s8-1.3 8-3V6"/><path d="M4 11v5c0 1.7 3.6 3 8 3s8-1.3 8-3v-5"/></svg></span>
+            What schools cost
+          </span>
+        </div>
+        <div class="tier-grid band-grid">
+          {BANDS.map((b) => (
+            <a class="tier" href={`/schools?band=${b.key}`}>
+              <span class="band-coins"><Coins n={b.dots} size="lg" label={b.label} /></span>
+              <span class="tier-name">{b.label}</span>
+              <span class="tier-n">{s.bands[b.key] ?? 0}</span>
+              <span class="band-range">{b.short}</span>
+            </a>
+          ))}
+          <a class="tier" href="/schools?band=none">
+            <span class="band-coins">
+              <svg
+                class="coins coins-lg coin-empty"
+                viewBox="0 0 46 48"
+                width="46"
+                height="48"
+                role="img"
+                aria-label="No fee published"
+              >
+                <ellipse cx="23" cy="38" rx="14" ry="4.8" />
+              </svg>
+            </span>
+            <span class="tier-name">Not published</span>
+            <span class="tier-n">{s.bands["none"] ?? 0}</span>
+            <span class="band-range">&nbsp;</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+      <a class="cur-note" href="/schools?curriculum=__multi__">
+        <span class="star">*</span> Some schools have more than one curricula, such as
+        British and IB, so the counts total more than {s.total}.
+      </a>
+    </div>
+
+    <aside class="home-rail">
+      <section class="pane pane-search">
+        <h3><span class="chart-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5 21 21"/></svg></span>Browse, filter or search</h3>
+        <p class="sub">
+          Search by School Name, Area, Curriculum, KHDA rating or Fee.
+        </p>
+        <a class="btn" href="/schools">Browse all {s.total}</a>
+      </section>
+
+      <div class="chatbox" id="chatbox">
+          <p class="chatbox-q">
+            <span class="chatbox-ico" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 11.5a8.4 8.4 0 0 1-9 8.4 9.9 9.9 0 0 1-2.8-.4L3 21l1.6-4.6A8.2 8.2 0 0 1 3.6 11.5 8.4 8.4 0 0 1 12 3.1a8.4 8.4 0 0 1 9 8.4z"/>
+              </svg>
+            </span>
+            Have a question?
+            <button type="button" class="chatclose" id="chatclose" hidden aria-label="Close chat">&times;</button>
+          </p>
+          <p class="chatbox-hint">
+            Ask about anything the listing does not cover — indoor and outdoor
+            facilities, class sizes, school transport and bus routes, how many
+            students and teachers a school has, the make-up of its student
+            population, curriculum certifications and accreditations, term dates,
+            admissions, and so on.
+          </p>
+          <div class="chatlog" id="chatlog" hidden></div>
+          <form class="chatform" id="chatform" hidden>
+            <input id="chatinput" placeholder="Ask about fees, curricula or areas…" autocomplete="off" />
+            <button type="submit" id="chatsend" aria-label="Send">&rarr;</button>
+          </form>
+          <button type="button" class="btn chatbox-cta" id="chatopen">Chat with us</button>
+        </div>
+    </aside>
+  </div>
+</Base>

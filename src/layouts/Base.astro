@@ -23,20 +23,21 @@ const NAV = [
   { href: "/news", label: "Schools News" },
   { href: "/contribute", label: "Contribute" },
   { href: "/advertise", label: "Advertise" },
-  { href: "/#chatbox", label: "Chatbot" },
+  { href: "/overview#chatbox", label: "Chatbot" },
 ];
 
 /**
  * Which nav item the page belongs to.
  *
- * Compared on the path alone: the Chatbot item points at /#chatbox, and a
- * fragment is not part of a page's identity. A school page under /schools/...
- * matches nothing in the bar, which is correct — no nav item claims it.
+ * Compared on the path alone: the Chatbot item points at /overview#chatbox,
+ * and a fragment is not part of a page's identity. A school page under
+ * /schools/... matches nothing in the bar, which is correct — no nav item
+ * claims it. Nor does "/", which is the splash and has no section of its own.
  */
 const here = (Astro.url.pathname.replace(/\/+$/, "") || "/").toLowerCase();
 const isHere = (href: string) => {
   const base = (href.split("#")[0].replace(/\/+$/, "") || "/").toLowerCase();
-  if (base === "/") return false;           // the overview has no nav item
+  if (base === "/") return false;           // the splash has no nav item
   return here === base || here.startsWith(base + "/");
 };
 ---
