@@ -90,10 +90,11 @@ const ICONS = {
     "M2.2 16.2h19.6v1.9H2.2z" +
     "M6.6 16.4a2.3 2.3 0 1 0 0 4.6 2.3 2.3 0 0 0 0-4.6z" +
     "M17.4 16.4a2.3 2.3 0 1 0 0 4.6 2.3 2.3 0 0 0 0-4.6z",
-  sport:
-    "M12 1.6a10.4 10.4 0 1 0 0 20.8 10.4 10.4 0 0 0 0-20.8z" +
-    "m0 2.1a8.3 8.3 0 1 1 0 16.6 8.3 8.3 0 0 1 0-16.6z" +
-    "M12 6.4 16 9.3l-1.5 4.7h-5L8 9.3z",
+  // Only the head is a fill; the body is in STROKES below. A football failed
+  // here because a ball is recognisable by the pattern over its whole surface,
+  // and that pattern is the first thing to disappear at bubble size. A runner
+  // is recognisable by its pose, which survives being small.
+  running: "M16.4 1.8a2.6 2.6 0 1 0 0 5.2 2.6 2.6 0 0 0 0-5.2z",
   certificate:
     "M3 2.4h18v12.2H3z M6.2 5.8h11.6v1.6H6.2z M6.2 9.2h7.8v1.6H6.2z" +
     "M17.2 14.6a3.4 3.4 0 1 0 0 6.8 3.4 3.4 0 0 0 0-6.8z" +
@@ -110,6 +111,29 @@ const ICONS = {
 };
 
 /**
+ * Icons drawn with lines rather than areas.
+ *
+ * A running figure is joints and limbs; drawn as a filled silhouette it needs
+ * a dozen carefully offset quadrilaterals to say what five strokes say. The
+ * widths are in the icon's own 24-unit space so they grow with the bubble.
+ *
+ * `far` marks the limbs on the far side of the body. They are painted over in
+ * the bubble's colour afterwards, which reads as the arm and leg being behind
+ * the torso rather than beside it.
+ */
+const STROKES = {
+  running: [
+    { d: "M14.7 8.4 11.3 14",            w: 3.3 },              // torso
+    { d: "M13.1 9.5 9.3 10.3 7.5 8",     w: 2.4, far: true },   // far arm
+    { d: "M11.0 13.9 7.3 16.4 4.1 17.6", w: 2.8, far: true },   // far leg
+    { d: "M14.9 9.1 18.5 8.5 19.9 11.5", w: 2.4 },              // near arm
+    { d: "M11.9 13.7 15.9 15.9 16.7 20.4", w: 2.8 },            // near leg
+    { d: "M16.7 20.6 19.2 20.9",         w: 2.0 },              // near foot
+    { d: "M4.1 17.6 3.1 19.6",           w: 2.0, far: true },   // far foot
+  ],
+};
+
+/**
  * Where each icon is shaded.
  *
  * These are painted in the bubble's own colour at a third opacity, over the
@@ -121,7 +145,7 @@ const SHADE = {
   book:        "M11.4 5.6h1.2v13.2h-1.2z M13 5.2c1.3-.8 2.7-1.3 4.1-1.4v14.8c-1.4.1-2.8.6-4.1 1.4z",
   school:      "M12 3.8 22.4 8.6v1.6H1.6V8.6z M3.4 11.4h17.2v1.4H3.4z",
   bus:         "M2.2 6.2c0-1.3 1.1-2.4 2.4-2.4h14.8c1.3 0 2.4 1.1 2.4 2.4v.7H2.2z M6.6 17.9a.8.8 0 1 0 0 1.6.8.8 0 0 0 0-1.6z M17.4 17.9a.8.8 0 1 0 0 1.6.8.8 0 0 0 0-1.6z",
-  sport:       "M12 6.4 16 9.3l-1.5 4.7h-5L8 9.3z M12 3.7a8.3 8.3 0 0 0-8.3 8.3h1.6A6.7 6.7 0 0 1 12 5.3z",
+
   coins:       "M3.9 8.2C5.4 9.7 8.5 10.6 12 10.6s6.6-.9 8.1-2.4v1.1c-1.5 1.5-4.6 2.4-8.1 2.4s-6.6-.9-8.1-2.4z M3.9 13.8c1.5 1.5 4.6 2.4 8.1 2.4s6.6-.9 8.1-2.4v1.1c-1.5 1.5-4.6 2.4-8.1 2.4s-6.6-.9-8.1-2.4z",
   student:     "M12 1.6 22.8 5.9 12 10.2 1.2 5.9z M12 11.9a3.3 3.3 0 0 0-3.3 3.3h6.6A3.3 3.3 0 0 0 12 11.9z",
   government:  "M12 1.8 22.6 7v1.6H1.4V7z M2.2 19.6h19.6v.9H2.2z",
@@ -144,7 +168,7 @@ const BUBBLES = [
   { icon: "rank",        fill: "#0c6455", r: 17   },
   { icon: "certificate", fill: "#a2372f", r: 15.5 },
   { icon: "coins",       fill: "#8a6a1c", r: 15.5 },
-  { icon: "sport",       fill: "#1f7f74", r: 15   },
+  { icon: "running",     fill: "#1f7f74", r: 15   },
   { icon: "pen",         fill: "#b5471f", r: 14   },
 ];
 
@@ -236,6 +260,13 @@ const bubble = (b, i) => {
   const ox = b.x - (24 * s) / 2;
   const oy = b.y - (24 * s) / 2;
   const ic = ICONS[b.icon];
+  const st = STROKES[b.icon] ?? [];
+  const line = (l, colour, op) =>
+    `
+        <path d="${l.d}" fill="none" stroke="${colour}" stroke-width="${l.w}"` +
+    ` stroke-linecap="round" stroke-linejoin="round"${op ? ` opacity="${op}"` : ""}/>`;
+  const lines = st.map((l) => line(l, "#fff")).join("");
+  const dim = st.filter((l) => l.far).map((l) => line(l, b.fill, ".3")).join("");
   const soft = SHADE[b.icon]
     ? `
         <path d="${SHADE[b.icon]}" fill="${b.fill}" fill-rule="evenodd" opacity=".34"/>`
@@ -244,7 +275,7 @@ const bubble = (b, i) => {
       <circle cx="${b.x.toFixed(1)}" cy="${b.y.toFixed(1)}" r="${b.r}" fill="${b.fill}"/>
       <circle cx="${b.x.toFixed(1)}" cy="${(b.y - b.r * 0.28).toFixed(1)}" r="${(b.r * 0.72).toFixed(1)}" fill="#fff" opacity=".08"/>
       <g transform="translate(${ox.toFixed(1)} ${oy.toFixed(1)}) scale(${s.toFixed(3)})">
-        <path d="${ic}" fill="#fff" fill-rule="evenodd"/>${soft}
+        <path d="${ic}" fill="#fff" fill-rule="evenodd"/>${lines}${soft}${dim}
       </g>
     </g>`;
 };
