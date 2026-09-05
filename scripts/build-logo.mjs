@@ -56,10 +56,13 @@ const ICONS = {
   // never gains detail. Filled shapes carry a roof, wheels, a pediment — the
   // things that make an icon read as the object rather than as a diagram.
   // Holes (windows, ruled lines) are cut with fill-rule evenodd.
+  // The pages curve away from the gutter and the outer edges fall, which is
+  // what makes a book look open. Two straight-sided slabs read as a folder.
   book:
-    "M2.6 5.2c2.7-1.7 5.7-1.7 8.4 0v13.4c-2.7-1.7-5.7-1.7-8.4 0z" +
-    "M13 5.2c2.7-1.7 5.7-1.7 8.4 0v13.4c-2.7-1.7-5.7-1.7-8.4 0z" +
-    "M11.4 5.6h1.2v13.2h-1.2z",
+    "M11.3 6.5C8.8 4.6 5.7 3.7 2.2 3.7v12.9c3.5 0 6.6.9 9.1 2.8z" +
+    "M12.7 6.5c2.5-1.9 5.6-2.8 9.1-2.8v12.9c-3.5 0-6.6.9-9.1 2.8z" +
+    "M2.2 16.6c3.5 0 6.6.9 9.1 2.8v1.5c-2.5-1.9-5.6-2.8-9.1-2.8z" +
+    "M21.8 16.6c-3.5 0-6.6.9-9.1 2.8v1.5c2.5-1.9 5.6-2.8 9.1-2.8z",
   school:
     "M11.4 1.2h1.2v2.4h-1.2z M12.6 1.6l3 1-3 1z" +
     "M12 3.8 22.4 8.6v1.6H1.6V8.6z" +
@@ -99,15 +102,38 @@ const ICONS = {
     "M3 2.4h18v12.2H3z M6.2 5.8h11.6v1.6H6.2z M6.2 9.2h7.8v1.6H6.2z" +
     "M17.2 14.6a3.4 3.4 0 1 0 0 6.8 3.4 3.4 0 0 0 0-6.8z" +
     "M13.6 20.1 12.4 24l2.6-1.1 1.4 1.1.6-3.4z",
+  // Three flat coins seen edge-on gave nowhere to put a symbol: at bubble size
+  // each face is a 3-unit sliver. So one coin stands up and carries the mark,
+  // and the stack lies behind it saying "money" by silhouette.
   coins:
-    "M12 2.6c4.5 0 8.1 1.4 8.1 3.2S16.5 9 12 9 3.9 7.6 3.9 5.8 7.5 2.6 12 2.6z" +
-    "M3.9 8.2C5.4 9.7 8.5 10.6 12 10.6s6.6-.9 8.1-2.4v2.7c0 1.8-3.6 3.2-8.1 3.2s-8.1-1.4-8.1-3.2z" +
-    "M3.9 13.8c1.5 1.5 4.6 2.4 8.1 2.4s6.6-.9 8.1-2.4v2.7c0 1.8-3.6 3.2-8.1 3.2s-8.1-1.4-8.1-3.2z",
+    "M15.7 1.0a6.9 6.9 0 1 1 0 13.8 6.9 6.9 0 0 1 0-13.8z" +
+    "M7.8 14.4c3.9 0 7 1.4 7 3.1s-3.1 3.1-7 3.1-7-1.4-7-3.1 3.1-3.1 7-3.1z" +
+    "M0.8 18.4c0 1.7 3.1 3.1 7 3.1s7-1.4 7-3.1v2.3c0 1.7-3.1 3.1-7 3.1s-7-1.4-7-3.1z",
   rank:
     "M12 1.4l1.4 3 3.2.4-2.4 2.2.6 3.2-2.8-1.6-2.8 1.6.6-3.2L7.4 4.8l3.2-.4z" +
     "M9.2 11.4h5.6v10.8H9.2z" +
     "M2.4 14.4H8v7.8H2.4z" +
     "M16 16.4h5.6v5.8H16z",
+};
+
+/**
+ * Symbols struck into a face, drawn at full strength in the bubble's colour.
+ *
+ * Separate from SHADE because shading is a third opacity and a struck symbol is
+ * not — a dirham at 34% reads as a smudge. Separate from the icon path because
+ * these subpaths overlap (the bars cross the stem), and the icons are filled
+ * with evenodd, where overlapping subpaths cancel each other out instead of
+ * joining.
+ */
+const MARK = {
+  // The UAE dirham: a D-bowl on a stem with two bars through it. Worth checking
+  // against the Central Bank's own artwork before this goes on anything
+  // printed — it is drawn from the shape, not from the official file.
+  coins:
+    "M13.5 4.2h1.9v9.4h-1.9z" +
+    "M14.6 4.2c3.3 0 5.6 1.9 5.6 4.7s-2.3 4.7-5.6 4.7v-2.1c2 0 3.4-1 3.4-2.6s-1.4-2.6-3.4-2.6z" +
+    "M11.0 6.9h5.4v1.7h-5.4z" +
+    "M11.0 9.9h5.4v1.7h-5.4z",
 };
 
 /**
@@ -142,11 +168,15 @@ const STROKES = {
  * every plane is the same white.
  */
 const SHADE = {
-  book:        "M11.4 5.6h1.2v13.2h-1.2z M13 5.2c1.3-.8 2.7-1.3 4.1-1.4v14.8c-1.4.1-2.8.6-4.1 1.4z",
+  book:        "M11.3 6.5h1.4v12.9h-1.4z" +
+               "M4.4 7.2h5.2v1.1H4.4z M4.4 9.7h5.2v1.1H4.4z M4.4 12.2h3.6v1.1H4.4z" +
+               "M14.4 7.2h5.2v1.1h-5.2z M14.4 9.7h5.2v1.1h-5.2z M14.4 12.2h3.6v1.1h-3.6z" +
+               "M2.2 16.6c3.5 0 6.6.9 9.1 2.8v.5c-2.5-1.9-5.6-2.8-9.1-2.8z" +
+               "M21.8 16.6c-3.5 0-6.6.9-9.1 2.8v.5c2.5-1.9 5.6-2.8 9.1-2.8z",
   school:      "M12 3.8 22.4 8.6v1.6H1.6V8.6z M3.4 11.4h17.2v1.4H3.4z",
   bus:         "M2.2 6.2c0-1.3 1.1-2.4 2.4-2.4h14.8c1.3 0 2.4 1.1 2.4 2.4v.7H2.2z M6.6 17.9a.8.8 0 1 0 0 1.6.8.8 0 0 0 0-1.6z M17.4 17.9a.8.8 0 1 0 0 1.6.8.8 0 0 0 0-1.6z",
 
-  coins:       "M3.9 8.2C5.4 9.7 8.5 10.6 12 10.6s6.6-.9 8.1-2.4v1.1c-1.5 1.5-4.6 2.4-8.1 2.4s-6.6-.9-8.1-2.4z M3.9 13.8c1.5 1.5 4.6 2.4 8.1 2.4s6.6-.9 8.1-2.4v1.1c-1.5 1.5-4.6 2.4-8.1 2.4s-6.6-.9-8.1-2.4z",
+  coins:       "M15.7 2.5a5.4 5.4 0 1 0 0 10.8 5.4 5.4 0 0 0 0-10.8zm0 1.1a4.3 4.3 0 1 1 0 8.6 4.3 4.3 0 0 1 0-8.6z M0.8 20.7c0 1.7 3.1 3.1 7 3.1s7-1.4 7-3.1v1.1c0 1.7-3.1 3.1-7 3.1s-7-1.4-7-3.1z",
   student:     "M12 1.6 22.8 5.9 12 10.2 1.2 5.9z M12 11.9a3.3 3.3 0 0 0-3.3 3.3h6.6A3.3 3.3 0 0 0 12 11.9z",
   government:  "M12 1.8 22.6 7v1.6H1.4V7z M2.2 19.6h19.6v.9H2.2z",
   teacher:     "M8.8 2.4h13.4v1.4H8.8z M5.2 5.6a2.7 2.7 0 0 0-2.7 2.7h5.4a2.7 2.7 0 0 0-2.7-2.7z",
@@ -271,11 +301,17 @@ const bubble = (b, i) => {
     ? `
         <path d="${SHADE[b.icon]}" fill="${b.fill}" fill-rule="evenodd" opacity=".34"/>`
     : "";
+  // Nonzero, deliberately: the bars cross the stem, and evenodd would punch
+  // the crossings back out.
+  const mark = MARK[b.icon]
+    ? `
+        <path d="${MARK[b.icon]}" fill="${b.fill}"/>`
+    : "";
   return `    <g class="bub" style="--i:${i}">
       <circle cx="${b.x.toFixed(1)}" cy="${b.y.toFixed(1)}" r="${b.r}" fill="${b.fill}"/>
       <circle cx="${b.x.toFixed(1)}" cy="${(b.y - b.r * 0.28).toFixed(1)}" r="${(b.r * 0.72).toFixed(1)}" fill="#fff" opacity=".08"/>
       <g transform="translate(${ox.toFixed(1)} ${oy.toFixed(1)}) scale(${s.toFixed(3)})">
-        <path d="${ic}" fill="#fff" fill-rule="evenodd"/>${lines}${soft}${dim}
+        <path d="${ic}" fill="#fff" fill-rule="evenodd"/>${lines}${soft}${mark}${dim}
       </g>
     </g>`;
 };
