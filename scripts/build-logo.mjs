@@ -128,10 +128,10 @@ const MARK = {
   // against the Central Bank's own artwork before this goes on anything
   // printed — it is drawn from the shape, not from the official file.
   coins:
-    "M8.5 3.9h3.2v16.2H8.5z" +
-    "M10.4 3.9c5.7 0 9.7 3.2 9.7 8.1s-4 8.1-9.7 8.1v-3.6c3.5 0 5.9-1.8 5.9-4.5s-2.4-4.5-5.9-4.5z" +
-    "M3.9 8.5h10.5v2.8H3.9z" +
-    "M3.9 13.6h10.5v2.8H3.9z",
+    "M8.0 3.4h3.8v17.2H8.0z" +
+    "M10.6 3.4c6 0 10 3.4 10 8.6s-4 8.6-10 8.6v-3.9c3.7 0 6.2-1.9 6.2-4.7s-2.5-4.7-6.2-4.7z" +
+    "M3.4 8.2h11.2v3.4H3.4z" +
+    "M3.4 12.8h11.2v3.4H3.4z",
 };
 
 /**
@@ -174,8 +174,6 @@ const SHADE = {
   school:      "M12 3.8 22.4 8.6v1.6H1.6V8.6z M3.4 11.4h17.2v1.4H3.4z",
   bus:         "M2.2 6.2c0-1.3 1.1-2.4 2.4-2.4h14.8c1.3 0 2.4 1.1 2.4 2.4v.7H2.2z M6.6 17.9a.8.8 0 1 0 0 1.6.8.8 0 0 0 0-1.6z M17.4 17.9a.8.8 0 1 0 0 1.6.8.8 0 0 0 0-1.6z",
 
-  // A milled rim, set outside the symbol's reach so the two never touch.
-  coins:       "M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm0 .8a9.2 9.2 0 1 1 0 18.4 9.2 9.2 0 0 1 0-18.4z",
   student:     "M12 1.6 22.8 5.9 12 10.2 1.2 5.9z M12 11.9a3.3 3.3 0 0 0-3.3 3.3h6.6A3.3 3.3 0 0 0 12 11.9z",
   government:  "M12 1.8 22.6 7v1.6H1.4V7z M2.2 19.6h19.6v.9H2.2z",
   teacher:     "M8.8 2.4h13.4v1.4H8.8z M5.2 5.6a2.7 2.7 0 0 0-2.7 2.7h5.4a2.7 2.7 0 0 0-2.7-2.7z",
@@ -196,7 +194,7 @@ const BUBBLES = [
   { icon: "bus",         fill: "#b8892b", r: 17   },
   { icon: "rank",        fill: "#0c6455", r: 17   },
   { icon: "certificate", fill: "#a2372f", r: 15.5 },
-  { icon: "coins",       fill: "#8a6a1c", r: 15.5 },
+  { icon: "coins",       fill: "#6f5210", r: 15.5 },
   { icon: "running",     fill: "#1f7f74", r: 15   },
   { icon: "pen",         fill: "#b5471f", r: 14   },
 ];
