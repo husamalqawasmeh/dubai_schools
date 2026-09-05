@@ -3,6 +3,18 @@ import Base from "../../layouts/Base.astro";
 import LensLogo from "../../components/LensLogo.astro";
 
 /**
+ * The wordmark, letter by letter.
+ *
+ * Indices rather than hand-written spans: b, S, h and the final s are four
+ * letters in a twelve-letter word, and typing that markup by hand is how you
+ * end up dropping the wrong o. "Schools" takes the accent colour from index 5,
+ * which is the same split the header uses.
+ */
+const WORD = "DubaiSchools";
+const DROPPED = new Set([2, 5, 7, 11]);   // b, S, h, s
+const ACCENT_FROM = 5;
+
+/**
  * The identity demo — the lens on the left, everything else stacked to its
  * right, and nothing at all beneath it.
  *
@@ -29,7 +41,13 @@ import LensLogo from "../../components/LensLogo.astro";
       <LensLogo size={424} class="idmark is-reveal" />
 
       <div class="idside">
-        <h1 class="idword">Dubai<span>Schools</span></h1>
+        <h1 class="idword">
+          {[...WORD].map((ch, i) => (
+            <span
+              class={`idch${DROPPED.has(i) ? " is-low" : ""}${i >= ACCENT_FROM ? " is-accent" : ""}`}
+            >{ch}</span>
+          ))}
+        </h1>
 
         <div class="idsplit">
           <section class="idcard idcard-parents">

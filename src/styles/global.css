@@ -2384,3 +2384,14 @@ a.cur-note {
 @media (prefers-reduced-motion: reduce) {
   .idcard-schools, .idcard-parents { animation: none; opacity: 1; transform: none; }
 }
+
+/* ---------------- the dropped letters ---------------- */
+/* b, S, h and the final s sit half a letter lower than the rest.
+   inline-block, because a transform does nothing to an inline box — the letters
+   would simply not move, which looks like the rule never applied rather than
+   like a bug. */
+.idch { display: inline-block; }
+.idch.is-accent { color: var(--accent); }
+/* 0.35em is half a cap height in this face, not half an em. Half an em would
+   drop them below the descenders and read as broken rather than as bounced. */
+.idch.is-low { transform: translateY(0.35em); }
