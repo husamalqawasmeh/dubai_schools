@@ -1905,8 +1905,8 @@ a.cur-note {
 
 /* ---------------- good to know / supplies ---------------- */
 .note-foot {
-  margin: 30px 0 0;
-  padding-top: 14px;
+  margin: 12px 0 0;
+  padding-top: 8px;
   border-top: 1px solid var(--rule);
   font-family: var(--display);
   /* 199 characters need about 1045px at 10.5px, against the 1072px the page
