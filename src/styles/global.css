@@ -138,7 +138,7 @@ p { margin: 0 0 14px; }
    everything below it, so the nav ends where the boxes end. */
 .site-head { background: transparent; }
 .site-head .wrap { border-bottom: 1px solid var(--rule); }
-.site-head .wrap { display: flex; align-items: center; justify-content: space-between; height: 52px; gap: 8px; }
+.site-head .wrap { display: flex; align-items: center; justify-content: space-between; height: 52px; gap: 6px; }
 .brand { font-family: var(--display); font-weight: 700; font-size: 14px; color: var(--ink); text-decoration: none; letter-spacing: -0.01em; }
 .brand span { color: var(--accent); }
 .site-head nav { display: flex; gap: 6px; font-family: var(--display); font-size: 13.5px; font-weight: 700; }
@@ -1460,12 +1460,17 @@ a.adminlink:hover { border-color: var(--accent); }
    flex: none, so the header shrinks the nav rather than the name: the nav can
    scroll and the name cannot, and a wrapped brand is the one thing in this bar
    that would look broken. */
-.brandwrap { display: flex; align-items: baseline; gap: 2px; flex: none; }
+/* Centred, not baseline-aligned. An inline-flex box takes its baseline from
+   its first child, and the brand's first child is now a 28px lens with no
+   baseline of its own — so the SVG's bottom edge became the row's baseline and
+   dragged "Part of can-du-ai.com" below the nav beside it. The nav is centred
+   in the 52px bar; centring this matches it. */
+.brandwrap { display: flex; align-items: center; gap: 3px; flex: none; }
 .brand, .partof { white-space: nowrap; }
 .brandsep { font-family: var(--ui); font-size: 13px; font-weight: 700; color: var(--ink-2); }
 .partof { font-family: var(--ui); font-size: 12px; font-weight: 700; white-space: nowrap; }
 /* The pill padding that spaces the nav items would break the line up here. */
-.brandwrap .partof { padding: 4px 6px; }
+.brandwrap .partof { padding: 4px 5px; }
 /* Below this the header has no room for the credit; the colon goes with it,
    rather than dangling after the name. */
 @media (max-width: 620px) {
@@ -2099,7 +2104,7 @@ a.cur-note {
 /* Shorter pills: 6px of padding above and below a 12.5px label made a box
    taller than the label needed, and the fill on the current item showed
    every pixel of it. */
-.site-head nav a { padding: 3px 6px; font-size: 12.5px; white-space: nowrap; line-height: 1.35; }
+.site-head nav a { padding: 3px 5px; font-size: 12.5px; white-space: nowrap; line-height: 1.35; }
 .nav-sep {
   align-self: center;
   flex: none;
@@ -2154,7 +2159,7 @@ a.cur-note {
 .chatbox.is-open .chatbox-hint { display: none; }
 
 /* ---------------- brand mark ---------------- */
-.brand { display: inline-flex; align-items: center; gap: 8px; }
+.brand { display: inline-flex; align-items: center; gap: 6px; }
 .brand-mark {
   width: 26px; height: 26px; flex: none; display: block;
   /* The board is top-heavy, so the mark sits a hair low against the cap height
