@@ -1,5 +1,6 @@
 ---
 import Base from "../../layouts/Base.astro";
+import LensLogo from "../../components/LensLogo.astro";
 
 /**
  * The identity demo — the mark drawing itself, then the two sentences that say
@@ -12,24 +13,17 @@ import Base from "../../layouts/Base.astro";
  * The animation is CSS and SVG only. A logo reveal that needs a script is a
  * logo reveal that shows nothing while the script loads, which is the one
  * moment it exists for.
+ *
+ * The bubbles rise into the glass one at a time and then keep drifting, so the
+ * mark is still alive after the reveal has finished — a logo that freezes the
+ * moment it lands looks like a video that has stopped.
  */
 ---
 
 <Base title="Dubai Schools — identity">
   <div class="idwrap">
     <div class="idstage">
-      <svg class="idmark" viewBox="0 0 64 64" role="img" aria-label="Dubai Schools">
-        <rect class="id-tile" width="64" height="64" rx="14" fill="var(--accent)" />
-        <path class="id-board" d="M32 15 L52 24 L32 33 L12 24 Z" fill="#fff" />
-        <path
-          class="id-cap"
-          d="M21 28.5 V39.5 C21 44.5 43 44.5 43 39.5 V28.5"
-          fill="none" stroke="#fff" stroke-width="3.2"
-          stroke-linecap="round" stroke-linejoin="round"
-        />
-        <path class="id-spire" d="M50 25.5 V37" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round" />
-        <circle class="id-bead" cx="50" cy="40.5" r="3.1" fill="#fff" />
-      </svg>
+      <LensLogo size={230} class="idmark is-reveal" />
 
       <h1 class="idword">Dubai<span>Schools</span></h1>
 

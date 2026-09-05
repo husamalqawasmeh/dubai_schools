@@ -2177,7 +2177,7 @@ a.cur-note {
 /* Each element waits its turn. The delays are the whole design: the mark lands
    first and alone, the name arrives under it, then the two sentences — so a
    viewer reads them in that order rather than all at once. */
-.idmark { width: 128px; height: 128px; display: block; margin: 0 auto; }
+.idmark { margin: 0 auto; }
 .id-tile {
   transform-origin: 50% 50%;
   animation: id-tile 620ms cubic-bezier(.2, .8, .25, 1) both;
@@ -2253,4 +2253,47 @@ a.cur-note {
   .idword, .idline, .idfoot { animation: none; opacity: 1; transform: none; }
   .id-cap, .id-spire { stroke-dashoffset: 0; }
   .idreplay { display: none; }
+}
+
+/* ---------------- lens logo ---------------- */
+.lenslogo { display: block; }
+
+/* Each bubble drifts on its own small orbit. The per-bubble --i sets both the
+   delay and the duration, so thirteen bubbles never fall into step — a
+   synchronised drift reads as one object wobbling rather than as things
+   floating independently.
+
+   transform-box: fill-box is what makes this work at all: without it the
+   transform origin is the SVG's origin, and every bubble swings around the
+   top-left corner instead of its own centre. */
+.lenslogo .bub {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+.is-animated .bub {
+  animation: bub-drift calc(5.5s + var(--i) * 0.42s) ease-in-out
+             calc(var(--i) * -0.7s) infinite;
+}
+@keyframes bub-drift {
+  0%   { transform: translate(0, 0) scale(1); }
+  25%  { transform: translate(2.6px, -3.2px) scale(1.035); }
+  50%  { transform: translate(-1.8px, -1.2px) scale(0.985); }
+  75%  { transform: translate(-2.4px, 3px) scale(1.02); }
+  100% { transform: translate(0, 0) scale(1); }
+}
+
+/* The reveal on the identity page: the glass, then the bubbles rising into it
+   one at a time, then the ring closing over them. */
+.is-reveal .bub {
+  animation:
+    bub-in 520ms cubic-bezier(.2, 1.3, .35, 1) calc(340ms + var(--i) * 95ms) both,
+    bub-drift calc(5.5s + var(--i) * 0.42s) ease-in-out calc(1.9s + var(--i) * -0.7s) infinite;
+}
+@keyframes bub-in {
+  from { opacity: 0; transform: translateY(16px) scale(.4); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .is-animated .bub, .is-reveal .bub { animation: none; opacity: 1; transform: none; }
 }

@@ -1,0 +1,27 @@
+---
+// The generated markup is imported rather than pasted, so the static file in
+// public/ and the animated one here are the same shapes by construction. Edit
+// scripts/build-logo.mjs and re-run it; never edit either output.
+import lens from "./generated-lens.html?raw";
+
+interface Props {
+  /** Rendered size in px. The art is a 200-unit square. */
+  size?: number;
+  /** Bubbles drift when true. Off by default — a logo in a header should sit
+   *  still; motion is for the one place that is showing it off. */
+  animated?: boolean;
+  class?: string;
+}
+
+const { size = 200, animated = false, class: cls = "" } = Astro.props;
+---
+
+<svg
+  class={`lenslogo ${animated ? "is-animated" : ""} ${cls}`}
+  viewBox="0 0 200 200"
+  width={size}
+  height={size}
+  role="img"
+  aria-label="Dubai Schools"
+  set:html={lens}
+/>
