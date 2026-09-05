@@ -2064,7 +2064,10 @@ a.cur-note {
    the brand beside it cannot shrink, so this can never become two lines. */
 .site-head nav { gap: 0; min-width: 0; overflow-x: auto; scrollbar-width: none; }
 .site-head nav::-webkit-scrollbar { display: none; }
-.site-head nav a { padding: 6px 7px; font-size: 12.5px; white-space: nowrap; }
+/* Shorter pills: 6px of padding above and below a 12.5px label made a box
+   taller than the label needed, and the fill on the current item showed
+   every pixel of it. */
+.site-head nav a { padding: 3px 7px; font-size: 12.5px; white-space: nowrap; line-height: 1.35; }
 .nav-sep {
   align-self: center;
   flex: none;
