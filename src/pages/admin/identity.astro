@@ -26,7 +26,7 @@ import LensLogo from "../../components/LensLogo.astro";
 <Base title="Dubai Schools — identity">
   <div class="idwrap">
     <div class="idstage">
-      <LensLogo size={494} class="idmark is-reveal" />
+      <LensLogo size={469} class="idmark is-reveal" />
 
       <div class="idside">
         <h1 class="idword">Dubai<span>Schools</span></h1>
@@ -49,7 +49,6 @@ import LensLogo from "../../components/LensLogo.astro";
           </section>
         </div>
 
-        <p class="idfoot">dubai-schools.can-du-ai.com</p>
       </div>
     </div>
 
@@ -158,12 +157,13 @@ import LensLogo from "../../components/LensLogo.astro";
         requestAnimationFrame(step);
       }
 
-      // Let the reveal finish before the physics takes over, or bubbles bounce
-      // while they are still arriving.
+      // The last bubble starts at 300 + 10x90 and takes 520ms, so 1720ms is the
+      // moment the reveal is over — not a moment earlier, or a bubble is still
+      // being animated by CSS when the script starts writing its transform.
       setTimeout(function () {
         svg.classList.add("is-bouncing");
         requestAnimationFrame(step);
-      }, 1900);
+      }, 1720);
 
       document.getElementById("replay").addEventListener("click", function () {
         var stage = document.querySelector(".idstage");
