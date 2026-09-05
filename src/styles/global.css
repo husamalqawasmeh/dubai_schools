@@ -2200,11 +2200,11 @@ a.cur-note {
    the mark shrinks rather than the words wrapping to nothing. */
 @media (max-width: 1080px) {
   .idstage { gap: 22px; }
-  .idmark { width: 307px; height: 307px; }
+  .idmark { width: 292px; height: 292px; }
 }
 @media (max-width: 820px) {
   .idstage { flex-direction: column; align-items: flex-start; gap: 16px; }
-  .idmark { width: 235px; height: 235px; }
+  .idmark { width: 223px; height: 223px; }
 }
 
 /* Each element waits its turn. The delays are the whole design: the mark lands

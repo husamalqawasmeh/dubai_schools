@@ -77,22 +77,33 @@ const ICONS = {
     "M16.4 2.2 21.8 7.6l-2.7 2.7-5.4-5.4z" +
     "M12.6 6 18 11.4 7.9 21.5 2.5 16.1z" +
     "M1.8 17.4 6.6 22.2 1 23.4z",
-  student:
-    "M12 1.6 22.8 5.9 12 10.2 1.2 5.9z" +
-    "M21 6.7v4.4a1 1 0 1 1-1.4 0V7.3z" +
-    "M12 11.9a3.3 3.3 0 1 0 0 6.6 3.3 3.3 0 0 0 0-6.6z" +
-    "M4.9 22.4a7.1 7.1 0 0 1 14.2 0z",
-  teacher:
-    "M8.8 2.4h13.4v10.2H8.8z M10.8 4.6h9.4V6h-9.4z M10.8 7.6h6.2V9h-6.2z" +
-    "M5.2 5.6a2.7 2.7 0 1 0 0 5.4 2.7 2.7 0 0 0 0-5.4z" +
-    "M1.4 22.2c0-3.1 1.7-5.6 3.8-5.6s3.8 2.5 3.8 5.6z" +
-    "M6.9 12.9 11.4 9.8l1.2 1.8-4.5 3.1z",
-  bus:
-    "M2.2 6.2c0-1.3 1.1-2.4 2.4-2.4h14.8c1.3 0 2.4 1.1 2.4 2.4v9.2H2.2z" +
-    "M4.8 6.9h3.7v3.6H4.8z M10.1 6.9h3.8v3.6h-3.8z M15.5 6.9h3.7v3.6h-3.7z" +
-    "M2.2 16.2h19.6v1.9H2.2z" +
-    "M6.6 16.4a2.3 2.3 0 1 0 0 4.6 2.3 2.3 0 0 0 0-4.6z" +
-    "M17.4 16.4a2.3 2.3 0 1 0 0 4.6 2.3 2.3 0 0 0 0-4.6z",
+  // Head under the cap rather than beside it, and a collar cut into the
+  // shoulders — a plain dome over a plain arc was a chess piece.
+  student: [
+    "M12 11.2a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7z",
+    "M12 17.8c-4 0-7.3 2.7-7.3 6h14.6c0-3.3-3.3-6-7.3-6z" +
+      "M12 17.9 10.2 20.6h3.6z",
+    "M12 1.4 22.9 5.8 12 10.2 1.1 5.8z",
+    "M21.2 6.5v4.6a1.1 1.1 0 1 1-1.5 0V7.1z",
+  ],
+  // The figure stands rather than floating: head, then a body that reaches the
+  // ground, with the raised arm and the pointer drawn as strokes because an
+  // arm is a line, not an area.
+  teacher: [
+    "M8.2 2.2h14.4v11.4H8.2z M10.3 4.5h10.2v1.3H10.3z M10.3 7.2h6.6v1.3h-6.6z M10.3 9.9h8.4v1.3h-8.4z",
+    "M4.9 5.2a2.9 2.9 0 1 0 0 5.8 2.9 2.9 0 0 0 0-5.8z",
+    "M4.9 11.6c-2.3 0-4.1 2.5-4.1 5.8v5.4h8.2v-5.4c0-3.3-1.8-5.8-4.1-5.8z",
+  ],
+  // A real school bus has a bonnet, so the roof stops short of the front and
+  // the windscreen rakes back from it. A plain box with three windows was a
+  // van. Wheels are their own layer, or they punch holes in the body.
+  bus: [
+    "M1.2 8.2c0-1.7 1.4-3.1 3.1-3.1h11.2c1.1 0 2.2.5 2.9 1.4l3.4 4.1c.6.7.9 1.6.9 2.5v2.7c0 1-.8 1.8-1.8 1.8H3c-1 0-1.8-.8-1.8-1.8z" +
+      "M3.6 7.4h3.2v3.9H3.6z M8.2 7.4h3.2v3.9H8.2z M12.8 7.4h2.5v3.9h-2.5z" +
+      "M16.9 7.6h1.1l2.9 3.5h-4z",
+    "M6.6 14.4a3.3 3.3 0 1 0 0 6.6 3.3 3.3 0 0 0 0-6.6z",
+    "M17.4 14.4a3.3 3.3 0 1 0 0 6.6 3.3 3.3 0 0 0 0-6.6z",
+  ],
   // Only the head is a fill; the body is in STROKES below. A football failed
   // here because a ball is recognisable by the pattern over its whole surface,
   // and that pattern is the first thing to disappear at bubble size. A runner
@@ -127,11 +138,14 @@ const MARK = {
   // The UAE dirham: a D-bowl on a stem with two bars through it. Worth checking
   // against the Central Bank's own artwork before this goes on anything
   // printed — it is drawn from the shape, not from the official file.
+  // Thinner than it was. Weight and clarity are not the same thing: at 3.8 the
+  // stem and the bars nearly closed the counters between them, and a symbol
+  // reads by its gaps as much as by its ink.
   coins:
-    "M8.0 3.4h3.8v17.2H8.0z" +
-    "M10.6 3.4c6 0 10 3.4 10 8.6s-4 8.6-10 8.6v-3.9c3.7 0 6.2-1.9 6.2-4.7s-2.5-4.7-6.2-4.7z" +
-    "M3.4 8.2h11.2v3.4H3.4z" +
-    "M3.4 12.8h11.2v3.4H3.4z",
+    "M8.6 3.4h2.8v17.2H8.6z" +
+    "M10.6 3.4c6 0 10 3.4 10 8.6s-4 8.6-10 8.6v-2.8c4.3 0 7.2-2.3 7.2-5.8s-2.9-5.8-7.2-5.8z" +
+    "M3.4 8.6h11.2v2.6H3.4z" +
+    "M3.4 12.8h11.2v2.6H3.4z",
 };
 
 /**
@@ -146,6 +160,10 @@ const MARK = {
  * the torso rather than beside it.
  */
 const STROKES = {
+  teacher: [
+    { d: "M6.4 13.6 10.4 10.4", w: 2.3 },   // raised arm
+    { d: "M10.2 10.7 14.2 7.4", w: 1.3 },   // pointer
+  ],
   running: [
     { d: "M14.7 8.4 11.3 14",            w: 3.3 },              // torso
     { d: "M13.1 9.5 9.3 10.3 7.5 8",     w: 2.4, far: true },   // far arm
@@ -172,11 +190,15 @@ const SHADE = {
                "M2.2 16.6c3.5 0 6.6.9 9.1 2.8v.5c-2.5-1.9-5.6-2.8-9.1-2.8z" +
                "M21.8 16.6c-3.5 0-6.6.9-9.1 2.8v.5c2.5-1.9 5.6-2.8 9.1-2.8z",
   school:      "M12 3.8 22.4 8.6v1.6H1.6V8.6z M3.4 11.4h17.2v1.4H3.4z",
-  bus:         "M2.2 6.2c0-1.3 1.1-2.4 2.4-2.4h14.8c1.3 0 2.4 1.1 2.4 2.4v.7H2.2z M6.6 17.9a.8.8 0 1 0 0 1.6.8.8 0 0 0 0-1.6z M17.4 17.9a.8.8 0 1 0 0 1.6.8.8 0 0 0 0-1.6z",
+  bus:         "M1.2 8.2c0-1.7 1.4-3.1 3.1-3.1h11.2c.5 0 1 .1 1.5.3H1.4z" +
+               "M6.6 16.2a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3z M17.4 16.2a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3z" +
+               "M1.2 12.4h20.5v1.1H1.2z",
 
-  student:     "M12 1.6 22.8 5.9 12 10.2 1.2 5.9z M12 11.9a3.3 3.3 0 0 0-3.3 3.3h6.6A3.3 3.3 0 0 0 12 11.9z",
+  student:     "M12 1.4 22.9 5.8 12 10.2 1.1 5.8z M12 11.2a3.5 3.5 0 0 0-3.5 3.5h7A3.5 3.5 0 0 0 12 11.2z" +
+               "M12 17.9 10.2 20.6h3.6z",
   government:  "M12 1.8 22.6 7v1.6H1.4V7z M2.2 19.6h19.6v.9H2.2z",
-  teacher:     "M8.8 2.4h13.4v1.4H8.8z M5.2 5.6a2.7 2.7 0 0 0-2.7 2.7h5.4a2.7 2.7 0 0 0-2.7-2.7z",
+  teacher:     "M8.2 2.2h14.4v1.5H8.2z M4.9 5.2a2.9 2.9 0 0 0-2.9 2.9h5.8a2.9 2.9 0 0 0-2.9-2.9z" +
+               "M.8 16.4c.6-3 2.2-4.8 4.1-4.8s3.5 1.8 4.1 4.8z",
   certificate: "M3 2.4h18v1.5H3z M17.2 16.2a1.8 1.8 0 1 0 0 3.6 1.8 1.8 0 0 0 0-3.6z",
   rank:        "M2.4 14.4H8v1.3H2.4z M16 16.4h5.6v1.3H16z",
   pen:         "M16.4 2.2 21.8 7.6l-2.7 2.7-5.4-5.4z",
@@ -287,6 +309,7 @@ const bubble = (b, i) => {
   const ox = b.x - (24 * s) / 2;
   const oy = b.y - (24 * s) / 2;
   const ic = ICONS[b.icon];
+  const parts = Array.isArray(ic) ? ic : [ic];
   const st = STROKES[b.icon] ?? [];
   const line = (l, colour, op) =>
     `
@@ -308,7 +331,7 @@ const bubble = (b, i) => {
       <circle cx="${b.x.toFixed(1)}" cy="${b.y.toFixed(1)}" r="${b.r}" fill="${b.fill}"/>
       <circle cx="${b.x.toFixed(1)}" cy="${(b.y - b.r * 0.28).toFixed(1)}" r="${(b.r * 0.72).toFixed(1)}" fill="#fff" opacity=".08"/>
       <g transform="translate(${ox.toFixed(1)} ${oy.toFixed(1)}) scale(${s.toFixed(3)})">
-        <path d="${ic}" fill="#fff" fill-rule="evenodd"/>${lines}${soft}${mark}${dim}
+        ${parts.map((d) => `<path d="${d}" fill="#fff" fill-rule="evenodd"/>`).join("\n        ")}${lines}${soft}${mark}${dim}
       </g>
     </g>`;
 };
