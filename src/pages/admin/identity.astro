@@ -3,38 +3,44 @@ import Base from "../../layouts/Base.astro";
 import LensLogo from "../../components/LensLogo.astro";
 
 /**
- * The identity demo — the mark drawing itself, then the two sentences that say
- * why the site exists.
+ * The identity demo — the mark, then who the site is for, in two columns.
  *
  * Under /admin, so the middleware already requires a session. It is not linked
  * from the public nav and is not meant to be: this is the thing you open in
  * front of a school, not a page a parent wanders into.
  *
- * The animation is CSS and SVG only. A logo reveal that needs a script is a
- * logo reveal that shows nothing while the script loads, which is the one
- * moment it exists for.
- *
- * The bubbles rise into the glass one at a time and then keep drifting, so the
- * mark is still alive after the reveal has finished — a logo that freezes the
- * moment it lands looks like a video that has stopped.
+ * The bubbles bounce, and bouncing is the one part of this that a script has to
+ * do. Everything else — the reveal, the two panels — is CSS, so if the script
+ * never runs the logo is still a logo and the page still reads; it just sits
+ * still. A reveal that needs JavaScript shows nothing in the one moment it
+ * exists for, which is why only the physics depends on it.
  */
 ---
 
 <Base title="Dubai Schools — identity">
   <div class="idwrap">
     <div class="idstage">
-      <LensLogo size={230} class="idmark is-reveal" />
+      <LensLogo size={345} class="idmark is-reveal" />
 
       <h1 class="idword">Dubai<span>Schools</span></h1>
 
-      <p class="idline idline-1">
-        Every private school in Dubai in one place — curriculum, fees, KHDA
-        rating and area, searchable side by side, free and without an account.
-      </p>
-      <p class="idline idline-2">
-        Parents stop opening a dozen sites to compare four schools.
-        Schools get a listing they can correct, fill out and be found through.
-      </p>
+      <div class="idsplit">
+        <section class="idcard idcard-schools">
+          <h2>For schools</h2>
+          <p>
+            A listing you can correct, fill out and be found through — in front
+            of every parent comparing schools in Dubai, at no cost.
+          </p>
+        </section>
+
+        <section class="idcard idcard-parents">
+          <h2>For parents</h2>
+          <p>
+            Every private school in one place — curriculum, fees, KHDA rating
+            and area, side by side. Free, and without an account.
+          </p>
+        </section>
+      </div>
 
       <p class="idfoot">dubai-schools.can-du-ai.com</p>
     </div>
@@ -46,14 +52,117 @@ import LensLogo from "../../components/LensLogo.astro";
   </div>
 
   <script is:inline>
-    // Replay works by taking the class off and forcing a reflow before putting
-    // it back. Without the reflow the browser coalesces both changes into no
-    // change at all, and the button appears dead.
-    document.getElementById("replay").addEventListener("click", function () {
-      var stage = document.querySelector(".idstage");
-      stage.classList.remove("is-running");
-      void stage.offsetWidth;
-      stage.classList.add("is-running");
-    });
+    (function () {
+      var svg = document.querySelector(".idmark");
+      if (!svg) return;
+
+      // Respect the setting before starting a loop that exists only to move.
+      var still = window.matchMedia("(prefers-reduced-motion: reduce)");
+      if (still.matches) return;
+
+      // The wall comes from the artwork's own clip circle rather than a copy of
+      // the number, so regenerating the logo at a new size cannot leave the
+      // physics bouncing off where the glass used to be.
+      var bounds = svg.querySelector("clipPath circle");
+      if (!bounds) return;
+      var CX = +bounds.getAttribute("cx");
+      var CY = +bounds.getAttribute("cy");
+      var WALL = +bounds.getAttribute("r") - 1.5;
+
+      var balls = [];
+      svg.querySelectorAll(".bub").forEach(function (g, i) {
+        var c = g.querySelector("circle");
+        var x0 = +c.getAttribute("cx");
+        var y0 = +c.getAttribute("cy");
+        // Spread the starting directions around the circle rather than using
+        // random ones: random headings clump, and a clump drifts as one mass.
+        var a = (i / 13) * Math.PI * 2 + 0.7;
+        var speed = 0.16 + (i % 4) * 0.035;
+        balls.push({
+          g: g, x0: x0, y0: y0, x: x0, y: y0,
+          vx: Math.cos(a) * speed, vy: Math.sin(a) * speed,
+          r: +c.getAttribute("r"),
+        });
+      });
+
+      var last = 0;
+      function step(now) {
+        // Scaled to a 60fps frame so the speed is the same on any display, and
+        // clamped so a backgrounded tab does not resume with one huge jump that
+        // teleports every bubble through a wall.
+        var dt = last ? Math.min((now - last) / 16.7, 3) : 1;
+        last = now;
+
+        for (var i = 0; i < balls.length; i++) {
+          var b = balls[i];
+          b.x += b.vx * dt;
+          b.y += b.vy * dt;
+
+          // Bounce off the glass: reflect the velocity about the wall's normal,
+          // which for a circle is simply the direction from the centre.
+          var dx = b.x - CX, dy = b.y - CY;
+          var d = Math.hypot(dx, dy);
+          var max = WALL - b.r;
+          if (d > max) {
+            var nx = dx / d, ny = dy / d;
+            var dot = b.vx * nx + b.vy * ny;
+            b.vx -= 2 * dot * nx;
+            b.vy -= 2 * dot * ny;
+            b.x = CX + nx * max;
+            b.y = CY + ny * max;
+          }
+        }
+
+        // Bubble against bubble. Equal masses, so they simply swap the part of
+        // their velocity along the line between them — and they are pushed
+        // apart first, or a pair can stick together jittering.
+        for (var a2 = 0; a2 < balls.length; a2++) {
+          for (var b2 = a2 + 1; b2 < balls.length; b2++) {
+            var p = balls[a2], q = balls[b2];
+            var ex = q.x - p.x, ey = q.y - p.y;
+            var dist = Math.hypot(ex, ey) || 0.0001;
+            var need = p.r + q.r;
+            if (dist >= need) continue;
+
+            var ux = ex / dist, uy = ey / dist;
+            var push = (need - dist) / 2;
+            p.x -= ux * push; p.y -= uy * push;
+            q.x += ux * push; q.y += uy * push;
+
+            var pn = p.vx * ux + p.vy * uy;
+            var qn = q.vx * ux + q.vy * uy;
+            if (pn - qn <= 0) continue;   // already separating
+            var swap = pn - qn;
+            p.vx -= swap * ux; p.vy -= swap * uy;
+            q.vx += swap * ux; q.vy += swap * uy;
+          }
+        }
+
+        for (var k = 0; k < balls.length; k++) {
+          var t = balls[k];
+          t.g.setAttribute(
+            "transform",
+            "translate(" + (t.x - t.x0).toFixed(2) + " " + (t.y - t.y0).toFixed(2) + ")"
+          );
+        }
+        requestAnimationFrame(step);
+      }
+
+      // Let the reveal finish before the physics takes over, or bubbles bounce
+      // while they are still arriving.
+      setTimeout(function () {
+        svg.classList.add("is-bouncing");
+        requestAnimationFrame(step);
+      }, 1900);
+
+      document.getElementById("replay").addEventListener("click", function () {
+        var stage = document.querySelector(".idstage");
+        // Removing the class and putting it back in one go is coalesced into no
+        // change at all; the reflow between them is what makes it replay.
+        stage.classList.remove("is-running");
+        void stage.offsetWidth;
+        stage.classList.add("is-running");
+      });
+    })();
   </script>
 </Base>

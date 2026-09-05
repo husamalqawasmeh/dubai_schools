@@ -2297,3 +2297,54 @@ a.cur-note {
 @media (prefers-reduced-motion: reduce) {
   .is-animated .bub, .is-reveal .bub { animation: none; opacity: 1; transform: none; }
 }
+
+/* ---------------- identity: two audiences ---------------- */
+/* Side by side rather than stacked, because the point being made is that the
+   site serves both — one above the other reads as a first and a second. */
+.idsplit {
+  display: grid;
+  gap: 12px;
+  margin: 20px auto 0;
+  max-width: 46rem;
+  text-align: left;
+}
+@media (min-width: 700px) { .idsplit { grid-template-columns: 1fr 1fr; } }
+
+.idcard {
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-left: 4px solid var(--accent);
+  border-radius: 8px;
+  padding: 14px 16px 16px;
+}
+.idcard h2 {
+  margin: 0 0 6px;
+  font-family: var(--display);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  color: var(--accent);
+}
+.idcard p {
+  margin: 0;
+  font-family: var(--display);
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--ink-2);
+}
+/* One edge each, so the two are told apart at a glance without either looking
+   more important than the other. */
+.idcard-schools { border-left-color: var(--accent); }
+.idcard-parents { border-left-color: var(--r4); }
+.idcard-parents h2 { color: var(--r3); }
+
+.idcard-schools { animation: id-rise 560ms cubic-bezier(.2, .8, .25, 1) 1820ms both; }
+.idcard-parents { animation: id-rise 560ms cubic-bezier(.2, .8, .25, 1) 2000ms both; }
+
+/* Once the script is driving positions, the CSS drift has to stop or the two
+   fight each other — transform would be set twice a frame from two places. */
+.is-bouncing .bub { animation: none !important; }
+
+@media (prefers-reduced-motion: reduce) {
+  .idcard-schools, .idcard-parents { animation: none; opacity: 1; transform: none; }
+}

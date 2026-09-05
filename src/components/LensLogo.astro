@@ -5,7 +5,7 @@
 import lens from "./generated-lens.html?raw";
 
 interface Props {
-  /** Rendered size in px. The art is a 200-unit square. */
+  /** Rendered size in px. The art is a 220-unit square. */
   size?: number;
   /** Bubbles drift when true. Off by default — a logo in a header should sit
    *  still; motion is for the one place that is showing it off. */
@@ -18,7 +18,7 @@ const { size = 200, animated = false, class: cls = "" } = Astro.props;
 
 <svg
   class={`lenslogo ${animated ? "is-animated" : ""} ${cls}`}
-  viewBox="0 0 200 200"
+  viewBox="0 0 220 220"
   width={size}
   height={size}
   role="img"
