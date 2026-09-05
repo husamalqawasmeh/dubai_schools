@@ -2098,24 +2098,25 @@ a.cur-note {
 .nav-sep {
   align-self: center;
   flex: none;
+  font-size: 14px;
+  line-height: 1;
+  color: var(--nav-mark);
   /* Belongs to the item before it: near enough to read as that item's mark,
      with the space kept for the one it points at. The pair still costs about
      what an even gap did, so the row is no wider than before. */
   margin: 0 7px 0 1px;
-}
-/* The final mark has nothing to its right to make room for, and its margin
-   was the last thing pushing the row past the edge. */
-.site-head nav > .nav-sep:last-child {
-  margin-right: 0;
-  font-size: 14px;
-  line-height: 1;
-  color: var(--nav-mark);
   /* Stretched rather than enlarged: font-size would grow the width too, and
      the width is already right. scaleY leaves it untouched.
      The translate is optical, not metric — the glyph's own bounding box is
      bottom-heavy and it sits low against the cap height of the labels either
      side. It runs before the scale, so it is not stretched along with it. */
   transform: translateY(-1px) scaleY(1.85);
+}
+/* The final mark has nothing to its right to make room for, and its margin
+   was the last thing pushing the row past the edge. Margin only: when this
+   carried the size and the stretch as well, every other mark lost them. */
+.site-head nav > .nav-sep:last-child {
+  margin-right: 0;
 }
 /* Pointing down, at the page it belongs to. The right pointer is stretched
    tall; this one is stretched wide, which is the same idea turned through
