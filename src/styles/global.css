@@ -145,6 +145,15 @@ p { margin: 0 0 14px; }
   text-decoration: none;
   transition: background 0.12s ease, color 0.12s ease, box-shadow 0.12s ease;
 }
+/* The page you are on, marked for as long as you are on it. A step lighter
+   than the hover fill, so hovering the current item still answers the pointer
+   instead of looking inert. */
+.site-head nav a.is-here {
+  background: var(--accent);
+  color: var(--on-accent);
+}
+.site-head nav a.is-here .nav-mark { color: var(--nav-mark-on); }
+
 .site-head nav a:hover,
 .partof:hover {
   background: var(--accent-2);

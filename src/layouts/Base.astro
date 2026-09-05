@@ -24,6 +24,20 @@ const NAV = [
   { href: "/advertise", label: "Advertise" },
   { href: "/#chatbox", label: "Chatbot", mark: "▼" },
 ];
+
+/**
+ * Which nav item the page belongs to.
+ *
+ * Compared on the path alone: the Chatbot item points at /#chatbox, and a
+ * fragment is not part of a page's identity. A school page under /schools/...
+ * matches nothing in the bar, which is correct — no nav item claims it.
+ */
+const here = (Astro.url.pathname.replace(/\/+$/, "") || "/").toLowerCase();
+const isHere = (href: string) => {
+  const base = (href.split("#")[0].replace(/\/+$/, "") || "/").toLowerCase();
+  if (base === "/") return false;           // the overview has no nav item
+  return here === base || here.startsWith(base + "/");
+};
 ---
 
 <!doctype html>
@@ -56,7 +70,11 @@ const NAV = [
           {NAV.map((item, i) => (
             <>
               {i > 0 && <span class="nav-sep" aria-hidden="true">&#9658;</span>}
-              <a href={item.href}>
+              <a
+                href={item.href}
+                class={isHere(item.href) ? "is-here" : undefined}
+                aria-current={isHere(item.href) ? "page" : undefined}
+              >
                 {item.label}
                 {item.mark && <span class="nav-mark" aria-hidden="true">{item.mark}</span>}
               </a>
