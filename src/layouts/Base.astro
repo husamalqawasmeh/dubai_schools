@@ -67,8 +67,9 @@ const isHere = (href: string) => {
           <a class="partof" href="https://www.can-du-ai.com">Part of can-du-ai.com<span class="nav-mark" aria-hidden="true">▲</span></a>
         </div>
         <nav>
-          {NAV.map((item) => {
+          {NAV.map((item, i) => {
             const current = isHere(item.href);
+            const last = i === NAV.length - 1;
             /* The mark points down at the page you are on. The chatbot has no
                page of its own — it sits on the overview — so its mark points
                down only while you are there to see it. */
@@ -82,9 +83,14 @@ const isHere = (href: string) => {
                 >
                   {item.label}
                 </a>
-                <span class={down ? "nav-sep is-down" : "nav-sep"} aria-hidden="true">
-                  {down ? "\u25bc" : "\u25ba"}
-                </span>
+                {/* Nothing follows the last item, so it carries no mark.
+                    Dropping the last one shifts nothing: everything that
+                    could move is to its left. */}
+                {!last && (
+                  <span class={down ? "nav-sep is-down" : "nav-sep"} aria-hidden="true">
+                    {down ? "\u25bc" : "\u25ba"}
+                  </span>
+                )}
               </>
             );
           })}

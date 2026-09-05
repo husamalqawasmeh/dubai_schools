@@ -967,7 +967,9 @@ button.btn:disabled { opacity: 0.55; cursor: default; }
 /* ---------------- advertise ---------------- */
 /* The last page with a cap of its own. Like .pick and .contribute it now
    takes the 1120px the wrap gives, so every page on the site is one width. */
-.advertise { padding-top: 22px; padding-bottom: 50px; }
+/* 5px, not 50: the tier cards are the end of the page, and fifty pixels
+   under them read as something missing rather than as breathing room. */
+.advertise { padding-top: 22px; padding-bottom: 5px; }
 .ad-head { margin-bottom: 12px; }
 .ad-head h1 { font-size: 20px; margin-top: 6px; }
 /* Full container width, not a reading measure: at 66ch this ran to three
@@ -2111,12 +2113,6 @@ a.cur-note {
      bottom-heavy and it sits low against the cap height of the labels either
      side. It runs before the scale, so it is not stretched along with it. */
   transform: translateY(-1px) scaleY(1.85);
-}
-/* The final mark has nothing to its right to make room for, and its margin
-   was the last thing pushing the row past the edge. Margin only: when this
-   carried the size and the stretch as well, every other mark lost them. */
-.site-head nav > .nav-sep:last-child {
-  margin-right: 0;
 }
 /* Pointing down, at the page it belongs to. The right pointer is stretched
    tall; this one is stretched wide, which is the same idea turned through
