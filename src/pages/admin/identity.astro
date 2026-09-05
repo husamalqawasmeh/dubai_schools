@@ -3,7 +3,13 @@ import Base from "../../layouts/Base.astro";
 import LensLogo from "../../components/LensLogo.astro";
 
 /**
- * The identity demo — the mark, then who the site is for, in two columns.
+ * The identity demo — the mark and the name on one line, then who the site is
+ * for, in two columns.
+ *
+ * Left-aligned rather than centred: a centred stage reads as a splash screen,
+ * and this is shown while someone talks over it. Ranged left, the eye returns
+ * to the same edge for the name and then each panel, which is the order they
+ * should be read in.
  *
  * Under /admin, so the middleware already requires a session. It is not linked
  * from the public nav and is not meant to be: this is the thing you open in
@@ -20,24 +26,25 @@ import LensLogo from "../../components/LensLogo.astro";
 <Base title="Dubai Schools — identity">
   <div class="idwrap">
     <div class="idstage">
-      <LensLogo size={345} class="idmark is-reveal" />
-
-      <h1 class="idword">Dubai<span>Schools</span></h1>
+      <div class="idhead">
+        <LensLogo size={345} class="idmark is-reveal" />
+        <h1 class="idword">Dubai<span>Schools</span></h1>
+      </div>
 
       <div class="idsplit">
-        <section class="idcard idcard-schools">
-          <h2>For schools</h2>
-          <p>
-            A listing you can correct, fill out and be found through — in front
-            of every parent comparing schools in Dubai, at no cost.
-          </p>
-        </section>
-
         <section class="idcard idcard-parents">
           <h2>For parents</h2>
           <p>
             Every private school in one place — curriculum, fees, KHDA rating
             and area, side by side. Free, and without an account.
+          </p>
+        </section>
+
+        <section class="idcard idcard-schools">
+          <h2>For schools</h2>
+          <p>
+            A listing you can correct, fill out and be found through — in front
+            of every parent comparing schools in Dubai, at no cost.
           </p>
         </section>
       </div>
@@ -77,7 +84,9 @@ import LensLogo from "../../components/LensLogo.astro";
         // Spread the starting directions around the circle rather than using
         // random ones: random headings clump, and a clump drifts as one mass.
         var a = (i / 13) * Math.PI * 2 + 0.7;
-        var speed = 0.16 + (i % 4) * 0.035;
+        // Slow on purpose: fast bubbles read as a screensaver, where slow
+        // ones read as suspended in liquid, which is what a lens implies.
+        var speed = 0.052 + (i % 4) * 0.011;
         balls.push({
           g: g, x0: x0, y0: y0, x: x0, y: y0,
           vx: Math.cos(a) * speed, vy: Math.sin(a) * speed,

@@ -2168,11 +2168,18 @@ a.cur-note {
   min-height: calc(100dvh - 52px);
   display: grid;
   grid-template-rows: 1fr auto;
-  place-items: center;
-  padding: 20px 24px 26px;
+  /* Ranged left, not centred. A centred stage reads as a splash screen; this
+     is shown while someone talks over it, and the eye should return to one
+     edge for the name and then each panel. */
+  justify-items: start;
+  align-items: center;
+  padding: 20px 30px 26px;
   box-sizing: border-box;
 }
-.idstage { text-align: center; max-width: 46rem; }
+.idstage { text-align: left; max-width: 52rem; }
+
+/* The glass and the name on one line, name to the right of the lens. */
+.idhead { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
 
 /* Each element waits its turn. The delays are the whole design: the mark lands
    first and alone, the name arrives under it, then the two sentences — so a
@@ -2201,7 +2208,7 @@ a.cur-note {
 .id-bead { animation: id-pop 340ms cubic-bezier(.2, 1.5, .4, 1) 1300ms both; transform-origin: 50px 40.5px; }
 
 .idword {
-  margin: 18px 0 0;
+  margin: 0;
   font-family: var(--display);
   font-size: clamp(30px, 6vw, 46px);
   font-weight: 700;
@@ -2222,7 +2229,7 @@ a.cur-note {
 .idline-1 { animation: id-rise 560ms cubic-bezier(.2, .8, .25, 1) 1820ms both; }
 .idline-2 { animation: id-rise 560ms cubic-bezier(.2, .8, .25, 1) 2180ms both; }
 .idfoot {
-  margin: 22px 0 0;
+  margin: 20px 0 0;
   font-family: var(--ui);
   font-size: 12.5px;
   font-weight: 700;
@@ -2304,7 +2311,7 @@ a.cur-note {
 .idsplit {
   display: grid;
   gap: 12px;
-  margin: 20px auto 0;
+  margin: 22px 0 0;
   max-width: 46rem;
   text-align: left;
 }
@@ -2338,8 +2345,8 @@ a.cur-note {
 .idcard-parents { border-left-color: var(--r4); }
 .idcard-parents h2 { color: var(--r3); }
 
-.idcard-schools { animation: id-rise 560ms cubic-bezier(.2, .8, .25, 1) 1820ms both; }
-.idcard-parents { animation: id-rise 560ms cubic-bezier(.2, .8, .25, 1) 2000ms both; }
+.idcard-parents { animation: id-rise 560ms cubic-bezier(.2, .8, .25, 1) 1820ms both; }
+.idcard-schools { animation: id-rise 560ms cubic-bezier(.2, .8, .25, 1) 2000ms both; }
 
 /* Once the script is driving positions, the CSS drift has to stop or the two
    fight each other — transform would be set twice a frame from two places. */
