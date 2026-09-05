@@ -2171,6 +2171,7 @@ a.cur-note {
 /* ---------------- identity demo (admin only) ---------------- */
 .idwrap {
   min-height: calc(100dvh - 52px);
+  width: 100%;
   display: grid;
   grid-template-rows: 1fr auto;
   /* Ranged left, not centred. A centred stage reads as a splash screen; this
@@ -2181,10 +2182,30 @@ a.cur-note {
   padding: 20px 30px 26px;
   box-sizing: border-box;
 }
-.idstage { text-align: left; max-width: 52rem; }
+/* Lens left, words right, nothing below either. The lens takes its natural
+   width and the column beside it takes the rest, so growing the mark does not
+   squeeze the text — it just moves the column right. */
+.idstage {
+  text-align: left;
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  width: 100%;
+  max-width: 74rem;
+}
+.idmark { flex: none; }
+.idside { min-width: 0; flex: 1; }
 
-/* The glass and the name on one line, name to the right of the lens. */
-.idhead { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+/* Below the two-column width there is no room for a 520px lens beside text, so
+   the mark shrinks rather than the words wrapping to nothing. */
+@media (max-width: 1080px) {
+  .idstage { gap: 22px; }
+  .idmark { width: 340px; height: 340px; }
+}
+@media (max-width: 820px) {
+  .idstage { flex-direction: column; align-items: flex-start; gap: 16px; }
+  .idmark { width: 260px; height: 260px; }
+}
 
 /* Each element waits its turn. The delays are the whole design: the mark lands
    first and alone, the name arrives under it, then the two sentences — so a
@@ -2316,8 +2337,7 @@ a.cur-note {
 .idsplit {
   display: grid;
   gap: 12px;
-  margin: 22px 0 0;
-  max-width: 46rem;
+  margin: 18px 0 0;
   text-align: left;
 }
 @media (min-width: 700px) { .idsplit { grid-template-columns: 1fr 1fr; } }

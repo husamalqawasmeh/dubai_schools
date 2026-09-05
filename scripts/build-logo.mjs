@@ -25,10 +25,10 @@ import { fileURLToPath } from "node:url";
 const REPO = join(dirname(fileURLToPath(import.meta.url)), "..");
 
 /* ---------- geometry ---------- */
-const CX = 96;          // lens centre
-const CY = 94;
-const R_OUTER = 92;     // outer edge of the ring
-const RING = 10;        // ring thickness
+const CX = 110;         // lens centre
+const CY = 108;
+const R_OUTER = 106;    // outer edge of the ring
+const RING = 11;        // ring thickness
 const R_GLASS = R_OUTER - RING;   // inside face of the glass
 
 /**
@@ -44,45 +44,86 @@ const R_GLASS = R_OUTER - RING;   // inside face of the glass
  * with them — 71 to 82 — so the fill stays near half. That headroom is not
  * only taste: these bubbles bounce, and a bubble in a full jar cannot move.
  */
-const BUBBLE_SCALE = 1.02;
+const BUBBLE_SCALE = 1.224;
 
 /* ---------- the icons ---------- */
 /* Each is drawn in a 24x24 box, white stroke, no fill — a stroke reads at a
    smaller size than a filled glyph, and keeps every icon the same visual
    weight regardless of how much ink its subject wants. */
 const ICONS = {
-  school:    "M12 3.5 21 9.5V21H3V9.5z M9.5 21v-6.5h5V21",
-  book:      "M12 7.5c-2.4-2-5.4-2-7.8 0v11c2.4-2 5.4-2 7.8 0 2.4-2 5.4-2 7.8 0v-11c-2.4-2-5.4-2-7.8 0z M12 7.5v11",
-  pen:       "M4.5 19.5 5.6 15 16 4.6l3.4 3.4L9 18.4z M13.6 7 17 10.4",
-  student:   "M4 7.5 12 4l8 3.5-8 3.5z M12 11v3.2 M6.5 18.5a5.5 5.5 0 0 1 11 0",
-  government:"M12 3.5 21 8.5H3z M4.5 8.5v9 M9 8.5v9 M15 8.5v9 M19.5 8.5v9 M2.5 20.5h19",
-  bus:       "M4 6.5h16v9H4z M4 15.5h16 M7.5 9.5h4v3.5h-4z M13.5 9.5h4v3.5h-4z M7 19a1.6 1.6 0 1 1 0-3.2 1.6 1.6 0 0 1 0 3.2z M17 19a1.6 1.6 0 1 1 0-3.2 1.6 1.6 0 0 1 0 3.2z",
-  books:     "M3.5 16.5h17v3.5h-17z M4.5 12.5h16v3.5h-16z M3.5 8.5h17V12h-17z",
-  sport:     "M8 4h8v5.5a4 4 0 0 1-8 0z M8 5.5H5.2A3 3 0 0 0 8 9.2 M16 5.5h2.8A3 3 0 0 1 16 9.2 M12 13.5v4 M9 20h6",
-  ranking:   "M4 20v-6.5h4V20z M10 20V5h4v15z M16 20v-4.5h4V20z",
-  certificate:"M5 4h14v11H5z M8 8h8 M8 11.5h5 M9.5 15v5.5l2.5-1.8 2.5 1.8V15",
-  badge:     "M12 3.5 20 6.5v5.4c0 4.6-3.7 7.3-8 8.6-4.3-1.3-8-4-8-8.6V6.5z M8.8 12l2.3 2.3 4.1-4.4",
-  coins:     "M5 7a7 3 0 1 0 14 0A7 3 0 0 0 5 7z M5 7v5c0 1.7 3.1 3 7 3s7-1.3 7-3V7 M5 12v5c0 1.7 3.1 3 7 3s7-1.3 7-3v-5",
-  chat:      "M4 5.5h16v10h-9.5L4.5 20v-4.5H4z",
+  // Filled rather than stroked. A 1.9px line has to stay 1.9px however large
+  // the bubble is, so a stroked glyph gets thinner-looking as it grows and
+  // never gains detail. Filled shapes carry a roof, wheels, a pediment — the
+  // things that make an icon read as the object rather than as a diagram.
+  // Holes (windows, ruled lines) are cut with fill-rule evenodd.
+  book:
+    "M2.6 5.2c2.7-1.7 5.7-1.7 8.4 0v13.4c-2.7-1.7-5.7-1.7-8.4 0z" +
+    "M13 5.2c2.7-1.7 5.7-1.7 8.4 0v13.4c-2.7-1.7-5.7-1.7-8.4 0z" +
+    "M11.4 5.6h1.2v13.2h-1.2z",
+  school:
+    "M11.4 1.2h1.2v2.4h-1.2z M12.6 1.6l3 1-3 1z" +
+    "M12 3.8 22.4 8.6v1.6H1.6V8.6z" +
+    "M3.4 11.4h17.2V21.8H3.4z" +
+    "M10.2 15.4h3.6v6.4h-3.6z" +
+    "M5.4 13.6h2.9v2.9H5.4z M15.7 13.6h2.9v2.9h-2.9z",
+  government:
+    "M12 1.8 22.6 7v1.6H1.4V7z" +
+    "M3.6 9.8h2.5v8.6H3.6z M8.4 9.8h2.5v8.6H8.4z M13.1 9.8h2.5v8.6h-2.5z M17.9 9.8h2.5v8.6h-2.5z" +
+    "M2.2 19.6h19.6v2.4H2.2z",
+  pen:
+    "M16.4 2.2 21.8 7.6l-2.7 2.7-5.4-5.4z" +
+    "M12.6 6 18 11.4 7.9 21.5 2.5 16.1z" +
+    "M1.8 17.4 6.6 22.2 1 23.4z",
+  student:
+    "M12 1.6 22.8 5.9 12 10.2 1.2 5.9z" +
+    "M21 6.7v4.4a1 1 0 1 1-1.4 0V7.3z" +
+    "M12 11.9a3.3 3.3 0 1 0 0 6.6 3.3 3.3 0 0 0 0-6.6z" +
+    "M4.9 22.4a7.1 7.1 0 0 1 14.2 0z",
+  teacher:
+    "M8.8 2.4h13.4v10.2H8.8z M10.8 4.6h9.4V6h-9.4z M10.8 7.6h6.2V9h-6.2z" +
+    "M5.2 5.6a2.7 2.7 0 1 0 0 5.4 2.7 2.7 0 0 0 0-5.4z" +
+    "M1.4 22.2c0-3.1 1.7-5.6 3.8-5.6s3.8 2.5 3.8 5.6z" +
+    "M6.9 12.9 11.4 9.8l1.2 1.8-4.5 3.1z",
+  bus:
+    "M2.2 6.2c0-1.3 1.1-2.4 2.4-2.4h14.8c1.3 0 2.4 1.1 2.4 2.4v9.2H2.2z" +
+    "M4.8 6.9h3.7v3.6H4.8z M10.1 6.9h3.8v3.6h-3.8z M15.5 6.9h3.7v3.6h-3.7z" +
+    "M2.2 16.2h19.6v1.9H2.2z" +
+    "M6.6 16.4a2.3 2.3 0 1 0 0 4.6 2.3 2.3 0 0 0 0-4.6z" +
+    "M17.4 16.4a2.3 2.3 0 1 0 0 4.6 2.3 2.3 0 0 0 0-4.6z",
+  sport:
+    "M12 1.6a10.4 10.4 0 1 0 0 20.8 10.4 10.4 0 0 0 0-20.8z" +
+    "m0 2.1a8.3 8.3 0 1 1 0 16.6 8.3 8.3 0 0 1 0-16.6z" +
+    "M12 6.4 16 9.3l-1.5 4.7h-5L8 9.3z",
+  certificate:
+    "M3 2.4h18v12.2H3z M6.2 5.8h11.6v1.6H6.2z M6.2 9.2h7.8v1.6H6.2z" +
+    "M17.2 14.6a3.4 3.4 0 1 0 0 6.8 3.4 3.4 0 0 0 0-6.8z" +
+    "M13.6 20.1 12.4 24l2.6-1.1 1.4 1.1.6-3.4z",
+  coins:
+    "M12 2.6c4.5 0 8.1 1.4 8.1 3.2S16.5 9 12 9 3.9 7.6 3.9 5.8 7.5 2.6 12 2.6z" +
+    "M3.9 8.2C5.4 9.7 8.5 10.6 12 10.6s6.6-.9 8.1-2.4v2.7c0 1.8-3.6 3.2-8.1 3.2s-8.1-1.4-8.1-3.2z" +
+    "M3.9 13.8c1.5 1.5 4.6 2.4 8.1 2.4s6.6-.9 8.1-2.4v2.7c0 1.8-3.6 3.2-8.1 3.2s-8.1-1.4-8.1-3.2z",
+  rank:
+    "M12 1.4l1.4 3 3.2.4-2.4 2.2.6 3.2-2.8-1.6-2.8 1.6.6-3.2L7.4 4.8l3.2-.4z" +
+    "M9.2 11.4h5.6v10.8H9.2z" +
+    "M2.4 14.4H8v7.8H2.4z" +
+    "M16 16.4h5.6v5.8H16z",
 };
 
 /* Bubble colours. Distinct in hue from each other so no two read as the same
    category, and every one dark enough to hold a white stroke — the palette in
    the reference image has pale circles that lose their glyph entirely. */
 const BUBBLES = [
-  { icon: "school",      fill: "#2f7d5c", r: 17.5, a: 198, d: 40 },
-  { icon: "book",        fill: "#c2542a", r: 15.5, a: 250, d: 42 },
-  { icon: "student",     fill: "#7a4b9c", r: 18.5, a: 300, d: 36 },
-  { icon: "government",  fill: "#1f6f8b", r: 15,   a: 348, d: 44 },
-  { icon: "bus",         fill: "#b8892b", r: 17,   a: 40,  d: 41 },
-  { icon: "books",       fill: "#3a7d3a", r: 14.5, a: 88,  d: 45 },
-  { icon: "ranking",     fill: "#0c6455", r: 18,   a: 132, d: 37 },
-  { icon: "certificate", fill: "#a2372f", r: 15,   a: 172, d: 45 },
-  { icon: "badge",       fill: "#2a5fa8", r: 16,   a: 222, d: 12 },
-  { icon: "coins",       fill: "#8a6a1c", r: 15.5, a: 330, d: 14 },
-  { icon: "chat",        fill: "#6b3f7d", r: 14,   a: 96,  d: 12 },
-  { icon: "sport",       fill: "#1f7f74", r: 14.5, a: 12,  d: 13 },
-  { icon: "pen",         fill: "#b5471f", r: 13.5, a: 262, d: 13 },
+  { icon: "school",      fill: "#2f7d5c", r: 18   },
+  { icon: "student",     fill: "#7a4b9c", r: 18.5 },
+  { icon: "book",        fill: "#c2542a", r: 16   },
+  { icon: "teacher",     fill: "#2a5fa8", r: 17.5 },
+  { icon: "government",  fill: "#1f6f8b", r: 15.5 },
+  { icon: "bus",         fill: "#b8892b", r: 17   },
+  { icon: "rank",        fill: "#0c6455", r: 17   },
+  { icon: "certificate", fill: "#a2372f", r: 15.5 },
+  { icon: "coins",       fill: "#8a6a1c", r: 15.5 },
+  { icon: "sport",       fill: "#1f7f74", r: 15   },
+  { icon: "pen",         fill: "#b5471f", r: 14   },
 ];
 
 /**
@@ -169,15 +210,13 @@ console.log(`packed ${placed.length} bubbles, all inside the glass and clear of 
 
 /* ---------- markup ---------- */
 const bubble = (b, i) => {
-  const s = (b.r * 2 * 0.62) / 24;          // icon box scaled to the bubble
+  const s = (b.r * 2 * 0.68) / 24;          // icon box scaled to the bubble
   const ox = b.x - (24 * s) / 2;
   const oy = b.y - (24 * s) / 2;
   return `    <g class="bub" style="--i:${i}">
       <circle cx="${b.x.toFixed(1)}" cy="${b.y.toFixed(1)}" r="${b.r}" fill="${b.fill}"/>
-      <g transform="translate(${ox.toFixed(1)} ${oy.toFixed(1)}) scale(${s.toFixed(3)})"
-         fill="none" stroke="#fff" stroke-width="${(1.9 / s).toFixed(2)}"
-         stroke-linecap="round" stroke-linejoin="round">
-        <path d="${ICONS[b.icon]}"/>
+      <g transform="translate(${ox.toFixed(1)} ${oy.toFixed(1)}) scale(${s.toFixed(3)})">
+        <path d="${ICONS[b.icon]}" fill="#fff" fill-rule="evenodd"/>
       </g>
     </g>`;
 };
@@ -191,8 +230,8 @@ const inner = `  <defs>
   </defs>
 
   <!-- the handle, behind the ring so the joint needs no seam -->
-  <path d="M168 166 L200 198" stroke="#3c2a33" stroke-width="19" stroke-linecap="round" fill="none"/>
-  <path d="M155 153 L172 170" stroke="#9fb4a6" stroke-width="17" stroke-linecap="round" fill="none"/>
+  <path d="M192 190 L230 228" stroke="#3c2a33" stroke-width="21" stroke-linecap="round" fill="none"/>
+  <path d="M178 176 L197 195" stroke="#9fb4a6" stroke-width="19" stroke-linecap="round" fill="none"/>
 
   <circle cx="${CX}" cy="${CY}" r="${R_GLASS}" fill="url(#glass)"/>
 
@@ -204,10 +243,10 @@ ${placed.map(bubble).join("\n")}
   <circle cx="${CX}" cy="${CY}" r="${R_OUTER - RING / 2}" fill="none"
           stroke="var(--lens-ring, #0c6455)" stroke-width="${RING}"/>
   <!-- the glint: what makes it read as glass rather than a coloured disc -->
-  <path d="M44 66a60 39 0 0 1 60-31" stroke="#ffffff" stroke-width="7"
+  <path d="M50 76a70 45 0 0 1 70-36" stroke="#ffffff" stroke-width="7"
         stroke-linecap="round" fill="none" opacity=".55"/>`;
 
-const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 220" width="220" height="220" role="img" aria-label="Dubai Schools">
+const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 250 250" width="250" height="250" role="img" aria-label="Dubai Schools">
   <!--
     Generated by scripts/build-logo.mjs — edit that, not this.
 

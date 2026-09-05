@@ -3,13 +3,13 @@ import Base from "../../layouts/Base.astro";
 import LensLogo from "../../components/LensLogo.astro";
 
 /**
- * The identity demo — the mark and the name on one line, then who the site is
- * for, in two columns.
+ * The identity demo — the lens on the left, everything else stacked to its
+ * right, and nothing at all beneath it.
  *
- * Left-aligned rather than centred: a centred stage reads as a splash screen,
- * and this is shown while someone talks over it. Ranged left, the eye returns
- * to the same edge for the name and then each panel, which is the order they
- * should be read in.
+ * That is what lets the lens be this large. Anything under it would have to
+ * share the height of the screen with it, and the mark is the thing being
+ * shown; putting the words alongside gives the glass the full column and still
+ * leaves the reading order intact — name, then who it is for, then the address.
  *
  * Under /admin, so the middleware already requires a session. It is not linked
  * from the public nav and is not meant to be: this is the thing you open in
@@ -26,30 +26,31 @@ import LensLogo from "../../components/LensLogo.astro";
 <Base title="Dubai Schools — identity">
   <div class="idwrap">
     <div class="idstage">
-      <div class="idhead">
-        <LensLogo size={345} class="idmark is-reveal" />
+      <LensLogo size={520} class="idmark is-reveal" />
+
+      <div class="idside">
         <h1 class="idword">Dubai<span>Schools</span></h1>
+
+        <div class="idsplit">
+          <section class="idcard idcard-parents">
+            <h2>For parents</h2>
+            <p>
+              Every private school in one place — curriculum, fees, KHDA rating
+              and area, side by side. Free, and without an account.
+            </p>
+          </section>
+
+          <section class="idcard idcard-schools">
+            <h2>For schools</h2>
+            <p>
+              A listing you can correct, fill out and be found through — in
+              front of every parent comparing schools in Dubai, at no cost.
+            </p>
+          </section>
+        </div>
+
+        <p class="idfoot">dubai-schools.can-du-ai.com</p>
       </div>
-
-      <div class="idsplit">
-        <section class="idcard idcard-parents">
-          <h2>For parents</h2>
-          <p>
-            Every private school in one place — curriculum, fees, KHDA rating
-            and area, side by side. Free, and without an account.
-          </p>
-        </section>
-
-        <section class="idcard idcard-schools">
-          <h2>For schools</h2>
-          <p>
-            A listing you can correct, fill out and be found through — in front
-            of every parent comparing schools in Dubai, at no cost.
-          </p>
-        </section>
-      </div>
-
-      <p class="idfoot">dubai-schools.can-du-ai.com</p>
     </div>
 
     <div class="idbar">
