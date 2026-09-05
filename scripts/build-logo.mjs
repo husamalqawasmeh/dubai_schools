@@ -280,6 +280,40 @@ const bubble = (b, i) => {
     </g>`;
 };
 
+/* ---------- the handle ---------- */
+/**
+ * Built outwards from the ring along the 45-degree axis rather than typed as
+ * fixed coordinates, so it stays attached if the lens is ever resized again —
+ * which it has been, three times.
+ *
+ * A magnifier handle is not a rod of one thickness. There is a collar where it
+ * meets the glass, a metal ferrule, and then a grip that flares slightly
+ * towards the butt so it cannot slide out of the hand. Drawing it as one
+ * round-capped stroke threw all of that away, which is why it read as a stick.
+ */
+const UX = Math.SQRT1_2, UY = Math.SQRT1_2;   // along the handle
+const PX = -UY, PY = UX;                      // across it
+const f = (n) => n.toFixed(1);
+const pt = (t, off) => [
+  CX + UX * (R_OUTER + t) + PX * off,
+  CY + UY * (R_OUTER + t) + PY * off,
+];
+
+/** A tapered band: width w0 at distance t0, w1 at t1, centred `off` across. */
+const band = (t0, w0, t1, w1, off = 0) => {
+  const a = pt(t0, off + w0 / 2);
+  const b = pt(t1, off + w1 / 2);
+  const cc = pt(t1, off - w1 / 2);
+  const d = pt(t0, off - w0 / 2);
+  return `M${f(a[0])} ${f(a[1])} L${f(b[0])} ${f(b[1])} L${f(cc[0])} ${f(cc[1])} L${f(d[0])} ${f(d[1])} Z`;
+};
+/** The butt. A circle rather than an arc, because an arc here needs the sweep
+ *  flag to be right and a circle cannot be wrong. */
+const butt = (t, w) => {
+  const [x, y] = pt(t, 0);
+  return `<circle cx="${f(x)}" cy="${f(y)}" r="${f(w / 2)}"`;
+};
+
 const inner = `  <defs>
     <clipPath id="lensClip"><circle cx="${CX}" cy="${CY}" r="${R_GLASS}"/></clipPath>
 
@@ -323,12 +357,28 @@ const inner = `  <defs>
 
   <ellipse cx="${CX + 4}" cy="${CY + R_OUTER - 2}" rx="${R_OUTER * 0.72}" ry="${R_OUTER * 0.13}" fill="url(#drop)"/>
 
-  <!-- Handle, then the collar that joins it to the ring. Behind the ring, so
-       the joint needs no seam drawn over it. -->
-  <path d="M192 190 L230 228" stroke="url(#handleWood)" stroke-width="21" stroke-linecap="round" fill="none"/>
-  <path d="M199 197 L226 224" stroke="#ffffff" stroke-width="3" stroke-linecap="round" fill="none" opacity=".14"/>
-  <path d="M178 176 L197 195" stroke="url(#ferrule)" stroke-width="19" stroke-linecap="round" fill="none"/>
-  <path d="M183 181 L191 189" stroke="#ffffff" stroke-width="2.4" stroke-linecap="round" fill="none" opacity=".45"/>
+  <!-- Handle, from the ring outwards. Drawn before the ring so the joint needs
+       no seam painted over it. -->
+
+  <!-- collar: the same metal as the ring, so the two read as one piece -->
+  <path d="${band(-12, 18, 2, 23)}" fill="url(#ringMetal)"/>
+
+  <!-- ferrule, with two turned bands and a highlight down its lit side -->
+  <path d="${band(2, 23, 24, 20.5)}" fill="url(#ferrule)"/>
+  <path d="${band(7, 23, 9.4, 22.4)}" fill="#3f5148" opacity=".38"/>
+  <path d="${band(17, 21.6, 19.4, 21.2)}" fill="#3f5148" opacity=".38"/>
+  <path d="${band(3, 4.6, 23, 4.2, -6.4)}" fill="#ffffff" opacity=".5"/>
+
+  <!-- grip: flared towards the butt, so it widens as a real handle does -->
+  ${butt(63, 23.5)} fill="url(#handleWood)"/>
+  <path d="${band(22, 20.5, 63, 23.5)}" fill="url(#handleWood)"/>
+  <!-- the lit edge and the turned-away edge, which is what gives it a round
+       section instead of a flat plank -->
+  <path d="${band(24, 5, 61, 5.4, -6.6)}" fill="#ffffff" opacity=".17"/>
+  <path d="${band(24, 6, 62, 6.6, 7.2)}" fill="#000000" opacity=".22"/>
+  <!-- grain, barely there: enough to be wood, not enough to be a pattern -->
+  <path d="${band(28, 1.4, 58, 1.6, -1.8)}" fill="#000000" opacity=".09"/>
+  <path d="${band(31, 1.2, 55, 1.3, 2.6)}" fill="#000000" opacity=".07"/>
 
   <circle cx="${CX}" cy="${CY}" r="${R_GLASS}" fill="url(#glass)"/>
 

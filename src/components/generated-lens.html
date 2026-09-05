@@ -41,12 +41,28 @@
 
   <ellipse cx="114" cy="212" rx="76.32" ry="13.780000000000001" fill="url(#drop)"/>
 
-  <!-- Handle, then the collar that joins it to the ring. Behind the ring, so
-       the joint needs no seam drawn over it. -->
-  <path d="M192 190 L230 228" stroke="url(#handleWood)" stroke-width="21" stroke-linecap="round" fill="none"/>
-  <path d="M199 197 L226 224" stroke="#ffffff" stroke-width="3" stroke-linecap="round" fill="none" opacity=".14"/>
-  <path d="M178 176 L197 195" stroke="url(#ferrule)" stroke-width="19" stroke-linecap="round" fill="none"/>
-  <path d="M183 181 L191 189" stroke="#ffffff" stroke-width="2.4" stroke-linecap="round" fill="none" opacity=".45"/>
+  <!-- Handle, from the ring outwards. Drawn before the ring so the joint needs
+       no seam painted over it. -->
+
+  <!-- collar: the same metal as the ring, so the two read as one piece -->
+  <path d="M170.1 180.8 L178.2 192.5 L194.5 176.2 L182.8 168.1 Z" fill="url(#ringMetal)"/>
+
+  <!-- ferrule, with two turned bands and a highlight down its lit side -->
+  <path d="M178.2 192.5 L194.7 207.2 L209.2 192.7 L194.5 176.2 Z" fill="url(#ferrule)"/>
+  <path d="M181.8 196.0 L183.7 197.5 L199.5 181.7 L198.0 179.8 Z" fill="#3f5148" opacity=".38"/>
+  <path d="M189.3 202.6 L191.2 204.2 L206.2 189.2 L204.6 187.3 Z" fill="#3f5148" opacity=".38"/>
+  <path d="M190.0 182.2 L204.3 196.2 L207.2 193.2 L193.2 178.9 Z" fill="#ffffff" opacity=".5"/>
+
+  <!-- grip: flared towards the butt, so it widens as a real handle does -->
+  <circle cx="229.5" cy="227.5" r="11.8" fill="url(#handleWood)"/>
+  <path d="M193.3 205.8 L221.2 235.8 L237.8 219.2 L207.8 191.3 Z" fill="url(#handleWood)"/>
+  <!-- the lit edge and the turned-away edge, which is what gives it a round
+       section instead of a flat plank -->
+  <path d="M204.8 197.0 L230.8 223.3 L234.7 219.5 L208.4 193.5 Z" fill="#ffffff" opacity=".17"/>
+  <path d="M194.7 207.1 L221.4 234.2 L226.0 229.6 L199.0 202.9 Z" fill="#000000" opacity=".22"/>
+  <!-- grain, barely there: enough to be wood, not enough to be a pattern -->
+  <path d="M205.5 202.0 L226.7 223.3 L227.8 222.1 L206.5 201.0 Z" fill="#000000" opacity=".09"/>
+  <path d="M204.6 207.1 L221.5 224.1 L222.5 223.2 L205.5 206.3 Z" fill="#000000" opacity=".07"/>
 
   <circle cx="110" cy="108" r="95" fill="url(#glass)"/>
 
