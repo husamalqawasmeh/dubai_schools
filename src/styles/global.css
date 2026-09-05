@@ -770,7 +770,9 @@ a.tier:hover .coin-edge { filter: brightness(0.9); }
 /* ---------------- contribute ---------------- */
 /* No max-width of its own, for the same reason as .pick: it takes the
    1120px the wrap gives every other page. */
-.contribute { padding-top: 22px; padding-bottom: 40px; }
+/* 4px, not 40: the form ends the page, and forty pixels under it read as
+   something missing rather than as breathing room. */
+.contribute { padding-top: 22px; padding-bottom: 4px; }
 .contribute-head { margin-bottom: 9px; }
 .contribute-head h1 { font-size: 20px; margin-top: 6px; }
 
@@ -1242,6 +1244,7 @@ a.adminlink:hover { border-color: var(--accent); }
   /* Two lines held whatever the tab says, so switching tabs does not shift the
      form below it. Kept in step with the size above. */
   min-height: calc(13.5px * 1.6 * 2);
+  margin-bottom: 6px;
 }
 
 /* ---------------- one card, four panes ----------------
