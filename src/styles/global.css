@@ -62,6 +62,11 @@
      the one pairing that reads as a warning rather than as punctuation. It
      measures 7.9:1 on the header ground, where the red managed 5.2:1, with a
      lighter partner for when a hovered link fills dark green underneath. */
+  /* The nav item you are on. A mid green: plainly filled, and plainly
+     lighter than the deep green a hovered item takes, so the two states
+     stay apart. As light as it goes with a white label — 5.0:1 here,
+     against 4.2:1 one step lighter. */
+  --nav-here: #1c7d69;
   --nav-mark: #6b3f1d;
   --nav-mark-on: #e8c39a;
   --coin: #d9a327;
@@ -145,11 +150,11 @@ p { margin: 0 0 14px; }
   text-decoration: none;
   transition: background 0.12s ease, color 0.12s ease, box-shadow 0.12s ease;
 }
-/* The page you are on, marked for as long as you are on it. A step lighter
-   than the hover fill, so hovering the current item still answers the pointer
-   instead of looking inert. */
+/* The page you are on, marked for as long as you are on it. Lighter than the
+   hover fill, so hovering the current item still answers the pointer instead
+   of looking inert. */
 .site-head nav a.is-here {
-  background: var(--accent);
+  background: var(--nav-here);
   color: var(--on-accent);
 }
 .site-head nav a.is-here .nav-mark { color: var(--nav-mark-on); }
