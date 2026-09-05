@@ -102,13 +102,11 @@ const ICONS = {
     "M3 2.4h18v12.2H3z M6.2 5.8h11.6v1.6H6.2z M6.2 9.2h7.8v1.6H6.2z" +
     "M17.2 14.6a3.4 3.4 0 1 0 0 6.8 3.4 3.4 0 0 0 0-6.8z" +
     "M13.6 20.1 12.4 24l2.6-1.1 1.4 1.1.6-3.4z",
-  // Three flat coins seen edge-on gave nowhere to put a symbol: at bubble size
-  // each face is a 3-unit sliver. So one coin stands up and carries the mark,
-  // and the stack lies behind it saying "money" by silhouette.
-  coins:
-    "M15.7 1.0a6.9 6.9 0 1 1 0 13.8 6.9 6.9 0 0 1 0-13.8z" +
-    "M7.8 14.4c3.9 0 7 1.4 7 3.1s-3.1 3.1-7 3.1-7-1.4-7-3.1 3.1-3.1 7-3.1z" +
-    "M0.8 18.4c0 1.7 3.1 3.1 7 3.1s7-1.4 7-3.1v2.3c0 1.7-3.1 3.1-7 3.1s-7-1.4-7-3.1z",
+  // One coin, filling the box, with the dirham struck across it. The stack
+  // behind it was competing for the same 24 units the symbol needed, and the
+  // symbol is the part that says which currency — the discs only said "money",
+  // which the bubble's company already says.
+  coins: "M12 1.4a10.6 10.6 0 1 1 0 21.2 10.6 10.6 0 0 1 0-21.2z",
   rank:
     "M12 1.4l1.4 3 3.2.4-2.4 2.2.6 3.2-2.8-1.6-2.8 1.6.6-3.2L7.4 4.8l3.2-.4z" +
     "M9.2 11.4h5.6v10.8H9.2z" +
@@ -130,10 +128,10 @@ const MARK = {
   // against the Central Bank's own artwork before this goes on anything
   // printed — it is drawn from the shape, not from the official file.
   coins:
-    "M13.5 4.2h1.9v9.4h-1.9z" +
-    "M14.6 4.2c3.3 0 5.6 1.9 5.6 4.7s-2.3 4.7-5.6 4.7v-2.1c2 0 3.4-1 3.4-2.6s-1.4-2.6-3.4-2.6z" +
-    "M11.0 6.9h5.4v1.7h-5.4z" +
-    "M11.0 9.9h5.4v1.7h-5.4z",
+    "M8.5 3.9h3.2v16.2H8.5z" +
+    "M10.4 3.9c5.7 0 9.7 3.2 9.7 8.1s-4 8.1-9.7 8.1v-3.6c3.5 0 5.9-1.8 5.9-4.5s-2.4-4.5-5.9-4.5z" +
+    "M3.9 8.5h10.5v2.8H3.9z" +
+    "M3.9 13.6h10.5v2.8H3.9z",
 };
 
 /**
@@ -176,7 +174,8 @@ const SHADE = {
   school:      "M12 3.8 22.4 8.6v1.6H1.6V8.6z M3.4 11.4h17.2v1.4H3.4z",
   bus:         "M2.2 6.2c0-1.3 1.1-2.4 2.4-2.4h14.8c1.3 0 2.4 1.1 2.4 2.4v.7H2.2z M6.6 17.9a.8.8 0 1 0 0 1.6.8.8 0 0 0 0-1.6z M17.4 17.9a.8.8 0 1 0 0 1.6.8.8 0 0 0 0-1.6z",
 
-  coins:       "M15.7 2.5a5.4 5.4 0 1 0 0 10.8 5.4 5.4 0 0 0 0-10.8zm0 1.1a4.3 4.3 0 1 1 0 8.6 4.3 4.3 0 0 1 0-8.6z M0.8 20.7c0 1.7 3.1 3.1 7 3.1s7-1.4 7-3.1v1.1c0 1.7-3.1 3.1-7 3.1s-7-1.4-7-3.1z",
+  // A milled rim, set outside the symbol's reach so the two never touch.
+  coins:       "M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm0 .8a9.2 9.2 0 1 1 0 18.4 9.2 9.2 0 0 1 0-18.4z",
   student:     "M12 1.6 22.8 5.9 12 10.2 1.2 5.9z M12 11.9a3.3 3.3 0 0 0-3.3 3.3h6.6A3.3 3.3 0 0 0 12 11.9z",
   government:  "M12 1.8 22.6 7v1.6H1.4V7z M2.2 19.6h19.6v.9H2.2z",
   teacher:     "M8.8 2.4h13.4v1.4H8.8z M5.2 5.6a2.7 2.7 0 0 0-2.7 2.7h5.4a2.7 2.7 0 0 0-2.7-2.7z",
