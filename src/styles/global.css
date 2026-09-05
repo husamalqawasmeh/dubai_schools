@@ -2340,8 +2340,8 @@ a.cur-note {
    site serves both — one above the other reads as a first and a second. */
 .idsplit {
   display: grid;
-  gap: 12px;
-  margin: 18px 0 0;
+  gap: 14px;
+  margin: 34px 0 0;
   text-align: left;
 }
 @media (min-width: 700px) { .idsplit { grid-template-columns: 1fr 1fr; } }
@@ -2432,7 +2432,7 @@ body.is-bare .idwrap { min-height: 100dvh; }
 .idwrap > .idgo {
   justify-self: center;
   flex-direction: column;
-  gap: 8px;
-  margin: 0 0 6px;
+  gap: 14px;
+  margin: 0 0 30px;
   text-align: center;
 }
