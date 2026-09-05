@@ -157,6 +157,22 @@ p { margin: 0 0 14px; }
 .site-head nav a.is-here {
   background: var(--nav-here);
   color: var(--on-midtone);
+  position: relative;
+}
+/* The mark for the current page sits centred beneath its own button rather
+   than in the row. Drawn as a pseudo-element out of flow, so the buttons
+   either side of it do not move by a pixel — the inline mark keeps its place
+   in the row and simply stops being drawn (below). */
+.site-head nav a.is-here::after {
+  content: "\25bc";
+  position: absolute;
+  left: 50%;
+  top: calc(100% - 1px);
+  transform: translateX(-50%) scaleX(1.35);
+  font-size: 11px;
+  line-height: 1;
+  color: var(--nav-mark);
+  pointer-events: none;
 }
 
 .site-head nav a:hover,
@@ -2062,7 +2078,18 @@ a.cur-note {
 /* No gap of its own: the mark sets its own spacing, tight to the item it
    follows and open before the next one. The row scrolls rather than wraps, and
    the brand beside it cannot shrink, so this can never become two lines. */
-.site-head nav { gap: 0; min-width: 0; overflow-x: auto; scrollbar-width: none; }
+.site-head nav {
+  gap: 0;
+  min-width: 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+  /* Taller than the 23px pills it holds, so the mark drawn under the current
+     one has somewhere to sit: a 23px pill centred in 44px leaves 10.5px below
+     it, and the mark is 11px drawn from 1px up. The bar around it stays 52px,
+     so nothing moves; this only claims space the bar already had. */
+  height: 44px;
+  align-items: center;
+}
 .site-head nav::-webkit-scrollbar { display: none; }
 /* Shorter pills: 6px of padding above and below a 12.5px label made a box
    taller than the label needed, and the fill on the current item showed
@@ -2093,8 +2120,11 @@ a.cur-note {
 /* Pointing down, at the page it belongs to. The right pointer is stretched
    tall; this one is stretched wide, which is the same idea turned through
    ninety degrees rather than the same transform reused. */
+/* Still in the row, still occupying its width and margins, but not drawn: the
+   visible mark has moved under the button. Removing it instead would pull
+   every item after it fifteen pixels to the left. */
 .nav-sep.is-down {
-  transform: translateY(-1px) scaleX(1.4);
+  visibility: hidden;
 }
 .nav-mark {
   display: inline-block;
