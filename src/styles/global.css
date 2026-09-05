@@ -64,9 +64,10 @@
      lighter partner for when a hovered link fills dark green underneath. */
   /* The nav item you are on. A mid green: plainly filled, and plainly
      lighter than the deep green a hovered item takes, so the two states
-     stay apart. As light as it goes with a white label — 5.0:1 here,
-     against 4.2:1 one step lighter. */
-  --nav-here: #1c7d69;
+     stay apart. Light enough now to take the dark label the other pale
+     buttons use rather than a white one — 6.1:1 — which is what makes a
+     hovered item, dark green under white, read as plainly different. */
+  --nav-here: #7ab5a2;
   --nav-mark: #6b3f1d;
   --nav-mark-on: #e8c39a;
   --coin: #d9a327;
@@ -137,7 +138,7 @@ p { margin: 0 0 14px; }
    everything below it, so the nav ends where the boxes end. */
 .site-head { background: transparent; }
 .site-head .wrap { border-bottom: 1px solid var(--rule); }
-.site-head .wrap { display: flex; align-items: center; justify-content: space-between; height: 52px; gap: 16px; }
+.site-head .wrap { display: flex; align-items: center; justify-content: space-between; height: 52px; gap: 8px; }
 .brand { font-family: var(--display); font-weight: 700; font-size: 14px; color: var(--ink); text-decoration: none; letter-spacing: -0.01em; }
 .brand span { color: var(--accent); }
 .site-head nav { display: flex; gap: 6px; font-family: var(--display); font-size: 13.5px; font-weight: 700; }
@@ -155,9 +156,8 @@ p { margin: 0 0 14px; }
    of looking inert. */
 .site-head nav a.is-here {
   background: var(--nav-here);
-  color: var(--on-accent);
+  color: var(--on-midtone);
 }
-.site-head nav a.is-here .nav-mark { color: var(--nav-mark-on); }
 
 .site-head nav a:hover,
 .partof:hover {
@@ -2067,7 +2067,7 @@ a.cur-note {
 /* Shorter pills: 6px of padding above and below a 12.5px label made a box
    taller than the label needed, and the fill on the current item showed
    every pixel of it. */
-.site-head nav a { padding: 3px 7px; font-size: 12.5px; white-space: nowrap; line-height: 1.35; }
+.site-head nav a { padding: 3px 6px; font-size: 12.5px; white-space: nowrap; line-height: 1.35; }
 .nav-sep {
   align-self: center;
   flex: none;
@@ -2075,6 +2075,11 @@ a.cur-note {
      with the space kept for the one it points at. The pair still costs about
      what an even gap did, so the row is no wider than before. */
   margin: 0 7px 0 1px;
+}
+/* The final mark has nothing to its right to make room for, and its margin
+   was the last thing pushing the row past the edge. */
+.site-head nav > .nav-sep:last-child {
+  margin-right: 0;
   font-size: 14px;
   line-height: 1;
   color: var(--nav-mark);
