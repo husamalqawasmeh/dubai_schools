@@ -2434,6 +2434,10 @@ a.cur-note {
    only the span inside it is scaled, so all four fall by the same distance
    however differently they are sized. */
 .idch.is-low { transform: translateY(0.46em); }
+/* Less than the drop, not equal to it. A capital already stands taller than
+   the x-height letters around it, so matching the fall would have thrown it
+   much further clear of the word than the low letters sit beneath it. */
+.idch.is-high { transform: translateY(-0.34em); }
 
 /* ---------------- the way in ---------------- */
 .idgo { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-top: 20px; }
@@ -2489,10 +2493,9 @@ body.is-bare .idwrap { min-height: 100dvh; }
 /* The indent lives on the column, not on the panels, so the name and the boxes
    share one left edge by construction. Indenting both separately would have
    meant two numbers that agree today and drift the first time either moves. */
-/* About 2cm below the name. The column pins the door to its bottom whatever
-   happens above, so this spends the slack between the two rather than pushing
-   anything off the glass's bottom edge. */
-.idsplit { gap: 26px; max-width: 40rem; margin-top: 110px; }
+/* Halfway back from the 2cm drop. The column still pins the door to its
+   bottom, so this only spends slack between the name and the boxes. */
+.idsplit { gap: 26px; max-width: 40rem; margin-top: 72px; }
 
 /* The door comes up off the floor. */
 

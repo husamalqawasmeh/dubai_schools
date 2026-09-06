@@ -27,7 +27,12 @@ import LensLogo from "../components/LensLogo.astro";
  * runs, the mark is still a mark and "Start the journey" still works.
  */
 const WORD = "DubaiSchools";
-const DROPPED = new Set([2, 5, 7, 11]);   // b, S, h, s
+const DROPPED = new Set([2, 7, 11]);      // b, h, s  — below the line
+const RAISED = new Set([5]);              // S         — above it
+/** Off the baseline either way. Brown marks a letter that has moved, not a
+ *  letter that has moved *down* — otherwise S would have had to change colour
+ *  just for going the other direction. */
+const OFFSET = new Set([...DROPPED, ...RAISED]);
 
 /**
  * A colour per letter, taken from the bubbles inside the lens rather than
@@ -46,16 +51,16 @@ const DROPPED = new Set([2, 5, 7, 11]);   // b, S, h, s
 const BROWN = "#6f5210";
 
 /**
- * How big each dropped letter is, relative to the rest of the word.
+ * How big each offset letter is, relative to the rest of the word.
  *
  * The size lives on an inner span, not on .idch. The drop is measured in em,
  * and em is relative to the element's own font size — so scaling .idch itself
  * would scale its drop with it, and the four letters would fall by four
  * different amounts. Outer span positions, inner span sizes.
  */
-const DROP_SIZE: Record<number, number> = {
+const OFFSET_SIZE: Record<number, number> = {
   2: 0.86,    // b  smallest
-  5: 1.2,     // S  biggest
+  5: 1.2,     // S  biggest, and the one that goes up
   7: 1.06,    // h
   11: 1.06,   // s
 };
@@ -85,11 +90,11 @@ const LETTER_COLOUR: Record<number, string> = {
         <h1 class="idword">
           {[...WORD].map((ch, i) => (
             <span
-              class={`idch${DROPPED.has(i) ? " is-low" : ""}`}
-              style={`color:${DROPPED.has(i) ? BROWN : LETTER_COLOUR[i]}`}
+              class={`idch${DROPPED.has(i) ? " is-low" : ""}${RAISED.has(i) ? " is-high" : ""}`}
+              style={`color:${OFFSET.has(i) ? BROWN : LETTER_COLOUR[i]}`}
             >
-              {DROPPED.has(i) ? (
-                <span style={`font-size:${DROP_SIZE[i]}em`}>{ch}</span>
+              {OFFSET.has(i) ? (
+                <span style={`font-size:${OFFSET_SIZE[i]}em`}>{ch}</span>
               ) : (
                 ch
               )}
