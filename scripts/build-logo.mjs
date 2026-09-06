@@ -73,10 +73,16 @@ const ICONS = {
     "M12 1.8 22.6 7v1.6H1.4V7z" +
     "M3.6 9.8h2.5v8.6H3.6z M8.4 9.8h2.5v8.6H8.4z M13.1 9.8h2.5v8.6h-2.5z M17.9 9.8h2.5v8.6h-2.5z" +
     "M2.2 19.6h19.6v2.4H2.2z",
-  pen:
-    "M16.4 2.2 21.8 7.6l-2.7 2.7-5.4-5.4z" +
-    "M12.6 6 18 11.4 7.9 21.5 2.5 16.1z" +
-    "M1.8 17.4 6.6 22.2 1 23.4z",
+  // A pencil has five parts and reads as one the moment they are all there:
+  // eraser, ferrule, body, the wood cone, and the graphite. Three slabs read
+  // as a wedge.
+  pen: [
+    "M18.1 1.3a2.1 2.1 0 0 1 3 0l1.6 1.6a2.1 2.1 0 0 1 0 3l-1.3 1.3-4.6-4.6z",
+    "M16.3 3.1l4.6 4.6-1.7 1.7-4.6-4.6z",
+    "M14.3 5.1l4.6 4.6-9.9 9.9-4.6-4.6z",
+    "M4.2 15.2l4.6 4.6-6 1.4z",
+    "M2.4 21.4l.4-2 1.6.4z",
+  ],
   // Head under the cap rather than beside it, and a collar cut into the
   // shoulders — a plain dome over a plain arc was a chess piece.
   // Shoulders that carry arms, and a book held against one of them. A cap on a
@@ -215,7 +221,10 @@ const SHADE = {
   school:      "M12 3.8 22.4 8.6v1.6H1.6V8.6z M3.4 11.4h17.2v1.4H3.4z",
   bus:         "M1.2 8.2c0-1.7 1.4-3.1 3.1-3.1h11.2c.5 0 1 .1 1.5.3H1.4z" +
                "M6.6 16.2a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3z M17.4 16.2a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3z" +
-               "M1.2 12.4h20.5v1.1H1.2z",
+               "M1.2 12.4h20.5v1.1H1.2z" +
+               "M15.6 5.4h.9v10.2h-.9z" +
+               "M20 13.9a1.1 1.1 0 1 0 0 2.2 1.1 1.1 0 0 0 0-2.2z" +
+               "M5.4 4.2h2v1.1h-2z M12.6 4.2h2v1.1h-2z",
 
   student:     "M12 1.4 22.9 5.8 12 10.2 1.1 5.8z M12 11.2a3.5 3.5 0 0 0-3.5 3.5h7A3.5 3.5 0 0 0 12 11.2z" +
                "M12 17.9 10.2 20.6h3.6z",
@@ -225,7 +234,9 @@ const SHADE = {
                "M2.2 22.4h2.1v1.4H2.2z M5.5 22.4h2.1v1.4H5.5z",
   certificate: "M3 2.4h18v1.5H3z M17.2 16.2a1.8 1.8 0 1 0 0 3.6 1.8 1.8 0 0 0 0-3.6z",
   rank:        "M2.4 14.4H8v1.3H2.4z M16 16.4h5.6v1.3H16z",
-  pen:         "M16.4 2.2 21.8 7.6l-2.7 2.7-5.4-5.4z",
+  pen:         "M16.3 3.1l4.6 4.6-.6.6-4.6-4.6z M19.4 6.2l.6.6-1.7 1.7-.6-.6z" +
+               "M14.3 5.1l1.4 1.4-9.9 9.9-1.4-1.4z" +
+               "M4.2 15.2l4.6 4.6-2.4.6-2.8-2.8z",
 };
 
 /**
@@ -265,11 +276,11 @@ const BUBBLES = [
   { icon: "teacher",     fill: "#2a5fa8", r: 17.5 },   // blue
   { icon: "government",  fill: "#3f4a9c", r: 15.5 },   // indigo
   { icon: "bus",         fill: "#3a4a52", r: 17   },   // slate, so the bus can be the yellow
-  { icon: "rank",        fill: "#a8326b", r: 17   },   // pink
-  { icon: "certificate", fill: "#a2372f", r: 15.5 },   // red
+  { icon: "rank",        fill: "#5f7d1f", r: 17   },   // olive
+  { icon: "certificate", fill: "#262626", r: 15.5 },   // near-black
   { icon: "coins",       fill: "#6f5210", r: 15.5 },   // brown
   { icon: "running",     fill: "#0f8a8a", r: 15   },   // cyan
-  { icon: "pen",         fill: "#5f7d1f", r: 14   },   // olive
+  { icon: "pen",         fill: "#c0468a", r: 14   },   // pink
 ];
 
 /**
