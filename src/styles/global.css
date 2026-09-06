@@ -2211,7 +2211,7 @@ a.cur-note {
   grid-column: 2;
   grid-row: 1;
   min-width: 0;
-  height: var(--lens);
+  min-height: var(--lens);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -2222,6 +2222,9 @@ a.cur-note {
    the mark shrinks rather than the words wrapping to nothing. */
 @media (max-width: 1080px) {
   .idwrap { --lens: 263px; column-gap: 46px; }
+  /* The shorter column has no slack to spend, so the gap goes back to what it
+     was rather than pushing the door below the glass. */
+  .idsplit { margin-top: 34px; }
 }
 @media (max-width: 820px) {
   /* One column, three rows: the lens, the words, the door. */
@@ -2423,7 +2426,6 @@ a.cur-note {
    would simply not move, which looks like the rule never applied rather than
    like a bug. */
 .idch { display: inline-block; }
-.idch.is-accent { color: var(--accent); }
 /* 0.35em is half a cap height in this face, not half an em. Half an em would
    drop them below the descenders and read as broken rather than as bounced. */
 .idch.is-low { transform: translateY(0.35em); }
@@ -2482,15 +2484,19 @@ body.is-bare .idwrap { min-height: 100dvh; }
 /* The indent lives on the column, not on the panels, so the name and the boxes
    share one left edge by construction. Indenting both separately would have
    meant two numbers that agree today and drift the first time either moves. */
-.idsplit { gap: 26px; max-width: 40rem; }
+/* About 2cm below the name. The column pins the door to its bottom whatever
+   happens above, so this spends the slack between the two rather than pushing
+   anything off the glass's bottom edge. */
+.idsplit { gap: 26px; max-width: 40rem; margin-top: 110px; }
 
 /* The door comes up off the floor. */
 
 
 @media (max-width: 1080px) {
-  .idsplit { gap: 18px; }
-
+  /* The shorter column has no slack to spend, so the gap goes back to what it
+     was rather than pushing the door below the glass. This has to live here,
+     after the 110px rule — in the earlier @media block it lost to it at every
+     width, which is how it was written the first time. */
+  .idsplit { gap: 18px; margin-top: 34px; }
 }
-@media (max-width: 820px) {
 
-}

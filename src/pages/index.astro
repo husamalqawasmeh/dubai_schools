@@ -28,7 +28,32 @@ import LensLogo from "../components/LensLogo.astro";
  */
 const WORD = "DubaiSchools";
 const DROPPED = new Set([2, 5, 7, 11]);   // b, S, h, s
-const ACCENT_FROM = 5;
+
+/**
+ * A colour per letter, taken from the bubbles inside the lens rather than
+ * invented — so the name and the mark are visibly one palette instead of two
+ * that happen to sit together.
+ *
+ * The four dropped letters are all one brown. Giving them colours too would
+ * have left twelve competing letters and no pattern; holding them to a single
+ * colour is what makes the drop read as deliberate rather than as a fault.
+ *
+ * Checked against the page ground: the weakest of these is 4.0:1 and the
+ * strongest 6.4:1. At 46px the bar for large text is 3:1, so every one clears
+ * it — but three of them (D, a, l) would not pass as body text, which is why
+ * this treatment stays on the wordmark and does not spread to prose.
+ */
+const BROWN = "#6f5210";
+const LETTER_COLOUR: Record<number, string> = {
+  0: "#2f7d5c",   // D  school green
+  1: "#7a4b9c",   // u  purple
+  3: "#c2542a",   // a  orange
+  4: "#2a5fa8",   // i  blue
+  6: "#1f6f8b",   // c  teal-blue
+  8: "#0c6455",   // o  accent
+  9: "#a2372f",   // o  red
+  10: "#1f7f74",  // l  teal
+};
 ---
 
 <Base
@@ -45,7 +70,8 @@ const ACCENT_FROM = 5;
         <h1 class="idword">
           {[...WORD].map((ch, i) => (
             <span
-              class={`idch${DROPPED.has(i) ? " is-low" : ""}${i >= ACCENT_FROM ? " is-accent" : ""}`}
+              class={`idch${DROPPED.has(i) ? " is-low" : ""}`}
+              style={`color:${DROPPED.has(i) ? BROWN : LETTER_COLOUR[i]}`}
             >{ch}</span>
           ))}
         </h1>
