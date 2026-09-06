@@ -44,7 +44,7 @@ const R_GLASS = R_OUTER - RING;   // inside face of the glass
  * with them — 71 to 82 — so the fill stays near half. That headroom is not
  * only taste: these bubbles bounce, and a bubble in a full jar cannot move.
  */
-const BUBBLE_SCALE = 1.224;
+const BUBBLE_SCALE = 1.13;
 
 /* ---------- the icons ---------- */
 /* Each is drawn in a 24x24 box, white stroke, no fill — a stroke reads at a
@@ -79,20 +79,32 @@ const ICONS = {
     "M1.8 17.4 6.6 22.2 1 23.4z",
   // Head under the cap rather than beside it, and a collar cut into the
   // shoulders — a plain dome over a plain arc was a chess piece.
+  // Shoulders that carry arms, and a book held against one of them. A cap on a
+  // head on an arc was a bust on a plinth; the arms and the book are what make
+  // it a person standing there.
   student: [
     "M12 11.2a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7z",
-    "M12 17.8c-4 0-7.3 2.7-7.3 6h14.6c0-3.3-3.3-6-7.3-6z" +
-      "M12 17.9 10.2 20.6h3.6z",
+    "M12 17.8c-3.6 0-6.6 2.4-7.2 5.5l.1.5h14.2l.1-.5c-.6-3.1-3.6-5.5-7.2-5.5z" +
+      "M12 17.9 10.2 20.4h3.6z",
+    "M5.6 19.6 3.9 23.8h2.3l1.4-3.4z",
+    "M18.4 19.6l1.7 4.2h-2.3l-1.4-3.4z",
+    "M15.6 18.9h5.1v4.9h-5.1z M16.6 20.1h3.1v.8h-3.1z M16.6 21.6h2.2v.8h-2.2z",
     "M12 1.4 22.9 5.8 12 10.2 1.1 5.8z",
     "M21.2 6.5v4.6a1.1 1.1 0 1 1-1.5 0V7.1z",
   ],
   // The figure stands rather than floating: head, then a body that reaches the
   // ground, with the raised arm and the pointer drawn as strokes because an
   // arm is a line, not an area.
+  // A torso that ends and legs that begin, rather than a bell reaching the
+  // floor. The board gains a frame and a tray, which is what makes it a board
+  // rather than a poster.
   teacher: [
-    "M8.2 2.2h14.4v11.4H8.2z M10.3 4.5h10.2v1.3H10.3z M10.3 7.2h6.6v1.3h-6.6z M10.3 9.9h8.4v1.3h-8.4z",
+    "M8.2 2.2h14.4v11.4H8.2z M9.6 3.6h11.6v8.6H9.6z" +
+      "M11 5.2h8.8v1.2H11z M11 7.6h5.6v1.2H11z M11 10h7.2v1.2H11z" +
+      "M8.9 13.6h13v1.2h-13z",
     "M4.9 5.2a2.9 2.9 0 1 0 0 5.8 2.9 2.9 0 0 0 0-5.8z",
-    "M4.9 11.6c-2.3 0-4.1 2.5-4.1 5.8v5.4h8.2v-5.4c0-3.3-1.8-5.8-4.1-5.8z",
+    "M4.9 11.6c-2.1 0-3.8 2-3.8 4.6v1.9h7.6v-1.9c0-2.6-1.7-4.6-3.8-4.6z",
+    "M2.2 18.3h2.1v5.5H2.2z M5.5 18.3h2.1v5.5H5.5z",
   ],
   // A real school bus has a bonnet, so the roof stops short of the front and
   // the windscreen rakes back from it. A plain box with three windows was a
@@ -108,7 +120,7 @@ const ICONS = {
   // here because a ball is recognisable by the pattern over its whole surface,
   // and that pattern is the first thing to disappear at bubble size. A runner
   // is recognisable by its pose, which survives being small.
-  running: "M16.4 1.8a2.6 2.6 0 1 0 0 5.2 2.6 2.6 0 0 0 0-5.2z",
+  running: "M15.8 2.1a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5z",
   certificate:
     "M3 2.4h18v12.2H3z M6.2 5.8h11.6v1.6H6.2z M6.2 9.2h7.8v1.6H6.2z" +
     "M17.2 14.6a3.4 3.4 0 1 0 0 6.8 3.4 3.4 0 0 0 0-6.8z" +
@@ -165,14 +177,18 @@ const STROKES = {
     { d: "M6.4 13.6 10.4 10.4", w: 2.3 },   // raised arm
     { d: "M10.2 10.7 14.2 7.4", w: 1.3 },   // pointer
   ],
+  // A stride, not a star jump. The knee of the leading leg drives forward and
+  // up while the trailing leg extends behind, and the arms oppose them — the
+  // near arm swings up as the near leg drives, which is the thing that makes a
+  // figure read as running rather than as falling over.
   running: [
-    { d: "M14.7 8.4 11.3 14",            w: 3.3 },              // torso
-    { d: "M13.1 9.5 9.3 10.3 7.5 8",     w: 2.4, far: true },   // far arm
-    { d: "M11.0 13.9 7.3 16.4 4.1 17.6", w: 2.8, far: true },   // far leg
-    { d: "M14.9 9.1 18.5 8.5 19.9 11.5", w: 2.4 },              // near arm
-    { d: "M11.9 13.7 15.9 15.9 16.7 20.4", w: 2.8 },            // near leg
-    { d: "M16.7 20.6 19.2 20.9",         w: 2.0 },              // near foot
-    { d: "M4.1 17.6 3.1 19.6",           w: 2.0, far: true },   // far foot
+    { d: "M14.2 8.0 10.8 14.2",              w: 3.4 },              // torso, leaning
+    { d: "M12.8 9.4 9.0 9.0 7.0 11.4",       w: 2.3, far: true },   // far arm
+    { d: "M10.6 14.0 7.0 15.6 3.8 18.8",     w: 2.9, far: true },   // trailing leg
+    { d: "M3.9 18.7 2.4 20.7",               w: 2.0, far: true },   // trailing foot
+    { d: "M14.4 9.0 18.2 9.8 19.6 6.8",      w: 2.4 },              // near arm, up
+    { d: "M11.4 13.8 15.4 16.2 14.8 20.8",   w: 2.9 },              // leading leg
+    { d: "M14.8 21.0 17.4 21.4",             w: 2.0 },              // leading foot
   ],
 };
 
@@ -185,9 +201,15 @@ const STROKES = {
  * every plane is the same white.
  */
 const SHADE = {
+  // The ruled lines rake with the pages instead of sitting flat. The page top
+  // rises from the gutter to the outer edge, so a horizontal line contradicted
+  // the very curve that says the book is open — it read as a card with a fold
+  // down it. Each line is a thin parallelogram on the page's own slope.
   book:        "M11.3 6.5h1.4v12.9h-1.4z" +
-               "M4.4 7.2h5.2v1.1H4.4z M4.4 9.7h5.2v1.1H4.4z M4.4 12.2h3.6v1.1H4.4z" +
-               "M14.4 7.2h5.2v1.1h-5.2z M14.4 9.7h5.2v1.1h-5.2z M14.4 12.2h3.6v1.1h-3.6z" +
+               "M9.8 8.8 4.2 7.1v1.1l5.6 1.7z M9.8 11.3 4.2 9.6v1.1l5.6 1.7z" +
+               "M9.8 13.8 6.4 12.8v1.1l3.4 1z" +
+               "M14.2 8.8 19.8 7.1v1.1l-5.6 1.7z M14.2 11.3 19.8 9.6v1.1l-5.6 1.7z" +
+               "M14.2 13.8 17.6 12.8v1.1l-3.4 1z" +
                "M2.2 16.6c3.5 0 6.6.9 9.1 2.8v.5c-2.5-1.9-5.6-2.8-9.1-2.8z" +
                "M21.8 16.6c-3.5 0-6.6.9-9.1 2.8v.5c2.5-1.9 5.6-2.8 9.1-2.8z",
   school:      "M12 3.8 22.4 8.6v1.6H1.6V8.6z M3.4 11.4h17.2v1.4H3.4z",
@@ -199,27 +221,55 @@ const SHADE = {
                "M12 17.9 10.2 20.6h3.6z",
   government:  "M12 1.8 22.6 7v1.6H1.4V7z M2.2 19.6h19.6v.9H2.2z",
   teacher:     "M8.2 2.2h14.4v1.5H8.2z M4.9 5.2a2.9 2.9 0 0 0-2.9 2.9h5.8a2.9 2.9 0 0 0-2.9-2.9z" +
-               "M.8 16.4c.6-3 2.2-4.8 4.1-4.8s3.5 1.8 4.1 4.8z",
+               "M1.1 15.6c.4-2.4 1.9-4 3.8-4s3.4 1.6 3.8 4z" +
+               "M2.2 22.4h2.1v1.4H2.2z M5.5 22.4h2.1v1.4H5.5z",
   certificate: "M3 2.4h18v1.5H3z M17.2 16.2a1.8 1.8 0 1 0 0 3.6 1.8 1.8 0 0 0 0-3.6z",
   rank:        "M2.4 14.4H8v1.3H2.4z M16 16.4h5.6v1.3H16z",
   pen:         "M16.4 2.2 21.8 7.6l-2.7 2.7-5.4-5.4z",
+};
+
+/**
+ * Icons that are not white.
+ *
+ * The bus is yellow on slate and the coin is gold on brown, and both are the
+ * same idea: the object carries the colour, not the disc behind it. A yellow
+ * disc cannot hold a white glyph anyway — at #e0a800 white is 2.15:1, under
+ * the 3:1 a graphic needs — so painting the disc yellow would have forced the
+ * bus itself dark, which is backwards.
+ */
+const FACE = {
+  // The bus is the yellow thing, not the disc behind it. Painting the disc
+  // yellow forced the bus itself dark, which is backwards: it is the vehicle
+  // that is famously that colour.
+  bus: "#efb100",
+  coins: "#e0b33a",
+};
+
+/** Where the struck symbol is not the bubble's own colour. */
+const MARK_COLOUR = {
+  coins: "#4a3608",
 };
 
 /* Bubble colours. Distinct in hue from each other so no two read as the same
    category, and every one dark enough to hold a white stroke — the palette in
    the reference image has pale circles that lose their glyph entirely. */
 const BUBBLES = [
-  { icon: "school",      fill: "#2f7d5c", r: 18   },
-  { icon: "student",     fill: "#7a4b9c", r: 18.5 },
-  { icon: "book",        fill: "#c2542a", r: 16   },
-  { icon: "teacher",     fill: "#2a5fa8", r: 17.5 },
-  { icon: "government",  fill: "#1f6f8b", r: 15.5 },
-  { icon: "bus",         fill: "#b8892b", r: 17   },
-  { icon: "rank",        fill: "#0c6455", r: 17   },
-  { icon: "certificate", fill: "#a2372f", r: 15.5 },
-  { icon: "coins",       fill: "#6f5210", r: 15.5 },
-  { icon: "running",     fill: "#1f7f74", r: 15   },
-  { icon: "pen",         fill: "#b5471f", r: 14   },
+  // Eleven hues, one per subject, spread around the wheel rather than clustered.
+  // The first palette had three greens and three reds in it, which read as one
+  // green blur and one red blur however different the icons inside them were —
+  // colour is what tells the bubbles apart at a glance, so it has to do that
+  // job before it does any other.
+  { icon: "school",      fill: "#2f7d5c", r: 18   },   // green
+  { icon: "student",     fill: "#6b3fa0", r: 18.5 },   // purple
+  { icon: "book",        fill: "#c05a12", r: 16   },   // orange
+  { icon: "teacher",     fill: "#2a5fa8", r: 17.5 },   // blue
+  { icon: "government",  fill: "#3f4a9c", r: 15.5 },   // indigo
+  { icon: "bus",         fill: "#3a4a52", r: 17   },   // slate, so the bus can be the yellow
+  { icon: "rank",        fill: "#a8326b", r: 17   },   // pink
+  { icon: "certificate", fill: "#a2372f", r: 15.5 },   // red
+  { icon: "coins",       fill: "#6f5210", r: 15.5 },   // brown
+  { icon: "running",     fill: "#0f8a8a", r: 15   },   // cyan
+  { icon: "pen",         fill: "#5f7d1f", r: 14   },   // olive
 ];
 
 /**
@@ -311,12 +361,13 @@ const bubble = (b, i) => {
   const oy = b.y - (24 * s) / 2;
   const ic = ICONS[b.icon];
   const parts = Array.isArray(ic) ? ic : [ic];
+  const face = FACE[b.icon] ?? "#fff";
   const st = STROKES[b.icon] ?? [];
   const line = (l, colour, op) =>
     `
         <path d="${l.d}" fill="none" stroke="${colour}" stroke-width="${l.w}"` +
     ` stroke-linecap="round" stroke-linejoin="round"${op ? ` opacity="${op}"` : ""}/>`;
-  const lines = st.map((l) => line(l, "#fff")).join("");
+  const lines = st.map((l) => line(l, face)).join("");
   const dim = st.filter((l) => l.far).map((l) => line(l, b.fill, ".3")).join("");
   const soft = SHADE[b.icon]
     ? `
@@ -326,13 +377,13 @@ const bubble = (b, i) => {
   // the crossings back out.
   const mark = MARK[b.icon]
     ? `
-        <path d="${MARK[b.icon]}" fill="${b.fill}"/>`
+        <path d="${MARK[b.icon]}" fill="${MARK_COLOUR[b.icon] ?? b.fill}"/>`
     : "";
   return `    <g class="bub" style="--i:${i}">
       <circle cx="${b.x.toFixed(1)}" cy="${b.y.toFixed(1)}" r="${b.r}" fill="${b.fill}"/>
       <circle cx="${b.x.toFixed(1)}" cy="${(b.y - b.r * 0.28).toFixed(1)}" r="${(b.r * 0.72).toFixed(1)}" fill="#fff" opacity=".08"/>
       <g transform="translate(${ox.toFixed(1)} ${oy.toFixed(1)}) scale(${s.toFixed(3)})">
-        ${parts.map((d) => `<path d="${d}" fill="#fff" fill-rule="evenodd"/>`).join("\n        ")}${lines}${soft}${mark}${dim}
+        ${parts.map((d) => `<path d="${d}" fill="${face}" fill-rule="evenodd"/>`).join("\n        ")}${lines}${soft}${mark}${dim}
       </g>
     </g>`;
 };

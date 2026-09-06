@@ -2445,7 +2445,10 @@ a.cur-note {
   margin-top: 0;
   padding: 12px 26px;
   font-size: 16px;
-  background: var(--accent);
+  /* Lighter at rest so the hover has somewhere to go — it was already close to
+     the colour it darkened to. #178873 was the first pick and it is 4.37:1 —
+     under the 4.5 that 16px bold needs, so it went one step back. */
+  background: #127966;
   border-radius: 7px;
 }
 .idgo-btn:hover { background: var(--accent-2); }
@@ -2473,7 +2476,13 @@ body.is-bare .idwrap { min-height: 100dvh; }
    doing above it. Centred, because it is the only thing on its line and
    ranging it left would leave it looking dropped rather than placed. */
 .idcol > .idgo {
-  align-items: flex-start;
+  /* fit-content sizes the block to its widest child, which is the line of
+     facts; stretch then pulls the button out to match it. Neither alone does
+     it — stretch on a full-width block would run the button to the far edge of
+     the column, and fit-content without stretch leaves the button at its own
+     text width. */
+  width: fit-content;
+  align-items: stretch;
   flex-direction: column;
   gap: 14px;
   margin: 0;
