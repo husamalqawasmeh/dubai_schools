@@ -2426,9 +2426,14 @@ a.cur-note {
    would simply not move, which looks like the rule never applied rather than
    like a bug. */
 .idch { display: inline-block; }
-/* 0.35em is half a cap height in this face, not half an em. Half an em would
-   drop them below the descenders and read as broken rather than as bounced. */
-.idch.is-low { transform: translateY(0.35em); }
+/* Further down than the half cap height it started at, but still short of half
+   an em — past that the letters clear the descenders and stop reading as part
+   of the same word.
+
+   The em here is the h1's, not the letter's: .idch keeps the parent size and
+   only the span inside it is scaled, so all four fall by the same distance
+   however differently they are sized. */
+.idch.is-low { transform: translateY(0.46em); }
 
 /* ---------------- the way in ---------------- */
 .idgo { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-top: 20px; }

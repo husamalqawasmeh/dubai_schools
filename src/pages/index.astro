@@ -44,6 +44,21 @@ const DROPPED = new Set([2, 5, 7, 11]);   // b, S, h, s
  * this treatment stays on the wordmark and does not spread to prose.
  */
 const BROWN = "#6f5210";
+
+/**
+ * How big each dropped letter is, relative to the rest of the word.
+ *
+ * The size lives on an inner span, not on .idch. The drop is measured in em,
+ * and em is relative to the element's own font size — so scaling .idch itself
+ * would scale its drop with it, and the four letters would fall by four
+ * different amounts. Outer span positions, inner span sizes.
+ */
+const DROP_SIZE: Record<number, number> = {
+  2: 0.86,    // b  smallest
+  5: 1.2,     // S  biggest
+  7: 1.06,    // h
+  11: 1.06,   // s
+};
 const LETTER_COLOUR: Record<number, string> = {
   0: "#2f7d5c",   // D  school green
   1: "#7a4b9c",   // u  purple
@@ -72,7 +87,13 @@ const LETTER_COLOUR: Record<number, string> = {
             <span
               class={`idch${DROPPED.has(i) ? " is-low" : ""}`}
               style={`color:${DROPPED.has(i) ? BROWN : LETTER_COLOUR[i]}`}
-            >{ch}</span>
+            >
+              {DROPPED.has(i) ? (
+                <span style={`font-size:${DROP_SIZE[i]}em`}>{ch}</span>
+              ) : (
+                ch
+              )}
+            </span>
           ))}
         </h1>
 
