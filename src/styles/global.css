@@ -2170,41 +2170,70 @@ a.cur-note {
 
 /* ---------------- identity demo (admin only) ---------------- */
 .idwrap {
+  /* One number for the mark's size, used by both the lens and the column
+     beside it. Two numbers would have to agree at every breakpoint, and the
+     whole point here is that the two bottom edges cannot drift apart. */
+  --lens: 403px;
   min-height: calc(100dvh - 52px);
   width: 100%;
+  max-width: 86rem;
   display: grid;
-  grid-template-rows: 1fr auto;
+  grid-template-columns: auto minmax(0, 1fr);
+  grid-template-rows: minmax(0, 1fr);
+  /* The gap is the old stage gap plus the old panel indent, in one number now
+     that both live in the same column. */
+  column-gap: 72px;
   /* Ranged left, not centred. A centred stage reads as a splash screen; this
      is shown while someone talks over it, and the eye should return to one
-     edge for the name and then each panel. */
+     edge for the name, each panel and then the door. */
   justify-items: start;
   align-items: center;
   padding: 20px 30px 26px;
   box-sizing: border-box;
 }
-/* Lens left, words right, nothing below either. The lens takes its natural
-   width and the column beside it takes the rest, so growing the mark does not
-   squeeze the text — it just moves the column right. */
-.idstage {
-  text-align: left;
+/* One grid for the whole page rather than a flex row with a button under it.
+   The lens takes column one; the name, the panels and the door all take column
+   two — so they share a left edge because they are in the same column, not
+   because three margins were set to the same number.
+
+   .idstage is display:contents so its children join that grid directly. It
+   stays in the markup because it is what the reveal animates. */
+.idstage { display: contents; }
+.idmark { grid-column: 1; grid-row: 1; width: var(--lens); height: var(--lens); }
+
+/* The column is exactly as tall as the lens and pushes its two children to
+   opposite ends, so the door's bottom edge sits on the glass's bottom edge
+   because they are the same height and the same offset — not because a margin
+   was tuned until it looked level. */
+.idcol {
+  grid-column: 2;
+  grid-row: 1;
+  min-width: 0;
+  height: var(--lens);
   display: flex;
-  align-items: center;
-  gap: 30px;
-  width: 100%;
-  max-width: 74rem;
+  flex-direction: column;
+  justify-content: space-between;
 }
-.idmark { flex: none; }
-.idside { min-width: 0; flex: 1; }
+.idside { min-width: 0; }
 
 /* Below the two-column width there is no room for a 520px lens beside text, so
    the mark shrinks rather than the words wrapping to nothing. */
 @media (max-width: 1080px) {
-  .idstage { gap: 22px; }
-  .idmark { width: 263px; height: 263px; }
+  .idwrap { --lens: 263px; column-gap: 46px; }
 }
 @media (max-width: 820px) {
-  .idstage { flex-direction: column; align-items: flex-start; gap: 16px; }
-  .idmark { width: 201px; height: 201px; }
+  /* One column, three rows: the lens, the words, the door. */
+  .idwrap {
+    --lens: 201px;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto auto;
+    align-content: center;
+    row-gap: 18px;
+  }
+  .idmark { grid-column: 1; grid-row: 1; }
+  /* Stacked, so the column stops being lens-height — there is nothing beside
+     it to line up with any more. */
+  .idcol { grid-column: 1; grid-row: 2; height: auto; gap: 22px; transform: none; }
 }
 
 /* Each element waits its turn. The delays are the whole design: the mark lands
@@ -2429,12 +2458,12 @@ body.is-bare .idwrap { min-height: 100dvh; }
    the text column, so it sits at the foot of the screen whatever the lens is
    doing above it. Centred, because it is the only thing on its line and
    ranging it left would leave it looking dropped rather than placed. */
-.idwrap > .idgo {
-  justify-self: center;
+.idcol > .idgo {
+  align-items: flex-start;
   flex-direction: column;
   gap: 14px;
-  margin: 0 0 30px;
-  text-align: center;
+  margin: 0;
+  text-align: left;
 }
 
 /* ---------------- front page: placement ---------------- */
@@ -2444,23 +2473,21 @@ body.is-bare .idwrap { min-height: 100dvh; }
 
    Clamped against the viewport height: on a short screen 90px would push the
    glass into the button, and the offset is a nicety while the button is not. */
-.idmark { transform: translateY(clamp(0px, 9vh, 90px)); }
+.idmark,
+.idcol { transform: translateY(clamp(0px, 9vh, 90px)); }
 
 /* The indent lives on the column, not on the panels, so the name and the boxes
    share one left edge by construction. Indenting both separately would have
    meant two numbers that agree today and drift the first time either moves. */
-.idside { margin-left: 42px; }
-.idsplit { gap: 26px; }
+.idsplit { gap: 26px; max-width: 40rem; }
 
 /* The door comes up off the floor. */
-.idwrap > .idgo { margin-bottom: 54px; }
+
 
 @media (max-width: 1080px) {
-  .idside { margin-left: 24px; }
   .idsplit { gap: 18px; }
-  .idwrap > .idgo { margin-bottom: 38px; }
+
 }
 @media (max-width: 820px) {
-  /* Stacked at this width, so an indent would just eat the column. */
-  .idside { margin-left: 0; }
+
 }
