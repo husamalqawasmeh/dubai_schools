@@ -2815,3 +2815,17 @@ a.idcard:hover h2 { color: var(--on-accent); }
    of space actually exists rather than being drawn over something. */
 .idtag { margin-top: calc(10px + 1in); }
 @media (max-height: 860px) { .idtag { margin-top: calc(10px + 0.6in); } }
+
+
+/* The whole text block — name, tagline and both cards — moves 2cm right and
+   2cm down. On .idside, so it travels as one piece: the wordmark's own -2cm
+   sits inside this one and transforms compose, so the block keeps its internal
+   spacing rather than the raise being cancelled or doubled.
+
+   Backed off where there is less room to give: a fixed 2cm down on a short
+   screen pushes the cards past the fold, and 2cm right on a narrow one pushes
+   them into the edge. */
+.idside { transform: translate(2cm, 2cm); }
+@media (max-height: 860px) { .idside { transform: translate(2cm, 1.1cm); } }
+@media (max-width: 1200px) { .idside { transform: translate(1cm, 1.1cm); } }
+@media (max-width: 820px) { .idside { transform: none; } }
