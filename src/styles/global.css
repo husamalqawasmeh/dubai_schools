@@ -2403,7 +2403,7 @@ a.cur-note {
      which way the card is read from. It turns white on hover rather than
      vanishing into the fill it would otherwise match. */
   border: none;
-  border-left: 2.9px solid var(--accent-2);
+  border-left: 2.7px solid var(--accent-2);
   border-radius: 8px;
   padding: 14px 16px 16px;
 }
