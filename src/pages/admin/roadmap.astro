@@ -17,7 +17,6 @@ const { results } = await DB.prepare(
 }>();
 
 const items = results ?? [];
-const doneCount = items.filter((i) => i.done).length;
 
 /**
  * Which row is open for editing, from the query string.
@@ -36,12 +35,6 @@ const shown = (d: string | null) =>
   <div class="wrap pick rm-page">
     <a class="back" href="/admin">&larr; Admin</a>
     <h1 style="margin-top:14px">Improvements and planned changes</h1>
-    <p class="sub">
-      {items.length === 0
-        ? "Nothing on the list."
-        : `${doneCount} of ${items.length} done. Tick what is finished, edit to add dates, and use the arrows to put the rest in the order you mean to do them.`}
-    </p>
-
     <form class="rm-add" method="POST" action="/api/admin/roadmap">
       <input type="hidden" name="action" value="add" />
       <input
