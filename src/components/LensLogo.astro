@@ -3,6 +3,7 @@
 // public/ and the animated one here are the same shapes by construction. Edit
 // scripts/build-logo.mjs and re-run it; never edit either output.
 import lens from "./generated-lens.html?raw";
+import lensCentred from "./generated-lens-centred.html?raw";
 
 interface Props {
   /** Rendered size in px. The art is a 220-unit square. */
@@ -10,10 +11,14 @@ interface Props {
   /** Bubbles drift when true. Off by default — a logo in a header should sit
    *  still; motion is for the one place that is showing it off. */
   animated?: boolean;
+  /** "packed" is the solver's arrangement; "centred" puts student, school and
+   *  teacher in the middle with the other eight evenly around them. */
+  layout?: "packed" | "centred";
   class?: string;
 }
 
-const { size = 200, animated = false, class: cls = "" } = Astro.props;
+const { size = 200, animated = false, layout = "packed", class: cls = "" } = Astro.props;
+const art = layout === "centred" ? lensCentred : lens;
 ---
 
 <svg
@@ -23,5 +28,5 @@ const { size = 200, animated = false, class: cls = "" } = Astro.props;
   height={size}
   role="img"
   aria-label="Dubai Schools"
-  set:html={lens}
+  set:html={art}
 />

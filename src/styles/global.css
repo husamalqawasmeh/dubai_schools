@@ -2223,7 +2223,9 @@ a.cur-note {
   min-height: var(--lens);
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  /* Centred, not space-between: with the door gone there is one child left,
+     and space-between would pin it to the top of a lens-height column. */
+  justify-content: center;
 }
 .idside { min-width: 0; }
 
@@ -2749,3 +2751,67 @@ button.adminlink {
 }
 .fp-test a { color: #fff; text-decoration: underline; text-underline-offset: 2px; }
 .fp-test a:hover { text-decoration: none; }
+
+
+/* The tagline, in the position the overview gives it — first line of the
+   content column, above everything else in it. */
+.idtag {
+  margin: 10px 0 0;
+  max-width: 34rem;
+  font-family: var(--display);
+  font-size: clamp(15px, 1.9vw, 19px);
+  font-weight: 600;
+  line-height: 1.45;
+  color: var(--ink-2);
+  animation: id-rise 560ms cubic-bezier(.2, .8, .25, 1) 1620ms both;
+}
+
+/* The two cards are links now, so they answer the pointer like every other
+   control here — the shared fill, and the heading with it. */
+a.idcard { text-decoration: none; display: block; }
+a.idcard h2 { margin: 0; }
+a.idcard:hover { background: var(--accent-2); border-color: var(--accent-2); }
+a.idcard:hover h2 { color: var(--on-accent); }
+
+@media (prefers-reduced-motion: reduce) { .idtag { animation: none; opacity: 1; transform: none; } }
+
+
+/* The wordmark sits about 2cm above where the column would put it. A transform,
+   so the tagline and the cards below it do not move with it — raising the name
+   is the change; re-spacing everything under it is not.
+
+   Reduced on short screens: on a laptop 2cm can lift it clear of the glass it
+   is meant to sit beside. */
+.idword { transform: translateY(-2cm); }
+@media (max-height: 860px) { .idword { transform: translateY(-1.2cm); } }
+@media (max-width: 820px) { .idword { transform: none; } }
+
+
+/* The whole stage moves an inch left. A transform on the wrap rather than
+   padding or a margin: the wrap is centred with margin auto, and changing
+   either of those fights the centring instead of offsetting it.
+
+   Off below 1200px, where the column no longer has an inch to give. */
+.idwrap { transform: translateX(-1in); }
+@media (max-width: 1200px) { .idwrap { transform: none; } }
+
+/* The two cards, a fifth larger and centred.
+   min-height rather than a fixed one, so a label that wraps on a narrow column
+   grows the card instead of spilling out of it. */
+.idcard {
+  padding: 17px 19px 19px;
+  min-height: 4.6rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+.idcard h2 { font-size: 17px; }
+
+
+/* The tagline drops an inch. Margin rather than a transform, deliberately: the
+   cards sit 72px under it, and a transform would have slid the text down
+   through them. Everything below moves with it, which is the only way an inch
+   of space actually exists rather than being drawn over something. */
+.idtag { margin-top: calc(10px + 1in); }
+@media (max-height: 860px) { .idtag { margin-top: calc(10px + 0.6in); } }

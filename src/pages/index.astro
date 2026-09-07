@@ -17,14 +17,14 @@ import LensLogo from "../components/LensLogo.astro";
  * WHAT A SPLASH COSTS, AND HOW IT IS PAID FOR HERE
  * ------------------------------------------------
  * A front page with a logo on it has almost no text for a search engine to
- * read, and "/" is the page that ranks. So the description below carries the
- * substance, the two panels are real prose rather than images, and the way in
- * is a plain <a href> — a crawler follows it to the overview and finds all 232
- * schools behind that. A button that needed JavaScript would have made this
- * site's front door invisible.
+ * read, and "/" is the page that ranks. So the description carries the
+ * substance, the tagline is real text rather than a picture of one, and both
+ * ways in are plain <a href> — a crawler follows either to the overview and
+ * finds all 232 schools behind it. Links that needed JavaScript would have
+ * made this site's front door invisible.
  *
  * The bubbles bounce, and that is the only part needing a script. If it never
- * runs, the mark is still a mark and "Start the journey" still works.
+ * runs, the mark is still a mark and both links still work.
  */
 const WORD = "DubaiSchools";
 const DROPPED = new Set([2, 7, 11]);      // b, h, s  — below the line
@@ -90,29 +90,18 @@ const ON_LINE = "#8c1512";
           ))}
         </h1>
 
+        <p class="idtag">Every private school in Dubai, in one place.</p>
+
         <div class="idsplit">
-          <section class="idcard idcard-parents">
-            <h2>For parents</h2>
-            <p>
-              Every private school in one place — curriculum, fees, KHDA rating
-              and area, side by side. Free, and without an account.
-            </p>
-          </section>
+          <a class="idcard idcard-parents" href="/overview">
+            <h2>Parents</h2>
+          </a>
 
-          <section class="idcard idcard-schools">
-            <h2>For schools</h2>
-            <p>
-              A listing you can correct, fill out and be found through — in
-              front of every parent comparing schools in Dubai, at no cost.
-            </p>
-          </section>
+          <a class="idcard idcard-schools" href="/overview">
+            <h2>Schools</h2>
+          </a>
         </div>
 
-        </div>
-
-        <div class="idgo">
-          <span class="idgo-note">232 schools &middot; 78 areas &middot; no sign-up</span>
-          <a class="btn idgo-btn" href="/overview">Start the journey</a>
         </div>
       </div>
     </div>
