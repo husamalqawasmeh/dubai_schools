@@ -156,22 +156,20 @@ const MARK = {
   // The UAE dirham: a D-bowl on a stem with two bars through it. Worth checking
   // against the Central Bank's own artwork before this goes on anything
   // printed — it is drawn from the shape, not from the official file.
-  // What was hiding the D was the bars, not the D. They ran to x=14.6, three
-  // units past the stem and straight through the counter — the one piece of
-  // white that tells you it is a D at all. They stop at 12.4 now, just clear of
-  // the stem, and the counter is open again.
+  // Redrawn against the actual glyph rather than from a description of it.
+  // Two things were wrong. The bars were raked — I had reasoned from the euro
+  // that an angle reads as currency, but the dirham's are level, and inventing
+  // a slant the real mark does not have is not a stylistic choice, it is a
+  // different symbol. And they were long, running most of the width; the real
+  // ones are short, crossing the stem and protruding a little to its left.
   //
-  // They also rake up to the right rather than sitting flat, which is the euro
-  // treatment: two parallel strokes crossing a letterform at a slight angle
-  // read as a currency mark, where two level ones read as a strikethrough.
-  //
-  // The bowl wall is 2.6 against 1.9 bars, so the D stays the dominant shape
-  // and the bars stay obviously secondary to it.
+  // The D is bolder to match: a 3.2 stem and a 3.2 bowl wall, which is what
+  // gives it the weight the reference has.
   coins:
-    "M8.8 3.4h2.4v17.2H8.8z" +
-    "M10.6 3.4c6 0 10 3.4 10 8.6s-4 8.6-10 8.6v-2.6c4.4 0 7.4-2.4 7.4-6s-3-6-7.4-6z" +
-    "M3.2 9.7 12.4 8.4v1.9L3.2 11.6z" +
-    "M3.2 14.2 12.4 12.9v1.9L3.2 16.1z",
+    "M6.8 3.8h3.2v16.4H6.8z" +
+    "M9.4 3.8c5.9 0 10.2 3.3 10.2 8.2s-4.3 8.2-10.2 8.2v-3.2c3.9 0 6.8-2.1 6.8-5s-2.9-5-6.8-5z" +
+    "M3.4 8.6h8v2.2h-8z" +
+    "M3.4 13.2h8v2.2h-8z",
 };
 
 /**
