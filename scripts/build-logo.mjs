@@ -531,7 +531,7 @@ const render = (list) => `  <defs>
   <circle cx="${CX}" cy="${CY}" r="${R_GLASS}" fill="url(#glass)"/>
 
   <g clip-path="url(#lensClip)">
-${placed.map(bubble).join("\n")}
+${list.map(bubble).join("\n")}
     <!-- The sweep across the glass sits over the bubbles, which is what makes
          them read as being behind it rather than printed on it. -->
     <path d="M${CX - R_GLASS} ${CY - 18} a ${R_GLASS} ${R_GLASS} 0 0 1 ${R_GLASS * 1.5} -${R_GLASS * 0.72} L ${CX - R_GLASS * 0.2} ${CY - R_GLASS} a ${R_GLASS} ${R_GLASS} 0 0 0 -${R_GLASS * 0.82} ${R_GLASS * 0.9} z"
