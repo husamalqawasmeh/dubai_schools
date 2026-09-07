@@ -861,7 +861,6 @@ a.tier:hover .coin-edge { filter: brightness(0.9); }
 .form-foot { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-top: 4px; }
 .form-foot .btn { margin-top: 0; min-width: 168px; }
 .note { font-family: var(--display); font-size: 12.5px; color: var(--muted); margin: 0; }
-.admin-bar-actions { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
 
 /* A settings row: the box, then the claim, then what it actually does. The
    explanation is not a tooltip — someone flipping a switch that changes a
@@ -2653,3 +2652,14 @@ body.is-bare .idwrap { min-height: 100dvh; }
   color: var(--muted); text-decoration: none;
 }
 .rm-cancel:hover { color: var(--accent); text-decoration: underline; }
+
+/* Sign out is a form post, so its card has to be a button. These are the four
+   properties a button does not inherit from a link — everything else comes
+   from .adminlink itself, so the two stay identical by construction. */
+.adminlink-form { display: contents; }
+button.adminlink {
+  width: 100%;
+  text-align: left;
+  font: inherit;
+  cursor: pointer;
+}
