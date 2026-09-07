@@ -27,3 +27,9 @@
 npm-debug.log*
 /.admin.sql
 /.emails.sql
+
+# Kept beside the code but never committed: the Resend key lives in this one,
+# and the two pictures are working references, not part of the app.
+resend key.docx
+images.jpg
+world-travel-landmarks-concept-with-iconic-cities-halfearth_485374-25004.avif
