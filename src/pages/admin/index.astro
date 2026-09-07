@@ -29,13 +29,13 @@ const pending = (
         <h2>Improvements and planned changes</h2>
         <p>What still needs doing, in the order you mean to do it. Add, tick off, reorder and remove.</p>
       </a>
-      <div class="adminlink is-soon">
+      <a class="adminlink" href="/admin/moderation">
         <h2>Moderation queue</h2>
-        <p>{pending} submission{pending === 1 ? "" : "s"} waiting. Not built yet — they are safe in the database meanwhile.</p>
-      </div>
+        <p>{pending} submission{pending === 1 ? "" : "s"} waiting. Approve or reject what comes in through Communicate.</p>
+      </a>
 
       <a class="adminlink" href="/admin/settings">
-        <h2>Settings</h2>
+        <h2>Hide offer options for now</h2>
         <p>How the site behaves — the things that change without touching code.</p>
       </a>
       <a class="adminlink" href="/admin/account">

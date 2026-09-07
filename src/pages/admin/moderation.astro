@@ -1,0 +1,108 @@
+---
+import Base from "../../layouts/Base.astro";
+import { env } from "cloudflare:workers";
+
+const DB = (env as unknown as { DB: D1Database }).DB;
+
+/**
+ * Pending first, then whatever was decided recently.
+ *
+ * A queue that hides its history is a queue you cannot check your own work in,
+ * so the last fifty decisions stay visible under the ones still waiting — with
+ * who decided and when, which is the part worth keeping.
+ */
+const { results } = await DB.prepare(
+  `SELECT id, audience, kind, school_name, author_name, contact, message,
+          status, moderated_by, moderated_at, created_at
+     FROM submissions
+    ORDER BY (status = 'pending') DESC, COALESCE(moderated_at, created_at) DESC
+    LIMIT 60`
+).all<any>();
+
+const rows = results ?? [];
+const pending = rows.filter((r) => r.status === "pending");
+const decided = rows.filter((r) => r.status !== "pending");
+
+const AUDIENCE: Record<string, string> = {
+  school: "School admin",
+  parent: "Parent",
+  student: "Student",
+  site: "Site",
+};
+
+const when = (iso: string | null) =>
+  iso
+    ? new Date(iso).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" })
+    : "";
+---
+
+<Base title="Moderation queue — admin">
+  <div class="wrap pick rm-page">
+    <a class="back" href="/admin">&larr; Admin</a>
+    <h1 style="margin-top:14px">Moderation queue</h1>
+
+    {pending.length === 0 ? (
+      <p class="sub">Nothing waiting.</p>
+    ) : (
+      <div class="mod-list">
+        {pending.map((r) => (
+          <article class="mod-item">
+            <p class="mod-meta">
+              <span class="mod-tag">{AUDIENCE[r.audience] ?? r.audience}</span>
+              {r.school_name && <span>{r.school_name}</span>}
+              <span class="mod-dot">·</span>
+              <span>{when(r.created_at)}</span>
+            </p>
+            <p class="mod-message">{r.message}</p>
+            {(r.author_name || r.contact) && (
+              <p class="mod-from">
+                {r.author_name}
+                {r.author_name && r.contact ? " — " : ""}
+                {r.contact}
+              </p>
+            )}
+            <div class="mod-actions">
+              <form method="POST" action="/api/admin/moderate">
+                <input type="hidden" name="action" value="approve" />
+                <input type="hidden" name="id" value={r.id} />
+                <button class="btn mod-ok" type="submit">Approve</button>
+              </form>
+              <form method="POST" action="/api/admin/moderate">
+                <input type="hidden" name="action" value="reject" />
+                <input type="hidden" name="id" value={r.id} />
+                <button class="btn sec mod-no" type="submit">Reject</button>
+              </form>
+            </div>
+          </article>
+        ))}
+      </div>
+    )}
+
+    {decided.length > 0 && (
+      <>
+        <h2 style="margin:26px 0 8px">Decided</h2>
+        <div class="mod-list">
+          {decided.map((r) => (
+            <article class={`mod-item is-${r.status}`}>
+              <p class="mod-meta">
+                <span class="mod-tag">{AUDIENCE[r.audience] ?? r.audience}</span>
+                {r.school_name && <span>{r.school_name}</span>}
+                <span class="mod-dot">·</span>
+                <span>{r.status === "approved" ? "Approved" : "Rejected"} {when(r.moderated_at)}</span>
+                {r.moderated_by && <span class="mod-dot">·</span>}
+                {r.moderated_by && <span>{r.moderated_by}</span>}
+              </p>
+              <p class="mod-message">{r.message}</p>
+            </article>
+          ))}
+        </div>
+      </>
+    )}
+
+    <p class="note-foot">
+      Nothing is deleted here. Rejecting records the decision and who made it,
+      so it can be looked at again — approving does the same. Approved
+      submissions are not yet published to school pages; that is the next piece.
+    </p>
+  </div>
+</Base>

@@ -15,6 +15,16 @@ import Base from "../../layouts/Base.astro";
           <label for="password">Password</label>
           <input id="password" type="password" autocomplete="current-password" required />
         </div>
+        <div class="login-opts">
+          <label class="login-check">
+            <input type="checkbox" id="remember" />
+            <span>Remember me</span>
+          </label>
+          <label class="login-check">
+            <input type="checkbox" id="showpw" />
+            <span>Show password</span>
+          </label>
+        </div>
         <button class="btn" type="submit" id="go">Sign in</button>
         <p class="note" id="msg"></p>
       </form>
@@ -23,6 +33,29 @@ import Base from "../../layouts/Base.astro";
 </Base>
 <script>
   const f = document.getElementById("lf") as HTMLFormElement;
+  const pw = document.getElementById("password") as HTMLInputElement;
+  const showpw = document.getElementById("showpw") as HTMLInputElement;
+  const remember = document.getElementById("remember") as HTMLInputElement;
+
+  // Only the type changes, so what has been typed stays typed and the caret
+  // does not jump to the end.
+  showpw.addEventListener("change", () => {
+    pw.type = showpw.checked ? "text" : "password";
+  });
+
+  // The email is remembered in this browser; how long the session lasts is the
+  // server's business. Never the password — ticking a box is not consent to
+  // keep a credential in localStorage.
+  const REMEMBERED = "dxb-admin-email";
+  try {
+    const saved = localStorage.getItem(REMEMBERED);
+    if (saved) {
+      (document.getElementById("email") as HTMLInputElement).value = saved;
+      remember.checked = true;
+    }
+  } catch {
+    /* private mode or storage disabled — the form still works */
+  }
   const msg = document.getElementById("msg")!;
   const go = document.getElementById("go") as HTMLButtonElement;
   f.addEventListener("submit", async (e) => {
@@ -35,11 +68,22 @@ import Base from "../../layouts/Base.astro";
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         email: (document.getElementById("email") as HTMLInputElement).value,
-        password: (document.getElementById("password") as HTMLInputElement).value,
+        password: pw.value,
+          remember: remember.checked,
       }),
     });
     const out = (await res.json()) as { ok: boolean; error?: string };
-    if (out.ok) { location.href = "/admin"; return; }
+    if (out.ok) {
+      try {
+        const email = (document.getElementById("email") as HTMLInputElement).value;
+        if (remember.checked) localStorage.setItem(REMEMBERED, email);
+        else localStorage.removeItem(REMEMBERED);
+      } catch {
+        /* storage refused; the session cookie is what actually matters */
+      }
+      location.href = "/admin";
+      return;
+    }
     msg.textContent = out.error ?? "Could not sign in.";
     msg.className = "note is-bad";
     go.disabled = false;

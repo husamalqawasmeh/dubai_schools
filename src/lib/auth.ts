@@ -71,6 +71,14 @@ export async function verifyPassword(password: string, stored: string): Promise<
 
 export const COOKIE = "dxb_admin";
 const IDLE_HOURS = 8;
+/**
+ * How long "remember me" lasts.
+ *
+ * Thirty days, not indefinitely. A session that never expires is a credential
+ * left on whatever machine it was made on, and this one can edit school data
+ * and send mail — the convenience is worth a month, not a year.
+ */
+const REMEMBER_DAYS = 30;
 
 /** Only the hash is stored, so a leaked database read hands over no live
  *  sessions. */
@@ -85,7 +93,12 @@ export interface AdminUser {
   role: string;
 }
 
-export async function createSession(userId: number, ip: string, ua: string): Promise<string> {
+export async function createSession(
+  userId: number,
+  ip: string,
+  ua: string,
+  remember = false
+): Promise<string> {
   const token = b64(crypto.getRandomValues(new Uint8Array(32)).buffer)
     .replace(/\+/g, "-")
     .replace(/\//g, "_")
@@ -99,7 +112,7 @@ export async function createSession(userId: number, ip: string, ua: string): Pro
       await sha256(token),
       userId,
       new Date(now).toISOString(),
-      new Date(now + IDLE_HOURS * 3600_000).toISOString(),
+      new Date(now + sessionSeconds(remember) * 1000).toISOString(),
       ip.slice(0, 60),
       ua.slice(0, 300)
     )
@@ -125,6 +138,14 @@ export async function destroySession(token: string | undefined): Promise<void> {
     .bind(await sha256(token))
     .run();
 }
+
+/**
+ * The cookie and the database row have to agree, so both read this. Setting
+ * one without the other gives you a cookie that outlives its session, or a
+ * session nobody can present a cookie for.
+ */
+export const sessionSeconds = (remember: boolean) =>
+  remember ? REMEMBER_DAYS * 24 * 3600 : IDLE_HOURS * 3600;
 
 export function cookieHeader(token: string, maxAgeSeconds = IDLE_HOURS * 3600): string {
   return `${COOKIE}=${token}; HttpOnly; Secure; SameSite=Lax; Path=/; Max-Age=${maxAgeSeconds}`;
