@@ -23,8 +23,11 @@ import LensLogo from "../components/LensLogo.astro";
  * finds all 232 schools behind it. Links that needed JavaScript would have
  * made this site's front door invisible.
  *
- * The bubbles bounce, and that is the only part needing a script. If it never
- * runs, the mark is still a mark and both links still work.
+ * The bubbles do not move and there is no script on this page at all. The
+ * arrangement is the centred one — student, school and teacher in the middle,
+ * the other eight evenly around them — which is symmetric by construction, and
+ * motion would only obscure that. It was tried on /admin/front-page first,
+ * which is what that copy is for.
  */
 const WORD = "DubaiSchools";
 const DROPPED = new Set([2, 7, 11]);      // b, h, s  — below the line
@@ -71,7 +74,7 @@ const ON_LINE = "#8c1512";
 >
   <div class="idwrap">
     <div class="idstage">
-      <LensLogo size={403} class="idmark is-reveal" />
+      <LensLogo size={403} layout="centred" class="idmark" />
 
       <div class="idcol">
         <div class="idside">
@@ -107,107 +110,4 @@ const ON_LINE = "#8c1512";
     </div>
   </div>
 
-  <script is:inline>
-    (function () {
-      var svg = document.querySelector(".idmark");
-      if (!svg) return;
-
-      var still = window.matchMedia("(prefers-reduced-motion: reduce)");
-      if (still.matches) return;
-
-      // The wall comes from the artwork's own clip circle, so resizing the logo
-      // cannot leave the physics bouncing off where the glass used to be.
-      var bounds = svg.querySelector("clipPath circle");
-      if (!bounds) return;
-      var CX = +bounds.getAttribute("cx");
-      var CY = +bounds.getAttribute("cy");
-      var WALL = +bounds.getAttribute("r") - 1.5;
-
-      var balls = [];
-      svg.querySelectorAll(".bub").forEach(function (g, i) {
-        var c = g.querySelector("circle");
-        var x0 = +c.getAttribute("cx");
-        var y0 = +c.getAttribute("cy");
-        // Headings spread around the circle rather than random: random ones
-        // clump, and a clump drifts as one mass.
-        var a = (i / 11) * Math.PI * 2 + 0.7;
-        // Slow enough to read as suspended rather than as a screensaver.
-        var speed = 0.052 + (i % 4) * 0.011;
-        balls.push({
-          g: g, x0: x0, y0: y0, x: x0, y: y0,
-          vx: Math.cos(a) * speed, vy: Math.sin(a) * speed,
-          r: +c.getAttribute("r"),
-        });
-      });
-
-      var last = 0;
-      function step(now) {
-        // Scaled to a 60fps frame so speed does not depend on the display, and
-        // clamped so a backgrounded tab does not resume with one jump that
-        // teleports a bubble through a wall.
-        var dt = last ? Math.min((now - last) / 16.7, 3) : 1;
-        last = now;
-
-        for (var i = 0; i < balls.length; i++) {
-          var b = balls[i];
-          b.x += b.vx * dt;
-          b.y += b.vy * dt;
-
-          var dx = b.x - CX, dy = b.y - CY;
-          var d = Math.hypot(dx, dy);
-          var max = WALL - b.r;
-          if (d > max) {
-            var nx = dx / d, ny = dy / d;
-            var dot = b.vx * nx + b.vy * ny;
-            b.vx -= 2 * dot * nx;
-            b.vy -= 2 * dot * ny;
-            b.x = CX + nx * max;
-            b.y = CY + ny * max;
-          }
-        }
-
-        // Equal masses, so a collision is a swap of the velocity along the line
-        // of centres. Overlapping pairs are separated first, or two bubbles
-        // stick together and jitter.
-        for (var a2 = 0; a2 < balls.length; a2++) {
-          for (var b2 = a2 + 1; b2 < balls.length; b2++) {
-            var p = balls[a2], q = balls[b2];
-            var ex = q.x - p.x, ey = q.y - p.y;
-            var dist = Math.hypot(ex, ey) || 0.0001;
-            var need = p.r + q.r;
-            if (dist >= need) continue;
-
-            var ux = ex / dist, uy = ey / dist;
-            var push = (need - dist) / 2;
-            p.x -= ux * push; p.y -= uy * push;
-            q.x += ux * push; q.y += uy * push;
-
-            var pn = p.vx * ux + p.vy * uy;
-            var qn = q.vx * ux + q.vy * uy;
-            if (pn - qn <= 0) continue;
-            var swap = pn - qn;
-            p.vx -= swap * ux; p.vy -= swap * uy;
-            q.vx += swap * ux; q.vy += swap * uy;
-          }
-        }
-
-        for (var k = 0; k < balls.length; k++) {
-          var t = balls[k];
-          t.g.setAttribute(
-            "transform",
-            "translate(" + (t.x - t.x0).toFixed(2) + " " + (t.y - t.y0).toFixed(2) + ")"
-          );
-        }
-        requestAnimationFrame(step);
-      }
-
-      // The last bubble starts at 300 + 10x90 and takes 520ms, so the reveal is
-      // over at 1720 — not before, or CSS is still animating a bubble the
-      // script has started writing to.
-      setTimeout(function () {
-        svg.classList.add("is-bouncing");
-        requestAnimationFrame(step);
-      }, 1720);
-    })();
-  </script>
 </Base>

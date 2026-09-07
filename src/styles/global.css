@@ -2829,3 +2829,16 @@ a.idcard:hover h2 { color: var(--on-accent); }
 @media (max-height: 860px) { .idside { transform: translate(2cm, 1.1cm); } }
 @media (max-width: 1200px) { .idside { transform: translate(1cm, 1.1cm); } }
 @media (max-width: 820px) { .idside { transform: none; } }
+
+/* Titles only now, so each card centres its one line rather than hanging it in
+   the top-left of a box sized for two. min-height keeps the seven the same
+   size — without it a card is as tall as its own text, and "Sign out" would be
+   shorter than "Improvements and planned changes". */
+.adminlink {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 5.4rem;
+  text-align: center;
+}
+.adminlink h2 { margin: 0; }

@@ -19,28 +19,22 @@ const pending = (
     <div class="adminlinks">
       <a class="adminlink" href="/admin/schools">
         <h2>Schools</h2>
-        <p>Filter the directory, select schools and export or mail the ones that gave us an address.</p>
       </a>
       <a class="adminlink" href="/admin/front-page">
         <h2>Front page testing</h2>
-        <p>A working copy of the landing page. Change it, look at it, and copy what works into the live one — nothing here reaches a visitor.</p>
       </a>
       <a class="adminlink" href="/admin/roadmap">
         <h2>Improvements and planned changes</h2>
-        <p>What still needs doing, in the order you mean to do it. Add, tick off, reorder and remove.</p>
       </a>
       <a class="adminlink" href="/admin/moderation">
         <h2>Moderation queue</h2>
-        <p>{pending} submission{pending === 1 ? "" : "s"} waiting. Approve or reject what comes in through Communicate.</p>
       </a>
 
       <a class="adminlink" href="/admin/settings">
         <h2>Hide offer options for now</h2>
-        <p>How the site behaves — the things that change without touching code.</p>
       </a>
       <a class="adminlink" href="/admin/account">
         <h2>Your account</h2>
-        <p>Change the password you signed in with.</p>
       </a>
       {/* display:contents so the button is a grid item in its own right — a
           form wrapper would otherwise become the cell and the card inside it
@@ -48,7 +42,6 @@ const pending = (
       <form method="POST" action="/api/admin/logout" class="adminlink-form">
         <button class="adminlink" type="submit">
           <h2>Sign out</h2>
-          <p>{admin.email}</p>
         </button>
       </form>
     </div>

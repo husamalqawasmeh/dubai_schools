@@ -530,12 +530,21 @@ const render = (list) => `  <defs>
 
   <circle cx="${CX}" cy="${CY}" r="${R_GLASS}" fill="url(#glass)"/>
 
+  <!-- Everything that belongs to the glass surface is painted before the
+       bubbles now, so the icons sit on top of it rather than under it. The
+       sweep and the two speculars used to come after, which is precisely what
+       put them behind the glass. -->
   <g clip-path="url(#lensClip)">
-${list.map(bubble).join("\n")}
-    <!-- The sweep across the glass sits over the bubbles, which is what makes
-         them read as being behind it rather than printed on it. -->
     <path d="M${CX - R_GLASS} ${CY - 18} a ${R_GLASS} ${R_GLASS} 0 0 1 ${R_GLASS * 1.5} -${R_GLASS * 0.72} L ${CX - R_GLASS * 0.2} ${CY - R_GLASS} a ${R_GLASS} ${R_GLASS} 0 0 0 -${R_GLASS * 0.82} ${R_GLASS * 0.9} z"
           fill="#ffffff" opacity=".26"/>
+  </g>
+  <path d="M${CX - 58} ${CY - 42} a 72 46 0 0 1 74 -34" stroke="#ffffff" stroke-width="9"
+        stroke-linecap="round" fill="none" opacity=".65"/>
+  <path d="M${CX + 40} ${CY + 46} a 40 26 0 0 1 -26 14" stroke="#ffffff" stroke-width="5"
+        stroke-linecap="round" fill="none" opacity=".3"/>
+
+  <g clip-path="url(#lensClip)">
+${list.map(bubble).join("\n")}
   </g>
 
   <!-- Ring last, over every bubble edge. An inner dark line and an outer light
@@ -543,14 +552,7 @@ ${list.map(bubble).join("\n")}
   <circle cx="${CX}" cy="${CY}" r="${R_OUTER - RING / 2}" fill="none"
           stroke="url(#ringMetal)" stroke-width="${RING}"/>
   <circle cx="${CX}" cy="${CY}" r="${R_GLASS + 0.6}" fill="none" stroke="#062b24" stroke-width="1.4" opacity=".5"/>
-  <circle cx="${CX}" cy="${CY}" r="${R_OUTER - 0.7}" fill="none" stroke="#ffffff" stroke-width="1.2" opacity=".3"/>
-
-  <!-- Specular highlights: the big one where the light is, the small one
-       opposite, which is what a curved surface actually does. -->
-  <path d="M${CX - 58} ${CY - 42} a 72 46 0 0 1 74 -34" stroke="#ffffff" stroke-width="9"
-        stroke-linecap="round" fill="none" opacity=".65"/>
-  <path d="M${CX + 40} ${CY + 46} a 40 26 0 0 1 -26 14" stroke="#ffffff" stroke-width="5"
-        stroke-linecap="round" fill="none" opacity=".3"/>`;
+  <circle cx="${CX}" cy="${CY}" r="${R_OUTER - 0.7}" fill="none" stroke="#ffffff" stroke-width="1.2" opacity=".3"/>`;
 
 /**
  * A second arrangement, for the test page.
