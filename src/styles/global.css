@@ -2517,3 +2517,65 @@ body.is-bare .idwrap { min-height: 100dvh; }
   .idsplit { gap: 18px; margin-top: 34px; }
 }
 
+
+/* ---------------- roadmap ---------------- */
+.rm-add { display: flex; gap: 8px; margin-top: 14px; max-width: 44rem; }
+.rm-add .tt-input { flex: 1; }
+.rm-addbtn { margin-top: 0; flex: none; padding: 0 20px; }
+
+.rm-list { list-style: none; margin: 18px 0 0; padding: 0; max-width: 44rem; display: grid; gap: 8px; }
+.rm-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: 8px;
+  padding: 9px 12px;
+}
+.rm-item form { display: flex; margin: 0; }
+
+/* A button drawn as a checkbox. It has to look exactly like one, because it is
+   doing that job — the only difference is that it saves without a script. */
+.rm-box {
+  width: 20px; height: 20px; flex: none; cursor: pointer;
+  display: grid; place-items: center;
+  font-family: var(--ui); font-size: 13px; font-weight: 700; line-height: 1;
+  color: var(--on-accent);
+  background: var(--surface-2);
+  border: 1.5px solid var(--rule-firm);
+  border-radius: 4px;
+  padding: 0;
+}
+.rm-box[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); }
+.rm-box:hover { border-color: var(--accent); }
+
+.rm-title {
+  flex: 1; min-width: 0;
+  font-family: var(--display); font-size: 14px; line-height: 1.45; color: var(--ink);
+}
+/* Struck through and faded, so a finished item stays readable but stops
+   competing with the ones still to do. */
+.is-done .rm-title { text-decoration: line-through; color: var(--muted); }
+
+.rm-moves { display: flex; flex-direction: column; gap: 2px; flex: none; }
+.rm-move {
+  width: 22px; height: 15px; cursor: pointer; padding: 0;
+  display: grid; place-items: center;
+  font-size: 9px; line-height: 1;
+  color: var(--ink-2); background: var(--surface-2);
+  border: 1px solid var(--rule); border-radius: 3px;
+}
+.rm-move:hover:not(:disabled) { background: var(--accent-2); color: var(--on-accent); border-color: var(--accent-2); }
+/* The first item cannot go up and the last cannot go down. Disabling says so
+   before the click, where a silent no-op leaves you wondering. */
+.rm-move:disabled { opacity: 0.3; cursor: default; }
+
+.rm-del {
+  width: 24px; height: 24px; flex: none; cursor: pointer; padding: 0;
+  display: grid; place-items: center;
+  font-size: 16px; line-height: 1;
+  color: var(--muted); background: transparent;
+  border: 1px solid transparent; border-radius: 5px;
+}
+.rm-del:hover { color: #fff; background: #a2372f; border-color: #a2372f; }

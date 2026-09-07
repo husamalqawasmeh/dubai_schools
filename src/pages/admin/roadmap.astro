@@ -1,0 +1,94 @@
+---
+import Base from "../../layouts/Base.astro";
+import { env } from "cloudflare:workers";
+
+const DB = (env as unknown as { DB: D1Database }).DB;
+
+const { results } = await DB.prepare(
+  "SELECT id, title, done, position FROM roadmap ORDER BY position ASC, id ASC"
+).all<{ id: number; title: string; done: number; position: number }>();
+
+const items = results ?? [];
+const doneCount = items.filter((i) => i.done).length;
+---
+
+<Base title="Improvements and planned changes — admin">
+  <div class="wrap pick">
+    <a class="back" href="/admin">&larr; Admin</a>
+    <h1 style="margin-top:14px">Improvements and planned changes</h1>
+    <p class="sub">
+      {items.length === 0
+        ? "Nothing on the list."
+        : `${doneCount} of ${items.length} done. Tick what is finished, and use the arrows to put the rest in the order you mean to do them.`}
+    </p>
+
+    <form class="rm-add" method="POST" action="/api/admin/roadmap">
+      <input type="hidden" name="action" value="add" />
+      <input
+        class="tt-input"
+        name="title"
+        placeholder="Add a change to make…"
+        maxlength="300"
+        required
+        autocomplete="off"
+      />
+      <button class="btn rm-addbtn" type="submit">Add</button>
+    </form>
+
+    <ol class="rm-list">
+      {items.map((item, i) => (
+        <li class={item.done ? "rm-item is-done" : "rm-item"}>
+          {/* Each control is its own form. One form with several submit buttons
+              would work, but a stray Enter in the text field would then fire
+              whichever button came first — here there is no ambiguity. */}
+          <form method="POST" action="/api/admin/roadmap" class="rm-tick">
+            <input type="hidden" name="action" value="toggle" />
+            <input type="hidden" name="id" value={item.id} />
+            {/* A button drawn as a checkbox, not a checkbox. A real one needs a
+                script to save on change, and would sit there looking saved
+                while having saved nothing if that script ever failed. */}
+            <button
+              type="submit"
+              class="rm-box"
+              aria-pressed={item.done ? "true" : "false"}
+              aria-label={item.done ? `Mark "${item.title}" as not done` : `Mark "${item.title}" as done`}
+            >
+              {item.done ? "✓" : ""}
+            </button>
+          </form>
+
+          <span class="rm-title">{item.title}</span>
+
+          <span class="rm-moves">
+            <form method="POST" action="/api/admin/roadmap">
+              <input type="hidden" name="action" value="up" />
+              <input type="hidden" name="id" value={item.id} />
+              <button type="submit" class="rm-move" disabled={i === 0} aria-label="Move up">▲</button>
+            </form>
+            <form method="POST" action="/api/admin/roadmap">
+              <input type="hidden" name="action" value="down" />
+              <input type="hidden" name="id" value={item.id} />
+              <button
+                type="submit"
+                class="rm-move"
+                disabled={i === items.length - 1}
+                aria-label="Move down"
+              >▼</button>
+            </form>
+          </span>
+
+          <form method="POST" action="/api/admin/roadmap">
+            <input type="hidden" name="action" value="delete" />
+            <input type="hidden" name="id" value={item.id} />
+            <button type="submit" class="rm-del" aria-label={`Delete "${item.title}"`}>&times;</button>
+          </form>
+        </li>
+      ))}
+    </ol>
+
+    <p class="note-foot">
+      This list is only visible here. Ticking an item records that it is done; it
+      does not change anything on the site.
+    </p>
+  </div>
+</Base>

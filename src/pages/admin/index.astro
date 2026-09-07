@@ -42,6 +42,10 @@ const [schools, subs, details, fees] = await DB.batch<any>([
         <h2>The front page</h2>
         <p>The mark, who the site is for, and the way in. It is the public front page now, so this is a link to it rather than a copy of it.</p>
       </a>
+      <a class="adminlink" href="/admin/roadmap">
+        <h2>Improvements and planned changes</h2>
+        <p>What still needs doing, in the order you mean to do it. Add, tick off, reorder and remove.</p>
+      </a>
       <div class="adminlink is-soon">
         <h2>Moderation queue</h2>
         <p>{subs.results[0].n} submission{subs.results[0].n === 1 ? "" : "s"} waiting. Not built yet — they are safe in the database meanwhile.</p>
