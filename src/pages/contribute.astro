@@ -88,7 +88,7 @@ const current = TABS.find((t) => t.id === active) ?? null;
     </div>
 
     {current && (
-    <div class="tabpanel" role="tabpanel">
+    <div class={current.id === "site" ? "tabpanel is-site" : "tabpanel"} role="tabpanel">
       {current.id === "site" ? (
         <div class="panel">
           <h2>{current.title}</h2>

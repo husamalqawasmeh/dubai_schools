@@ -2709,3 +2709,20 @@ button.adminlink {
 }
 .login-check input { width: 15px; height: 15px; accent-color: var(--accent); cursor: pointer; }
 .login-check:hover { color: var(--accent); }
+
+/* The sign-in card sits under the button that opened it, at that button's
+   width. The three tabs are equal flex children with a 10px gap, so one of
+   them is a third of the row less two thirds of the gap total — 20px across
+   three columns. Derived rather than typed, so it follows if the gap changes.
+
+   Only the site panel does this. The other two hold a form with two columns of
+   fields in it, and a third of the row is not a form. */
+.tabpanel.is-site .panel {
+  width: calc((100% - 20px) / 3);
+  margin-left: auto;
+}
+/* Below the width where the tabs stop sitting in one row, there is no third
+   column to line up with. */
+@media (max-width: 640px) {
+  .tabpanel.is-site .panel { width: 100%; margin-left: 0; }
+}
