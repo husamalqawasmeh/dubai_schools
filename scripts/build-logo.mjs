@@ -115,12 +115,24 @@ const ICONS = {
   // A real school bus has a bonnet, so the roof stops short of the front and
   // the windscreen rakes back from it. A plain box with three windows was a
   // van. Wheels are their own layer, or they punch holes in the body.
+  // What identifies a school bus is not the box, it is the details on it: a
+  // bonnet the roof stops short of, a raked windscreen, a passenger door with
+  // its own step, a mirror on a stalk, the stop arm, and wheels with hubs.
+  // Each is its own layer — as subpaths of one evenodd fill they would punch
+  // holes in the body instead of sitting on it.
   bus: [
-    "M1.2 8.2c0-1.7 1.4-3.1 3.1-3.1h11.2c1.1 0 2.2.5 2.9 1.4l3.4 4.1c.6.7.9 1.6.9 2.5v2.7c0 1-.8 1.8-1.8 1.8H3c-1 0-1.8-.8-1.8-1.8z" +
-      "M3.6 7.4h3.2v3.9H3.6z M8.2 7.4h3.2v3.9H8.2z M12.8 7.4h2.5v3.9h-2.5z" +
-      "M16.9 7.6h1.1l2.9 3.5h-4z",
-    "M6.6 14.4a3.3 3.3 0 1 0 0 6.6 3.3 3.3 0 0 0 0-6.6z",
-    "M17.4 14.4a3.3 3.3 0 1 0 0 6.6 3.3 3.3 0 0 0 0-6.6z",
+    // body, with the windows and windscreen cut out
+    "M1.2 8c0-1.7 1.4-3.1 3.1-3.1h10.4c1.1 0 2.2.5 2.9 1.4l3.6 4.4c.5.7.8 1.5.8 2.4v2.6c0 1-.8 1.8-1.8 1.8H3c-1 0-1.8-.8-1.8-1.8z" +
+      "M3.4 7.2h3.1v3.8H3.4z M7.9 7.2h3.1v3.8H7.9z" +
+      "M16.4 7.5h1.1l2.8 3.4h-3.9z",
+    // passenger door: two panes and the step below it
+    "M12.4 6.6h3.1v9.6h-3.1z",
+    // wheels
+    "M6.4 14.2a3.3 3.3 0 1 0 0 6.6 3.3 3.3 0 0 0 0-6.6z",
+    "M17.2 14.2a3.3 3.3 0 1 0 0 6.6 3.3 3.3 0 0 0 0-6.6z",
+    // wing mirror on its stalk, and the stop arm folded against the flank
+    "M20.6 6.4h1.9v2.6h-1.9z M19.4 7.2h1.4v.9h-1.4z",
+    "M1.6 11.4h1.4v3.4H1.6z",
   ],
   // Only the head is a fill; the body is in STROKES below. A football failed
   // here because a ball is recognisable by the pattern over its whole surface,
@@ -228,12 +240,10 @@ const SHADE = {
                "M2.2 16.6c3.5 0 6.6.9 9.1 2.8v.5c-2.5-1.9-5.6-2.8-9.1-2.8z" +
                "M21.8 16.6c-3.5 0-6.6.9-9.1 2.8v.5c2.5-1.9 5.6-2.8 9.1-2.8z",
   school:      "M12 3.8 22.4 8.6v1.6H1.6V8.6z M3.4 11.4h17.2v1.4H3.4z",
-  bus:         "M1.2 8.2c0-1.7 1.4-3.1 3.1-3.1h11.2c.5 0 1 .1 1.5.3H1.4z" +
-               "M6.6 16.2a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3z M17.4 16.2a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3z" +
-               "M1.2 12.4h20.5v1.1H1.2z" +
-               "M15.6 5.4h.9v10.2h-.9z" +
-               "M20 13.9a1.1 1.1 0 1 0 0 2.2 1.1 1.1 0 0 0 0-2.2z" +
-               "M5.4 4.2h2v1.1h-2z M12.6 4.2h2v1.1h-2z",
+  bus:         "M1.2 8c0-1.7 1.4-3.1 3.1-3.1h10.4c.5 0 1 .1 1.5.3H1.4z" +
+               "M6.4 16a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3z M17.2 16a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3z" +
+               "M1.2 12.2h20.4v1.1H1.2z" +
+               "M12.4 10.9h3.1v1H12.4z M13.9 6.6h.4v9.6h-.4z",
 
   student:     "M12 1.4 22.9 5.8 12 10.2 1.1 5.8z M12 11.2a3.5 3.5 0 0 0-3.5 3.5h7A3.5 3.5 0 0 0 12 11.2z" +
                "M12 17.9 10.2 20.6h3.6z",

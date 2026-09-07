@@ -2397,8 +2397,13 @@ a.cur-note {
 
 .idcard {
   background: var(--surface);
-  border: 1px solid var(--rule);
-  border-left: 4px solid var(--accent);
+  /* No edges. The fill makes it a block and the hover makes it a control —
+     an outline as well was a third thing saying the same. */
+  /* No outline, but a 2.9px bar down the left edge — the one edge that says
+     which way the card is read from. It turns white on hover rather than
+     vanishing into the fill it would otherwise match. */
+  border: none;
+  border-left: 2.9px solid var(--accent-2);
   border-radius: 8px;
   padding: 14px 16px 16px;
 }
@@ -2419,9 +2424,6 @@ a.cur-note {
 }
 /* One edge each, so the two are told apart at a glance without either looking
    more important than the other. */
-.idcard-schools { border-left-color: var(--accent); }
-.idcard-parents { border-left-color: var(--r4); }
-.idcard-parents h2 { color: var(--r3); }
 
 .idcard-parents { animation: id-rise 560ms cubic-bezier(.2, .8, .25, 1) 1820ms both; }
 .idcard-schools { animation: id-rise 560ms cubic-bezier(.2, .8, .25, 1) 2000ms both; }
@@ -2773,7 +2775,7 @@ button.adminlink {
    control here — the shared fill, and the heading with it. */
 a.idcard { text-decoration: none; display: block; }
 a.idcard h2 { margin: 0; }
-a.idcard:hover { background: var(--accent-2); border-color: var(--accent-2); }
+a.idcard:hover { background: var(--accent-2); }
 a.idcard:hover h2 { color: var(--on-accent); }
 
 @media (prefers-reduced-motion: reduce) { .idtag { animation: none; opacity: 1; transform: none; } }
@@ -2854,3 +2856,6 @@ a.idcard:hover h2 { color: var(--on-accent); }
 .idcard { background: var(--card-mid); }
 .idcard h2 { color: var(--ink); }
 a.idcard:hover h2 { color: var(--on-accent); }
+
+/* The bar would disappear into the hover fill, which is the same colour. */
+a.idcard:hover { border-left-color: var(--on-accent); }
