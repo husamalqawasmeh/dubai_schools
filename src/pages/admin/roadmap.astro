@@ -48,24 +48,28 @@ const shown = (d: string | null) =>
       <button class="btn rm-addbtn" type="submit">Add</button>
     </form>
 
-    <ol class="rm-list">
+    <ol class={editing ? "rm-list is-editing" : "rm-list"}>
       {items.map((item, i) => (
         <li class={item.done ? "rm-item is-done" : "rm-item"}>
           {editing === item.id ? (
             <form class="rm-edit" method="POST" action="/api/admin/roadmap">
               <input type="hidden" name="action" value="edit" />
               <input type="hidden" name="id" value={item.id} />
-              <span class="rm-no">{i + 1}</span>
-              <input class="tt-input rm-edit-title" name="title" value={item.title} maxlength="300" required />
-              <label class="rm-datefield">
-                <span>Raised</span>
-                <input class="tt-input" type="date" name="entry_date" value={item.entry_date ?? ""} />
-              </label>
-              <label class="rm-datefield">
-                <span>Completed</span>
-                <input class="tt-input" type="date" name="completion_date" value={item.completion_date ?? ""} />
-              </label>
-              <span class="rm-edit-actions">
+              <span class="rm-edit-row">
+                <span class="rm-no">{i + 1}</span>
+                <input class="tt-input rm-edit-title" name="title" value={item.title} maxlength="300" required />
+              </span>
+              <span class="rm-edit-row rm-edit-dates">
+                <label class="rm-datefield">
+                  <span>Raised</span>
+                  <input class="tt-input" type="date" name="entry_date" value={item.entry_date ?? ""} />
+                </label>
+                <label class="rm-datefield">
+                  <span>Completed</span>
+                  <input class="tt-input" type="date" name="completion_date" value={item.completion_date ?? ""} />
+                </label>
+              </span>
+              <span class="rm-edit-row rm-edit-actions">
                 <button class="btn rm-save" type="submit">Save</button>
                 <a class="rm-cancel" href="/admin/roadmap">Cancel</a>
               </span>

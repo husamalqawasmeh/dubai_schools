@@ -2610,19 +2610,36 @@ body.is-bare .idwrap { min-height: 100dvh; }
 }
 .rm-editlink:hover { background: var(--accent-2); color: var(--on-accent); }
 
-/* The open row keeps the same footprint as a closed one — it grows downwards
-   rather than pushing its neighbours sideways, which in a two-column list
-   would reflow the whole board on every edit. */
-.rm-edit { display: grid; grid-template-columns: auto 1fr; gap: 8px 9px; width: 100%; align-items: center; }
-.rm-edit-title { grid-column: 2; }
-.rm-datefield { grid-column: 2; display: flex; align-items: center; gap: 8px; }
-.rm-datefield span {
-  flex: none; min-width: 74px;
+/* .rm-item form is (0,2,0) and set to flex; this has to outrank it or the edit
+   form is laid out by that rule instead, which is what collapsed the title
+   field to nothing and pushed Save on top of the text beside it. */
+.rm-item > form.rm-edit {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 9px;
+  width: 100%;
+  min-width: 0;
+}
+.rm-edit-row { display: flex; align-items: center; gap: 9px; min-width: 0; }
+.rm-edit-title { flex: 1; min-width: 0; }
+.rm-edit-dates { flex-wrap: wrap; gap: 9px 18px; }
+.rm-datefield { display: flex; align-items: center; gap: 8px; }
+.rm-datefield > span {
+  flex: none;
   font-family: var(--display); font-size: 12px; font-weight: 700; color: var(--ink-2);
 }
-.rm-datefield .tt-input { height: 32px; font-size: 12.5px; }
+/* Fixed, not flexible: a date field has one job and a known width, and letting
+   it stretch left the two of them different sizes on every row. */
+.rm-datefield .tt-input { width: 9.5rem; flex: none; height: 32px; font-size: 12.5px; }
 .rm-edit .tt-input { background: var(--surface-2); }
-.rm-edit-actions { grid-column: 2; display: flex; align-items: center; gap: 12px; }
+.rm-edit-actions { gap: 14px; }
+
+/* One column while a row is open. An edit form is several times the height of
+   a closed row, and in a two-column flow that either overlaps the next column
+   or leaves a hole beside it. */
+.rm-list.is-editing { columns: auto; }
+.rm-list.is-editing .rm-item { max-width: 44rem; }
 .rm-save { margin-top: 0; padding: 7px 18px; font-size: 13px; }
 .rm-cancel {
   font-family: var(--ui); font-size: 12.5px; font-weight: 700;
