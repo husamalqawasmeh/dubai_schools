@@ -570,14 +570,22 @@ const byName = (n) => order.find((b) => b.icon === n);
 const CENTRE_TRIO = ["student", "school", "teacher"];
 const RING_ORDER = ["book", "bus", "rank", "government", "certificate", "coins", "running", "pen"];
 
-const trio = CENTRE_TRIO.map(byName);
-const ring = RING_ORDER.map(byName);
-const biggestPair = Math.max(
-  trio[0].r + trio[1].r,
-  trio[1].r + trio[2].r,
-  trio[0].r + trio[2].r
-);
-const TRIO_R = (biggestPair + PAD) / Math.sqrt(3);
+/**
+ * One radius for all eleven, on this layout only.
+ *
+ * 21 is the largest that fits, and three separate limits say so: neighbours
+ * on the ring need 2R + pad under the 53.6 chord (R <= 26.1), the outermost
+ * must stay inside the glass (R <= 24), and the trio has to clear the ring
+ * (R <= 21). The tightest wins, which is why it is not the obvious 24.
+ *
+ * The icons scale off the radius, so equal circles mean equal icons too.
+ */
+const EQUAL_R = 21;
+const sized = (n) => ({ ...byName(n), r: EQUAL_R });
+
+const trio = CENTRE_TRIO.map(sized);
+const ring = RING_ORDER.map(sized);
+const TRIO_R = (2 * EQUAL_R + PAD) / Math.sqrt(3);
 const RING_R = 70;
 
 const centred = [
