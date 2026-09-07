@@ -131,11 +131,10 @@ const ICONS = {
     "M3 2.4h18v12.2H3z M6.2 5.8h11.6v1.6H6.2z M6.2 9.2h7.8v1.6H6.2z" +
     "M17.2 14.6a3.4 3.4 0 1 0 0 6.8 3.4 3.4 0 0 0 0-6.8z" +
     "M13.6 20.1 12.4 24l2.6-1.1 1.4 1.1.6-3.4z",
-  // One coin, filling the box, with the dirham struck across it. The stack
-  // behind it was competing for the same 24 units the symbol needed, and the
-  // symbol is the part that says which currency — the discs only said "money",
-  // which the bubble's company already says.
-  coins: "M12 1.4a10.6 10.6 0 1 1 0 21.2 10.6 10.6 0 0 1 0-21.2z",
+  // Nothing: the bubble itself is the white disc and the ring is drawn at
+  // bubble scale. The D is in MARK, because its bars cross its own stem and
+  // evenodd would punch those crossings back out.
+  coins: [],
   rank:
     "M12 1.4l1.4 3 3.2.4-2.4 2.2.6 3.2-2.8-1.6-2.8 1.6.6-3.2L7.4 4.8l3.2-.4z" +
     "M9.2 11.4h5.6v10.8H9.2z" +
@@ -257,12 +256,22 @@ const FACE = {
   // yellow forced the bus itself dark, which is backwards: it is the vehicle
   // that is famously that colour.
   bus: "#efb100",
-  coins: "#e0b33a",
 };
 
 /** Where the struck symbol is not the bubble's own colour. */
 const MARK_COLOUR = {
-  coins: "#4a3608",
+  coins: "url(#dhGrad)",
+};
+
+/**
+ * Bubbles that carry a ring inside their edge.
+ *
+ * Drawn at bubble scale rather than inside the 24-unit icon box, because it is
+ * the disc's own edge — the box is only 68% of the diameter, so a ring drawn
+ * there would float well inside the bubble instead of sitting on it.
+ */
+const DISC_RING = {
+  coins: "url(#dhGrad)",
 };
 
 /* Bubble colours. Distinct in hue from each other so no two read as the same
@@ -282,7 +291,7 @@ const BUBBLES = [
   { icon: "bus",         fill: "#3a4a52", r: 17   },   // slate, so the bus can be the yellow
   { icon: "rank",        fill: "#5f7d1f", r: 17   },   // olive
   { icon: "certificate", fill: "#262626", r: 15.5 },   // near-black
-  { icon: "coins",       fill: "#6f5210", r: 15.5 },   // brown
+  { icon: "coins",       fill: "#ffffff", r: 15.5 },   // white disc, gradient ring
   { icon: "running",     fill: "#0f8a8a", r: 15   },   // cyan
   { icon: "pen",         fill: "#c0468a", r: 14   },   // pink
 ];
@@ -377,6 +386,12 @@ const bubble = (b, i) => {
   const ic = ICONS[b.icon];
   const parts = Array.isArray(ic) ? ic : [ic];
   const face = FACE[b.icon] ?? "#fff";
+  const rw = b.r * 0.13;
+  const ring = DISC_RING[b.icon]
+    ? `
+      <circle cx="${b.x.toFixed(1)}" cy="${b.y.toFixed(1)}" r="${(b.r - rw / 2).toFixed(1)}"` +
+      ` fill="none" stroke="${DISC_RING[b.icon]}" stroke-width="${rw.toFixed(1)}"/>`
+    : "";
   const st = STROKES[b.icon] ?? [];
   const line = (l, colour, op) =>
     `
@@ -396,7 +411,7 @@ const bubble = (b, i) => {
     : "";
   return `    <g class="bub" style="--i:${i}">
       <circle cx="${b.x.toFixed(1)}" cy="${b.y.toFixed(1)}" r="${b.r}" fill="${b.fill}"/>
-      <circle cx="${b.x.toFixed(1)}" cy="${(b.y - b.r * 0.28).toFixed(1)}" r="${(b.r * 0.72).toFixed(1)}" fill="#fff" opacity=".08"/>
+      <circle cx="${b.x.toFixed(1)}" cy="${(b.y - b.r * 0.28).toFixed(1)}" r="${(b.r * 0.72).toFixed(1)}" fill="#fff" opacity=".08"/>${ring}
       <g transform="translate(${ox.toFixed(1)} ${oy.toFixed(1)}) scale(${s.toFixed(3)})">
         ${parts.map((d) => `<path d="${d}" fill="${face}" fill-rule="evenodd"/>`).join("\n        ")}${lines}${soft}${mark}${dim}
       </g>
@@ -468,6 +483,16 @@ const inner = `  <defs>
       <stop offset="0" stop-color="#e6ecea"/>
       <stop offset="0.5" stop-color="#9fb4a6"/>
       <stop offset="1" stop-color="#6f8478"/>
+    </linearGradient>
+
+    <!-- The dirham mark's own colours: red through black to green, on the
+         diagonal, as the official logo has them. Per-element bounding box
+         rather than one gradient across the whole bubble, so the ring and the
+         D each carry the full sweep instead of each taking a slice of it. -->
+    <linearGradient id="dhGrad" x1="0" y1="1" x2="1" y2="0">
+      <stop offset="0" stop-color="#e2001a"/>
+      <stop offset="0.5" stop-color="#111111"/>
+      <stop offset="1" stop-color="#00843d"/>
     </linearGradient>
 
     <!-- A soft shadow under the glass, so the mark sits on the page instead of
