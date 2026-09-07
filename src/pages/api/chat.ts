@@ -1,6 +1,13 @@
 import type { APIRoute } from "astro";
 import { env } from "cloudflare:workers";
-import { schoolContext, SYSTEM_PROMPT, TOOLS, runTool } from "../../lib/assistant";
+import {
+  schoolContext,
+  compactContext,
+  SYSTEM_PROMPT,
+  FALLBACK_PROMPT,
+  TOOLS,
+  runTool,
+} from "../../lib/assistant";
 
 /**
  * The site assistant.
@@ -15,8 +22,34 @@ import { schoolContext, SYSTEM_PROMPT, TOOLS, runTool } from "../../lib/assistan
  * Tool calls are resolved inside one response: the model asks for a school's
  * fee sheet, we run the SQL, hand it back, and carry on streaming into the
  * same output. The client only ever reads text and never learns a tool ran.
+ *
+ * WHY THERE IS A SECOND MODEL
+ * ---------------------------
+ * Anthropic refuses a large share of calls from Cloudflare's egress with a 403
+ * — measured, not guessed: five fast retries answered 4 of 6, and six retries
+ * spread over six seconds answered 3 of 12. Spreading them made it worse,
+ * which is what you expect when the refusal follows the network path rather
+ * than the request.
+ *
+ * So when Claude cannot be reached at all, the answer comes from Workers AI
+ * instead. That runs on Cloudflare through a binding, so there is no egress to
+ * be refused. It is a smaller model with a smaller directory and no fee tool,
+ * and it says so — a worse answer is worth having, an error page is not.
  */
-const MODEL = "claude-opus-5";
+const MODEL = "claude-sonnet-5";
+/**
+ * Runs on Cloudflare, so it is reachable when Anthropic is not.
+ *
+ * A list rather than one id, tried in order. Cloudflare retires these on a
+ * schedule — the first model I picked had been deprecated three months before
+ * I used it — and a fallback that has quietly stopped working is worse than no
+ * fallback, because nothing tells you until you need it.
+ */
+const FALLBACK_MODELS = [
+  "@cf/meta/llama-4-scout-17b-16e-instruct",
+  "@cf/meta/llama-3.3-70b-instruct-fp8-fast",
+  "@cf/meta/llama-3.1-8b-instruct-fast",
+];
 const MAX_TOKENS = 4000;
 const MAX_INPUT = 1200;
 const MAX_TURNS = 8;
@@ -76,6 +109,43 @@ async function callAnthropic(key: string, payload: unknown): Promise<Response> {
     await new Promise((r) => setTimeout(r, 250 * attempt + Math.random() * 150));
   }
   return last;
+}
+
+/**
+ * The second model, on Cloudflare.
+ *
+ * Not streamed. It is the unhappy path and the reply is short, so waiting for
+ * the whole thing costs a second and removes a second stream implementation
+ * that would only run when something is already wrong.
+ */
+async function fallback(
+  message: string,
+  history: { role: string; content: any }[]
+): Promise<string> {
+  const ai = (env as unknown as { AI?: { run: (m: string, o: any) => Promise<any> } }).AI;
+  if (!ai) return "The assistant could not be reached just now. Please ask again.";
+
+  const messages = [
+    { role: "system", content: FALLBACK_PROMPT + "\n\n" + (await compactContext()) },
+    ...history.slice(-4),
+    { role: "user", content: message },
+  ];
+
+  for (const model of FALLBACK_MODELS) {
+    try {
+      const res = await ai.run(model, { messages, max_tokens: 400 });
+      const text = String(res?.response ?? "").trim();
+      if (text) return text;
+      console.error("[api/chat] fallback", model, "returned nothing");
+    } catch (err) {
+      // A retired or unavailable model throws here. Logging which one is the
+      // point: the first model I chose had been deprecated three months
+      // earlier, and the only reason that surfaced was the error text.
+      console.error("[api/chat] fallback", model, err);
+    }
+  }
+
+  return "The assistant could not be reached just now. Please ask again.";
 }
 
 export const POST: APIRoute = async ({ request }) => {
@@ -141,15 +211,16 @@ export const POST: APIRoute = async ({ request }) => {
             const detail = await res.text().catch(() => "");
             console.error("[api/chat]", res.status, detail.slice(0, 300));
             if (!sent) {
-              controller.enqueue(
-                encoder.encode(
-                  res.status === 401
-                    ? "The assistant's API key is not valid."
-                    : res.status === 429
-                      ? "The assistant is busy. Try again in a moment."
-                      : "The assistant could not be reached just now. Please ask again."
-                )
-              );
+              // A key or a quota problem is ours to fix and the fallback would
+              // only hide it. Anything else is worth trying the other model
+              // for, since the visitor is waiting either way.
+              const ours = res.status === 401 || res.status === 429;
+              const text = ours
+                ? res.status === 401
+                  ? "The assistant's API key is not valid."
+                  : "The assistant is busy. Try again in a moment."
+                : await fallback(message, history);
+              controller.enqueue(encoder.encode(text));
               sent = true;
             }
             break;
@@ -230,13 +301,17 @@ export const POST: APIRoute = async ({ request }) => {
         }
 
         if (!sent) {
-          controller.enqueue(
-            encoder.encode("Sorry — I could not produce an answer for that. Try rephrasing it.")
-          );
+          controller.enqueue(encoder.encode(await fallback(message, history)));
         }
       } catch (err) {
         console.error("[api/chat] stream", err);
-        if (!sent) controller.enqueue(encoder.encode("Something went wrong. Please ask again."));
+        if (!sent) {
+          try {
+            controller.enqueue(encoder.encode(await fallback(message, history)));
+          } catch {
+            controller.enqueue(encoder.encode("Something went wrong. Please ask again."));
+          }
+        }
       } finally {
         controller.close();
       }

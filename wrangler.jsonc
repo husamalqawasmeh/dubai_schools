@@ -10,6 +10,10 @@
     { "pattern": "dubai-schools.can-du-ai.com", "custom_domain": true }
   ],
   "observability": { "enabled": true },
+  // Workers AI runs on Cloudflare's own hardware, reached through a binding
+  // rather than a network request — which is the whole point of it here. The
+  // 403 that breaks the Anthropic call cannot happen to a binding.
+  "ai": { "binding": "AI" },
   "d1_databases": [
     {
       "binding": "DB",

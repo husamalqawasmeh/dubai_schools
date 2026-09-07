@@ -221,3 +221,58 @@ the table. Refer people to those sites; do not speak for them.
 - If the table does not hold the answer, say so and name where it does live —
   the school's site, KHDA, or MOE.
 `.trim();
+
+
+/**
+ * A much smaller directory, for the fallback model.
+ *
+ * The full table is 9,075 tokens. The models on Workers AI are small ones with
+ * short context windows, and a prompt that overflows does not degrade — it
+ * fails. So the fallback gets names and areas only: 232 schools in roughly a
+ * quarter of the tokens, enough to say which schools exist and where, which is
+ * what someone asks a fallback.
+ */
+let compact: string | null = null;
+
+export async function compactContext(): Promise<string> {
+  if (compact) return compact;
+
+  const { results } = await DB.prepare(
+    `SELECT name, area, curricula, khda_rating
+       FROM schools WHERE delisted_at IS NULL ORDER BY name`
+  ).all<any>();
+
+  const rows = results.map((r) => {
+    let cur = "";
+    try {
+      cur = (JSON.parse(r.curricula) as string[])[0] ?? "";
+    } catch {
+      cur = "";
+    }
+    return `${r.name} | ${r.area} | ${cur} | ${r.khda_rating}`;
+  });
+
+  compact = `Schools currently listed (name | area | curriculum | KHDA rating):\n${rows.join("\n")}`;
+  return compact;
+}
+
+/**
+ * The fallback's instructions.
+ *
+ * Shorter and blunter than the main prompt, because a small model follows a
+ * short instruction better than a nuanced one — and it is told to send people
+ * to the school's page for anything it does not hold, since it has no fee data
+ * and no tool to look any up.
+ */
+export const FALLBACK_PROMPT = `
+You are the assistant on Dubai Schools, a directory of private schools in Dubai.
+
+Answer only about schools and schooling in Dubai. Refuse politics, religion,
+sex, medical and legal questions in one short sentence, then stop.
+
+You have the list of schools below with area, curriculum and KHDA rating. You
+do NOT have fees, websites, or grade ranges. For any of those, say so and tell
+the person to open that school's page on this site, at /schools.
+
+Be brief: two or three sentences. Never invent a school, a fee or a rating.
+`.trim();
