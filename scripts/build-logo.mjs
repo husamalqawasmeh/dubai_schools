@@ -164,10 +164,16 @@ const MARK = {
   // The counter still shows above, between and below them, which is what keeps
   // the D legible while the bars run right through it.
   coins:
-    "M7.2 4.2h2.7v15.6H7.2z" +
-    "M9.3 4.2c5 0 8.5 3.2 8.5 7.8s-3.5 7.8-8.5 7.8V17c3.4 0 5.7-2.1 5.7-5s-2.3-5-5.7-5z" +
-    "M3.4 9h17.2v2H3.4z" +
-    "M3.4 13.2h17.2v2H3.4z",
+    // Redrawn against the clearer reference. Three things were off: the D
+    // was too light, the bars sat too far apart, and their left ends were
+    // square. The bars belong close together in the middle third — spread
+    // to the top and bottom of the bowl they read as a strikethrough — and
+    // their left ends are cut on a slant, the bottom edge reaching further
+    // left than the top.
+    "M6.6 4h3.6v16H6.6z" +
+    "M9.6 4c5.6 0 9 3.2 9 8s-3.4 8-9 8v-3.4c3.4 0 5.4-2 5.4-4.6s-2-4.6-5.4-4.6z" +
+    "M4.6 9.7H20.4v1.9H3.2z" +
+    "M4.6 12.7H20.4v1.9H3.2z",
 };
 
 /**

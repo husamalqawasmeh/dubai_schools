@@ -40,6 +40,9 @@
      edge against the page (2.6:1 to 2.2:1), which is the cost of the lift and
      the reason it stops here rather than going further. */
   --midtone: #7badad;
+  /* Exactly halfway from the card ground to the hover fill, so the two cards
+     rest at the midpoint of the move they make when you point at them. */
+  --card-mid: #729a8f;
   /* What the three midtone boxes carry. Lifted off the page ink, which sat
      heavier on this ground than it needed to. This is as light as it goes:
      4.7:1 against the midtone, and the hint box sets 11.5px, so the 4.5:1
@@ -2842,3 +2845,12 @@ a.idcard:hover h2 { color: var(--on-accent); }
   text-align: center;
 }
 .adminlink h2 { margin: 0; }
+
+
+/* The two cards rest halfway to the hover colour and complete the move on
+   hover. The label is ink at rest, not the accent: on this ground the accent
+   is 2.3:1 and disappears, where ink is 5.2:1. White would have been 3.1:1 —
+   legible at 17px bold, but only just, and the label is the whole card. */
+.idcard { background: var(--card-mid); }
+.idcard h2 { color: var(--ink); }
+a.idcard:hover h2 { color: var(--on-accent); }
