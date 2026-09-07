@@ -22,6 +22,13 @@ export const POST: APIRoute = async ({ request }) => {
   const action = String(form.get("action") ?? "");
   const id = Number(form.get("id") ?? 0);
   const now = new Date().toISOString();
+  const today = now.slice(0, 10);
+
+  /** An empty date field means "no date", not "the epoch". */
+  const dateOrNull = (v: FormDataEntryValue | null) => {
+    const s = String(v ?? "").trim();
+    return /^\d{4}-\d{2}-\d{2}$/.test(s) ? s : null;
+  };
 
   if (action === "add") {
     const title = String(form.get("title") ?? "").trim().slice(0, 300);
@@ -29,10 +36,13 @@ export const POST: APIRoute = async ({ request }) => {
     // New items land at the end. Appending is the safe default: an item pushed
     // to the top would reorder someone else's list without being asked to.
     const max = await DB.prepare("SELECT COALESCE(MAX(position), 0) p FROM roadmap").first<{ p: number }>();
+    // Today is the entry date, because today is when it was entered. It stays
+    // editable, so anything raised earlier can be backdated.
     await DB.prepare(
-      "INSERT INTO roadmap (title, done, position, created_at, updated_at) VALUES (?, 0, ?, ?, ?)"
+      `INSERT INTO roadmap (title, done, position, entry_date, created_at, updated_at)
+       VALUES (?, 0, ?, ?, ?, ?)`
     )
-      .bind(title, (max?.p ?? 0) + 10, now, now)
+      .bind(title, (max?.p ?? 0) + 10, today, now, now)
       .run();
     return back();
   }
@@ -44,11 +54,36 @@ export const POST: APIRoute = async ({ request }) => {
     return back();
   }
 
+  if (action === "edit") {
+    const title = String(form.get("title") ?? "").trim().slice(0, 300);
+    if (!title) return back();
+    await DB.prepare(
+      "UPDATE roadmap SET title = ?, entry_date = ?, completion_date = ?, updated_at = ? WHERE id = ?"
+    )
+      .bind(title, dateOrNull(form.get("entry_date")), dateOrNull(form.get("completion_date")), now, id)
+      .run();
+    return back();
+  }
+
   if (action === "toggle") {
     // Flipped in SQL rather than read-then-written, so two tabs open on the
     // same list cannot both read "not done" and both write "done".
-    await DB.prepare("UPDATE roadmap SET done = 1 - done, updated_at = ? WHERE id = ?")
-      .bind(now, id)
+    //
+    // Ticking fills the completion date only when it is empty, so it never
+    // overwrites a date someone set deliberately. Unticking leaves it alone
+    // rather than clearing it: the date is a fact about when the work
+    // finished, and a mis-click should not delete a fact.
+    await DB.prepare(
+      `UPDATE roadmap
+          SET done = 1 - done,
+              completion_date = CASE
+                WHEN done = 0 AND completion_date IS NULL THEN ?
+                ELSE completion_date
+              END,
+              updated_at = ?
+        WHERE id = ?`
+    )
+      .bind(today, now, id)
       .run();
     return back();
   }

@@ -2523,11 +2523,18 @@ body.is-bare .idwrap { min-height: 100dvh; }
 .rm-add .tt-input { flex: 1; }
 .rm-addbtn { margin-top: 0; flex: none; padding: 0 20px; }
 
-.rm-list { list-style: none; margin: 18px 0 0; padding: 0; max-width: 44rem; display: grid; gap: 8px; }
+.rm-page { max-width: 1080px; }
+/* Two columns by CSS columns, not grid, and that choice is about the arrows.
+   Columns flow top-to-bottom then over, so the visual order is the list order
+   and moving an item up moves it up. A two-column grid fills left-to-right, so
+   "up" would have jumped an item sideways. */
+.rm-list { list-style: none; margin: 18px 0 0; padding: 0; }
+@media (min-width: 900px) { .rm-list { columns: 2; column-gap: 14px; } }
+.rm-item { break-inside: avoid; margin-bottom: 8px; }
 .rm-item {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 9px;
   background: var(--surface);
   border: 1px solid var(--rule);
   border-radius: 8px;
@@ -2579,3 +2586,46 @@ body.is-bare .idwrap { min-height: 100dvh; }
   border: 1px solid transparent; border-radius: 5px;
 }
 .rm-del:hover { color: #fff; background: #a2372f; border-color: #a2372f; }
+
+/* ---------------- roadmap: serial, dates, editing ---------------- */
+.rm-no {
+  flex: none; min-width: 18px;
+  font-family: var(--ui); font-size: 12px; font-weight: 700;
+  color: var(--muted); text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+.rm-body { flex: 1; min-width: 0; }
+.rm-title { display: block; }
+.rm-dates {
+  display: block; margin-top: 2px;
+  font-family: var(--display); font-size: 11.5px; color: var(--muted);
+}
+.rm-dot { padding: 0 5px; }
+
+.rm-editlink {
+  flex: none;
+  font-family: var(--ui); font-size: 11.5px; font-weight: 700;
+  color: var(--accent); text-decoration: none;
+  padding: 3px 6px; border-radius: 4px;
+}
+.rm-editlink:hover { background: var(--accent-2); color: var(--on-accent); }
+
+/* The open row keeps the same footprint as a closed one — it grows downwards
+   rather than pushing its neighbours sideways, which in a two-column list
+   would reflow the whole board on every edit. */
+.rm-edit { display: grid; grid-template-columns: auto 1fr; gap: 8px 9px; width: 100%; align-items: center; }
+.rm-edit-title { grid-column: 2; }
+.rm-datefield { grid-column: 2; display: flex; align-items: center; gap: 8px; }
+.rm-datefield span {
+  flex: none; min-width: 74px;
+  font-family: var(--display); font-size: 12px; font-weight: 700; color: var(--ink-2);
+}
+.rm-datefield .tt-input { height: 32px; font-size: 12.5px; }
+.rm-edit .tt-input { background: var(--surface-2); }
+.rm-edit-actions { grid-column: 2; display: flex; align-items: center; gap: 12px; }
+.rm-save { margin-top: 0; padding: 7px 18px; font-size: 13px; }
+.rm-cancel {
+  font-family: var(--ui); font-size: 12.5px; font-weight: 700;
+  color: var(--muted); text-decoration: none;
+}
+.rm-cancel:hover { color: var(--accent); text-decoration: underline; }
