@@ -39,6 +39,11 @@ if (section === "site") return Astro.redirect("/admin/communicate", 301);
    school's own page. */
 if (section === "school") return Astro.redirect("/schools/communicate", 301);
 
+/* The parent form is no longer offered here — this page is the schools'
+   one and says so with a single tab. Anyone arriving with the old query
+   goes to the page that does still carry that form. */
+if (section === "parent") return Astro.redirect("/parents/communicate", 301);
+
 /* Defaults to the school form rather than to nothing — see the parents'
    copy for why the blank state stopped earning its place once the split
    moved the audience into the path. */
@@ -67,30 +72,6 @@ const TABS = [
       "Office email, number of teachers, number of admin staff, transport routes and fees, anything else worth listing.",
     contactLabel: "Your work email",
   },
-  {
-    id: "parent",
-    href: "/schools/communicate?as=parent",
-    label: "Parents",
-    kind: "info_request",
-    title: "Request information",
-    blurb:
-      "Ask about a school — a fee that is not listed, admissions, transport, waiting lists. We will chase the answer and publish it where it helps the next parent asking.",
-    messageLabel: "What would you like to know?",
-    placeholder: "e.g. Does this school run a bus from Al Barsha, and what does it cost?",
-    contactLabel: "Email, if you would like a reply",
-  },
-  {
-    id: "site",
-    href: "/admin/communicate",
-    label: "Site admin",
-    kind: "comment",
-    title: "Sign in",
-    blurb:
-      "The console for moderating what comes in through this page, editing school data, and running the update against KHDA.",
-    messageLabel: "",
-    placeholder: "",
-    contactLabel: "",
-  },
 ];
 
 const current = TABS.find((t) => t.id === active) ?? null;
@@ -98,7 +79,7 @@ const current = TABS.find((t) => t.id === active) ?? null;
 
 <Base
   title="Communicate — for schools"
-  description="Students, parents and schools: leave a comment, request information, or send details to be listed."
+  description="Schools: send the details KHDA does not publish — office email, staff numbers, transport routes — to be checked and listed."
 >
   <div class="wrap contribute">
     <div class="contribute-head">
@@ -106,7 +87,7 @@ const current = TABS.find((t) => t.id === active) ?? null;
       <h1>Communicate</h1>
     </div>
 
-    <div class="tabs" role="tablist">
+    <div class="tabs is-single" role="tablist">
       {TABS.map((t) => (
         <a
           class={t.id === current?.id ? "tab is-on" : "tab"}

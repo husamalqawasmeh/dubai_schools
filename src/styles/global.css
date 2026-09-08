@@ -809,6 +809,13 @@ a.tier:hover .coin-edge { filter: brightness(0.9); }
 }
 .tab.is-on { background: var(--accent); color: var(--on-accent); border-color: var(--accent); }
 
+/* Each communicate page now offers one audience — its own — so the strip is
+   a single box. It keeps its natural width and sits at the start of the row:
+   .tab is flex:1 so that three share a row evenly, and left alone that would
+   stretch the one remaining box across the full width, where it would read as
+   a banner rather than as the tab it still is. */
+.tabs.is-single .tab { flex: 0 0 auto; }
+
 .contribute .panel h2 { font-size: 16px; margin-bottom: 6px; }
 /* No measure cap here: the 62ch limit was what broke these single-sentence
    blurbs onto a second line. They still wrap on a narrow screen, which is

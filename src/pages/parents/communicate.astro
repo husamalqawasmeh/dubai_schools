@@ -38,6 +38,11 @@ if (section === "site") return Astro.redirect("/admin/communicate", 301);
    redirects: it was the target of ten "Tell us" links across the site. */
 if (section === "parent") return Astro.redirect("/parents/communicate", 301);
 
+/* The school form is no longer offered here — this page is the parents'
+   one and says so with a single tab. Anyone arriving with the old query
+   goes to the page that does still carry that form. */
+if (section === "school") return Astro.redirect("/schools/communicate", 301);
+
 /* Defaults to the parent form rather than to nothing.
 
    It opened blank when this was one page for three audiences and choosing
@@ -58,19 +63,6 @@ const active = (Astro.url.searchParams.get("as") ?? "parent").toLowerCase();
  */
 const TABS = [
   {
-    id: "school",
-    href: "/parents/communicate?as=school",
-    label: "School admin",
-    kind: "school_details",
-    title: "Provide details to be reviewed and shared",
-    blurb:
-      "KHDA does not publish your office email, your staff numbers or your transport routes. Send them here and they appear on your school's page once we have checked them.",
-    messageLabel: "Details",
-    placeholder:
-      "Office email, number of teachers, number of admin staff, transport routes and fees, anything else worth listing.",
-    contactLabel: "Your work email",
-  },
-  {
     id: "parent",
     href: "/parents/communicate",
     label: "Parents",
@@ -82,18 +74,6 @@ const TABS = [
     placeholder: "e.g. Does this school run a bus from Al Barsha, and what does it cost?",
     contactLabel: "Email, if you would like a reply",
   },
-  {
-    id: "site",
-    href: "/admin/communicate",
-    label: "Site admin",
-    kind: "comment",
-    title: "Sign in",
-    blurb:
-      "The console for moderating what comes in through this page, editing school data, and running the update against KHDA.",
-    messageLabel: "",
-    placeholder: "",
-    contactLabel: "",
-  },
 ];
 
 const current = TABS.find((t) => t.id === active) ?? null;
@@ -101,7 +81,7 @@ const current = TABS.find((t) => t.id === active) ?? null;
 
 <Base
   title="Communicate — for parents"
-  description="Students, parents and schools: leave a comment, request information, or send details to be listed."
+  description="Parents: ask about a Dubai school — fees that are not listed, admissions, transport, waiting lists."
 >
   <div class="wrap contribute">
     <div class="contribute-head">
@@ -109,7 +89,7 @@ const current = TABS.find((t) => t.id === active) ?? null;
       <h1>Communicate</h1>
     </div>
 
-    <div class="tabs" role="tablist">
+    <div class="tabs is-single" role="tablist">
       {TABS.map((t) => (
         <a
           class={t.id === current?.id ? "tab is-on" : "tab"}
