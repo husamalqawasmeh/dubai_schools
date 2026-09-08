@@ -26,7 +26,7 @@ const NAV = [
   { href: "/supplies", label: "School Supplies" },
   { href: "/travel-time", label: "Travel Time" },
   { href: "/news", label: "Schools News" },
-  { href: "/contribute", label: "Communicate" },
+  { href: "COMMUNICATE", label: "Communicate" },
   { href: "/advertise", label: "Advertise" },
   { href: "/overview#chatbox", label: "Chatbot" },
 ];
@@ -40,6 +40,21 @@ const NAV = [
  * claims it. Nor does "/", which is the splash and has no section of its own.
  */
 const here = (Astro.url.pathname.replace(/\/+$/, "") || "/").toLowerCase();
+
+/**
+ * Communicate follows the section you are already in.
+ *
+ * There are two of these pages now, one per audience, and the nav is shared by
+ * every page — so the link has to be resolved per request rather than written
+ * once. A school reading its own overview should not be sent to the parents'
+ * form to say which one it is; it has already said.
+ *
+ * Anything outside either section falls to the parents' page: that is who most
+ * visitors are, and the tabs on it lead to the other one in a click.
+ */
+const communicateHref = here.startsWith("/schools")
+  ? "/contribute?as=schools"
+  : "/contribute?as=parents";
 const isHere = (href: string) => {
   const base = (href.split("#")[0].replace(/\/+$/, "") || "/").toLowerCase();
   if (base === "/") return false;           // the splash has no nav item
@@ -79,7 +94,9 @@ const isHere = (href: string) => {
           <a class="partof" href="https://www.can-du-ai.com">Part of can-du-ai.com<span class="nav-mark" aria-hidden="true">▲</span></a>
         </div>
         <nav>
-          {NAV.map((item, i) => {
+          {NAV.map((raw, i) => {
+            const item =
+              raw.href === "COMMUNICATE" ? { ...raw, href: communicateHref } : raw;
             const current = isHere(item.href);
             const last = i === NAV.length - 1;
             /* The mark points down at the page you are on. The chatbot has no

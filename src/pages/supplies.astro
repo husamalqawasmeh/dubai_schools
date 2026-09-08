@@ -99,7 +99,7 @@ const SECTIONS = [
       may not be this one — which is why this page describes how to find the
       right answer rather than naming shops that would be out of date by the time
       you read it. Know something worth adding?
-      <a href="/contribute">Tell us</a>.
+      <a href="/parents/communicate">Tell us</a>.
     </p>
   </div>
 </Base>
@@ -110,7 +110,7 @@ const SECTIONS = [
   const byName = new Map(uniforms.map((u) => [u.n.toLowerCase(), u]));
 
   const ask = (name) =>
-    `/contribute?as=parent&about=${encodeURIComponent(name)}`;
+    `/parents/communicate?as=parent&about=${encodeURIComponent(name)}`;
 
   box.addEventListener("input", () => {
     const q = box.value.trim();
