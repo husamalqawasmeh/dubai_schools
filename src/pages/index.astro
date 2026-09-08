@@ -119,13 +119,14 @@ const ON_LINE = "#8c1512";
 
   <script is:inline>
     /**
-     * Three clicks on the dirham open the admin console.
+     * Three clicks on the dirham open the overview.
      *
-     * The console has no link anywhere on the public site — the Site admin tab
-     * that used to carry it is gone — so this is the way back in, and it is
-     * deliberately not signposted. It guards nothing: /admin bounces anyone
-     * without a session to the sign-in form, so finding the gesture early is
-     * not a security event. That is what makes a gesture sufficient here.
+     * The overview is an admin page now and has no link anywhere on the public
+     * site, so this is the way in, and it is deliberately not signposted.
+     * /overview redirects to /admin/overview, where the middleware decides
+     * whether you get the page or the sign-in form — so it guards nothing, and
+     * finding the gesture early is not a security event. That is what makes a
+     * gesture sufficient here rather than a poor lock.
      *
      * Clicks have to be within a second of each other. Without the window the
      * count would persist for the life of the page, and three idle clicks on
@@ -146,7 +147,7 @@ const ON_LINE = "#8c1512";
         last = now;
         if (hits >= 3) {
           hits = 0;
-          window.location.href = "/admin";
+          window.location.href = "/overview";
         }
       });
     })();

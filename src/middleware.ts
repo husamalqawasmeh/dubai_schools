@@ -17,7 +17,7 @@ export const onRequest = defineMiddleware(async (context, next) => {
 
   if (open) {
     // Already signed in? Skip the login form.
-    if (user && path === "/admin/login") return context.redirect("/admin", 302);
+    if (user && path === "/admin/login") return context.redirect("/admin/admin", 302);
     return next();
   }
 

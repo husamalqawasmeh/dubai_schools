@@ -35,13 +35,14 @@ const NAV = [
   { href: "SCHOOLNEWS", label: "Schools News" },
   { href: "COMMUNICATE", label: "Communicate" },
   { href: "/schools/advertise", label: "Advertise" },
-  { href: "/overview#chatbox", label: "Chatbot" },
+  { href: "CHATBOT", label: "Chatbot" },
+  { href: "ADMINFN", label: "Admin Functions" },
 ];
 
 /**
  * Which nav item the page belongs to.
  *
- * Compared on the path alone: the Chatbot item points at /overview#chatbox,
+ * Compared on the path alone: the Chatbot item points at an overview plus
  * and a fragment is not part of a page's identity. A school page under
  * /schools/... matches nothing in the bar, which is correct — no nav item
  * claims it. Nor does "/", which is the splash and has no section of its own.
@@ -83,7 +84,10 @@ const nav = NAV.filter(
     !(hideAdvertise && n.href === "/schools/advertise") &&
     !(hideTravel && n.href === "/parents/travel-time") &&
     !(hidePick && n.href === "/parents/pick-of-the-week") &&
-    !(isConsole && !n.href.startsWith("/overview#"))
+    !(isConsole && n.href !== "CHATBOT" && n.href !== "ADMINFN") &&
+    /* And Admin Functions exists only there — it is the console's own menu,
+       and a link to it on a public page is a locked door with a sign on it. */
+    !(!isConsole && n.href === "ADMINFN")
 );
 
 /**
@@ -104,6 +108,15 @@ const faqHref = here.startsWith("/schools") ? "/schools/faq" : "/parents/faq";
 const suppliesHref = here.startsWith("/schools") ? "/schools/school-supplies" : "/parents/school-supplies";
 const newsHref = here.startsWith("/schools") ? "/schools/school-news" : "/parents/school-news";
 
+/* The chatbot lives on an overview, and there are three of them now — one
+   per section, plus the console's. It follows you into whichever you are in
+   rather than sending a parent into the schools' copy to ask a question. */
+const chatbotHref = isConsole
+  ? "/admin/overview#chatbox"
+  : here.startsWith("/schools")
+    ? "/schools/overview#chatbox"
+    : "/parents/overview#chatbox";
+
 
 const communicateHref = here.startsWith("/schools")
   ? "/schools/communicate"
@@ -120,6 +133,8 @@ const SECTIONED: Record<string, string> = {
   FAQ: faqHref,
   SUPPLIES: suppliesHref,
   SCHOOLNEWS: newsHref,
+  CHATBOT: chatbotHref,
+  ADMINFN: "/admin/admin",
 };
 const isHere = (href: string) => {
   const base = (href.split("#")[0].replace(/\/+$/, "") || "/").toLowerCase();

@@ -21,7 +21,7 @@ interface Props {
 }
 
 const {
-  to = "/admin",
+  to = "/admin/admin",
   heading = "Admin sign in",
   blurb = "This area manages school data and outbound mail.",
   class: cls = "",
@@ -61,7 +61,7 @@ const {
   // on /admin it is only there once the Sign-in option has been opened.
   if (f) {
     const panel = f.closest(".signin-panel") as HTMLElement;
-    const to = panel?.dataset.signinTo || "/admin";
+    const to = panel?.dataset.signinTo || "/admin/admin";
     const pw = document.getElementById("password") as HTMLInputElement;
     const showpw = document.getElementById("showpw") as HTMLInputElement;
     const remember = document.getElementById("remember") as HTMLInputElement;

@@ -30,7 +30,7 @@ if (section === "parents") return Astro.redirect("/parents/communicate", 301);
    thing as the other two — they collect something, it lets a person in —
    and it sat here putting the console's front door inside a form meant
    for parents and schools. The old address still works. */
-if (section === "site") return Astro.redirect("/admin", 301);
+if (section === "site") return Astro.redirect("/admin/admin", 301);
 
 /* And ?as=school is gone too. This page is in the schools' section, so
    naming the audience again in a query string said the same thing twice —
@@ -83,7 +83,7 @@ const current = TABS.find((t) => t.id === active) ?? null;
 >
   <div class="wrap contribute">
     <div class="contribute-head">
-      <a class="back" href="/overview">Overview</a>
+      <a class="back" href="/schools/overview">Overview</a>
       <h1>Communicate</h1>
     </div>
 
