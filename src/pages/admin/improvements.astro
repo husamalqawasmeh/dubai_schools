@@ -60,6 +60,12 @@ const shown = (d: string | null) =>
       <form class="rm-add is-editing" method="POST" action="/api/admin/roadmap">
         <input type="hidden" name="action" value="edit" />
         <input type="hidden" name="id" value={target.id} />
+        {/* Two explicit rows rather than one wrapping line. What wraps where
+            depends on the window, and the dates kept ending up beside the
+            title on a wide screen and under the serial on a narrow one — the
+            form reads as "what it is, then when it happened", so that is
+            written down rather than left to the width. */}
+        <span class="rm-formrow">
         <span class="rm-editing-tag">Edit Item</span>
         {/* The serial is a position, not a stored value: typing 1 here means
             "put this first". Saving moves the row and renumbers the rest —
@@ -77,6 +83,9 @@ const shown = (d: string | null) =>
           autocomplete="off"
           autofocus
         />
+        </span>
+
+        <span class="rm-formrow">
         <label class="rm-datefield">
           <span>Raised</span>
           <input class="tt-input" type="date" name="entry_date" value={target.entry_date ?? ""} />
@@ -87,9 +96,10 @@ const shown = (d: string | null) =>
         </label>
         {/* Wrapped together so the pair moves as one to the right-hand end,
             rather than each finding its own place in the wrap. */}
-        <span class="rm-formactions">
-          <button class="rm-formbtn" type="submit">Save</button>
-          <a class="rm-formbtn" href="/admin/improvements">Cancel</a>
+        <span class="formactions">
+          <button class="formbtn" type="submit">Save</button>
+          <a class="formbtn" href="/admin/improvements">Cancel</a>
+        </span>
         </span>
       </form>
     ) : (
@@ -161,10 +171,28 @@ const shown = (d: string | null) =>
 
               <a class="rm-editlink" href={`/admin/improvements?edit=${item.id}`} aria-label={`Edit "${item.title}"`}>Edit</a>
 
-              <form method="POST" action="/api/admin/roadmap">
+              {/* The confirm is on the form, not the button, so it also
+                  catches Enter. It is an enhancement, not the guard: with
+                  JavaScript off the submit goes straight through, which is
+                  what it did before there was a prompt at all. */}
+              <form
+                method="POST"
+                action="/api/admin/roadmap"
+                onsubmit="return confirm('Are you sure?')"
+              >
                 <input type="hidden" name="action" value="delete" />
                 <input type="hidden" name="id" value={item.id} />
-                <button type="submit" class="rm-del" aria-label={`Delete "${item.title}"`}>&times;</button>
+                <button type="submit" class="rm-del" aria-label={`Delete "${item.title}"`}>
+                  {/* A bin, drawn rather than typed: the × read as "close"
+                      next to Edit, and this row deletes a record. */}
+                  <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor"
+                       stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M3 6h18" />
+                    <path d="M8 6V4.5A1.5 1.5 0 0 1 9.5 3h5A1.5 1.5 0 0 1 16 4.5V6" />
+                    <path d="M18.5 6l-.8 13.1a2 2 0 0 1-2 1.9H8.3a2 2 0 0 1-2-1.9L5.5 6" />
+                    <path d="M10 10.5v6M14 10.5v6" />
+                  </svg>
+                </button>
               </form>
         </li>
       ))}

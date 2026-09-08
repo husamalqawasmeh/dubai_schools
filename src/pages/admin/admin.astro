@@ -2,6 +2,7 @@
 import Base from "../../layouts/Base.astro";
 import { env } from "cloudflare:workers";
 import SignInPanel from "../../components/SignInPanel.astro";
+import { HIDE_PAID_TIERS, HIDE_SUPPLIES, getFlag } from "../../lib/settings";
 
 const DB = (env as unknown as { DB: D1Database }).DB;
 const admin = Astro.locals.admin!;
@@ -10,6 +11,13 @@ const admin = Astro.locals.admin!;
    opens a row for editing. It costs a round trip and buys something that
    works with JavaScript off, survives a refresh, and can be linked to. */
 const signin = Astro.url.searchParams.get("signin") !== null;
+
+/* The two hide settings, so their cards can show and flip them here
+   rather than only say where to go and change them. */
+const [hidePaid, hideSupplies] = await Promise.all([
+  getFlag(HIDE_PAID_TIERS),
+  getFlag(HIDE_SUPPLIES),
+]);
 
 const pending = (
   await DB.prepare("SELECT COUNT(*) n FROM submissions WHERE status='pending'").first<{ n: number }>()
@@ -40,6 +48,7 @@ const pending = (
             class="adminsignin"
             heading="Sign in"
             blurb={`Signed in as ${admin.email}`}
+            cancelHref="/admin/admin"
           />
         )}
       </div>
@@ -73,14 +82,34 @@ const pending = (
       <a class="adminlink" href="/admin/suppliers">
         <h2>Uniform suppliers</h2>
       </a>
-      <a class="adminlink" href="/admin/settings">
-        <h2>Hide offer options for now</h2>
-      </a>
+      {/* The box flips the setting; the label still opens the settings screen,
+          where the explanation of what it does lives. A button drawn as a
+          checkbox, not a checkbox — a real one needs a script to save on
+          change and would sit there looking saved having saved nothing. */}
+      <div class="adminlink is-toggle">
+        <form method="POST" action="/api/admin/settings">
+          <input type="hidden" name="flag" value="hidePaidTiers" />
+          <input type="hidden" name="on" value={hidePaid ? "0" : "1"} />
+          <button type="submit" class="togglebox"
+            aria-pressed={hidePaid ? "true" : "false"}
+            aria-label={hidePaid ? "Show the paid packages again" : "Hide the paid packages"}
+          >{hidePaid ? "✓" : ""}</button>
+        </form>
+        <a class="toggle-label" href="/admin/settings"><h2>Hide offer options for now</h2></a>
+      </div>
       {/* Both hide cards open the same settings screen, which now holds two
           toggles. The anchor drops you at the one the card names. */}
-      <a class="adminlink" href="/admin/settings#supplies">
-        <h2>Hide Supplies and Services Option</h2>
-      </a>
+      <div class="adminlink is-toggle">
+        <form method="POST" action="/api/admin/settings">
+          <input type="hidden" name="flag" value="hideSupplies" />
+          <input type="hidden" name="on" value={hideSupplies ? "0" : "1"} />
+          <button type="submit" class="togglebox"
+            aria-pressed={hideSupplies ? "true" : "false"}
+            aria-label={hideSupplies ? "Show School Supplies in the nav again" : "Hide School Supplies from the nav"}
+          >{hideSupplies ? "✓" : ""}</button>
+        </form>
+        <a class="toggle-label" href="/admin/settings#supplies"><h2>Hide Supplies and Services Option</h2></a>
+      </div>
       </div>
     </div>
   </div>

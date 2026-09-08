@@ -1146,10 +1146,20 @@ button.btn:disabled { opacity: 0.55; cursor: default; }
 .admin-main {
   display: grid;
   gap: 12px;
-  /* Top-aligned. Without this the side column stretches its one card down the
-     full height of the block beside it. */
-  align-content: start;
 }
+
+/* Top-aligned. Without this the one card in it stretches down the full height
+   of the block beside it. */
+.admin-side { align-content: start; }
+
+/* Spread to fill, so the last row ends level with whatever the side column
+   ends at — which is the sign-in box once that is open.
+
+   Both columns are items of the same grid row, so they already share a
+   height; this only says what to do with the difference. When the box is
+   shut this block is the taller of the two, there is no difference to
+   distribute, and space-between behaves exactly like start. */
+.admin-main { align-content: space-between; }
 .admin-main { grid-template-columns: 1fr; }
 
 @media (min-width: 700px) {
@@ -2598,12 +2608,29 @@ body.is-bare .idwrap { min-height: 100dvh; }
    around them they read as page furniture rather than as one form you are
    part-way through filling in. */
 .rm-add.is-editing {
-  row-gap: 10px;
+  /* A column of rows, so "what it is" sits above "when it happened" at every
+     width instead of wherever the wrap happens to put it. */
+  flex-direction: column;
+  align-items: stretch;
+  gap: 10px;
   background: var(--surface);
   border: 1px solid var(--accent);
   border-radius: 8px;
   padding: 12px 14px;
 }
+
+.rm-formrow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  row-gap: 10px;
+  min-width: 0;
+}
+/* The title takes the rest of its row; the dates keep their fixed widths and
+   sit left on theirs, which leaves the space for the buttons to claim. */
+.rm-formrow .tt-input[name="title"] { flex: 1 1 16rem; min-width: 0; }
+.rm-formrow .rm-datefield { margin-right: 10px; }
 
 .rm-serialfield { display: flex; align-items: center; gap: 6px; flex: none; }
 .rm-serialfield > span {
@@ -2747,7 +2774,7 @@ body.is-bare .idwrap { min-height: 100dvh; }
 
    Same height as the field above them, and the anchor is a flex box so its
    text centres on that height the way the button's does. */
-.rm-formbtn {
+.formbtn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -2767,7 +2794,7 @@ body.is-bare .idwrap { min-height: 100dvh; }
   cursor: pointer;
   transition: background 0.12s ease, color 0.12s ease, border-color 0.12s ease;
 }
-.rm-formbtn:hover {
+.formbtn:hover {
   background: var(--accent);
   color: var(--on-accent);
   border-color: var(--accent);
@@ -2776,7 +2803,55 @@ body.is-bare .idwrap { min-height: 100dvh; }
 /* Hard right. margin-left:auto eats whatever space is left on the line, so
    the pair sits at the form's right edge whether it shares a row with the
    fields or has wrapped onto one of its own. */
-.rm-formactions { display: flex; gap: 8px; margin-left: auto; flex: none; }
+.formactions { display: flex; gap: 8px; margin-left: auto; flex: none; }
+
+/* Sign in and Cancel on one line. .btn is padding-sized and .formbtn is 38px,
+   so the primary is given the height rather than the pair being left half a
+   pixel apart — they sit side by side and any difference shows. */
+.signin-actions { display: flex; align-items: center; gap: 8px; margin-top: 14px; }
+.signin-actions .btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 38px;
+  margin-top: 0;
+  padding: 0 22px;
+}
+
+/* The bin. Sized here rather than on the svg so the button keeps the hit area
+   it had when it held a character. */
+.rm-del svg { width: 15px; height: 15px; display: block; }
+
+/* A setting you can flip from the menu: the box does that, the label still
+   opens the screen that explains it. The card is a div, so it does not take
+   the whole-card hover fill that a.adminlink has — two different things
+   inside it do two different things, and one fill over both would say they
+   were one. */
+.adminlink.is-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 11px;
+}
+.adminlink.is-toggle form { display: flex; margin: 0; }
+.toggle-label { text-decoration: none; color: inherit; }
+.toggle-label h2 { margin: 0; }
+.toggle-label:hover h2 { color: var(--accent); text-decoration: underline; }
+
+/* Same button-drawn-as-a-checkbox as the board uses, and for the same reason
+   — it saves without a script. */
+.togglebox {
+  width: 20px; height: 20px; flex: none; cursor: pointer;
+  display: grid; place-items: center;
+  font-family: var(--ui); font-size: 13px; font-weight: 700; line-height: 1;
+  color: var(--on-accent);
+  background: var(--surface-2);
+  border: 1.5px solid var(--rule-firm);
+  border-radius: 4px;
+  padding: 0;
+}
+.togglebox[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); }
+.togglebox:hover { border-color: var(--accent); }
 
 /* Sign out is a form post, so its card has to be a button. These are the four
    properties a button does not inherit from a link — everything else comes

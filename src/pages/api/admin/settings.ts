@@ -15,6 +15,25 @@ export const POST: APIRoute = async ({ request, locals }) => {
 
   const ip = request.headers.get("CF-Connecting-IP") ?? "unknown";
 
+  /* Two callers, two shapes. The settings screen sends JSON from a script;
+     the toggles on the admin menu are plain form posts, so they keep working
+     with JavaScript off and can redirect back to the page they came from —
+     which a fetch cannot do. Same allow-list either way. */
+  const ct = request.headers.get("content-type") ?? "";
+  if (ct.includes("form")) {
+    const form = await request.formData();
+    const key = FLAGS[String(form.get("flag") ?? "")];
+    const to = String(form.get("on") ?? "") === "1";
+    const back = String(form.get("back") ?? "/admin/admin");
+    if (key) {
+      await setFlag(key, to, admin.id);
+      await audit(admin.id, "settings_changed", `${form.get("flag")}=${to ? "on" : "off"}`, ip);
+    }
+    // Back to a path on this site, never to whatever the form asked for.
+    const safe = back.startsWith("/") && !back.startsWith("//") ? back : "/admin/admin";
+    return new Response(null, { status: 303, headers: { Location: safe } });
+  }
+
   let body: Record<string, unknown>;
   try {
     body = await request.json();
