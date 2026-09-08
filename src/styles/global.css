@@ -2566,7 +2566,11 @@ body.is-bare .idwrap { min-height: 100dvh; }
    meant two numbers that agree today and drift the first time either moves. */
 /* Halfway back from the 2cm drop. The column still pins the door to its
    bottom, so this only spends slack between the name and the boxes. */
-.idsplit { gap: 26px; max-width: 40rem; margin-top: 72px; }
+/* The cards come up 1cm, taken off the gap above them rather than added as a
+   transform: they are the last thing in the column, so closing the space is
+   the same movement and leaves nothing hanging below where it was drawn.
+   The 72px is kept visible so the change reads as "1cm less than it was". */
+.idsplit { gap: 26px; max-width: 40rem; margin-top: calc(72px - 1cm); }
 
 /* The door comes up off the floor. */
 
@@ -2576,6 +2580,8 @@ body.is-bare .idwrap { min-height: 100dvh; }
      was rather than pushing the door below the glass. This has to live here,
      after the 110px rule — in the earlier @media block it lost to it at every
      width, which is how it was written the first time. */
+  /* Untouched: 34px has no centimetre to give, and the cards are already
+     close under the tagline at this width. */
   .idsplit { gap: 18px; margin-top: 34px; }
 }
 
@@ -2996,6 +3002,19 @@ a.idcard:hover h2 { color: var(--on-accent); }
    Off below 1200px, where the column no longer has an inch to give. */
 .idwrap { transform: translateX(calc(-1in - 1cm)); }
 @media (max-width: 1200px) { .idwrap { transform: none; } }
+
+/* And the lens alone comes back 2cm to the right, inside that.
+
+   A transform, so everything drawn in it moves with it as one piece — the
+   glass, the ring, the handle and all eleven bubbles are one <svg>, and
+   shifting the element is the only way to move them without touching the
+   geometry the generator writes.
+
+   It stops where the stage does. Below 1200px the wrap gives up its own
+   offset because the column has no room to spare, and a lens still pushed
+   right in that column would be the one thing left off-centre. */
+.idmark { transform: translateX(2cm); }
+@media (max-width: 1200px) { .idmark { transform: none; } }
 
 /* The two cards, a fifth larger and centred.
    min-height rather than a fixed one, so a label that wraps on a narrow column
