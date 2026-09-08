@@ -70,6 +70,31 @@ export const POST: APIRoute = async ({ request }) => {
     )
       .bind(title, dateOrNull(form.get("entry_date")), dateOrNull(form.get("completion_date")), now, id)
       .run();
+
+    /* The serial is editable, and it is a position, not a stored number —
+       typing 1 into row 7 means "put this first". So it moves the row and
+       renumbers the rest, which is the same thing the up and down arrows do,
+       just further in one go.
+
+       Positions are rewritten as 10, 20, 30… rather than 1, 2, 3. The arrows
+       work by swapping neighbours and the gaps leave room for that to keep
+       working without a rewrite each time. */
+    const wanted = Number(form.get("serial") ?? 0);
+    if (Number.isInteger(wanted) && wanted > 0) {
+      const { results } = await DB.prepare(
+        "SELECT id FROM roadmap ORDER BY position ASC, id ASC"
+      ).all<{ id: number }>();
+      const ids = (results ?? []).map((r) => r.id);
+      const from = ids.indexOf(id);
+      // Clamped, not rejected: 99 on a list of nine means "last", which is
+      // what someone typing 99 into it meant.
+      const to = Math.min(wanted, ids.length) - 1;
+      if (from !== -1 && to !== from) {
+        ids.splice(to, 0, ids.splice(from, 1)[0]);
+        const stmt = DB.prepare("UPDATE roadmap SET position = ?, updated_at = ? WHERE id = ?");
+        await DB.batch(ids.map((rid, k) => stmt.bind((k + 1) * 10, now, rid)));
+      }
+    }
     return back();
   }
 

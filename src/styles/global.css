@@ -2585,13 +2585,33 @@ body.is-bare .idwrap { min-height: 100dvh; }
 }
 .rm-add .tt-input[name="title"] { flex: 1 1 20rem; }
 .rm-add .tt-input { flex: 1; }
-.rm-addbtn { margin-top: 0; flex: none; padding: 0 20px; }
+/* The same height as the field it sits beside. .btn is padding-sized, which
+   made it shorter than the 38px input next to it. */
+.rm-addbtn { margin-top: 0; flex: none; height: 38px; padding: 0 20px; line-height: 38px; }
 
 /* The same line, carrying the edit form. It holds a title, two dates, Save
    and Cancel, which will not sit on one row at this width — so it wraps, and
    the title keeps a floor of its own so it never ends up narrower than the
    date fields beside it. */
-.rm-add.is-editing { row-gap: 10px; }
+/* Editing is one box, not a row of loose controls. It holds a tag, a serial,
+   a title, two dates, Save and Cancel — enough parts that without an edge
+   around them they read as page furniture rather than as one form you are
+   part-way through filling in. */
+.rm-add.is-editing {
+  row-gap: 10px;
+  background: var(--surface);
+  border: 1px solid var(--accent);
+  border-radius: 8px;
+  padding: 12px 14px;
+}
+
+.rm-serialfield { display: flex; align-items: center; gap: 6px; flex: none; }
+.rm-serialfield > span {
+  font-family: var(--display); font-size: 11.5px; font-weight: 700;
+  color: var(--muted); white-space: nowrap;
+}
+/* Wide enough for two digits and the stepper, and no wider. */
+.rm-serialfield .tt-input { width: 5rem; flex: none; }
 .rm-add.is-editing .tt-input[name="title"] { flex: 1 1 22rem; }
 .rm-add.is-editing .tt-input { background: var(--surface-2); }
 
@@ -2684,7 +2704,11 @@ body.is-bare .idwrap { min-height: 100dvh; }
   color: var(--muted); text-align: right;
   font-variant-numeric: tabular-nums;
 }
-.rm-body { flex: 1; min-width: 0; }
+/* Two lines tall whatever the text does, so a one-line item and a two-line
+   item are the same size and the two columns stay level with each other.
+   Measured from the title's own size and leading rather than typed as a
+   pixel height, so it follows if either changes. */
+.rm-body { flex: 1; min-width: 0; min-height: calc(14px * 1.45 * 2); }
 .rm-title { display: block; }
 .rm-dates {
   display: block; margin-top: 2px;
@@ -2728,8 +2752,6 @@ body.is-bare .idwrap { min-height: 100dvh; }
 /* One column while a row is open. An edit form is several times the height of
    a closed row, and in a two-column flow that either overlaps the next column
    or leaves a hole beside it. */
-.rm-list.is-editing { columns: auto; }
-.rm-list.is-editing .rm-item { max-width: 44rem; }
 .rm-save { margin-top: 0; padding: 7px 18px; font-size: 13px; }
 .rm-cancel {
   font-family: var(--ui); font-size: 12.5px; font-weight: 700;
