@@ -121,7 +121,7 @@ const shown = (d: string | null) =>
       </form>
     )}
 
-    <ol class={editing ? "rm-list is-editing" : "rm-list"}>
+    <ol class="rm-list">
       {items.map((item, i) => (
         <li class={`rm-item${item.done ? " is-done" : ""}${editing === item.id ? " is-target" : ""}`}>
               {/* Each control is its own form. One form with several submit

@@ -2585,6 +2585,12 @@ body.is-bare .idwrap { min-height: 100dvh; }
    and at 44rem the title box was the part that gave way — the field you
    actually type a sentence into was the narrowest thing on the row. It wraps
    rather than squeezing when the window is small. */
+/* Both states are one box, and the same box: a bordered strip the width of
+   the list below it. The add line without an edge read as a stray input
+   floating above the board rather than the place you put things into it —
+   and the two states swapping between framed and unframed made the edit form
+   look like a different component instead of the same line doing a second
+   job. Only the border colour separates them now. */
 .rm-add {
   display: flex;
   flex-wrap: wrap;
@@ -2592,6 +2598,10 @@ body.is-bare .idwrap { min-height: 100dvh; }
   gap: 8px;
   row-gap: 10px;
   margin-top: 14px;
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: 8px;
+  padding: 12px 14px;
 }
 .rm-add .tt-input[name="title"] { flex: 1 1 20rem; }
 .rm-add .tt-input { flex: 1; }
@@ -2599,24 +2609,14 @@ body.is-bare .idwrap { min-height: 100dvh; }
    made it shorter than the 38px input next to it. */
 .rm-addbtn { margin-top: 0; flex: none; height: 38px; padding: 0 20px; line-height: 38px; }
 
-/* The same line, carrying the edit form. It holds a title, two dates, Save
-   and Cancel, which will not sit on one row at this width — so it wraps, and
-   the title keeps a floor of its own so it never ends up narrower than the
-   date fields beside it. */
-/* Editing is one box, not a row of loose controls. It holds a tag, a serial,
-   a title, two dates, Save and Cancel — enough parts that without an edge
-   around them they read as page furniture rather than as one form you are
-   part-way through filling in. */
 .rm-add.is-editing {
   /* A column of rows, so "what it is" sits above "when it happened" at every
      width instead of wherever the wrap happens to put it. */
   flex-direction: column;
   align-items: stretch;
   gap: 10px;
-  background: var(--surface);
-  border: 1px solid var(--accent);
-  border-radius: 8px;
-  padding: 12px 14px;
+  /* The only thing that marks it as the edit state rather than the add one. */
+  border-color: var(--accent);
 }
 
 .rm-formrow {
