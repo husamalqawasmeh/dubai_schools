@@ -144,7 +144,12 @@ const ICONS = {
       "M2.0 9.9 3.9 5.9H5.4v5.0H2.0z" +
       "M5.9 6.3h1.1v8.3H5.9z" +
       "M7.5 6.3h2.7v4.6H7.5z M10.6 6.3h2.7v4.6h-2.7z M13.7 6.3h2.7v4.6h-2.7z" +
-      "M16.8 6.3h2.7v4.6h-2.7z M19.9 6.3h2.4v4.6h-2.4z",
+      "M16.8 6.3h2.7v4.6h-2.7z M19.9 6.3h2.4v4.6h-2.4z" +
+      // Wheel arches. These cross the bottom edge on purpose: evenodd cuts
+      // the overlap, so each leaves an arch rather than a circle, and the
+      // tyre below sits in it instead of against a flat sill.
+      "M6.4 13.7a3.1 3.1 0 1 0 0 6.2 3.1 3.1 0 0 0 0-6.2z" +
+      "M18.4 13.7a3.1 3.1 0 1 0 0 6.2 3.1 3.1 0 0 0 0-6.2z",
     // Mirror on its stalk, out ahead of the windscreen.
     "M0.2 7.2h1.0v3.4H0.2z M0.0 6.9h1.6v1.0H0.0z",
   ],
@@ -226,7 +231,10 @@ const MARK = {
     "M18.4 14.4a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5z" +
     "M1.2 11.5H22.8v0.8H1.2z" +
     "M1.0 14.5h2.8v1.7H1.0z" +
-    "M12.6 13.6 11.8 14.4 10.6 14.4 9.8 13.6 9.8 12.4 10.6 11.6 11.8 11.6 12.6 12.4z",
+    "M12.6 13.6 11.8 14.4 10.6 14.4 9.8 13.6 9.8 12.4 10.6 11.6 11.8 11.6 12.6 12.4z" +
+    // The filler flap, and the headlight in the nose below the windscreen.
+    "M14.6 12.9h1.1v1.4h-1.1z" +
+    "M1.4 12.9h1.6v1.2H1.4z",
 };
 
 /**
@@ -328,6 +336,19 @@ const MARK_COLOUR = {
  * the disc's own edge — the box is only 68% of the diameter, so a ring drawn
  * there would float well inside the bubble instead of sitting on it.
  */
+/**
+ * Icons that do not take the common size.
+ *
+ * The shared factor is set by the busiest drawings, and a long vehicle seen
+ * side-on is the odd one out: it fills its box across and leaves it empty top
+ * and bottom, so at the size that suits a square subject it reads smaller than
+ * everything around it. Multiplies the common factor rather than replacing it,
+ * so a change to that still reaches these.
+ */
+const ICON_SCALE = {
+  bus: 1.15,
+};
+
 const DISC_RING = {
   coins: "url(#dhGrad)",
 };
@@ -441,7 +462,7 @@ const bubble = (b, i) => {
   // 0.612 = 0.68 less a tenth. The icons carry more detail than they did, and
   // detail reads as clutter at the size the old factor gave them — a tenth
   // off buys back the white ring between the drawing and the bubble edge.
-  const s = (b.r * 2 * 0.612) / 24;         // icon box scaled to the bubble
+  const s = (b.r * 2 * 0.612 * (ICON_SCALE[b.icon] ?? 1)) / 24;   // icon box scaled to the bubble
   const ox = b.x - (24 * s) / 2;
   const oy = b.y - (24 * s) / 2;
   const ic = ICONS[b.icon];
