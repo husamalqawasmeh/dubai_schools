@@ -459,10 +459,10 @@ console.log(`packed ${placed.length} bubbles, all inside the glass and clear of 
 
 /* ---------- markup ---------- */
 const bubble = (b, i) => {
-  // 0.612 = 0.68 less a tenth. The icons carry more detail than they did, and
+  // 0.5508 = 0.68 less a tenth, twice over. The icons carry more detail than they did, and
   // detail reads as clutter at the size the old factor gave them — a tenth
   // off buys back the white ring between the drawing and the bubble edge.
-  const s = (b.r * 2 * 0.612 * (ICON_SCALE[b.icon] ?? 1)) / 24;   // icon box scaled to the bubble
+  const s = (b.r * 2 * 0.5508 * (ICON_SCALE[b.icon] ?? 1)) / 24;  // icon box scaled to the bubble
   const ox = b.x - (24 * s) / 2;
   const oy = b.y - (24 * s) / 2;
   const ic = ICONS[b.icon];
@@ -648,6 +648,45 @@ const render = (list) => `  <defs>
 
   <circle cx="${CX}" cy="${CY}" r="${R_GLASS}" fill="url(#glass)"/>
 
+  <!-- Dubai under the glass: the sea to the north-west, the coast running
+       south-west to north-east across it, the Creek cutting inland, the Palm
+       off Jumeirah, and four of the highways that everyone navigates by.
+
+       Drawn, not a map tile. A screenshot of anyone's map service is their
+       copyright and could not go on a public site, and a raster could not be
+       clipped to this circle or survive the favicon. Our own coordinates
+       would have been the other way to do it, but every lat/lng in the
+       schools table is still null.
+
+       Deliberately faint. It is the ground the bubbles sit on, and the moment
+       it competes with them it has stopped being a background. -->
+  <g clip-path="url(#lensClip)" opacity=".42">
+    <!-- Land first, filling the disc, then the sea laid over its north-west. -->
+    <circle cx="${CX}" cy="${CY}" r="${R_GLASS}" fill="#efe7d6"/>
+    <path d="M${CX - R_GLASS} ${CY - R_GLASS} h${R_GLASS * 2} v${R_GLASS * 0.55}
+             C ${CX + 52} ${CY - 44}, ${CX + 4} ${CY - 20}, ${CX - 30} ${CY + 14}
+             C ${CX - 52} ${CY + 36}, ${CX - 70} ${CY + 62}, ${CX - 78} ${CY + R_GLASS}
+             h-${R_GLASS} z" fill="#9fd6e8"/>
+
+    <!-- The Creek, inland from the coast. -->
+    <path d="M${CX + 6} ${CY - 24} c -10 12, -16 22, -26 30 c -8 7, -14 10, -20 12"
+          stroke="#9fd6e8" stroke-width="5" fill="none" stroke-linecap="round"/>
+
+    <!-- The Palm, off the coast: trunk, crown and the breakwater round it. -->
+    <circle cx="${CX - 58}" cy="${CY + 40}" r="15" fill="none" stroke="#efe7d6" stroke-width="2.4"/>
+    <path d="M${CX - 46} ${CY + 30} l -10 9" stroke="#efe7d6" stroke-width="3" stroke-linecap="round"/>
+    <path d="M${CX - 58} ${CY + 40} m -9 -6 l 18 12 M${CX - 58} ${CY + 40} m -9 6 l 18 -12
+             M${CX - 58} ${CY + 40} m 0 -10 l 0 20" stroke="#efe7d6" stroke-width="1.6"/>
+
+    <!-- Highways: the two that run the length of the city and two crossing. -->
+    <g stroke="#c9a86a" fill="none" stroke-linecap="round">
+      <path d="M${CX - 92} ${CY + 74} C ${CX - 40} ${CY + 30}, ${CX + 20} ${CY - 12}, ${CX + 84} ${CY - 52}" stroke-width="2.6"/>
+      <path d="M${CX - 78} ${CY + R_GLASS} C ${CX - 24} ${CY + 46}, ${CX + 34} ${CY + 6}, ${CX + 92} ${CY - 30}" stroke-width="2.2"/>
+      <path d="M${CX - 30} ${CY + 84} C ${CX - 6} ${CY + 40}, ${CX + 16} ${CY + 10}, ${CX + 54} ${CY - 16}" stroke-width="1.6"/>
+      <path d="M${CX + 18} ${CY + 76} C ${CX + 34} ${CY + 36}, ${CX + 52} ${CY + 8}, ${CX + 88} ${CY - 8}" stroke-width="1.6"/>
+    </g>
+  </g>
+
   <!-- Everything that belongs to the glass surface is painted before the
        bubbles now, so the icons sit on top of it rather than under it. The
        sweep and the two speculars used to come after, which is precisely what
@@ -687,36 +726,59 @@ ${list.map(bubble).join("\n")}
  * close enough in to clear the glass, and the check below proves both.
  */
 const byName = (n) => order.find((b) => b.icon === n);
-const CENTRE_TRIO = ["student", "school", "teacher"];
-const RING_ORDER = ["book", "bus", "rank", "government", "certificate", "coins", "running", "pen"];
+/* The row across the middle, left to right. Student in the centre, because it
+   is who the site is for; school and teacher either side of it; sport and
+   rank on the outside. */
+const MIDDLE_ROW = ["running", "teacher", "student", "school", "rank"];
+
+/* The other six, three above and three below. They keep the row company
+   rather than ringing it: a ring puts something directly above and below the
+   centre, and this layout wants the middle line clear across. */
+const ABOVE = ["book", "certificate", "government"];
+const BELOW = ["bus", "coins", "pen"];
 
 /**
- * One radius for all eleven, on this layout only.
+ * One radius for all eleven, and it is the smallest of them.
  *
- * 21 is the largest that fits, and three separate limits say so: neighbours
- * on the ring need 2R + pad under the 53.6 chord (R <= 26.1), the outermost
- * must stay inside the glass (R <= 24), and the trio has to clear the ring
- * (R <= 21). The tightest wins, which is why it is not the obvious 24.
+ * Equal circles were already the rule here; taking the smallest as the size
+ * is what changed. The palette has radii from 14 to 18.5 because some subjects
+ * want more room than others, but on this layout a bubble that is larger than
+ * its neighbour reads as more important than it, and none of them is.
  *
  * The icons scale off the radius, so equal circles mean equal icons too.
  */
-const EQUAL_R = 17.01;  // 21, less a tenth twice over
+const EQUAL_R = Math.min(...BUBBLES.map((b) => b.r)) * BUBBLE_SCALE;
 const sized = (n) => ({ ...byName(n), r: EQUAL_R });
 
-const trio = CENTRE_TRIO.map(sized);
-const ring = RING_ORDER.map(sized);
-const TRIO_R = (2 * EQUAL_R + PAD) / Math.sqrt(3);
-const RING_R = 70;
+/* Spread across the widest line there is — the one through the centre. The
+   outermost pair sit a bubble clear of the glass, and the rest divide what is
+   left evenly, so the spacing is a consequence of the width rather than a
+   number someone picked. */
+const ROW_HALF = R_GLASS - EQUAL_R - 4;
+const ROW_STEP = (2 * ROW_HALF) / (MIDDLE_ROW.length - 1);
+
+/* Far enough out that the rows clear each other, close enough in that the
+   three still fit the chord at that height. */
+const ROW_DY = 40;
+const sideHalf = Math.sqrt((R_GLASS - EQUAL_R - 3) ** 2 - ROW_DY ** 2);
+const SIDE_STEP = sideHalf;   // three across: -half, 0, +half
 
 const centred = [
-  ...trio.map((b, i) => {
-    const a = (-90 + i * 120) * (Math.PI / 180);
-    return { ...b, x: CX + Math.cos(a) * TRIO_R, y: CY + Math.sin(a) * TRIO_R };
-  }),
-  ...ring.map((b, i) => {
-    const a = (-90 + i * 45) * (Math.PI / 180);
-    return { ...b, x: CX + Math.cos(a) * RING_R, y: CY + Math.sin(a) * RING_R };
-  }),
+  ...MIDDLE_ROW.map(sized).map((b, i) => ({
+    ...b,
+    x: CX - ROW_HALF + i * ROW_STEP,
+    y: CY,
+  })),
+  ...ABOVE.map(sized).map((b, i) => ({
+    ...b,
+    x: CX + (i - 1) * SIDE_STEP,
+    y: CY - ROW_DY,
+  })),
+  ...BELOW.map(sized).map((b, i) => ({
+    ...b,
+    x: CX + (i - 1) * SIDE_STEP,
+    y: CY + ROW_DY,
+  })),
 ];
 
 const bad = [];
@@ -734,7 +796,10 @@ if (bad.length) {
   console.error("centred layout failed:\n  " + bad.join("\n  "));
   process.exit(1);
 }
-console.log(`centred layout: 3 in the middle at r=${TRIO_R.toFixed(1)}, 8 on a ring at r=${RING_R}`);
+console.log(
+  `centred layout: r=${EQUAL_R.toFixed(2)}, row of ${MIDDLE_ROW.length} across the middle ` +
+    `at step ${ROW_STEP.toFixed(1)}, ${ABOVE.length} above and ${BELOW.length} below at dy=${ROW_DY}`
+);
 
 const inner = render(placed);
 

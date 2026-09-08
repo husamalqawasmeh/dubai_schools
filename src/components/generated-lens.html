@@ -111,6 +111,45 @@
 
   <circle cx="110" cy="108" r="95" fill="url(#glass)"/>
 
+  <!-- Dubai under the glass: the sea to the north-west, the coast running
+       south-west to north-east across it, the Creek cutting inland, the Palm
+       off Jumeirah, and four of the highways that everyone navigates by.
+
+       Drawn, not a map tile. A screenshot of anyone's map service is their
+       copyright and could not go on a public site, and a raster could not be
+       clipped to this circle or survive the favicon. Our own coordinates
+       would have been the other way to do it, but every lat/lng in the
+       schools table is still null.
+
+       Deliberately faint. It is the ground the bubbles sit on, and the moment
+       it competes with them it has stopped being a background. -->
+  <g clip-path="url(#lensClip)" opacity=".42">
+    <!-- Land first, filling the disc, then the sea laid over its north-west. -->
+    <circle cx="110" cy="108" r="95" fill="#efe7d6"/>
+    <path d="M15 13 h190 v52.25000000000001
+             C 162 64, 114 88, 80 122
+             C 58 144, 40 170, 32 203
+             h-95 z" fill="#9fd6e8"/>
+
+    <!-- The Creek, inland from the coast. -->
+    <path d="M116 84 c -10 12, -16 22, -26 30 c -8 7, -14 10, -20 12"
+          stroke="#9fd6e8" stroke-width="5" fill="none" stroke-linecap="round"/>
+
+    <!-- The Palm, off the coast: trunk, crown and the breakwater round it. -->
+    <circle cx="52" cy="148" r="15" fill="none" stroke="#efe7d6" stroke-width="2.4"/>
+    <path d="M64 138 l -10 9" stroke="#efe7d6" stroke-width="3" stroke-linecap="round"/>
+    <path d="M52 148 m -9 -6 l 18 12 M52 148 m -9 6 l 18 -12
+             M52 148 m 0 -10 l 0 20" stroke="#efe7d6" stroke-width="1.6"/>
+
+    <!-- Highways: the two that run the length of the city and two crossing. -->
+    <g stroke="#c9a86a" fill="none" stroke-linecap="round">
+      <path d="M18 182 C 70 138, 130 96, 194 56" stroke-width="2.6"/>
+      <path d="M32 203 C 86 154, 144 114, 202 78" stroke-width="2.2"/>
+      <path d="M80 192 C 104 148, 126 118, 164 92" stroke-width="1.6"/>
+      <path d="M128 184 C 144 144, 162 116, 198 100" stroke-width="1.6"/>
+    </g>
+  </g>
+
   <!-- Everything that belongs to the glass surface is painted before the
        bubbles now, so the icons sit on top of it rather than under it. The
        sweep and the two speculars used to come after, which is precisely what
@@ -129,7 +168,7 @@
       <circle cx="155.2" cy="122.8" r="16.93305" fill="#6b3fa0"/>
       <circle cx="155.2" cy="122.8" r="16.93305" fill="url(#bubBounce)"/>
       <circle cx="155.2" cy="122.8" r="16.93305" fill="url(#bubBall)"/>
-      <g transform="translate(144.9 112.5) scale(0.864)">
+      <g transform="translate(145.9 113.5) scale(0.777)">
         <path d="M12 11.2a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7z" fill="#fff" fill-rule="evenodd"/>
         <path d="M12 17.8c-3.6 0-6.6 2.4-7.2 5.5l.1.5h14.2l.1-.5c-.6-3.1-3.6-5.5-7.2-5.5zM12 17.9 10.2 20.4h3.6z" fill="#fff" fill-rule="evenodd"/>
         <path d="M5.6 19.6 3.9 23.8h2.3l1.4-3.4z" fill="#fff" fill-rule="evenodd"/>
@@ -144,7 +183,7 @@
       <circle cx="128.0" cy="144.5" r="16.4754" fill="#2f7d5c"/>
       <circle cx="128.0" cy="144.5" r="16.4754" fill="url(#bubBounce)"/>
       <circle cx="128.0" cy="144.5" r="16.4754" fill="url(#bubBall)"/>
-      <g transform="translate(117.9 134.5) scale(0.840)">
+      <g transform="translate(118.9 135.5) scale(0.756)">
         <path d="M11.4 1h1.1v3.1h-1.1z M12.5 1.3l3.1 1-3.1 1zM12 3.7 22.5 8.5v1.6H1.5V8.5zM3.4 11.2h17.2V21.6H3.4zM12 12.1 16.1 15h-8.2z M10.2 15h3.6v6.6h-3.6zM11.45 12.85a1.05 1.05 0 1 0 0 2.1 1.05 1.05 0 0 0 0-2.1zM5.3 13.4h3v3h-3z M5 16.6h3.6v.8H5zM15.7 13.4h3v3h-3z M15.4 16.6h3.6v.8h-3.6zM2.6 21.6h18.8v1.3H2.6z" fill="#fff" fill-rule="evenodd"/>
         <path d="M12 3.8 22.4 8.6v1.6H1.6V8.6z M3.4 11.4h17.2v1.4H3.4z" fill="#2f7d5c" fill-rule="evenodd" opacity=".34"/>
       </g>
@@ -153,7 +192,7 @@
       <circle cx="123.8" cy="178.2" r="16.01775" fill="#2a5fa8"/>
       <circle cx="123.8" cy="178.2" r="16.01775" fill="url(#bubBounce)"/>
       <circle cx="123.8" cy="178.2" r="16.01775" fill="url(#bubBall)"/>
-      <g transform="translate(114.0 168.4) scale(0.817)">
+      <g transform="translate(115.0 169.4) scale(0.735)">
         <path d="M8.2 2.2h14.4v11.4H8.2z M9.6 3.6h11.6v8.6H9.6zM11 5.2h8.8v1.2H11z M11 7.6h5.6v1.2H11z M11 10h7.2v1.2H11zM8.9 13.6h13v1.2h-13z" fill="#fff" fill-rule="evenodd"/>
         <path d="M4.9 5.2a2.9 2.9 0 1 0 0 5.8 2.9 2.9 0 0 0 0-5.8z" fill="#fff" fill-rule="evenodd"/>
         <path d="M4.9 11.6c-2.1 0-3.8 2-3.8 4.6v1.9h7.6v-1.9c0-2.6-1.7-4.6-3.8-4.6z" fill="#fff" fill-rule="evenodd"/>
@@ -167,7 +206,7 @@
       <circle cx="94.6" cy="143.0" r="15.5601" fill="#3a4a52"/>
       <circle cx="94.6" cy="143.0" r="15.5601" fill="url(#bubBounce)"/>
       <circle cx="94.6" cy="143.0" r="15.5601" fill="url(#bubBall)"/>
-      <g transform="translate(83.7 132.0) scale(0.913)">
+      <g transform="translate(84.8 133.1) scale(0.821)">
         <path d="M3.4 5.0H21.2a1.6 1.6 0 0 1 1.6 1.6V16.2H1.2V9.8zM2.0 9.9 3.9 5.9H5.4v5.0H2.0zM5.9 6.3h1.1v8.3H5.9zM7.5 6.3h2.7v4.6H7.5z M10.6 6.3h2.7v4.6h-2.7z M13.7 6.3h2.7v4.6h-2.7zM16.8 6.3h2.7v4.6h-2.7z M19.9 6.3h2.4v4.6h-2.4zM6.4 13.7a3.1 3.1 0 1 0 0 6.2 3.1 3.1 0 0 0 0-6.2zM18.4 13.7a3.1 3.1 0 1 0 0 6.2 3.1 3.1 0 0 0 0-6.2z" fill="#efb100" fill-rule="evenodd"/>
         <path d="M0.2 7.2h1.0v3.4H0.2z M0.0 6.9h1.6v1.0H0.0z" fill="#efb100" fill-rule="evenodd"/>
         <path d="M3.4 5.0H21.2a1.6 1.6 0 0 1 1.6 1.6v.3H2.6zM1.2 12.6h21.6v3.6H1.2z" fill="#3a4a52" fill-rule="evenodd" opacity=".34"/>
@@ -178,7 +217,7 @@
       <circle cx="63.7" cy="121.7" r="15.5601" fill="#5f7d1f"/>
       <circle cx="63.7" cy="121.7" r="15.5601" fill="url(#bubBounce)"/>
       <circle cx="63.7" cy="121.7" r="15.5601" fill="url(#bubBall)"/>
-      <g transform="translate(54.1 112.2) scale(0.794)">
+      <g transform="translate(55.1 113.2) scale(0.714)">
         <path d="M12 1.2l1.5 3.1 3.4.5-2.5 2.4.6 3.4-3-1.6-3 1.6.6-3.4-2.5-2.4 3.4-.5zM9.2 11.2h5.6v10.2H9.2z M9.2 11.2h5.6v1H9.2zM2.6 14.2h5.6v7.2H2.6z M2.6 14.2h5.6v.9H2.6zM15.8 16.2h5.6v5.2h-5.6z M15.8 16.2h5.6v.9h-5.6zM1.4 21.4h21.2v1.4H1.4z" fill="#fff" fill-rule="evenodd"/>
         <path d="M2.4 14.4H8v1.3H2.4z M16 16.4h5.6v1.3H16z" fill="#5f7d1f" fill-rule="evenodd" opacity=".34"/>
       </g>
@@ -187,7 +226,7 @@
       <circle cx="51.4" cy="91.5" r="14.6448" fill="#c05a12"/>
       <circle cx="51.4" cy="91.5" r="14.6448" fill="url(#bubBounce)"/>
       <circle cx="51.4" cy="91.5" r="14.6448" fill="url(#bubBall)"/>
-      <g transform="translate(42.5 82.5) scale(0.747)">
+      <g transform="translate(43.4 83.4) scale(0.672)">
         <path d="M11.3 6.5C8.8 4.6 5.7 3.7 2.2 3.7v12.9c3.5 0 6.6.9 9.1 2.8zM12.7 6.5c2.5-1.9 5.6-2.8 9.1-2.8v12.9c-3.5 0-6.6.9-9.1 2.8zM2.2 16.6c3.5 0 6.6.9 9.1 2.8v1.5c-2.5-1.9-5.6-2.8-9.1-2.8zM21.8 16.6c-3.5 0-6.6.9-9.1 2.8v1.5c2.5-1.9 5.6-2.8 9.1-2.8z" fill="#fff" fill-rule="evenodd"/>
         <path d="M11.3 6.5h1.4v12.9h-1.4zM9.8 8.8 4.2 7.1v1.1l5.6 1.7z M9.8 11.3 4.2 9.6v1.1l5.6 1.7zM9.8 13.8 6.4 12.8v1.1l3.4 1zM14.2 8.8 19.8 7.1v1.1l-5.6 1.7z M14.2 11.3 19.8 9.6v1.1l-5.6 1.7zM14.2 13.8 17.6 12.8v1.1l-3.4 1zM2.2 16.6c3.5 0 6.6.9 9.1 2.8v.5c-2.5-1.9-5.6-2.8-9.1-2.8zM21.8 16.6c-3.5 0-6.6.9-9.1 2.8v.5c2.5-1.9 5.6-2.8 9.1-2.8z" fill="#c05a12" fill-rule="evenodd" opacity=".34"/>
       </g>
@@ -196,7 +235,7 @@
       <circle cx="81.5" cy="94.3" r="14.18715" fill="#3f4a9c"/>
       <circle cx="81.5" cy="94.3" r="14.18715" fill="url(#bubBounce)"/>
       <circle cx="81.5" cy="94.3" r="14.18715" fill="url(#bubBall)"/>
-      <g transform="translate(72.8 85.6) scale(0.724)">
+      <g transform="translate(73.7 86.5) scale(0.651)">
         <path d="M12 1.6 22.8 7v1.5H1.2V7z M12 3.4 18.6 6.7H5.4zM2.6 8.9h18.8v1.1H2.6zM3.6 10.2h2.5v7.6H3.6z M8.4 10.2h2.5v7.6H8.4z M13.1 10.2h2.5v7.6h-2.5z M17.9 10.2h2.5v7.6h-2.5zM3.1 17.9h3.5v1.1H3.1z M7.9 17.9h3.5v1.1H7.9z M12.6 17.9h3.5v1.1h-3.5z M17.4 17.9h3.5v1.1h-3.5zM2.2 19.2h19.6v1.4H2.2z M1.2 20.8h21.6v1.6H1.2z" fill="#fff" fill-rule="evenodd"/>
         <path d="M12 1.8 22.6 7v1.6H1.4V7z M2.2 19.6h19.6v.9H2.2z" fill="#3f4a9c" fill-rule="evenodd" opacity=".34"/>
       </g>
@@ -205,7 +244,7 @@
       <circle cx="77.2" cy="56.6" r="14.18715" fill="#262626"/>
       <circle cx="77.2" cy="56.6" r="14.18715" fill="url(#bubBounce)"/>
       <circle cx="77.2" cy="56.6" r="14.18715" fill="url(#bubBall)"/>
-      <g transform="translate(68.5 47.9) scale(0.724)">
+      <g transform="translate(69.4 48.8) scale(0.651)">
         <path d="M2.4 2h19.2v13H2.4z M3.8 3.4h16.4v10.2H3.8zM6 5.6h12v1.5H6z M6 8.4h8.6v1.3H6z M6 10.9h6.2v1.3H6zM17 14.4a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7zM13.4 19.9 12.1 24l2.7-1.2 1.5 1.2.5-3.3zM20.6 19.9 21.9 24l-2.7-1.2-1.5 1.2-.5-3.3z" fill="#fff" fill-rule="evenodd"/>
         <path d="M3 2.4h18v1.5H3z M17.2 16.2a1.8 1.8 0 1 0 0 3.6 1.8 1.8 0 0 0 0-3.6z" fill="#262626" fill-rule="evenodd" opacity=".34"/>
       </g>
@@ -215,7 +254,7 @@
       <circle cx="107.2" cy="79.3" r="14.18715" fill="url(#bubBounce)"/>
       <circle cx="107.2" cy="79.3" r="14.18715" fill="url(#bubBall)"/>
       <circle cx="107.2" cy="79.3" r="13.3" fill="none" stroke="url(#dhGrad)" stroke-width="1.8"/>
-      <g transform="translate(98.5 70.6) scale(0.724)">
+      <g transform="translate(99.4 71.5) scale(0.651)">
         
         <path d="M6.6 4h3.6v16H6.6zM9.6 4c5.6 0 9 3.2 9 8s-3.4 8-9 8v-3.4c3.4 0 5.4-2 5.4-4.6s-2-4.6-5.4-4.6zM4.6 9.7H20.4v1.9H3.2zM4.6 12.7H20.4v1.9H3.2z" fill="url(#dhGrad)"/>
       </g>
@@ -224,7 +263,7 @@
       <circle cx="136.1" cy="74.2" r="13.7295" fill="#0f8a8a"/>
       <circle cx="136.1" cy="74.2" r="13.7295" fill="url(#bubBounce)"/>
       <circle cx="136.1" cy="74.2" r="13.7295" fill="url(#bubBall)"/>
-      <g transform="translate(127.7 65.8) scale(0.700)">
+      <g transform="translate(128.5 66.7) scale(0.630)">
         <path d="M15.8 2.1a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5z" fill="#fff" fill-rule="evenodd"/>
         <path d="M14.2 8.0 10.8 14.2" fill="none" stroke="#fff" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/>
         <path d="M12.8 9.4 9.0 9.0 7.0 11.4" fill="none" stroke="#fff" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/>
@@ -242,7 +281,7 @@
       <circle cx="173.7" cy="97.7" r="12.8142" fill="#c0468a"/>
       <circle cx="173.7" cy="97.7" r="12.8142" fill="url(#bubBounce)"/>
       <circle cx="173.7" cy="97.7" r="12.8142" fill="url(#bubBall)"/>
-      <g transform="translate(165.8 89.9) scale(0.654)">
+      <g transform="translate(166.6 90.7) scale(0.588)">
         <path d="M18.1 1.3a2.1 2.1 0 0 1 3 0l1.6 1.6a2.1 2.1 0 0 1 0 3l-1.3 1.3-4.6-4.6z" fill="#fff" fill-rule="evenodd"/>
         <path d="M16.3 3.1l4.6 4.6-1.7 1.7-4.6-4.6z" fill="#fff" fill-rule="evenodd"/>
         <path d="M14.3 5.1l4.6 4.6-9.9 9.9-4.6-4.6z" fill="#fff" fill-rule="evenodd"/>
