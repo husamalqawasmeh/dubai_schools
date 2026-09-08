@@ -5,5 +5,5 @@
  */
 const as = (Astro.url.searchParams.get("as") ?? "").toLowerCase();
 const schools = as === "school" || as === "schools";
-return Astro.redirect(schools ? "/schools/supplies" : "/parents/supplies", 301);
+return Astro.redirect(schools ? "/schools/school-supplies" : "/parents/school-supplies", 301);
 ---
