@@ -1,140 +1,196 @@
 ---
 import Base from "../layouts/Base.astro";
-import { allSchools } from "../lib/db";
-
-// Name, supplier and contact only: the picker needs nothing else, and sending
-// the whole directory into the page would be 232 rows of fees nobody reads.
-const uniforms = (await allSchools()).map((s) => ({
-  n: s.name,
-  s: (s as any).uniform_supplier ?? null,
-  c: (s as any).uniform_contact ?? null,
-}));
-const known = uniforms.filter((u) => u.s).length;
+import { env } from "cloudflare:workers";
+import { CATEGORIES, LIMITS, categoryLabel } from "../lib/providers";
 
 /**
- * Where to buy the things a school year needs.
+ * Suppliers and services: the directory, and the form that fills it.
  *
- * Deliberately generic about retailers and specific about method. Which shop
- * stocks which school's uniform changes every year, and a list of shop names
- * would rot faster than anything else on this site — so each section says how
- * to find the right supplier rather than naming one and hoping.
+ * This replaced a page of general advice about where to buy things. The advice
+ * was fine and is still on the parents' and schools' supplies pages; what it
+ * could not do was name anyone, because naming shops we had not checked was
+ * the thing we were avoiding. A register the suppliers fill in themselves, with
+ * an approval step in front of it, is the version of that which can name names.
+ *
+ * Only approved rows are read. The filter is in the query rather than applied
+ * after it, so there is no arrangement of this page that shows a pending one.
  */
-const SECTIONS = [
-  {
-    title: "Uniform",
-    lead: "Most schools appoint a supplier and publish the name themselves — start with the school's own website or the admissions pack rather than searching.",
-    points: [
-      "Buy the compulsory items from the appointed supplier: the badge, the house colours and the PE kit usually have to match exactly.",
-      "Everything unbranded — plain trousers, plain shirts, socks, PE shorts — can be bought anywhere, and usually for a fraction of the price.",
-      "Order early. Supplier stock runs down in the last two weeks of August and sizes go first.",
-      "Buy one size up for anything worn daily. A year is a long time in a growing child.",
-    ],
-  },
-  {
-    title: "Books",
-    lead: "Which books, and whether the school supplies them, depends entirely on the curriculum — ask before buying anything.",
-    points: [
-      "Many British and IB schools include books in the fees or lend them for the year. Indian and MOE-curriculum schools more often expect families to buy.",
-      "The large Dubai bookshops carry the common curriculum titles and will order what they do not hold. Give them the ISBN, not the title — editions matter.",
-      "Digital editions are often cheaper and, for heavier subjects, kinder to a school bag.",
-      "Check the edition against the school's list. A prior edition is not usually a saving once page numbers stop matching in class.",
-    ],
-  },
-  {
-    title: "Stationery and equipment",
-    lead: "The generic half of the list — pens, files, geometry sets, calculators — costs the same everywhere and needs no special supplier.",
-    points: [
-      "Hypermarkets and the stationery chains cover almost all of it, and run back-to-school pricing through August.",
-      "Two items are worth buying exactly as specified: the calculator and, where required, the laptop or tablet. Examination boards restrict which calculator models are permitted, and schools standardise devices for a reason.",
-      "Label everything. Every school office in Dubai has a lost property box nobody claims from.",
-    ],
-  },
-  {
-    title: "Second-hand",
-    lead: "Uniforms outgrown in a year and books used for one term are the two things most worth buying used.",
-    points: [
-      "Many schools run a pre-loved uniform sale, often through the parent association. Ask the office — these are rarely advertised outside the school.",
-      "Parent groups on messaging apps and community boards are where most of this trade actually happens.",
-      "The general classifieds sites carry uniform and textbook listings, heaviest in the weeks either side of a term ending.",
-    ],
-  },
-];
+const DB = (env as unknown as { DB: D1Database }).DB;
+
+const { results } = await DB.prepare(
+  `SELECT id, name, category, summary, detail, areas, phone, email, website
+     FROM providers
+    WHERE status = 'approved'
+    ORDER BY category, name COLLATE NOCASE`
+).all<any>();
+
+const live = results ?? [];
+const byCategory = CATEGORIES.map((c) => ({
+  ...c,
+  items: live.filter((p) => p.category === c.id),
+})).filter((c) => c.items.length > 0);
+
+/* What the form has just done, if anything. Carried in the query string
+   because the post redirects — a message held in a variable would not survive
+   that, and a page that silently reloads after a submission looks broken. */
+const sent = Astro.url.searchParams.get("sent") === "1";
+const err = Astro.url.searchParams.get("err");
+const ERRORS: Record<string, string> = {
+  "1": "A name, a one-line summary and a category are needed.",
+  "2": "Add at least one way to reach you — a phone number, an email address or a website.",
+  "3": "That is several registrations from this connection in the last hour. Try again later, or write to us instead.",
+};
 ---
 
 <Base
   nonav
-  title="School supplies — for parents"
-  description="Where to get uniform, textbooks, stationery and equipment for a Dubai school, what the school supplies itself, and what is worth buying second-hand."
+  title="Suppliers and services for Dubai schools"
+  description="Uniforms, textbooks, second-hand books, stationery, transport, tutoring and activities for Dubai schools — and a form for suppliers to register their own service."
 >
   <div class="wrap pick">
     <a class="back" href="/">Home</a>
-    <h1 style="margin-top:14px">School supplies</h1>
+    <h1 style="margin-top:14px">Suppliers and services</h1>
+    <p class="sub">
+      Businesses serving Dubai schools and the families at them. Anyone can
+      register; nothing appears here until it has been checked.
+    </p>
 
-    <section class="uniform-ask">
-      <label for="uschool">Who supplies a school's uniform?</label>
-      <input id="uschool" type="search" list="uniform-schools" autocomplete="off"
-             placeholder="Start typing a school name" />
-      <datalist id="uniform-schools">
-        {uniforms.map((u) => <option value={u.n} />)}
-      </datalist>
-      <p class="uniform-answer" id="uanswer">
-        {known > 0
-          ? `Appointed suppliers are recorded for ${known} of ${uniforms.length} schools. Pick a school to see what we hold.`
-          : "No supplier is recorded yet. Pick a school and you can ask us to find out."}
+    {live.length === 0 ? (
+      <div class="panel" style="margin-top:18px">
+        <h2>Nothing listed yet</h2>
+        <p class="muted-p">
+          This register has just opened and no supplier has been approved onto
+          it. If you supply Dubai schools, the form below is how you get on it —
+          and being early is worth something, because the page is short.
+        </p>
+      </div>
+    ) : (
+      <>
+        <nav class="prov-jump" aria-label="Categories">
+          {byCategory.map((c) => (
+            <a href={`#cat-${c.id}`}>{c.label} <span>{c.items.length}</span></a>
+          ))}
+        </nav>
+
+        {byCategory.map((c) => (
+          <section class="prov-group" id={`cat-${c.id}`}>
+            <div class="faq-group-title">
+              <h2>{c.label}</h2>
+              <span class="faq-group-n">{c.items.length} listed</span>
+            </div>
+            <div class="prov-list">
+              {c.items.map((p) => (
+                <article class="prov">
+                  <h3>{p.name}</h3>
+                  <p class="prov-sum">{p.summary}</p>
+                  {p.areas && <p class="prov-areas">Serves {p.areas}</p>}
+                  {p.detail && <p class="prov-detail">{p.detail}</p>}
+                  <p class="prov-contact">
+                    {p.phone && <a href={`tel:${p.phone.replace(/\s+/g, "")}`}>{p.phone}</a>}
+                    {p.phone && (p.email || p.website) && <span class="mod-dot">·</span>}
+                    {p.email && <a href={`mailto:${p.email}`}>{p.email}</a>}
+                    {p.email && p.website && <span class="mod-dot">·</span>}
+                    {/* nofollow on an unvetted outbound link: a directory that
+                        passes its own standing to anyone who fills in a form is
+                        a directory worth spamming. */}
+                    {p.website && (
+                      <a href={p.website} target="_blank" rel="noopener nofollow">
+                        {p.website.replace(/^https?:\/\//, "").replace(/\/$/, "")}
+                      </a>
+                    )}
+                  </p>
+                </article>
+              ))}
+            </div>
+          </section>
+        ))}
+      </>
+    )}
+
+    <section class="panel prov-form" id="register" style="margin-top:26px">
+      <h2>Register a service</h2>
+      <p class="muted-p">
+        For businesses supplying Dubai schools or the families at them. It goes
+        to us first and appears on this page once it has been checked — usually
+        within a few days.
       </p>
+
+      {sent && (
+        <p class="prov-note is-good">
+          Received. It will appear here once we have looked at it. Nothing else
+          is needed from you.
+        </p>
+      )}
+      {err && ERRORS[err] && <p class="prov-note is-bad">{ERRORS[err]}</p>}
+
+      <form method="POST" action="/api/providers/register">
+        <div class="form-row">
+          <div class="field">
+            <label for="p-name">Business name</label>
+            <input class="tt-input" id="p-name" name="name" maxlength={LIMITS.name} required autocomplete="organization" />
+          </div>
+          <div class="field">
+            <label for="p-cat">What you supply</label>
+            <select class="tt-input" id="p-cat" name="category" required>
+              <option value="">Choose one</option>
+              {CATEGORIES.map((c) => <option value={c.id}>{c.label}</option>)}
+            </select>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="p-sum">In one line</label>
+          <input class="tt-input" id="p-sum" name="summary" maxlength={LIMITS.summary} required
+                 placeholder="e.g. School uniforms for twelve Dubai schools, fitted in store or online" />
+        </div>
+
+        <div class="field">
+          <label for="p-detail">Anything else worth knowing <span class="prov-opt">optional</span></label>
+          <textarea class="tt-input" id="p-detail" name="detail" rows="4" maxlength={LIMITS.detail}
+                    placeholder="Which schools you supply, opening hours, delivery, anything a parent would want to know before calling."></textarea>
+        </div>
+
+        <div class="field">
+          <label for="p-areas">Areas you serve <span class="prov-opt">optional</span></label>
+          <input class="tt-input" id="p-areas" name="areas" maxlength={LIMITS.areas} placeholder="e.g. Al Barsha, Jumeirah, or online across the UAE" />
+        </div>
+
+        <p class="prov-lead">
+          At least one way to reach you. These are published, so give the ones
+          you want a parent or a school to use.
+        </p>
+        <div class="form-row">
+          <div class="field">
+            <label for="p-phone">Phone</label>
+            <input class="tt-input" id="p-phone" name="phone" maxlength={LIMITS.phone} autocomplete="tel" />
+          </div>
+          <div class="field">
+            <label for="p-email">Email</label>
+            <input class="tt-input" id="p-email" name="email" type="email" maxlength={LIMITS.email} autocomplete="email" />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="field">
+            <label for="p-web">Website</label>
+            <input class="tt-input" id="p-web" name="website" maxlength={LIMITS.website} placeholder="example.ae" />
+          </div>
+          <div class="field">
+            <label for="p-contact">Your name <span class="prov-opt">not published</span></label>
+            <input class="tt-input" id="p-contact" name="contact_name" maxlength={LIMITS.contact_name} autocomplete="name" />
+          </div>
+        </div>
+
+        <span class="formactions" style="margin-left:0">
+          <button class="formbtn" type="submit">Register</button>
+        </span>
+      </form>
     </section>
 
-    <div class="supply-grid">
-      {SECTIONS.map((s) => (
-        <section class="supply-card">
-          <h3>{s.title}</h3>
-          <p>{s.lead}</p>
-          <ul>{s.points.map((p) => <li>{p}</li>)}</ul>
-        </section>
-      ))}
-    </div>
-
     <p class="note-foot">
-      Ask the school for its own list before buying anything. Requirements differ
-      by curriculum and by year group, and a supplier that was right last August
-      may not be this one — which is why this page describes how to find the
-      right answer rather than naming shops that would be out of date by the time
-      you read it. Know something worth adding?
-      <a href="/parents/communicate">Tell us</a>.
+      A listing here is not a recommendation. We check that a business exists
+      and that its details are real; we do not inspect it, and nothing on this
+      page is paid for. Something wrong with a listing, or want yours taken
+      down? <a href="/parents/communicate">Tell us</a>.
     </p>
   </div>
 </Base>
-
-<script define:vars={{ uniforms }}>
-  const box = document.getElementById("uschool");
-  const out = document.getElementById("uanswer");
-  const byName = new Map(uniforms.map((u) => [u.n.toLowerCase(), u]));
-
-  const ask = (name) =>
-    `/parents/communicate?about=${encodeURIComponent(name)}`;
-
-  box.addEventListener("input", () => {
-    const q = box.value.trim();
-    if (!q) { out.textContent = ""; return; }
-
-    const hit = byName.get(q.toLowerCase());
-    if (!hit) {
-      // Still typing, or a name that is not on the register.
-      out.textContent = "Keep typing, or pick a school from the list.";
-      return;
-    }
-
-    if (hit.s) {
-      out.innerHTML =
-        `<b>${hit.n}</b> appoints <b>${hit.s}</b>.` +
-        (hit.c ? ` ${hit.c}` : "") +
-        ` <a href="${ask(hit.n)}">Tell us if this has changed</a>.`;
-      return;
-    }
-
-    // Nothing held: say so plainly and offer the one thing that helps.
-    out.innerHTML =
-      `We do not hold a uniform supplier for <b>${hit.n}</b> yet. ` +
-      `<a href="${ask(hit.n)}">Ask us to find out</a>, and we will publish it once it is confirmed.`;
-  });
-</script>

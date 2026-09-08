@@ -3230,3 +3230,61 @@ a.idcard:hover h2 { color: var(--on-accent); }
   border-color: var(--accent);
   outline: none;
 }
+
+
+/* ---------------- suppliers and services ---------------- */
+/* The jump links across the top: only the categories that have something in
+   them, so the row never offers a heading that leads to an empty section. */
+.prov-jump { display: flex; flex-wrap: wrap; gap: 8px; margin: 18px 0 4px; }
+.prov-jump a {
+  font-family: var(--display); font-size: 13px; font-weight: 600;
+  color: var(--ink); background: var(--surface); text-decoration: none;
+  border: 1px solid var(--rule-firm); border-radius: 999px; padding: 5px 12px;
+}
+.prov-jump a span { color: var(--muted); margin-left: 4px; }
+.prov-jump a:hover { background: var(--accent); color: var(--on-accent); border-color: var(--accent); }
+.prov-jump a:hover span { color: var(--on-accent); }
+
+.prov-group { margin-top: 20px; }
+.prov-list { display: grid; gap: 10px; margin-top: 10px; }
+@media (min-width: 820px) { .prov-list { grid-template-columns: 1fr 1fr; } }
+.prov {
+  background: var(--surface); border: 1px solid var(--rule);
+  border-radius: 8px; padding: 13px 15px;
+}
+.prov h3 { margin: 0 0 3px; font-size: 15.5px; }
+.prov-sum { margin: 0; font-family: var(--display); font-size: 14px; color: var(--ink); line-height: 1.5; }
+.prov-areas { margin: 5px 0 0; font-family: var(--display); font-size: 12px; color: var(--muted); }
+.prov-detail { margin: 7px 0 0; font-size: 13.5px; color: var(--ink-2); line-height: 1.55; }
+.prov-contact { margin: 8px 0 0; font-family: var(--display); font-size: 13px; }
+.prov-contact a { color: var(--accent); text-decoration: none; }
+.prov-contact a:hover { text-decoration: underline; }
+
+/* The register form. */
+.prov-form { max-width: 46rem; }
+.prov-form textarea.tt-input { height: auto; padding: 9px 11px; line-height: 1.5; resize: vertical; }
+.prov-form select.tt-input { cursor: pointer; }
+.prov-lead {
+  margin: 14px 0 8px; font-family: var(--display); font-size: 13px;
+  font-weight: 600; color: var(--ink-2);
+}
+.prov-opt {
+  font-weight: 400; text-transform: none; letter-spacing: 0;
+  color: var(--muted); font-size: 10.5px; margin-left: 4px;
+}
+
+/* Said back to the submitter after the redirect. Green for received, amber
+   for a problem — neither is red, because nothing here has gone badly wrong. */
+.prov-note {
+  font-family: var(--display); font-size: 13px; line-height: 1.5;
+  border-radius: 6px; padding: 9px 12px; margin: 0 0 12px;
+}
+.prov-note.is-good { background: var(--surface-3); color: var(--ink); border-left: 3px solid var(--accent); }
+.prov-note.is-bad { background: var(--surface-2); color: var(--ink); border-left: 3px solid var(--warn); }
+
+/* The admin queue. */
+.prov-admin.is-hidden { opacity: .62; }
+.prov-del { color: var(--warn); border-color: var(--warn); }
+.prov-noteform { display: flex; gap: 8px; margin-top: 10px; }
+.prov-noteform .tt-input { flex: 1; height: 32px; font-size: 12.5px; }
+.prov-noteform .formbtn { height: 32px; padding: 0 14px; font-size: 13px; }

@@ -1,0 +1,140 @@
+---
+import Base from "../../layouts/Base.astro";
+import { env } from "cloudflare:workers";
+import { categoryLabel, STATUS_LABEL } from "../../lib/providers";
+
+/**
+ * The queue for suppliers who have registered themselves on /suppliers.
+ *
+ * Waiting first, then live, then hidden. A queue that buries what needs a
+ * decision under what has already had one is a queue nobody works through.
+ */
+const DB = (env as unknown as { DB: D1Database }).DB;
+
+const { results } = await DB.prepare(
+  `SELECT * FROM providers
+    ORDER BY CASE status WHEN 'pending' THEN 0 WHEN 'approved' THEN 1 ELSE 2 END,
+             created_at DESC`
+).all<any>();
+
+const rows = results ?? [];
+const pending = rows.filter((r) => r.status === "pending");
+const approved = rows.filter((r) => r.status === "approved");
+const hidden = rows.filter((r) => r.status === "hidden");
+
+const when = (iso: string | null) =>
+  iso
+    ? new Date(iso).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" })
+    : "";
+---
+
+<Base title="Supplier registrations — admin">
+  <div class="wrap pick rm-page">
+    <a class="back" href="/admin/admin">Back to admin</a>
+    <h1 style="margin-top:14px">Supplier registrations</h1>
+    <p class="sub">
+      {pending.length} waiting · {approved.length} live on <a href="/suppliers">/suppliers</a> ·
+      {hidden.length} hidden
+    </p>
+
+    {rows.length === 0 && (
+      <div class="panel" style="margin-top:18px">
+        <h2>Nothing registered yet</h2>
+        <p class="muted-p">
+          Suppliers add themselves through the form at the foot of
+          <a href="/suppliers">/suppliers</a>. Everything they send lands here
+          first and nothing reaches that page until it is approved.
+        </p>
+      </div>
+    )}
+
+    {[
+      { key: "pending", title: "Waiting", items: pending },
+      { key: "approved", title: "Live", items: approved },
+      { key: "hidden", title: "Hidden", items: hidden },
+    ]
+      .filter((s) => s.items.length > 0)
+      .map((section) => (
+        <>
+          <h2 style="margin:26px 0 8px">{section.title} ({section.items.length})</h2>
+          <div class="mod-list">
+            {section.items.map((r) => (
+              <article class={`mod-item prov-admin is-${r.status}`}>
+                <p class="mod-meta">
+                  <span class="mod-tag">{STATUS_LABEL[r.status] ?? r.status}</span>
+                  <span>{categoryLabel(r.category)}</span>
+                  <span class="mod-dot">·</span>
+                  <span>{when(r.created_at)}</span>
+                  {r.decided_by && <span class="mod-dot">·</span>}
+                  {r.decided_by && <span>{r.decided_by}</span>}
+                </p>
+
+                <h3 style="margin:2px 0 4px">{r.name}</h3>
+                <p class="mod-message">{r.summary}</p>
+                {r.detail && <p class="muted-p" style="margin:4px 0">{r.detail}</p>}
+                {r.areas && <p class="mod-from">Serves {r.areas}</p>}
+
+                <p class="mod-from">
+                  {r.contact_name && <>{r.contact_name} — </>}
+                  {r.phone}
+                  {r.phone && (r.email || r.website) ? " · " : ""}
+                  {r.email}
+                  {r.email && r.website ? " · " : ""}
+                  {/* nofollow here too: an admin screen is still a page, and a
+                      link to something not yet approved should carry nothing. */}
+                  {r.website && <a href={r.website} target="_blank" rel="noopener nofollow">{r.website}</a>}
+                </p>
+
+                {r.note && <p class="prov-note is-bad" style="margin:8px 0">{r.note}</p>}
+
+                <div class="mod-actions">
+                  {r.status !== "approved" && (
+                    <form method="POST" action="/api/admin/providers">
+                      <input type="hidden" name="action" value="approved" />
+                      <input type="hidden" name="id" value={r.id} />
+                      <button class="btn mod-ok" type="submit">
+                        {r.status === "hidden" ? "Show again" : "Approve"}
+                      </button>
+                    </form>
+                  )}
+                  {r.status !== "hidden" && (
+                    <form method="POST" action="/api/admin/providers">
+                      <input type="hidden" name="action" value="hidden" />
+                      <input type="hidden" name="id" value={r.id} />
+                      <button class="btn sec mod-no" type="submit">Hide</button>
+                    </form>
+                  )}
+                  {/* Delete asks first and says what it is deleting. Hiding is
+                      one click away and reversible; this is not. */}
+                  <form
+                    method="POST"
+                    action="/api/admin/providers"
+                    onsubmit={`return confirm('Delete "${String(r.name).replace(/'/g, "\\'")}" permanently? Hiding it keeps the record.')`}
+                  >
+                    <input type="hidden" name="action" value="delete" />
+                    <input type="hidden" name="id" value={r.id} />
+                    <button class="btn sec prov-del" type="submit">Delete</button>
+                  </form>
+                </div>
+
+                <form class="prov-noteform" method="POST" action="/api/admin/providers">
+                  <input type="hidden" name="action" value="note" />
+                  <input type="hidden" name="id" value={r.id} />
+                  <input class="tt-input" name="note" value={r.note ?? ""} maxlength="400"
+                         placeholder="Note — why it was hidden, what to check" />
+                  <button class="formbtn" type="submit">Save note</button>
+                </form>
+              </article>
+            ))}
+          </div>
+        </>
+      ))}
+
+    <p class="note-foot">
+      Hiding takes a listing off the page and keeps the row, so it can be put
+      back with one click — that is the one to use for a supplier who has gone
+      quiet or whose details need checking. Delete removes the record and is for
+      what should never have been submitted.
+    </p>
+  </div>
+</Base>
