@@ -28,7 +28,7 @@ const NAV = [
   { href: "/parents/travel-time", label: "Travel Time" },
   { href: "SCHOOLNEWS", label: "Schools News" },
   { href: "COMMUNICATE", label: "Communicate" },
-  { href: "/advertise/communicate", label: "Advertise" },
+  { href: "/schools/advertise", label: "Advertise" },
   { href: "/overview#chatbox", label: "Chatbot" },
 ];
 
@@ -66,7 +66,7 @@ const hidePick = here.startsWith("/schools");
 const nav = NAV.filter(
   (n) =>
     !(hideSupplies && n.href === "SUPPLIES") &&
-    !(hideAdvertise && n.href.startsWith("/advertise")) &&
+    !(hideAdvertise && n.href === "/schools/advertise") &&
     !(hideTravel && n.href === "/parents/travel-time") &&
     !(hidePick && n.href === "/parents/pick-of-the-week")
 );
