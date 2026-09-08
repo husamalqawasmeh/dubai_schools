@@ -1,6 +1,7 @@
 ---
 import "../styles/global.css";
 import LensLogo from "../components/LensLogo.astro";
+import { HIDE_SUPPLIES, getFlag } from "../lib/settings";
 
 interface Props {
   title: string;
@@ -27,9 +28,15 @@ const NAV = [
   { href: "/travel-time", label: "Travel Time" },
   { href: "/news", label: "Schools News" },
   { href: "COMMUNICATE", label: "Communicate" },
-  { href: "/advertise", label: "Advertise" },
+  { href: "/advertise/communicate", label: "Advertise" },
   { href: "/overview#chatbox", label: "Chatbot" },
 ];
+
+/* One database read per render, and it decides whether a menu item exists at
+   all rather than hiding it with CSS — a hidden link is still a link in the
+   tab order and still something a crawler follows. */
+const hideSupplies = await getFlag(HIDE_SUPPLIES);
+const nav = NAV.filter((n) => !(hideSupplies && n.href === "/supplies"));
 
 /**
  * Which nav item the page belongs to.
@@ -94,11 +101,11 @@ const isHere = (href: string) => {
           <a class="partof" href="https://www.can-du-ai.com">Part of can-du-ai.com<span class="nav-mark" aria-hidden="true">▲</span></a>
         </div>
         <nav>
-          {NAV.map((raw, i) => {
+          {nav.map((raw, i) => {
             const item =
               raw.href === "COMMUNICATE" ? { ...raw, href: communicateHref } : raw;
             const current = isHere(item.href);
-            const last = i === NAV.length - 1;
+            const last = i === nav.length - 1;
             /* The mark points down at the page you are on. The chatbot has no
                page of its own — it sits on the overview — so its mark points
                down only while you are there to see it. */

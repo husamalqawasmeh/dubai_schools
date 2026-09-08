@@ -1,11 +1,12 @@
 import type { APIRoute } from "astro";
-import { HIDE_PAID_TIERS, setFlag } from "../../../lib/settings";
+import { HIDE_PAID_TIERS, HIDE_SUPPLIES, setFlag } from "../../../lib/settings";
 import { audit } from "../../../lib/auth";
 
 /** Site settings an admin can flip. Only keys named here can be written, so a
  *  request cannot invent one. */
 const FLAGS: Record<string, string> = {
   hidePaidTiers: HIDE_PAID_TIERS,
+  hideSupplies: HIDE_SUPPLIES,
 };
 
 export const POST: APIRoute = async ({ request, locals }) => {

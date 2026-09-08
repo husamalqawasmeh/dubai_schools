@@ -2853,3 +2853,10 @@ a.idcard:hover h2 { color: var(--on-accent); }
 .idcard h2 { color: var(--ink); }
 a.idcard:hover { background: var(--accent-2); }
 a.idcard:hover h2 { color: var(--on-accent); }
+
+/* Three cards now, not two. Auto-fit rather than a fixed three columns: at the
+   narrow end they drop to one without a second breakpoint deciding when. */
+@media (min-width: 700px) {
+  .idsplit { grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr)); }
+}
+.idcard-supplies { animation: id-rise 560ms cubic-bezier(.2, .8, .25, 1) 2180ms both; }

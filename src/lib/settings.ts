@@ -15,6 +15,12 @@ const DB = (env as unknown as { DB: D1Database }).DB;
  *  the thing the page is actually for. */
 export const HIDE_PAID_TIERS = "advertise.hide_paid_tiers";
 
+/** School Supplies comes out of the nav while this is set. The page itself
+ *  stays reachable by its address — hiding a link is not the same as deleting
+ *  a page, and anything already linking to it should not start 404ing because
+ *  a nav item was turned off. */
+export const HIDE_SUPPLIES = "nav.hide_supplies";
+
 export async function getSetting(key: string): Promise<string | null> {
   const row = await DB.prepare("SELECT value FROM settings WHERE key = ?")
     .bind(key)

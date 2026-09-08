@@ -17,28 +17,29 @@ const pending = (
     </div>
 
     <div class="adminlinks">
+      <a class="adminlink" href="/admin/account">
+        <h2>Profile</h2>
+      </a>
+      <a class="adminlink" href="/admin/roadmap">
+        <h2>Improvements and planned changes</h2>
+      </a>
       <a class="adminlink" href="/admin/schools">
         <h2>Schools</h2>
       </a>
       <a class="adminlink" href="/admin/front-page">
         <h2>Front page testing</h2>
       </a>
-      <a class="adminlink" href="/admin/roadmap">
-        <h2>Improvements and planned changes</h2>
-      </a>
       <a class="adminlink" href="/admin/moderation">
         <h2>Moderation queue</h2>
       </a>
-
       <a class="adminlink" href="/admin/settings">
         <h2>Hide offer options for now</h2>
       </a>
-      <a class="adminlink" href="/admin/account">
-        <h2>Your account</h2>
+      {/* Both hide cards open the same settings screen, which now holds two
+          toggles. The anchor drops you at the one the card names. */}
+      <a class="adminlink" href="/admin/settings#supplies">
+        <h2>Hide Supplies and Services Option</h2>
       </a>
-      {/* display:contents so the button is a grid item in its own right — a
-          form wrapper would otherwise become the cell and the card inside it
-          would size to the text rather than the column. */}
       <form method="POST" action="/api/admin/logout" class="adminlink-form">
         <button class="adminlink" type="submit">
           <h2>Sign out</h2>

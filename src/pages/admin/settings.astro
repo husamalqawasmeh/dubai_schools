@@ -32,6 +32,20 @@ const lastSet =
         </span>
       </label>
 
+      <label class="setting" id="supplies">
+        <input type="checkbox" id="hideSupplies" checked={hideSupplies} />
+        <span>
+          <b>Hide School Supplies in the navigation</b>
+          <span class="setting-note">
+            The <a href="/supplies">School Supplies</a> item comes out of the
+            menu while this is on. The page itself stays reachable by its
+            address — hiding a link is not deleting a page, and anything
+            already pointing at it should not start 404ing because a menu
+            item was switched off.
+          </span>
+        </span>
+      </label>
+
       <p class="note" id="msg">
         {lastSet ? `Last changed ${lastSet}.` : "Not changed yet."}
       </p>
@@ -40,33 +54,42 @@ const lastSet =
 </Base>
 
 <script>
-  const box = document.getElementById("hidePaidTiers") as HTMLInputElement;
+  /* One handler, both boxes. The flag name is on the element, so adding a
+     third toggle is a checkbox and a FLAGS entry — not another copy of
+     this. */
   const msg = document.getElementById("msg")!;
+  const SAID: Record<string, [string, string]> = {
+    hidePaidTiers: ["Saved. The paid packages are hidden.", "Saved. The paid packages are showing."],
+    hideSupplies: ["Saved. School Supplies is out of the menu.", "Saved. School Supplies is back in the menu."],
+  };
 
-  box.addEventListener("change", async () => {
-    box.disabled = true;
-    msg.textContent = "Saving…";
-    msg.className = "note";
+  for (const id of Object.keys(SAID)) {
+    const box = document.getElementById(id) as HTMLInputElement | null;
+    if (!box) continue;
 
-    try {
-      const res = await fetch("/api/admin/settings", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ hidePaidTiers: box.checked }),
-      });
-      const out = (await res.json()) as { ok: boolean; error?: string };
-      if (!out.ok) throw new Error(out.error ?? "Could not save that.");
-      msg.textContent = box.checked
-        ? "Saved. The paid packages are hidden."
-        : "Saved. All three packages are showing.";
-      msg.className = "note is-good";
-    } catch (err) {
-      // Put the switch back where it was: the page should not claim a state
-      // the database did not accept.
-      box.checked = !box.checked;
-      msg.textContent = err instanceof Error ? err.message : "Could not save that.";
-      msg.className = "note is-bad";
-    }
-    box.disabled = false;
-  });
+    box.addEventListener("change", async () => {
+      box.disabled = true;
+      msg.textContent = "Saving…";
+      msg.className = "note";
+
+      try {
+        const res = await fetch("/api/admin/settings", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ [id]: box.checked }),
+        });
+        const out = (await res.json()) as { ok: boolean; error?: string };
+        if (!out.ok) throw new Error(out.error ?? "Could not save that.");
+        msg.textContent = SAID[id][box.checked ? 0 : 1];
+      } catch (err) {
+        // Put the box back to what the server still believes, or the screen
+        // shows a setting that was never saved.
+        box.checked = !box.checked;
+        msg.textContent = err instanceof Error ? err.message : "Could not save that.";
+        msg.className = "note is-bad";
+      } finally {
+        box.disabled = false;
+      }
+    });
+  }
 </script>
