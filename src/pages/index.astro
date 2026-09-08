@@ -23,7 +23,10 @@ import LensLogo from "../components/LensLogo.astro";
  * finds all 232 schools behind it. Links that needed JavaScript would have
  * made this site's front door invisible.
  *
- * The bubbles do not move and there is no script on this page at all. The
+ * The bubbles do not move. There is one script, and only one — three clicks
+ * on the dirham open the admin sign-in — and nothing on the page depends on
+ * it: both ways in are still plain <a href>, so a crawler with no JavaScript
+ * sees the same front door a visitor does. The
  * arrangement is the centred one — student, school and teacher in the middle,
  * the other eight evenly around them — which is symmetric by construction, and
  * motion would only obscure that. It was tried on /admin/front-page first,
@@ -113,4 +116,39 @@ const ON_LINE = "#8c1512";
     </div>
   </div>
 
+
+  <script is:inline>
+    /**
+     * Three clicks on the dirham open the admin sign-in.
+     *
+     * The console has no link anywhere on the public site — the Site admin tab
+     * that used to carry it is gone — so this is the way back in, and it is
+     * deliberately not signposted. It guards nothing: /admin/communicate is a
+     * public page and everything behind it still needs a password. Finding it
+     * early is not a security event, which is why a gesture is enough.
+     *
+     * Clicks have to be within a second of each other. Without the window the
+     * count would persist for the life of the page, and three idle clicks on
+     * the logo spread over a visit would eventually fire it at someone who
+     * meant nothing by it.
+     */
+    (function () {
+      var dirham = document.querySelector('.idmark [data-icon="coins"]');
+      if (!dirham) return;
+
+      var hits = 0;
+      var last = 0;
+      var GAP = 1000;
+
+      dirham.addEventListener("click", function () {
+        var now = Date.now();
+        hits = now - last > GAP ? 1 : hits + 1;
+        last = now;
+        if (hits >= 3) {
+          hits = 0;
+          window.location.href = "/admin/communicate";
+        }
+      });
+    })();
+  </script>
 </Base>

@@ -425,7 +425,7 @@ const bubble = (b, i) => {
     ? `
         <path d="${MARK[b.icon]}" fill="${MARK_COLOUR[b.icon] ?? b.fill}"/>`
     : "";
-  return `    <g class="bub" style="--i:${i}">
+  return `    <g class="bub" data-icon="${b.icon}" style="--i:${i}">
       <circle cx="${b.x.toFixed(1)}" cy="${b.y.toFixed(1)}" r="${b.r}" fill="${b.fill}"/>
       <circle cx="${b.x.toFixed(1)}" cy="${(b.y - b.r * 0.28).toFixed(1)}" r="${(b.r * 0.72).toFixed(1)}" fill="#fff" opacity=".08"/>${ring}
       <g transform="translate(${ox.toFixed(1)} ${oy.toFixed(1)}) scale(${s.toFixed(3)})">
