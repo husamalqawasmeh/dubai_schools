@@ -69,12 +69,21 @@ const hideTravel = here.startsWith("/schools");
    entirely, and not one this page is making. */
 const hidePick = here.startsWith("/schools");
 
+/* The console keeps only the chatbot.
+
+   Every other item leads out into the public site, and an admin working
+   through the queue is not browsing it — the row was seven ways to lose the
+   page you were on. The chatbot stays because it is the one thing there
+   worth reaching mid-task, and the brand mark still goes home. */
+const isConsole = here.startsWith("/admin");
+
 const nav = NAV.filter(
   (n) =>
     !(hideSupplies && n.href === "SUPPLIES") &&
     !(hideAdvertise && n.href === "/schools/advertise") &&
     !(hideTravel && n.href === "/parents/travel-time") &&
-    !(hidePick && n.href === "/parents/pick-of-the-week")
+    !(hidePick && n.href === "/parents/pick-of-the-week") &&
+    !(isConsole && !n.href.startsWith("/overview#"))
 );
 
 /**

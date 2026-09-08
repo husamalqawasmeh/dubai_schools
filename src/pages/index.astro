@@ -119,13 +119,13 @@ const ON_LINE = "#8c1512";
 
   <script is:inline>
     /**
-     * Three clicks on the dirham open the admin sign-in.
+     * Three clicks on the dirham open the admin console.
      *
      * The console has no link anywhere on the public site — the Site admin tab
      * that used to carry it is gone — so this is the way back in, and it is
-     * deliberately not signposted. It guards nothing: /admin/communicate is a
-     * public page and everything behind it still needs a password. Finding it
-     * early is not a security event, which is why a gesture is enough.
+     * deliberately not signposted. It guards nothing: /admin bounces anyone
+     * without a session to the sign-in form, so finding the gesture early is
+     * not a security event. That is what makes a gesture sufficient here.
      *
      * Clicks have to be within a second of each other. Without the window the
      * count would persist for the life of the page, and three idle clicks on
@@ -146,7 +146,7 @@ const ON_LINE = "#8c1512";
         last = now;
         if (hits >= 3) {
           hits = 0;
-          window.location.href = "/admin/communicate";
+          window.location.href = "/admin";
         }
       });
     })();

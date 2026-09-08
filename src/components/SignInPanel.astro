@@ -1,0 +1,122 @@
+---
+/**
+ * The admin sign-in box.
+ *
+ * A component rather than markup on /admin/login, because it now appears in two
+ * places — the login page and inline on /admin under the Sign-in option — and
+ * two copies of a credential form is two places for a fix to be applied once.
+ *
+ * The script is bundled into whichever page includes this, whether or not the
+ * component is actually rendered, so it starts by looking for its own form and
+ * leaves quietly when there is none.
+ */
+interface Props {
+  /** Where to land after a successful sign-in. */
+  to?: string;
+  /** The heading. On /admin the visitor is already signed in and is switching
+   *  accounts, which is a different sentence. */
+  heading?: string;
+  blurb?: string;
+  class?: string;
+}
+
+const {
+  to = "/admin",
+  heading = "Admin sign in",
+  blurb = "This area manages school data and outbound mail.",
+  class: cls = "",
+} = Astro.props;
+---
+
+<div class={`panel signin-panel ${cls}`} data-signin-to={to}>
+  <h1 class="signin-h">{heading}</h1>
+  <p class="muted-p">{blurb}</p>
+  <form id="lf">
+    <div class="field">
+      <label for="email">Email</label>
+      <input id="email" type="email" autocomplete="username" required />
+    </div>
+    <div class="field">
+      <label for="password">Password</label>
+      <input id="password" type="password" autocomplete="current-password" required />
+    </div>
+    <div class="login-opts">
+      <label class="login-check">
+        <input type="checkbox" id="remember" />
+        <span>Remember me</span>
+      </label>
+      <label class="login-check">
+        <input type="checkbox" id="showpw" />
+        <span>Show password</span>
+      </label>
+    </div>
+    <button class="btn" type="submit" id="go">Sign in</button>
+    <p class="note" id="msg"></p>
+  </form>
+</div>
+
+<script>
+  const f = document.getElementById("lf") as HTMLFormElement | null;
+  // Astro bundles this into the page whether or not the panel was rendered —
+  // on /admin it is only there once the Sign-in option has been opened.
+  if (f) {
+    const panel = f.closest(".signin-panel") as HTMLElement;
+    const to = panel?.dataset.signinTo || "/admin";
+    const pw = document.getElementById("password") as HTMLInputElement;
+    const showpw = document.getElementById("showpw") as HTMLInputElement;
+    const remember = document.getElementById("remember") as HTMLInputElement;
+    const email = document.getElementById("email") as HTMLInputElement;
+
+    // Only the type changes, so what has been typed stays typed and the caret
+    // does not jump to the end.
+    showpw.addEventListener("change", () => {
+      pw.type = showpw.checked ? "text" : "password";
+    });
+
+    // The email is remembered in this browser; how long the session lasts is
+    // the server's business. Never the password — ticking a box is not consent
+    // to keep a credential in localStorage.
+    const REMEMBERED = "dxb-admin-email";
+    try {
+      const saved = localStorage.getItem(REMEMBERED);
+      if (saved) {
+        email.value = saved;
+        remember.checked = true;
+      }
+    } catch {
+      /* private mode or storage disabled — the form still works */
+    }
+
+    const msg = document.getElementById("msg")!;
+    const go = document.getElementById("go") as HTMLButtonElement;
+    f.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      go.disabled = true;
+      msg.textContent = "Checking…";
+      msg.className = "note";
+      const res = await fetch("/api/admin/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: email.value,
+          password: pw.value,
+          remember: remember.checked,
+        }),
+      });
+      const out = (await res.json()) as { ok: boolean; error?: string };
+      if (out.ok) {
+        try {
+          if (remember.checked) localStorage.setItem(REMEMBERED, email.value);
+          else localStorage.removeItem(REMEMBERED);
+        } catch {
+          /* storage refused; the session cookie is what actually matters */
+        }
+        location.href = to;
+        return;
+      }
+      msg.textContent = out.error ?? "Could not sign in.";
+      msg.className = "note is-bad";
+      go.disabled = false;
+    });
+  }
+</script>

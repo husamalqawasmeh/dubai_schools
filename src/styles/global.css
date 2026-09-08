@@ -1258,10 +1258,12 @@ button.adminlink:hover { border-color: var(--accent); }
   font-size: 13.5px;
   font-weight: 500;
   line-height: 1.6;
-  /* Two lines held whatever the tab says, so switching tabs does not shift the
-     form below it. Kept in step with the size above. */
-  min-height: calc(13.5px * 1.6 * 2);
-  margin-bottom: 6px;
+  /* The two-line reservation is gone with the tabs it was for. It held the
+     blurb at two lines whatever the tab said, so switching tabs did not
+     shift the form below — but each page now offers one audience and one
+     blurb, so all it reserved was an empty line under a single-line
+     sentence. */
+  margin-bottom: 4px;
 }
 
 /* ---------------- one card, four panes ----------------
@@ -2903,3 +2905,17 @@ a.idcard:hover h2 { color: var(--on-accent); }
 }
 
 .rm-plain li { margin: 2px 0; }
+
+
+/* The sign-in box on /admin, opened by the first option.
+
+   Column 1 so it sits under the card that opened it rather than wherever the
+   grid would otherwise drop it — the cards are a two-column grid above 700px,
+   and without this the box would land beside Profile. Below that width the
+   grid is one column and this is already true. */
+.adminsignin { grid-column: 1; margin: -2px 0 4px; }
+.adminsignin .signin-h { font-size: 17px; margin-bottom: 4px; }
+
+/* The login page keeps the larger heading: there it is the page, not a panel
+   that opened inside one. */
+.adminlogin .signin-h { font-size: 24px; }
