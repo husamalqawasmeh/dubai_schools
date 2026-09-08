@@ -1146,7 +1146,11 @@ button.btn:disabled { opacity: 0.55; cursor: default; }
   .adminlinks { grid-template-columns: repeat(3, 1fr); }
   .adminlinks .is-alone { grid-column: 1; grid-row: 1; }
   .adminlinks .is-newrow { grid-column: 1; }
-  .adminsignin { grid-column: 1; }
+  /* Across all three, not one. A column-wide box put the sentence about which
+     account is signed in on three wrapped lines and left the form squeezed
+     into a third of the row — the box is a form, and the row is the width it
+     had to work in. */
+  .adminsignin { grid-column: 1 / -1; }
 }
 .adminlink {
   background: var(--surface); border: 1px solid var(--rule); border-radius: 6px;
@@ -2927,8 +2931,17 @@ a.idcard:hover h2 { color: var(--on-accent); }
    grid would otherwise drop it — the cards are a two-column grid above 700px,
    and without this the box would land beside Profile. Below that width the
    grid is one column and this is already true. */
-.adminsignin { grid-column: 1; margin: -2px 0 4px; }
+.adminsignin { grid-column: 1 / -1; margin: -2px 0 4px; }
 .adminsignin .signin-h { font-size: 17px; margin-bottom: 4px; }
+/* One line. The sentence names the account you are signed in as, and a
+   wrapped account name is harder to read at a glance than a scrolled
+   one — this is the panel that opens inside the menu, so it is working
+   in whatever width the row has. */
+.adminsignin .muted-p {
+  white-space: nowrap;
+  overflow-x: auto;
+  margin-bottom: 10px;
+}
 
 /* The login page keeps the larger heading: there it is the page, not a panel
    that opened inside one. */
