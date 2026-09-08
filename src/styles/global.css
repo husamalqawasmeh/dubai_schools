@@ -2982,7 +2982,7 @@ a.idcard:hover h2 { color: var(--on-accent); }
 @media (prefers-reduced-motion: reduce) { .idtag { animation: none; opacity: 1; transform: none; } }
 
 
-/* The wordmark sits 1cm below where the column would put it.
+/* The wordmark sits 2.2cm below where the column would put it.
 
    This was three transform rules, and all three were dead. .idword animates
    with id-rise at fill-mode `both`, whose last keyframe is transform:
@@ -2996,7 +2996,7 @@ a.idcard:hover h2 { color: var(--on-accent); }
    animation drives, so the two stop competing — and like the transform it
    was meant to be, it moves the name without re-spacing the tagline and
    cards below it. The same fix the tagline needed, for the same reason. */
-.idword { position: relative; top: 1cm; }
+.idword { position: relative; top: 2.2cm; }
 
 
 /* The whole stage moves an inch and a centimetre left. A transform on the
