@@ -453,8 +453,7 @@ const bubble = (b, i) => {
   return `    <g class="bub" data-icon="${b.icon}" style="--i:${i}">
       <circle cx="${b.x.toFixed(1)}" cy="${b.y.toFixed(1)}" r="${b.r}" fill="${b.fill}"/>
       <circle cx="${b.x.toFixed(1)}" cy="${b.y.toFixed(1)}" r="${b.r}" fill="url(#bubBounce)"/>
-      <circle cx="${b.x.toFixed(1)}" cy="${b.y.toFixed(1)}" r="${b.r}" fill="url(#bubBall)"/>
-      <ellipse cx="${(b.x - b.r * 0.33).toFixed(1)}" cy="${(b.y - b.r * 0.42).toFixed(1)}" rx="${(b.r * 0.30).toFixed(1)}" ry="${(b.r * 0.20).toFixed(1)}" fill="#fff" opacity=".55" transform="rotate(-28 ${(b.x - b.r * 0.33).toFixed(1)} ${(b.y - b.r * 0.42).toFixed(1)})"/>${ring}
+      <circle cx="${b.x.toFixed(1)}" cy="${b.y.toFixed(1)}" r="${b.r}" fill="url(#bubBall)"/>${ring}
       <g transform="translate(${ox.toFixed(1)} ${oy.toFixed(1)}) scale(${s.toFixed(3)})">
         ${parts.map((d) => `<path d="${d}" fill="${face}" fill-rule="evenodd"/>`).join("\n        ")}${lines}${soft}${mark}${dim}
       </g>
@@ -522,7 +521,10 @@ const render = (list) => `  <defs>
     </radialGradient>
 
     <!-- Light bouncing back up off the glass below. A real sphere is never
-         fully dark on its shaded side, and this is the stop that says so. -->
+         fully dark on its shaded side, and this is the stop that says so.
+         With the specular highlight gone this and the shading gradient are
+         the whole of the modelling, which is the point: the roundness comes
+         from the falloff, not from a shape drawn on top of it. -->
     <radialGradient id="bubBounce" cx="64%" cy="82%" r="42%">
       <stop offset="0" stop-color="#ffffff" stop-opacity=".22"/>
       <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
