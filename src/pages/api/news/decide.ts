@@ -29,7 +29,7 @@ const page = (title: string, detail: string, status = 200) =>
   a{color:#0c6455}
 </style>
 <div class="c"><h1>${title}</h1><p>${detail}</p>
-<p><a href="https://dubai-schools.can-du-ai.com/news">Schools news</a></p></div>`,
+<p><a href="https://dubai-schools.can-du-ai.com/parents/schoolnews">Schools news</a></p></div>`,
     { status, headers: { "Content-Type": "text/html; charset=utf-8", "Cache-Control": "no-store" } }
   );
 

@@ -26,7 +26,7 @@ const NAV = [
   { href: "/parents/pick-of-the-week", label: "Today's-spotlight" },
   { href: "SUPPLIES", label: "School Supplies" },
   { href: "/parents/travel-time", label: "Travel Time" },
-  { href: "/news", label: "Schools News" },
+  { href: "SCHOOLNEWS", label: "Schools News" },
   { href: "COMMUNICATE", label: "Communicate" },
   { href: "/advertise/communicate", label: "Advertise" },
   { href: "/overview#chatbox", label: "Chatbot" },
@@ -81,10 +81,25 @@ const nav = NAV.filter(
    page. */
 const faqHref = here.startsWith("/schools") ? "/schools/faq" : "/parents/faq";
 const suppliesHref = here.startsWith("/schools") ? "/schools/supplies" : "/parents/supplies";
+const newsHref = here.startsWith("/schools") ? "/schools/schoolnews" : "/parents/schoolnews";
+
 
 const communicateHref = here.startsWith("/schools")
   ? "/schools/communicate"
   : "/parents/communicate";
+
+/* Every nav item that exists once per audience. The sentinel in NAV is a
+   placeholder, not a URL — it is resolved here, per request, because the
+   nav is shared by both sections and the right target depends on which
+   one you are standing in. A lookup rather than a chain of ternaries:
+   there are four now, and each one added made the chain harder to read
+   than the thing it was expressing. */
+const SECTIONED: Record<string, string> = {
+  COMMUNICATE: communicateHref,
+  FAQ: faqHref,
+  SUPPLIES: suppliesHref,
+  SCHOOLNEWS: newsHref,
+};
 const isHere = (href: string) => {
   const base = (href.split("#")[0].replace(/\/+$/, "") || "/").toLowerCase();
   if (base === "/") return false;           // the splash has no nav item
@@ -125,14 +140,7 @@ const isHere = (href: string) => {
         </div>
         <nav>
           {nav.map((raw, i) => {
-            const item =
-              raw.href === "COMMUNICATE"
-                ? { ...raw, href: communicateHref }
-                : raw.href === "FAQ"
-                  ? { ...raw, href: faqHref }
-                  : raw.href === "SUPPLIES"
-                    ? { ...raw, href: suppliesHref }
-                    : raw;
+            const item = raw.href in SECTIONED ? { ...raw, href: SECTIONED[raw.href] } : raw;
             const current = isHere(item.href);
             const last = i === nav.length - 1;
             /* The mark points down at the page you are on. The chatbot has no
