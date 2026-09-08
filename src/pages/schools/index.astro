@@ -220,6 +220,15 @@ const title = activeBits.length
           <MultiSelect id="rating" icon="stamp" label="KHDA rating" options={ratOptions} selected={sel.rating} allLabel="All ratings" />
           <MultiSelect id="band" icon="coins" label="Fee band" options={bandOptions} selected={sel.band} allLabel="Any fee" />
           <MultiSelect id="area" icon="map" label="Area" groups={areaGroups} selected={sel.area} allLabel="All areas" scroll />
+          <div class="field clearall-cell">
+            <button type="button" id="clearall" class="clearall">Clear all filters</button>
+          </div>
+          <div class="field view-cell">
+            <label class="viewtoggle">
+              <input type="checkbox" id="compact" />
+              <span>Short list</span>
+            </label>
+          </div>
           {/* Sorting is one choice, so it is a select rather than another
               MultiSelect — those are for picking several values at once and
               one of them here would be a checkbox list where exactly one box
@@ -233,15 +242,6 @@ const title = activeBits.length
               <option value="band">Fee band</option>
               <option value="cur">Curriculum</option>
             </select>
-          </div>
-          <div class="field view-cell">
-            <label class="viewtoggle">
-              <input type="checkbox" id="compact" />
-              <span>Short list</span>
-            </label>
-          </div>
-          <div class="field clearall-cell">
-            <button type="button" id="clearall" class="clearall">Clear all filters</button>
           </div>
         </div>
       </div>

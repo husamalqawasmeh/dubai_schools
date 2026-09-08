@@ -3334,6 +3334,12 @@ a.idcard:hover h2 { color: var(--on-accent); }
 .grid.is-compact { display: block; }
 .grid.is-compact .card {
   display: flex;
+  /* The one that was missing, and the whole reason the short list stayed
+     tall: .card is flex-direction: column, so setting display:flex here
+     changed nothing — the children went on stacking. A row is the entire
+     point of a one-line-per-school view. */
+  flex-direction: row;
+  flex-wrap: nowrap;
   align-items: center;
   gap: 14px;
   padding: 9px 14px;
@@ -3360,6 +3366,8 @@ a.idcard:hover h2 { color: var(--on-accent); }
 }
 .grid.is-compact .card .foot {
   flex: 0 0 auto;
+  flex-wrap: nowrap;
+  justify-content: flex-end;
   margin: 0;
   border-top: none;
   padding-top: 0;
