@@ -1,27 +1,14 @@
 ---
 /**
- * The address the nav points at, and the one the outside world already knows.
+ * The old address, kept alive. It was the site's only Communicate page for
+ * months and is linked from outside, so it redirects rather than 404ing.
  *
- * It takes an audience and sends you to that audience's page. The nav writes
- * the plural ("parents", "schools") because that is what the sections are
- * called; the tabs inside those pages are keyed singular ("parent", "school").
- * Normalising here rather than at either end means neither has to know about
- * the other's spelling, and a link written by hand with either one works.
- *
- * 301, because the move is permanent — that is what carries the old address's
- * standing to the new one rather than leaving two indexed.
+ * ?as= still steers which section you land in — that is what the old links
+ * carried — but it is not passed on. The section is now in the path, and the
+ * page opens with nothing selected on purpose: whichever audience you are,
+ * choosing is the click that makes the form below mean something.
  */
 const raw = (Astro.url.searchParams.get("as") ?? "").toLowerCase();
-
 const SCHOOL = new Set(["school", "schools"]);
-const PARENT = new Set(["parent", "parents"]);
-
-const toSchools = SCHOOL.has(raw);
-const page = toSchools ? "/schools/communicate" : "/parents/communicate";
-
-// Only pass a tab through if it is one the page actually has; an unknown value
-// would select nothing and show a page with no panel on it.
-const tab = toSchools ? "school" : PARENT.has(raw) ? "parent" : "";
-
-return Astro.redirect(tab ? `${page}?as=${tab}` : page, 301);
+return Astro.redirect(SCHOOL.has(raw) ? "/schools/communicate" : "/parents/communicate", 301);
 ---

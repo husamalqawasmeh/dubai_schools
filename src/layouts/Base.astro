@@ -22,10 +22,10 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
  * and light up with the item before it, making one link look two wide.
  */
 const NAV = [
-  { href: "/faq", label: "FAQ" },
-  { href: "/pick-of-the-week", label: "Today's-spotlight" },
-  { href: "/supplies", label: "School Supplies" },
-  { href: "/travel-time", label: "Travel Time" },
+  { href: "FAQ", label: "FAQ" },
+  { href: "/parents/pick-of-the-week", label: "Today's-spotlight" },
+  { href: "SUPPLIES", label: "School Supplies" },
+  { href: "/parents/travel-time", label: "Travel Time" },
   { href: "/news", label: "Schools News" },
   { href: "COMMUNICATE", label: "Communicate" },
   { href: "/advertise/communicate", label: "Advertise" },
@@ -60,9 +60,9 @@ const hideTravel = here.startsWith("/schools");
 
 const nav = NAV.filter(
   (n) =>
-    !(hideSupplies && n.href === "/supplies") &&
+    !(hideSupplies && n.href === "SUPPLIES") &&
     !(hideAdvertise && n.href.startsWith("/advertise")) &&
-    !(hideTravel && n.href === "/travel-time")
+    !(hideTravel && n.href === "/parents/travel-time")
 );
 
 /**
@@ -76,9 +76,15 @@ const nav = NAV.filter(
  * Anything outside either section falls to the parents' page: that is who most
  * visitors are, and the tabs on it lead to the other one in a click.
  */
+/* Two FAQs now, one per audience, resolved the same way Communicate is —
+   which is the routing that had to be fixed once the page stopped being one
+   page. */
+const faqHref = here.startsWith("/schools") ? "/schools/faq" : "/parents/faq";
+const suppliesHref = here.startsWith("/schools") ? "/schools/supplies" : "/parents/supplies";
+
 const communicateHref = here.startsWith("/schools")
-  ? "/contribute?as=schools"
-  : "/contribute?as=parents";
+  ? "/schools/communicate"
+  : "/parents/communicate";
 const isHere = (href: string) => {
   const base = (href.split("#")[0].replace(/\/+$/, "") || "/").toLowerCase();
   if (base === "/") return false;           // the splash has no nav item
@@ -120,7 +126,13 @@ const isHere = (href: string) => {
         <nav>
           {nav.map((raw, i) => {
             const item =
-              raw.href === "COMMUNICATE" ? { ...raw, href: communicateHref } : raw;
+              raw.href === "COMMUNICATE"
+                ? { ...raw, href: communicateHref }
+                : raw.href === "FAQ"
+                  ? { ...raw, href: faqHref }
+                  : raw.href === "SUPPLIES"
+                    ? { ...raw, href: suppliesHref }
+                    : raw;
             const current = isHere(item.href);
             const last = i === nav.length - 1;
             /* The mark points down at the page you are on. The chatbot has no

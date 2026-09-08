@@ -13,6 +13,20 @@ const names = schools.map((s) => s.name);
  * me in", whoever you are. Choosing is one click, and it is the click that
  * makes the rest of the page mean something.
  */
+/**
+ * The old section words redirect; the tab ids do not.
+ *
+ * "?as=schools" and "?as=parents" are what /contribute used to carry to say
+ * which audience you were — they name a section, which now lives in the path,
+ * so they redirect to it and drop the query. The tab ids are singular
+ * ("school", "parent", "site") and still select a tab here, which is why the
+ * two cannot be collapsed into one set: ?as=school opens the school-details
+ * form on this page, ?as=schools leaves it.
+ */
+const section = (Astro.url.searchParams.get("as") ?? "").toLowerCase();
+if (section === "schools") return Astro.redirect("/schools/communicate", 301);
+if (section === "parents") return Astro.redirect("/parents/communicate", 301);
+
 const active = (Astro.url.searchParams.get("as") ?? "").toLowerCase();
 
 /**
