@@ -49,26 +49,51 @@ const NAV = [
  */
 const here = (Astro.url.pathname.replace(/\/+$/, "") || "/").toLowerCase();
 
+/**
+ * Whether this page belongs to the schools' section — which is not the same
+ * as living under /schools.
+ *
+ * That prefix does two jobs. It is the schools' section (/schools/faq,
+ * /schools/communicate…) and it is the public directory: /schools lists all
+ * 232, and /schools/<slug> is one school's page. Those are the pages parents
+ * spend their time on, reached by "Browse all 232" from the parents'
+ * overview — so testing the prefix alone silently moved a parent into the
+ * schools' nav mid-visit, swapping Travel Time and the weekly pick for
+ * Advertise and pointing Communicate at the school-admin form.
+ *
+ * The section is a fixed, small set of names; everything else under /schools
+ * is directory, and directory falls to the parents' nav like anything else
+ * outside a section.
+ */
+const SCHOOL_SECTION = new Set([
+  "overview", "faq", "communicate", "school-supplies", "school-news", "advertise",
+]);
+const inSchools = (() => {
+  const seg = here.split("/");   // "/schools/faq" -> ["", "schools", "faq"]
+  return seg[1] === "schools" && SCHOOL_SECTION.has(seg[2] ?? "");
+})();
+
 /* One database read per render, and it decides whether a menu item exists
    at all rather than hiding it with CSS — a hidden link is still a link in
    the tab order and still something a crawler follows. */
 const hideSupplies = await getFlag(HIDE_SUPPLIES);
-/* Advertise is a school-facing offer, so it comes out of the parents'
-   section. Scoped to /parents rather than to the one page: a parent who
-   moves from the overview to the communicate page has not become an
-   advertiser on the way, and a nav item that reappears one click later
-   reads as a bug. */
-const hideAdvertise = here.startsWith("/parents");
+/* Advertise is a school-facing offer, so it appears only inside the schools'
+   section — not merely outside the parents' one. Hiding it by /parents left
+   it on every neutral page, including the directory and each school's own
+   page, which are exactly where a parent spends the visit: the one nav item
+   pointing into the schools' section was the one a parent was most likely
+   to be offered. */
+const hideAdvertise = !inSchools;
 
 /* Travel time is a parent's question — how long the school run takes from
    home. A school has no home to measure from, so it comes out of the schools'
    section for the same reason Advertise comes out of the parents'. */
-const hideTravel = here.startsWith("/schools");
+const hideTravel = inSchools;
 
 /* Same for the weekly pick. It is a school chosen for parents to look at;
    showing a school a shortlist it might not be on is a different proposition
    entirely, and not one this page is making. */
-const hidePick = here.startsWith("/schools");
+const hidePick = inSchools;
 
 /* The console keeps only the chatbot.
 
@@ -104,21 +129,21 @@ const nav = NAV.filter(
 /* Two FAQs now, one per audience, resolved the same way Communicate is —
    which is the routing that had to be fixed once the page stopped being one
    page. */
-const faqHref = here.startsWith("/schools") ? "/schools/faq" : "/parents/faq";
-const suppliesHref = here.startsWith("/schools") ? "/schools/school-supplies" : "/parents/school-supplies";
-const newsHref = here.startsWith("/schools") ? "/schools/school-news" : "/parents/school-news";
+const faqHref = inSchools ? "/schools/faq" : "/parents/faq";
+const suppliesHref = inSchools ? "/schools/school-supplies" : "/parents/school-supplies";
+const newsHref = inSchools ? "/schools/school-news" : "/parents/school-news";
 
 /* The chatbot lives on an overview, and there are three of them now — one
    per section, plus the console's. It follows you into whichever you are in
    rather than sending a parent into the schools' copy to ask a question. */
 const chatbotHref = isConsole
   ? "/admin/overview#chatbox"
-  : here.startsWith("/schools")
+  : inSchools
     ? "/schools/overview#chatbox"
     : "/parents/overview#chatbox";
 
 
-const communicateHref = here.startsWith("/schools")
+const communicateHref = inSchools
   ? "/schools/communicate"
   : "/parents/communicate";
 
