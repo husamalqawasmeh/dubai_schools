@@ -613,15 +613,8 @@ const render = (list) => `  <defs>
       <stop offset="1" stop-color="#00843d"/>
     </linearGradient>
 
-    <!-- A soft shadow under the glass, so the mark sits on the page instead of
-         floating above it. -->
-    <radialGradient id="drop" cx="50%" cy="50%" r="50%">
-      <stop offset="0.6" stop-color="#0b3b31" stop-opacity=".22"/>
-      <stop offset="1" stop-color="#0b3b31" stop-opacity="0"/>
-    </radialGradient>
   </defs>
 
-  <ellipse cx="${CX + 4}" cy="${CY + R_OUTER - 2}" rx="${R_OUTER * 0.72}" ry="${R_OUTER * 0.13}" fill="url(#drop)"/>
 
   <!-- Handle, from the ring outwards. Drawn before the ring so the joint needs
        no seam painted over it. -->
@@ -656,86 +649,117 @@ const render = (list) => `  <defs>
        were the other way to do it, but every lat/lng in the schools table is
        still null.
 
-       What makes it Dubai rather than any coastline is four things, and they
-       are the four that are drawn most carefully: the Palm with its trunk,
-       sixteen fronds and the crescent broken where the channel runs; the
-       World scattered offshore; the Creek cutting inland from the north-east;
-       and Jebel Ali's palm at the south-west edge. Take those away and the
-       rest is a diagonal.
+       Six landmarks carry the recognition and nothing else here does: the
+       Palm with its trunk, sixteen fronds and the crescent broken where the
+       channel runs; the World scattered offshore; Bluewaters with its wheel;
+       the Burj Al Arab on its own spur; the Creek forking inland past Deira;
+       and the Jebel Ali palm at the south-west edge. Take those away and what
+       is left is a diagonal with roads on it.
 
        Absolute coordinates, not offsets from CX/CY. This is a hand-placed
-       drawing rather than a construction, and writing 150 - CX for every
-       point would obscure the shape without making it move correctly if the
-       lens ever changed size. -->
-  <g clip-path="url(#lensClip)" opacity=".5">
-    <circle cx="${CX}" cy="${CY}" r="${R_GLASS}" fill="#efe7d6"/>
+       drawing rather than a construction, and writing every point as a delta
+       would obscure the shape without making it survive a change of size. -->
+  <g clip-path="url(#lensClip)" opacity=".82">
+    <circle cx="${CX}" cy="${CY}" r="${R_GLASS}" fill="#f2e9d5"/>
 
     <!-- The Gulf, north-west of a coast running south-west to north-east. -->
     <path d="M13 11 H207 V16 C186 34 168 52 150 70 C132 88 116 104 100 119
-             C82 136 60 156 40 176 C30 186 22 195 16 203 H13 z" fill="#9fd6e8"/>
+             C82 136 60 156 40 176 C30 186 22 195 16 203 H13 z" fill="#8ecfe6"/>
 
-    <!-- Dubai Creek, in from the coast and bending south. -->
-    <path d="M152 66 C160 78 168 90 173 102 C177 111 178 120 175 129"
-          fill="none" stroke="#9fd6e8" stroke-width="4.6" stroke-linecap="round"/>
+    <!-- Desert inland, so the land is not one flat colour. -->
+    <path d="M120 203 C140 170 160 142 186 118 C196 109 202 104 207 100 V203 z"
+          fill="#e8dcc0"/>
 
-    <!-- The World: an oval scatter, offshore of Jumeirah. -->
-    <g fill="#efe7d6">
+    <!-- The Creek, in from the coast and forking round Deira. -->
+    <path d="M154 63 C161 76 169 89 174 101 C178 111 179 121 176 131 C174 139 170 145 165 150"
+          fill="none" stroke="#8ecfe6" stroke-width="5" stroke-linecap="round"/>
+    <path d="M170 95 C177 99 184 101 191 101" fill="none" stroke="#8ecfe6" stroke-width="3"/>
+
+    <!-- The World. -->
+    <g fill="#f2e9d5">
       <circle cx="104" cy="50" r="2.1"/><circle cx="112" cy="46" r="1.7"/>
       <circle cx="120" cy="49" r="2.3"/><circle cx="99" cy="57" r="1.8"/>
       <circle cx="108" cy="56" r="2.4"/><circle cx="117" cy="55" r="1.9"/>
       <circle cx="125" cy="57" r="2.0"/><circle cx="103" cy="64" r="2.2"/>
       <circle cx="112" cy="63" r="1.8"/><circle cx="121" cy="64" r="2.1"/>
       <circle cx="129" cy="50" r="1.6"/><circle cx="96" cy="49" r="1.6"/>
+      <circle cx="130" cy="63" r="1.5"/><circle cx="95" cy="65" r="1.4"/>
     </g>
 
-    <!-- Palm Jumeirah: trunk out from the shore, a crown of sixteen fronds,
-         and the crescent around it left open where the channel runs. -->
-    <g stroke="#efe7d6" fill="none" stroke-linecap="round">
-      <path d="M74 141 L64 127" stroke-width="3.4"/>
-      <g stroke-width="1.5">
-        <path d="M64 127 L52 121 M64 127 L54 115 M64 127 L57 109 M64 127 L62 103"
-              />
+    <!-- Palm Jumeirah. -->
+    <g stroke="#f2e9d5" fill="none" stroke-linecap="round">
+      <path d="M74 141 L64 127" stroke-width="3.6"/>
+      <g stroke-width="1.6">
+        <path d="M64 127 L52 121 M64 127 L54 115 M64 127 L57 109 M64 127 L62 103"/>
         <path d="M64 127 L68 102 M64 127 L74 105 M64 127 L79 110 M64 127 L82 117"/>
         <path d="M64 127 L50 128 M64 127 L51 134 M64 127 L55 140 M64 127 L61 144"/>
         <path d="M64 127 L70 143 M64 127 L76 139 M64 127 L80 133 M64 127 L83 126"/>
       </g>
-      <path d="M64 105 A23 23 0 1 1 46 138" stroke-width="2.6"/>
+      <path d="M64 104 A24 24 0 1 1 45 139" stroke-width="2.8"/>
     </g>
 
-    <!-- Palm Jebel Ali, smaller, down at the south-west edge. -->
-    <g stroke="#efe7d6" fill="none" stroke-linecap="round">
-      <path d="M34 178 L26 168" stroke-width="2.4"/>
-      <g stroke-width="1.1">
+    <!-- Bluewaters and its wheel, just north of the Marina. -->
+    <circle cx="44" cy="118" r="4.6" fill="#f2e9d5"/>
+    <circle cx="44" cy="118" r="2.4" fill="none" stroke="#8ecfe6" stroke-width="1"/>
+
+    <!-- The Burj Al Arab on its spur, and the marina inlet behind it. -->
+    <path d="M88 132 l4 -6 4 6 z" fill="#f2e9d5"/>
+    <path d="M92 133 L96 138" stroke="#f2e9d5" stroke-width="1.4"/>
+    <path d="M52 150 C58 144 64 140 70 138" fill="none" stroke="#8ecfe6" stroke-width="2.6"/>
+
+    <!-- Palm Jebel Ali. -->
+    <g stroke="#f2e9d5" fill="none" stroke-linecap="round">
+      <path d="M34 178 L26 168" stroke-width="2.6"/>
+      <g stroke-width="1.2">
         <path d="M26 168 L18 163 M26 168 L20 158 M26 168 L25 153 M26 168 L31 156"/>
         <path d="M26 168 L36 160 M26 168 L16 172 M26 168 L19 178 M26 168 L26 182"/>
       </g>
-      <path d="M26 151 A17 17 0 1 1 12 176" stroke-width="1.9"/>
+      <path d="M26 150 A18 18 0 1 1 11 177" stroke-width="2"/>
     </g>
 
-    <!-- The roads the city is navigated by: Sheikh Zayed and Emirates Road
-         running its length, with three crossing them inland. -->
-    <g stroke="#c9a86a" fill="none" stroke-linecap="round">
-      <path d="M22 203 C62 163 104 124 148 84 C168 66 186 50 202 38" stroke-width="2.8"/>
-      <path d="M50 205 C88 168 128 130 168 94 C184 79 196 68 206 60" stroke-width="2.2"/>
-      <path d="M92 205 C102 172 114 144 130 118" stroke-width="1.5"/>
-      <path d="M148 203 C158 172 168 146 180 124" stroke-width="1.5"/>
-      <path d="M40 190 C66 176 96 158 126 136" stroke-width="1.2"/>
+    <!-- Sheikh Zayed and Emirates Road down the length of the city, three
+         crossing them, and a grid of streets between. A map reads as a map
+         because of the small roads, not the big ones. -->
+    <g stroke="#c39a52" fill="none" stroke-linecap="round">
+      <path d="M22 203 C62 163 104 124 148 84 C168 66 186 50 202 38" stroke-width="3"/>
+      <path d="M50 205 C88 168 128 130 168 94 C184 79 196 68 206 60" stroke-width="2.4"/>
+      <path d="M92 205 C102 172 114 144 130 118" stroke-width="1.6"/>
+      <path d="M148 203 C158 172 168 146 180 124" stroke-width="1.6"/>
+      <path d="M40 190 C66 176 96 158 126 136" stroke-width="1.3"/>
     </g>
+    <g stroke="#d8bd8c" fill="none" stroke-width=".9" stroke-linecap="round">
+      <path d="M62 190 C82 172 104 152 126 132"/>
+      <path d="M84 200 C104 182 124 164 146 144"/>
+      <path d="M112 203 C130 186 148 170 168 152"/>
+      <path d="M56 176 C70 186 84 194 96 200"/>
+      <path d="M84 152 C100 164 116 176 130 186"/>
+      <path d="M112 128 C128 140 144 152 158 162"/>
+      <path d="M140 104 C154 116 168 128 180 138"/>
+    </g>
+  </g>
   </g>
   </g>
 
   <!-- Everything that belongs to the glass surface is painted before the
-       bubbles now, so the icons sit on top of it rather than under it. The
-       sweep and the two speculars used to come after, which is precisely what
-       put them behind the glass. -->
+       bubbles, so the icons sit on top of it rather than under it.
+
+       The sweep is down from .26 to .10. It is drawn over the map, and at the
+       old strength it was a white wash across the whole north-west — which is
+       where the sea, the Palm and the World all are. A lens still reads as
+       glass at a tenth; a coastline does not read at all under a quarter. -->
   <g clip-path="url(#lensClip)">
     <path d="M${CX - R_GLASS} ${CY - 18} a ${R_GLASS} ${R_GLASS} 0 0 1 ${R_GLASS * 1.5} -${R_GLASS * 0.72} L ${CX - R_GLASS * 0.2} ${CY - R_GLASS} a ${R_GLASS} ${R_GLASS} 0 0 0 -${R_GLASS * 0.82} ${R_GLASS * 0.9} z"
-          fill="#ffffff" opacity=".26"/>
+          fill="#ffffff" opacity=".10"/>
   </g>
+  <!-- The two speculars across the glass, down from .65 and .3. They are
+       drawn over the map and the strong one is a nine-pixel white arc through
+       exactly where the sea, the Palm and the World are — at the old strength
+       it erased them. Glass still reads at a third; a coastline does not read
+       under two thirds. -->
   <path d="M${CX - 58} ${CY - 42} a 72 46 0 0 1 74 -34" stroke="#ffffff" stroke-width="9"
-        stroke-linecap="round" fill="none" opacity=".65"/>
+        stroke-linecap="round" fill="none" opacity=".30"/>
   <path d="M${CX + 40} ${CY + 46} a 40 26 0 0 1 -26 14" stroke="#ffffff" stroke-width="5"
-        stroke-linecap="round" fill="none" opacity=".3"/>
+        stroke-linecap="round" fill="none" opacity=".16"/>
 
   <g clip-path="url(#lensClip)">
 ${list.map(bubble).join("\n")}
