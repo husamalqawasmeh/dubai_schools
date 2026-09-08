@@ -3037,6 +3037,16 @@ a.idcard:hover h2 { color: var(--on-accent); }
 .idtag { margin-top: calc(10px + 1in); }
 @media (max-height: 860px) { .idtag { margin-top: calc(10px + 0.6in); } }
 
+/* And half a centimetre lower again.
+
+   Relative offset rather than a transform or a margin, and for two separate
+   reasons. The tagline finishes its rise on transform: translateY(0) with a
+   `both` fill, so a static transform on it would simply be overwritten once
+   the animation lands. And a margin would push the cards down with it, which
+   would undo the centimetre they were just raised by — top: moves what is
+   drawn without moving anything that follows. */
+.idtag { position: relative; top: 0.5cm; }
+
 
 /* The whole text block — name, tagline and both cards — moves 2cm right and
    2cm down. On .idside, so it travels as one piece: the wordmark's own -2cm
