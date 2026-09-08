@@ -23,7 +23,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
  */
 const NAV = [
   { href: "FAQ", label: "FAQ" },
-  { href: "/parents/pick-of-the-week", label: "Today's-spotlight" },
+  { href: "/parents/pick-of-the-week", label: "School Pick-of-the-week" },
   { href: "SUPPLIES", label: "School Supplies" },
   { href: "/parents/travel-time", label: "Travel Time" },
   { href: "SCHOOLNEWS", label: "Schools News" },
@@ -58,11 +58,17 @@ const hideAdvertise = here.startsWith("/parents");
    section for the same reason Advertise comes out of the parents'. */
 const hideTravel = here.startsWith("/schools");
 
+/* Same for the weekly pick. It is a school chosen for parents to look at;
+   showing a school a shortlist it might not be on is a different proposition
+   entirely, and not one this page is making. */
+const hidePick = here.startsWith("/schools");
+
 const nav = NAV.filter(
   (n) =>
     !(hideSupplies && n.href === "SUPPLIES") &&
     !(hideAdvertise && n.href.startsWith("/advertise")) &&
-    !(hideTravel && n.href === "/parents/travel-time")
+    !(hideTravel && n.href === "/parents/travel-time") &&
+    !(hidePick && n.href === "/parents/pick-of-the-week")
 );
 
 /**

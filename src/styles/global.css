@@ -2865,3 +2865,27 @@ a.idcard:hover h2 { color: var(--on-accent); }
   .idsplit { grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr)); }
 }
 .idcard-supplies { animation: id-rise 560ms cubic-bezier(.2, .8, .25, 1) 2180ms both; }
+
+/* Two admin-only shapes, used by the Dubai Pulse and suppliers screens.
+   A command someone is meant to copy, and a list that is a list rather than
+   a row of controls — the roadmap board owns .rm-list, which is neither. */
+.tt-pre {
+  margin: 10px 0;
+  padding: 10px 12px;
+  background: var(--surface-3);
+  border-radius: 8px;
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: 13px;
+  line-height: 1.7;
+  /* A long secret command must scroll rather than widen the page. */
+  overflow-x: auto;
+  white-space: pre;
+}
+
+.rm-plain {
+  margin: 6px 0 0;
+  padding-left: 18px;
+  line-height: 1.75;
+}
+
+.rm-plain li { margin: 2px 0; }

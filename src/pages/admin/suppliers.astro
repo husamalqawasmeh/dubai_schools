@@ -1,0 +1,125 @@
+---
+import Base from "../../layouts/Base.astro";
+import { env } from "cloudflare:workers";
+
+const DB = (env as unknown as { DB: D1Database }).DB;
+
+/**
+ * Who sells what, to which schools.
+ *
+ * Grouped by supplier rather than by school, because that is the question this
+ * page exists to answer — one outlet typically serves several schools, and a
+ * school-by-school list would repeat the same shop a dozen times and never show
+ * that it is the same shop.
+ */
+const { results } = await DB.prepare(
+  `SELECT u.*, s.name AS school, s.slug
+     FROM uniform_suppliers u
+     LEFT JOIN schools s ON s.id = u.school_id
+    ORDER BY u.name COLLATE NOCASE, s.name`
+).all<any>();
+
+const rows = results ?? [];
+
+/** Grouped on the name as typed, case-folded. Two spellings of one shop will
+ *  show as two rows — which is the honest thing to show, since deciding they
+ *  are the same shop is exactly the judgement this page is asking for. */
+const byName = new Map<string, any[]>();
+for (const r of rows) {
+  const k = (r.name ?? "").trim().toLowerCase();
+  (byName.get(k) ?? byName.set(k, []).get(k)!).push(r);
+}
+
+const KIND: Record<string, string> = {
+  supplier: "Appointed supplier",
+  school_shop: "School shop",
+  second_hand: "Second-hand / pre-loved",
+  online: "Online only",
+};
+
+const sells = (r: any) =>
+  [r.sells_uniform && "Uniform", r.sells_pe_kit && "PE kit", r.sells_books && "Books"]
+    .filter(Boolean)
+    .join(", ") || "—";
+
+const live = rows.filter((r) => r.published_at).length;
+---
+
+<Base title="Uniform suppliers — admin">
+  <div class="wrap pick rm-page">
+    <a class="back" href="/admin">&larr; Admin</a>
+    <h1 style="margin-top:14px">Uniform suppliers</h1>
+    <p class="sub">
+      Where each school's uniform is sold, and which schools each outlet serves.
+      {rows.length} entr{rows.length === 1 ? "y" : "ies"}, {live} published.
+    </p>
+
+    {rows.length === 0 ? (
+      <div class="panel" style="margin-top:18px">
+        <h2>Nothing recorded yet</h2>
+        <p class="muted-p">
+          Nothing has been entered against a school. These arrive through the
+          Communicate page — a school naming its appointed supplier, or a parent
+          reporting where they actually bought the kit — and land here unpublished
+          until someone decides they are right.
+        </p>
+        <p class="muted-p">
+          Until then the Supplies page stays generic about retailers on purpose:
+          which shop stocks which school's uniform changes every year, and a list
+          of shop names would rot faster than anything else on the site.
+        </p>
+      </div>
+    ) : (
+      [...byName].map(([, items]) => {
+        const first = items[0];
+        return (
+          <div class="panel" style="margin-bottom:14px">
+            <h3 style="margin:0 0 4px">{first.name}</h3>
+            <p class="mod-meta">
+              <span class="mod-tag">{KIND[first.kind] ?? first.kind}</span>
+              <span>Sells: {sells(first)}</span>
+              {first.area && <span class="mod-dot">·</span>}
+              {first.area && <span>{first.area}</span>}
+            </p>
+            {(first.phone || first.email || first.website) && (
+              <p class="mod-from">
+                {first.phone}
+                {first.phone && (first.email || first.website) ? " — " : ""}
+                {first.email}
+                {first.email && first.website ? " — " : ""}
+                {first.website && <a href={first.website}>{first.website}</a>}
+              </p>
+            )}
+            {first.address && <p class="muted-p" style="margin:4px 0">{first.address}</p>}
+            {first.opening_hours && <p class="muted-p" style="margin:4px 0">{first.opening_hours}</p>}
+
+            <p class="mod-meta" style="margin-top:10px">
+              Supplies {items.length} school{items.length === 1 ? "" : "s"}
+            </p>
+            <ul class="rm-plain">
+              {items.map((r) => (
+                <li>
+                  {r.slug ? <a href={`/schools/${r.slug}`}>{r.school}</a> : (r.school ?? "(unmatched school)")}
+                  {" — "}{sells(r)}
+                  {r.published_at
+                    ? <span class="mod-tag" style="margin-left:8px">live</span>
+                    : <span class="mod-tag" style="margin-left:8px">not published</span>}
+                  {r.source && <span class="mod-dot">·</span>}
+                  {r.source && <span>from {r.source}</span>}
+                  {r.note && <><br /><span class="muted-p">{r.note}</span></>}
+                </li>
+              ))}
+            </ul>
+          </div>
+        );
+      })
+    )}
+
+    <p class="note-foot">
+      Nothing on this page is visible to a visitor until it is published. Rows
+      are kept separate from the school record on purpose: a school's uniform
+      supplier is contributed data, and the KHDA import must never be able to
+      overwrite it.
+    </p>
+  </div>
+</Base>

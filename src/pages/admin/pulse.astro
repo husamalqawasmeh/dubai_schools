@@ -1,0 +1,174 @@
+---
+import Base from "../../layouts/Base.astro";
+import { env } from "cloudflare:workers";
+import { DATASETS, configured } from "../../lib/pulse";
+
+const DB = (env as unknown as { DB: D1Database }).DB;
+
+const [{ results: pending }, { results: decided }, last] = await Promise.all([
+  DB.prepare(
+    `SELECT f.*, s.slug FROM pulse_findings f
+       LEFT JOIN schools s ON s.id = f.school_id
+      WHERE f.status = 'pending'
+      ORDER BY CASE f.kind WHEN 'new_school' THEN 0 WHEN 'new_field' THEN 1 ELSE 2 END,
+               f.school_name, f.field
+      LIMIT 300`
+  ).all<any>(),
+  DB.prepare(
+    `SELECT f.*, s.slug FROM pulse_findings f
+       LEFT JOIN schools s ON s.id = f.school_id
+      WHERE f.status != 'pending'
+      ORDER BY f.decided_at DESC LIMIT 40`
+  ).all<any>(),
+  DB.prepare("SELECT * FROM pulse_runs ORDER BY id DESC LIMIT 1").first<any>(),
+]);
+
+const rows = pending ?? [];
+const past = decided ?? [];
+const ready = configured();
+
+/** Grouped by school so the page reads as "here is what Pulse says about this
+ *  school", not as three hundred loose facts. */
+const groups = new Map<string, any[]>();
+for (const r of rows) {
+  const k = r.school_name ?? "(unnamed)";
+  (groups.get(k) ?? groups.set(k, []).get(k)!).push(r);
+}
+
+const KIND: Record<string, string> = {
+  new_school: "Not on the site",
+  new_field: "We hold nothing",
+  changed_value: "Disagrees with ours",
+};
+
+const when = (iso: string | null) =>
+  iso ? new Date(iso).toLocaleString("en-GB", { day: "numeric", month: "short", year: "numeric", hour: "2-digit", minute: "2-digit" }) : "never";
+---
+
+<Base title="Dubai Pulse — admin">
+  <div class="wrap pick rm-page">
+    <a class="back" href="/admin">&larr; Admin</a>
+    <h1 style="margin-top:14px">Data from Dubai Pulse</h1>
+    <p class="sub">
+      What the open KHDA registers publish that this site does not carry yet.
+      Nothing here is live: accepting records the decision, it does not change a
+      school page.
+    </p>
+
+    {!ready && (
+      <div class="panel" style="margin:18px 0">
+        <h2>Not connected yet</h2>
+        <p class="muted-p">
+          Dubai Pulse moved to <strong>data.dubai</strong> during 2026. The old
+          dataset addresses now redirect to the new portal's home page, browsing
+          is behind a login, and the data API replies <code>401 Unauthorized
+          application request</code> to anyone without a registered application
+          — so there is no anonymous read left to fall back on.
+        </p>
+        <p class="muted-p">
+          To switch this on: register an application on the portal, wait for the
+          API key and secret (they arrive in two separate emails), then set them
+          as Worker secrets —
+        </p>
+        <pre class="tt-pre">npx wrangler secret put PULSE_API_KEY
+npx wrangler secret put PULSE_API_SECRET</pre>
+        <p class="muted-p">
+          The scan below works the moment both exist; nothing else needs changing.
+        </p>
+      </div>
+    )}
+
+    <div class="panel" style="margin:18px 0">
+      <h2>Datasets this reads</h2>
+      <ul class="rm-plain">
+        {DATASETS.map((d) => (
+          <li><strong>{d.label}</strong> — {d.why}</li>
+        ))}
+      </ul>
+      <p class="mod-meta" style="margin-top:10px">
+        Last scan: {when(last?.started_at ?? null)}
+        {last && <span class="mod-dot">·</span>}
+        {last && <span>{last.ok ? `${last.rows_read} rows read, ${last.found_new} new` : "failed"}</span>}
+      </p>
+      {last?.message && <p class="muted-p" style="margin-top:6px">{last.message}</p>}
+      <form method="POST" action="/api/pulse/scan" style="margin-top:12px">
+        <button class="btn" type="submit" style="max-width:220px">Scan Dubai Pulse now</button>
+      </form>
+    </div>
+
+    {rows.length === 0 ? (
+      <p class="sub">
+        {last?.ok
+          ? "Nothing waiting — the last scan found nothing Pulse has that we do not."
+          : "Nothing waiting. Run a scan to check."}
+      </p>
+    ) : (
+      <>
+        <h2 style="margin:26px 0 8px">Waiting ({rows.length})</h2>
+        {[...groups].map(([school, items]) => (
+          <div class="panel" style="margin-bottom:14px">
+            <h3 style="margin:0 0 8px">
+              {items[0].slug ? <a href={`/schools/${items[0].slug}`}>{school}</a> : school}
+              {!items[0].school_id && <span class="mod-tag" style="margin-left:8px">new to us</span>}
+            </h3>
+            {items.map((r) => (
+              <div class="mod-item">
+                <p class="mod-meta">
+                  <span class="mod-tag">{KIND[r.kind] ?? r.kind}</span>
+                  <span>{r.field}</span>
+                  <span class="mod-dot">·</span>
+                  <span>{r.dataset}</span>
+                </p>
+                <p class="mod-message">
+                  <strong>Pulse:</strong> {r.pulse_value ?? "—"}
+                  {r.our_value && <><br /><strong>Ours:</strong> {r.our_value}</>}
+                </p>
+                <div class="mod-actions">
+                  <form method="POST" action="/api/pulse/decide">
+                    <input type="hidden" name="action" value="accept" />
+                    <input type="hidden" name="id" value={r.id} />
+                    <button class="btn mod-ok" type="submit">Worth having</button>
+                  </form>
+                  <form method="POST" action="/api/pulse/decide">
+                    <input type="hidden" name="action" value="ignore" />
+                    <input type="hidden" name="id" value={r.id} />
+                    <button class="btn sec mod-no" type="submit">Ignore</button>
+                  </form>
+                </div>
+              </div>
+            ))}
+          </div>
+        ))}
+      </>
+    )}
+
+    {past.length > 0 && (
+      <>
+        <h2 style="margin:26px 0 8px">Decided</h2>
+        <div class="mod-list">
+          {past.map((r) => (
+            <article class={`mod-item is-${r.status === "accepted" ? "approved" : "rejected"}`}>
+              <p class="mod-meta">
+                <span class="mod-tag">{r.status === "accepted" ? "Worth having" : "Ignored"}</span>
+                <span>{r.school_name}</span>
+                <span class="mod-dot">·</span>
+                <span>{r.field}</span>
+                {r.decided_by && <span class="mod-dot">·</span>}
+                {r.decided_by && <span>{r.decided_by}</span>}
+              </p>
+              <p class="mod-message">{r.pulse_value}</p>
+            </article>
+          ))}
+        </div>
+      </>
+    )}
+
+    <p class="note-foot">
+      Accepting does not write to a school page. Pulse and the KHDA site refresh
+      on different schedules, so a disagreement often means Pulse is the stale
+      one — and a value applied straight through would be overwritten by the
+      next KHDA ingest anyway unless it goes in as an override. This queue is
+      the shortlist for that decision, not the decision itself.
+    </p>
+  </div>
+</Base>
