@@ -2976,23 +2976,25 @@ a.idcard:hover h2 { color: var(--on-accent); }
 @media (prefers-reduced-motion: reduce) { .idtag { animation: none; opacity: 1; transform: none; } }
 
 
-/* The wordmark sits about 2cm above where the column would put it. A transform,
-   so the tagline and the cards below it do not move with it — raising the name
-   is the change; re-spacing everything under it is not.
+/* The wordmark sits about 1cm above where the column would put it — it was
+   2cm and has come down by one. A transform, so the tagline and the cards
+   below it do not move with it: lowering the name is the change; re-spacing
+   everything under it is not.
 
-   Reduced on short screens: on a laptop 2cm can lift it clear of the glass it
-   is meant to sit beside. */
-.idword { transform: translateY(-2cm); }
-@media (max-height: 860px) { .idword { transform: translateY(-1.2cm); } }
+   Reduced on short screens: on a laptop even this much can lift it clear of
+   the glass it is meant to sit beside. */
+.idword { transform: translateY(-1cm); }
+@media (max-height: 860px) { .idword { transform: translateY(-0.2cm); } }
 @media (max-width: 820px) { .idword { transform: none; } }
 
 
-/* The whole stage moves an inch left. A transform on the wrap rather than
+/* The whole stage moves an inch and a centimetre left. A transform on the
+   wrap rather than
    padding or a margin: the wrap is centred with margin auto, and changing
    either of those fights the centring instead of offsetting it.
 
    Off below 1200px, where the column no longer has an inch to give. */
-.idwrap { transform: translateX(-1in); }
+.idwrap { transform: translateX(calc(-1in - 1cm)); }
 @media (max-width: 1200px) { .idwrap { transform: none; } }
 
 /* The two cards, a fifth larger and centred.
