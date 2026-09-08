@@ -4,28 +4,74 @@ import { env } from "cloudflare:workers";
 import { categoryLabel, STATUS_LABEL } from "../../lib/providers";
 
 /**
- * The queue for suppliers who have registered themselves on /suppliers.
+ * The queue for suppliers who registered themselves on /suppliers.
  *
- * Waiting first, then live, then hidden. A queue that buries what needs a
- * decision under what has already had one is a queue nobody works through.
+ * Waiting first, then live, then frozen, then rejected. A queue that buries
+ * what needs a decision under what has already had one is a queue nobody works
+ * through.
+ *
+ * Rejected and frozen are both off the page and are still shown separately,
+ * because only one of them is coming back — which is the thing an admin needs
+ * to know at a glance about a listing that is down.
  */
 const DB = (env as unknown as { DB: D1Database }).DB;
 
 const { results } = await DB.prepare(
   `SELECT * FROM providers
-    ORDER BY CASE status WHEN 'pending' THEN 0 WHEN 'approved' THEN 1 ELSE 2 END,
+    ORDER BY CASE status
+               WHEN 'pending'  THEN 0
+               WHEN 'approved' THEN 1
+               WHEN 'frozen'   THEN 2
+               ELSE 3
+             END,
              created_at DESC`
 ).all<any>();
 
 const rows = results ?? [];
-const pending = rows.filter((r) => r.status === "pending");
-const approved = rows.filter((r) => r.status === "approved");
-const hidden = rows.filter((r) => r.status === "hidden");
+const group = (s: string) => rows.filter((r) => r.status === s);
+
+const SECTIONS = [
+  { key: "pending", title: "Waiting", items: group("pending") },
+  { key: "approved", title: "Live", items: group("approved") },
+  { key: "frozen", title: "Frozen", items: group("frozen") },
+  { key: "rejected", title: "Rejected", items: group("rejected") },
+];
+
+/* What the last action did, said back after the redirect. Mail is the only one
+   worth reporting: everything else is visible in the row itself. */
+const mail = Astro.url.searchParams.get("mail");
+const MAIL_NOTE: Record<string, string> = {
+  sent: "Question sent.",
+  failed:
+    "The question is saved against the supplier but the email did not go. Use the link on the row to send it yourself.",
+  noaddress:
+    "The question is saved, but this supplier gave no email address — a phone call is the only way to ask.",
+};
 
 const when = (iso: string | null) =>
   iso
     ? new Date(iso).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" })
     : "";
+
+/** A prefilled mail link, so a question can still be sent when Resend is not
+ *  configured or refuses. Built here rather than in the browser because the
+ *  page already knows the address and the last question. */
+const mailtoFor = (r: any) => {
+  const subject = `About your listing on Dubai Schools — ${r.name}`;
+  const body = [
+    "Hello,",
+    "",
+    `You registered ${r.name} on dubai-schools.can-du-ai.com under ${categoryLabel(r.category)}.`,
+    "Before it goes live we would like to ask:",
+    "",
+    r.last_query ?? "",
+    "",
+    "Just reply to this email and we will pick it up from there.",
+    "",
+    "Dubai Schools",
+  ].join("\n");
+  return `mailto:${r.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+};
 ---
 
 <Base title="Supplier registrations — admin">
@@ -33,108 +79,159 @@ const when = (iso: string | null) =>
     <a class="back" href="/admin/admin">Back to admin</a>
     <h1 style="margin-top:14px">Supplier registrations</h1>
     <p class="sub">
-      {pending.length} waiting · {approved.length} live on <a href="/suppliers">/suppliers</a> ·
-      {hidden.length} hidden
-    </p>
-
-    {rows.length === 0 && (
-      <div class="panel" style="margin-top:18px">
-        <h2>Nothing registered yet</h2>
-        <p class="muted-p">
-          Suppliers add themselves through the form at the foot of
-          <a href="/suppliers">/suppliers</a>. Everything they send lands here
-          first and nothing reaches that page until it is approved.
-        </p>
-      </div>
-    )}
-
-    {[
-      { key: "pending", title: "Waiting", items: pending },
-      { key: "approved", title: "Live", items: approved },
-      { key: "hidden", title: "Hidden", items: hidden },
-    ]
-      .filter((s) => s.items.length > 0)
-      .map((section) => (
+      {SECTIONS.map((s, i) => (
         <>
-          <h2 style="margin:26px 0 8px">{section.title} ({section.items.length})</h2>
-          <div class="mod-list">
-            {section.items.map((r) => (
-              <article class={`mod-item prov-admin is-${r.status}`}>
-                <p class="mod-meta">
-                  <span class="mod-tag">{STATUS_LABEL[r.status] ?? r.status}</span>
-                  <span>{categoryLabel(r.category)}</span>
-                  <span class="mod-dot">·</span>
-                  <span>{when(r.created_at)}</span>
-                  {r.decided_by && <span class="mod-dot">·</span>}
-                  {r.decided_by && <span>{r.decided_by}</span>}
-                </p>
-
-                <h3 style="margin:2px 0 4px">{r.name}</h3>
-                <p class="mod-message">{r.summary}</p>
-                {r.detail && <p class="muted-p" style="margin:4px 0">{r.detail}</p>}
-                {r.areas && <p class="mod-from">Serves {r.areas}</p>}
-
-                <p class="mod-from">
-                  {r.contact_name && <>{r.contact_name} — </>}
-                  {r.phone}
-                  {r.phone && (r.email || r.website) ? " · " : ""}
-                  {r.email}
-                  {r.email && r.website ? " · " : ""}
-                  {/* nofollow here too: an admin screen is still a page, and a
-                      link to something not yet approved should carry nothing. */}
-                  {r.website && <a href={r.website} target="_blank" rel="noopener nofollow">{r.website}</a>}
-                </p>
-
-                {r.note && <p class="prov-note is-bad" style="margin:8px 0">{r.note}</p>}
-
-                <div class="mod-actions">
-                  {r.status !== "approved" && (
-                    <form method="POST" action="/api/admin/providers">
-                      <input type="hidden" name="action" value="approved" />
-                      <input type="hidden" name="id" value={r.id} />
-                      <button class="btn mod-ok" type="submit">
-                        {r.status === "hidden" ? "Show again" : "Approve"}
-                      </button>
-                    </form>
-                  )}
-                  {r.status !== "hidden" && (
-                    <form method="POST" action="/api/admin/providers">
-                      <input type="hidden" name="action" value="hidden" />
-                      <input type="hidden" name="id" value={r.id} />
-                      <button class="btn sec mod-no" type="submit">Hide</button>
-                    </form>
-                  )}
-                  {/* Delete asks first and says what it is deleting. Hiding is
-                      one click away and reversible; this is not. */}
-                  <form
-                    method="POST"
-                    action="/api/admin/providers"
-                    onsubmit={`return confirm('Delete "${String(r.name).replace(/'/g, "\\'")}" permanently? Hiding it keeps the record.')`}
-                  >
-                    <input type="hidden" name="action" value="delete" />
-                    <input type="hidden" name="id" value={r.id} />
-                    <button class="btn sec prov-del" type="submit">Delete</button>
-                  </form>
-                </div>
-
-                <form class="prov-noteform" method="POST" action="/api/admin/providers">
-                  <input type="hidden" name="action" value="note" />
-                  <input type="hidden" name="id" value={r.id} />
-                  <input class="tt-input" name="note" value={r.note ?? ""} maxlength="400"
-                         placeholder="Note — why it was hidden, what to check" />
-                  <button class="formbtn" type="submit">Save note</button>
-                </form>
-              </article>
-            ))}
-          </div>
+          {i > 0 && " · "}
+          {s.items.length} {s.title.toLowerCase()}
         </>
       ))}
+      {" — live listings appear on "}<a href="/suppliers">/suppliers</a>.
+    </p>
+
+    {mail && MAIL_NOTE[mail] && (
+      <p class={mail === "sent" ? "prov-note is-good" : "prov-note is-bad"} style="margin-top:14px">
+        {MAIL_NOTE[mail]}
+      </p>
+    )}
+
+    {rows.length === 0 && (
+      <p class="prov-empty">
+        <strong>Nothing registered yet.</strong> Suppliers add themselves through
+        the form at the foot of <a href="/suppliers">/suppliers</a>, and
+        everything they send lands here before it reaches that page.
+      </p>
+    )}
+
+    {SECTIONS.filter((s) => s.items.length > 0).map((section) => (
+      <>
+        <h2 style="margin:26px 0 8px">{section.title} ({section.items.length})</h2>
+        <div class="mod-list">
+          {section.items.map((r) => (
+            <article class={`mod-item prov-admin is-${r.status}`} id={`p${r.id}`}>
+              <p class="mod-meta">
+                <span class={`mod-tag prov-st is-${r.status}`}>{STATUS_LABEL[r.status] ?? r.status}</span>
+                <span>{categoryLabel(r.category)}</span>
+                <span class="mod-dot">·</span>
+                <span>registered {when(r.created_at)}</span>
+                {r.decided_by && <span class="mod-dot">·</span>}
+                {r.decided_by && <span>{STATUS_LABEL[r.status]?.toLowerCase()} by {r.decided_by}</span>}
+              </p>
+
+              <h3 style="margin:2px 0 4px">{r.name}</h3>
+              <p class="mod-message">{r.summary}</p>
+              {r.detail && <p class="muted-p" style="margin:4px 0">{r.detail}</p>}
+              {r.areas && <p class="mod-from">Serves {r.areas}</p>}
+
+              <p class="mod-from">
+                {r.contact_name && <>{r.contact_name} — </>}
+                {r.phone}
+                {r.phone && (r.email || r.website) ? " · " : ""}
+                {r.email}
+                {r.email && r.website ? " · " : ""}
+                {r.website && <a href={r.website} target="_blank" rel="noopener nofollow">{r.website}</a>}
+                {!r.email && <span class="missing"> · no email address</span>}
+              </p>
+
+              {r.last_query && (
+                <div class="prov-asked">
+                  <p class="prov-asked-h">
+                    Asked {when(r.last_query_at)}{r.last_query_by ? ` by ${r.last_query_by}` : ""}
+                    {r.email && (
+                      <>
+                        {" · "}
+                        <a href={mailtoFor(r)}>send it again by hand</a>
+                      </>
+                    )}
+                  </p>
+                  <p class="prov-asked-q">{r.last_query}</p>
+                </div>
+              )}
+
+              {r.note && <p class="prov-note is-bad" style="margin:8px 0">{r.note}</p>}
+
+              <div class="mod-actions">
+                {r.status !== "approved" && (
+                  <form method="POST" action="/api/admin/providers">
+                    <input type="hidden" name="action" value="approved" />
+                    <input type="hidden" name="id" value={r.id} />
+                    <button class="btn mod-ok" type="submit">
+                      {r.status === "pending" ? "Approve" : "Put back live"}
+                    </button>
+                  </form>
+                )}
+                {r.status === "approved" && (
+                  <form method="POST" action="/api/admin/providers">
+                    <input type="hidden" name="action" value="frozen" />
+                    <input type="hidden" name="id" value={r.id} />
+                    <button class="btn sec" type="submit">Freeze</button>
+                  </form>
+                )}
+                {r.status !== "rejected" && (
+                  <form method="POST" action="/api/admin/providers">
+                    <input type="hidden" name="action" value="rejected" />
+                    <input type="hidden" name="id" value={r.id} />
+                    <button class="btn sec mod-no" type="submit">Reject</button>
+                  </form>
+                )}
+                {r.status === "rejected" && (
+                  <form method="POST" action="/api/admin/providers">
+                    <input type="hidden" name="action" value="pending" />
+                    <input type="hidden" name="id" value={r.id} />
+                    <button class="btn sec" type="submit">Back to waiting</button>
+                  </form>
+                )}
+                {/* Delete asks first and names what it is removing. Freezing is
+                    one click away and reversible; this is not. */}
+                <form
+                  method="POST"
+                  action="/api/admin/providers"
+                  onsubmit={`return confirm('Delete "${String(r.name).replace(/'/g, "\\'")}" permanently? Rejecting or freezing keeps the record.')`}
+                >
+                  <input type="hidden" name="action" value="delete" />
+                  <input type="hidden" name="id" value={r.id} />
+                  <button class="btn sec prov-del" type="submit">Delete</button>
+                </form>
+              </div>
+
+              {/* Asking does not change the status: a supplier being asked to
+                  clarify is still waiting, and moving them out of the queue
+                  while their answer is what the queue waits for would lose
+                  them. */}
+              <form class="prov-askform" method="POST" action="/api/admin/providers">
+                <input type="hidden" name="action" value="query" />
+                <input type="hidden" name="id" value={r.id} />
+                <textarea
+                  class="tt-input"
+                  name="query"
+                  rows="2"
+                  maxlength="1200"
+                  placeholder={r.email
+                    ? "Ask them something — which schools they supply, a trade licence, anything unclear."
+                    : "No email address on this registration, so a question can only be recorded here."}
+                ></textarea>
+                <button class="formbtn" type="submit" disabled={!r.email}>Ask</button>
+              </form>
+
+              <form class="prov-noteform" method="POST" action="/api/admin/providers">
+                <input type="hidden" name="action" value="note" />
+                <input type="hidden" name="id" value={r.id} />
+                <input class="tt-input" name="note" value={r.note ?? ""} maxlength="400"
+                       placeholder="Private note — why it was frozen, what to check" />
+                <button class="formbtn" type="submit">Save note</button>
+              </form>
+            </article>
+          ))}
+        </div>
+      </>
+    ))}
 
     <p class="note-foot">
-      Hiding takes a listing off the page and keeps the row, so it can be put
-      back with one click — that is the one to use for a supplier who has gone
-      quiet or whose details need checking. Delete removes the record and is for
-      what should never have been submitted.
+      Freeze takes a listing off the page and keeps it — for a supplier who has
+      gone quiet, or details being checked — and one click puts it back. Reject
+      is for a registration that should not have been sent; it also keeps the
+      record, so the same submission arriving twice is recognisable. Delete
+      removes the row and cannot be undone. Asking a question leaves the
+      supplier where they are, because their answer is what you are waiting for.
     </p>
   </div>
 </Base>

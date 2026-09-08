@@ -110,9 +110,8 @@ const ERRORS: Record<string, string> = {
     <section class="panel prov-form" id="register" style="margin-top:26px">
       <h2>Register a service</h2>
       <p class="muted-p">
-        For businesses supplying Dubai schools or the families at them. It goes
-        to us first and appears on this page once it has been checked — usually
-        within a few days.
+        This page is for businesses supplying Dubai schools or the families at
+        these schools. Any registration will be reviewed before approval.
       </p>
 
       {sent && (
@@ -180,8 +179,15 @@ const ERRORS: Record<string, string> = {
           </div>
         </div>
 
-        <span class="formactions" style="margin-left:0">
+        {/* Cancel clears the form rather than leaving the page. That is the
+            opposite of what Cancel does on the admin account screen, and for
+            a reason: there the page has one purpose and leaving it is what
+            cancelling means, whereas here the form sits under a directory
+            somebody may well have come to read. Sending them away from it
+            would be a strange thing for a Cancel button to do. */}
+        <span class="formactions prov-actions">
           <button class="formbtn" type="submit">Register</button>
+          <button class="formbtn" type="reset">Cancel</button>
         </span>
       </form>
     </section>

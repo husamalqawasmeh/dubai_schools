@@ -41,3 +41,51 @@ export async function notify(subject: string, lines: string[]): Promise<void> {
     console.error("[notify]", err);
   }
 }
+
+
+/**
+ * Sends to someone who is not us — at the moment, a supplier being asked to
+ * clarify their registration.
+ *
+ * Returns whether it actually went, which notify() has no need to do: that one
+ * is a nudge to the owner and failing quietly is fine. This one is a message a
+ * person is waiting for, and the admin screen has to be able to say "this was
+ * not sent, here is a link to send it yourself" rather than implying it left.
+ *
+ * Replies come back to the site address rather than to whichever admin pressed
+ * the button: the answer belongs with the registration, not in one inbox.
+ */
+export async function sendTo(
+  to: string,
+  subject: string,
+  lines: string[]
+): Promise<{ ok: boolean; reason?: string }> {
+  const key = (env as unknown as { RESEND_API_KEY?: string }).RESEND_API_KEY;
+  if (!key) return { ok: false, reason: "no-key" };
+  if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(to)) return { ok: false, reason: "bad-address" };
+
+  try {
+    const res = await fetch("https://api.resend.com/emails", {
+      method: "POST",
+      headers: { "Content-Type": "application/json", Authorization: `Bearer ${key}` },
+      body: JSON.stringify({
+        from: FROM,
+        to: [to],
+        reply_to: TO,
+        subject: subject.slice(0, 180),
+        // Plain text, for the same reason notify() is: nothing a stranger
+        // typed should reach a place that renders it.
+        text: lines.join("\n"),
+      }),
+    });
+    if (!res.ok) {
+      const body = (await res.text().catch(() => "")).slice(0, 200);
+      console.error("[sendTo]", res.status, body);
+      return { ok: false, reason: `http-${res.status}` };
+    }
+    return { ok: true };
+  } catch (err) {
+    console.error("[sendTo]", err);
+    return { ok: false, reason: "threw" };
+  }
+}

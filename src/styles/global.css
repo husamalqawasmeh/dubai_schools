@@ -3390,3 +3390,43 @@ a.idcard:hover h2 { color: var(--on-accent); }
   color: var(--ink-2);
 }
 .prov-empty strong { color: var(--ink); }
+
+
+/* The register buttons, pushed clear of the last field. They were sitting
+   against the row above and reading as part of it. Left-aligned rather than
+   right: this is the end of a form being filled in downwards, not a decision
+   at the foot of a dialog. */
+.prov-actions { margin-left: 0; margin-top: 18px; }
+
+/* The four states, told apart at a glance. Colour carries which of the two
+   off-page states a listing is in, because that is the thing worth seeing
+   without reading. */
+.prov-st.is-approved { background: var(--accent); color: var(--on-accent); }
+.prov-st.is-rejected { background: var(--warn); color: #fff; }
+.prov-st.is-frozen   { background: var(--surface-3); color: var(--ink); }
+.prov-admin.is-frozen, .prov-admin.is-rejected { opacity: .72; }
+
+/* A question already put to a supplier, and what it said. */
+.prov-asked {
+  border-left: 3px solid var(--rule-firm);
+  padding: 2px 0 2px 10px;
+  margin: 9px 0 0;
+}
+.prov-asked-h {
+  margin: 0; font-family: var(--display); font-size: 11.5px;
+  font-weight: 700; color: var(--muted);
+}
+.prov-asked-q { margin: 3px 0 0; font-size: 13px; color: var(--ink-2); line-height: 1.5; }
+
+/* Asking one. The box grows with the question rather than scrolling a
+   two-line window, because these are written once and read back later. */
+.prov-askform { display: flex; gap: 8px; align-items: flex-end; margin-top: 10px; }
+.prov-askform textarea.tt-input {
+  flex: 1; height: auto; padding: 7px 10px;
+  font-size: 12.5px; line-height: 1.5; resize: vertical;
+}
+.prov-askform .formbtn { height: 34px; padding: 0 16px; font-size: 13px; }
+.prov-askform .formbtn:disabled { opacity: .45; cursor: not-allowed; }
+.prov-askform .formbtn:disabled:hover {
+  background: var(--surface-2); color: var(--accent); border-color: var(--rule-firm);
+}

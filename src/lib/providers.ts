@@ -28,12 +28,22 @@ export const categoryLabel = (id: string): string => BY_ID.get(id) ?? id;
 
 export const isCategory = (id: string): boolean => BY_ID.has(id);
 
-export type ProviderStatus = "pending" | "approved" | "hidden";
+/**
+ * Four states, and rejected and frozen are not the same thing.
+ *
+ * Both take a listing off the page. Only one of them is coming back, and that
+ * is the single fact worth recording about a listing that is down — collapsing
+ * them into one "hidden" loses it.
+ */
+export type ProviderStatus = "pending" | "approved" | "rejected" | "frozen";
+
+export const STATUSES: ProviderStatus[] = ["pending", "approved", "rejected", "frozen"];
 
 export const STATUS_LABEL: Record<string, string> = {
   pending: "Waiting",
   approved: "Live",
-  hidden: "Hidden",
+  rejected: "Rejected",
+  frozen: "Frozen",
 };
 
 /**
