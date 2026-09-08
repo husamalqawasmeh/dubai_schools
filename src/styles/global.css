@@ -3192,3 +3192,41 @@ a.idcard:hover h2 { color: var(--on-accent); }
 .gradetbl th.sortable[data-dir="up"]::after   { content: "\25b2"; opacity: 1; color: var(--accent); }
 .gradetbl th.sortable[data-dir="down"]::after { content: "\25bc"; opacity: 1; color: var(--accent); }
 .gradetbl th.sortable:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+
+
+/* The admin school filters, which are five now and not equal.
+
+   Curriculum holds a handful of names and rating holds five words, so both
+   are narrow. Area carries 78 values, some of them long, and it was the one
+   truncating — it takes the widest track and sits last, where a long option
+   list has room to open. Search takes what is left in the middle.
+
+   Overrides the four-equal-columns rule the other filter rows use, which is
+   why it is keyed to its own class rather than to .filters .row. */
+@media (min-width: 860px) {
+  .filters .row-schools {
+    grid-template-columns: 0.72fr 0.68fr 0.92fr 1.05fr 1.35fr;
+  }
+}
+/* Between the breakpoints, two per line rather than five squeezed. */
+@media (min-width: 560px) and (max-width: 859px) {
+  .filters .row-schools { grid-template-columns: 1fr 1fr; }
+}
+
+/* The search box, matched to the selects beside it so the row reads as one
+   set of controls rather than a text field dropped among them. */
+.filters .row-schools input[type="search"] {
+  width: 100%;
+  height: 34px;
+  padding: 0 10px;
+  font-family: var(--display);
+  font-size: 13.5px;
+  color: var(--ink);
+  background: var(--surface);
+  border: 1px solid var(--rule-firm);
+  border-radius: 6px;
+}
+.filters .row-schools input[type="search"]:focus {
+  border-color: var(--accent);
+  outline: none;
+}

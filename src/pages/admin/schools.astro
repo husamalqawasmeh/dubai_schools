@@ -61,14 +61,15 @@ const bandLabel: Record<string, string> = {
     </div>
 
     <div class="filters">
-      <div class="row">
+      {/* Curriculum and rating first and deliberately narrow — one holds a
+          handful of names, the other five words. Area is last and widest:
+          it carries 78 values, some of them long, and it is the one that was
+          truncating. The search sits between them because it is the control
+          most often reached for, and it filters as it is typed. */}
+      <div class="row row-schools">
         <div class="field">
           <label for="f-cur">Curriculum</label>
           <select id="f-cur"><option value="">All</option>{curricula.map((c) => <option value={c}>{c}</option>)}</select>
-        </div>
-        <div class="field">
-          <label for="f-area">Area</label>
-          <select id="f-area"><option value="">All</option>{areas.map((a) => <option value={a}>{a}</option>)}</select>
         </div>
         <div class="field">
           <label for="f-rat">KHDA rating</label>
@@ -83,6 +84,16 @@ const bandLabel: Record<string, string> = {
             <option value="school">Address from the school</option>
             <option value="khda">Address from KHDA</option>
           </select>
+        </div>
+        <div class="field">
+          <label for="f-q">Search</label>
+          {/* type=search rather than text: it brings the clear affordance the
+              browser already has, and nothing here needs a form submit. */}
+          <input id="f-q" type="search" placeholder="Name, area, curriculum or email" autocomplete="off" />
+        </div>
+        <div class="field">
+          <label for="f-area">Area</label>
+          <select id="f-area"><option value="">All</option>{areas.map((a) => <option value={a}>{a}</option>)}</select>
         </div>
       </div>
     </div>
@@ -122,6 +133,9 @@ const bandLabel: Record<string, string> = {
                   anything unrecognised after the lot. */}
               data-rank={String(TIERS.indexOf(r.khda_rating) === -1 ? TIERS.length : TIERS.indexOf(r.khda_rating))}
               data-mailaddr={r.email ?? ""}
+              {/* One lowercased haystack per row, built once here rather than
+                  reassembled from four cells on every keystroke. */}
+              data-q={[r.name, r.area, r.curricula.join(" "), r.email ?? ""].join(" ").toLowerCase()}
               data-mail={r.email ? "yes" : "no"}
               data-src={r.source ?? ""}
             >
@@ -173,6 +187,7 @@ const bandLabel: Record<string, string> = {
   const area = document.getElementById("f-area") as HTMLSelectElement;
   const rat = document.getElementById("f-rat") as HTMLSelectElement;
   const mail = document.getElementById("f-mail") as HTMLSelectElement;
+  const q = document.getElementById("f-q") as HTMLInputElement;
   const all = document.getElementById("all") as HTMLInputElement;
   const pickedEl = document.getElementById("picked")!;
   const shownEl = document.getElementById("shown")!;
@@ -182,10 +197,15 @@ const bandLabel: Record<string, string> = {
   const toEl = document.getElementById("to")!;
 
   function apply() {
+    const terms = q.value.toLowerCase().trim().split(/\s+/).filter(Boolean);
     let shown = 0;
     for (const r of rows) {
       const d = r.dataset;
+      /* Every term has to appear somewhere in the row, in any order — so
+         "british barsha" finds a British school in Al Barsha, which one
+         substring match against the whole string would not. */
       const ok =
+        terms.every((t) => d.q!.includes(t)) &&
         (!cur.value || d.cur!.split("|").includes(cur.value)) &&
         (!area.value || d.area === area.value) &&
         (!rat.value || d.rat === rat.value) &&
@@ -269,6 +289,12 @@ const bandLabel: Record<string, string> = {
   }
 
   for (const el of [cur, area, rat, mail]) el.addEventListener("change", apply);
+  /* input, not change: change on a text box waits for blur or Enter, and the
+     point of this one is that it filters while it is being typed. "search"
+     catches the browser's own clear button, which does not raise input in
+     every engine. */
+  q.addEventListener("input", apply);
+  q.addEventListener("search", apply);
   all.addEventListener("change", () => {
     for (const c of picks()) if (!c.disabled) c.checked = all.checked;
     count();
