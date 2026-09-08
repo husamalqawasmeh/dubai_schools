@@ -2836,14 +2836,21 @@ a.idcard:hover h2 { color: var(--on-accent); }
 @media (max-width: 820px) { .idside { transform: none; } }
 
 /* Titles only now, so each card centres its one line rather than hanging it in
-   the top-left of a box sized for two. min-height keeps the seven the same
-   size — without it a card is as tall as its own text, and "Sign out" would be
-   shorter than "Improvements and planned changes". */
+   the top-left of a box sized for two. min-height keeps them all the same size
+   — without it a card is as tall as its own text, and "Sign-in" would be
+   shorter than "Improvements and planned changes".
+
+   Shorter than it was: the menu has grown to eleven cards, and at the old
+   height the last of them sat below the fold. The padding comes down with it
+   — leaving 16px against a 3.2rem box would have made the padding set the
+   floor instead of the min-height, and the cards would go back to being
+   different sizes. */
 .adminlink {
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 5.4rem;
+  min-height: 3.2rem;
+  padding: 8px 16px;
   text-align: center;
 }
 .adminlink h2 { margin: 0; }
