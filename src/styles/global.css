@@ -2768,7 +2768,12 @@ button.adminlink {
 
 /* The two cards are links now, so they answer the pointer like every other
    control here — the shared fill, and the heading with it. */
-a.idcard { text-decoration: none; display: block; }
+/* display:block was here to make the link fill its cell. It also outranked
+   the .idcard flex rule — a.idcard is (0,2,0) against (0,1,0), and
+   specificity beats source order — so the card was never a flex container
+   and align-items had nothing to act on. Flex fills the cell just as well,
+   and it is the one thing that actually centres the label. */
+a.idcard { text-decoration: none; }
 a.idcard h2 { margin: 0; }
 a.idcard:hover { background: var(--accent-2); }
 a.idcard:hover h2 { color: var(--on-accent); }

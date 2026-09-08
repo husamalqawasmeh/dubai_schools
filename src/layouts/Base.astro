@@ -32,12 +32,6 @@ const NAV = [
   { href: "/overview#chatbox", label: "Chatbot" },
 ];
 
-/* One database read per render, and it decides whether a menu item exists at
-   all rather than hiding it with CSS — a hidden link is still a link in the
-   tab order and still something a crawler follows. */
-const hideSupplies = await getFlag(HIDE_SUPPLIES);
-const nav = NAV.filter((n) => !(hideSupplies && n.href === "/supplies"));
-
 /**
  * Which nav item the page belongs to.
  *
@@ -47,6 +41,29 @@ const nav = NAV.filter((n) => !(hideSupplies && n.href === "/supplies"));
  * claims it. Nor does "/", which is the splash and has no section of its own.
  */
 const here = (Astro.url.pathname.replace(/\/+$/, "") || "/").toLowerCase();
+
+/* One database read per render, and it decides whether a menu item exists
+   at all rather than hiding it with CSS — a hidden link is still a link in
+   the tab order and still something a crawler follows. */
+const hideSupplies = await getFlag(HIDE_SUPPLIES);
+/* Advertise is a school-facing offer, so it comes out of the parents'
+   section. Scoped to /parents rather than to the one page: a parent who
+   moves from the overview to the communicate page has not become an
+   advertiser on the way, and a nav item that reappears one click later
+   reads as a bug. */
+const hideAdvertise = here.startsWith("/parents");
+
+/* Travel time is a parent's question — how long the school run takes from
+   home. A school has no home to measure from, so it comes out of the schools'
+   section for the same reason Advertise comes out of the parents'. */
+const hideTravel = here.startsWith("/schools");
+
+const nav = NAV.filter(
+  (n) =>
+    !(hideSupplies && n.href === "/supplies") &&
+    !(hideAdvertise && n.href.startsWith("/advertise")) &&
+    !(hideTravel && n.href === "/travel-time")
+);
 
 /**
  * Communicate follows the section you are already in.
