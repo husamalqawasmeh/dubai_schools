@@ -17,6 +17,28 @@
       <stop offset="1" stop-color="#cfe2d6"/>
     </radialGradient>
 
+    <!-- What turns a disc into a sphere. One gradient does both halves of it:
+         white where the light lands at the upper left, black where the surface
+         rolls away at the lower right. Object-bounding-box units, so the same
+         def fits all eleven whatever their size or colour — the bubbles are
+         eleven different hues and a coloured gradient would need eleven defs.
+
+         The dark stops start at 82% of the radius. The icon reaches 61%, so it
+         stays in the lit part and does not get muddied by its own bubble. -->
+    <radialGradient id="bubBall" cx="34%" cy="30%" r="76%">
+      <stop offset="0" stop-color="#ffffff" stop-opacity=".45"/>
+      <stop offset="0.42" stop-color="#ffffff" stop-opacity=".07"/>
+      <stop offset="0.82" stop-color="#000000" stop-opacity=".05"/>
+      <stop offset="1" stop-color="#000000" stop-opacity=".28"/>
+    </radialGradient>
+
+    <!-- Light bouncing back up off the glass below. A real sphere is never
+         fully dark on its shaded side, and this is the stop that says so. -->
+    <radialGradient id="bubBounce" cx="64%" cy="82%" r="42%">
+      <stop offset="0" stop-color="#ffffff" stop-opacity=".22"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+    </radialGradient>
+
     <!-- The ring is one band of metal: light where it faces the light, dark
          where it turns away. Two stops would read as flat; four give it a
          roll. -->
@@ -99,9 +121,11 @@
 
   <g clip-path="url(#lensClip)">
     <g class="bub" data-icon="student" style="--i:0">
-      <circle cx="163.2" cy="120.7" r="20.904999999999998" fill="#6b3fa0"/>
-      <circle cx="163.2" cy="114.9" r="15.1" fill="#fff" opacity=".08"/>
-      <g transform="translate(150.4 107.9) scale(1.066)">
+      <circle cx="158.2" cy="121.4" r="18.8145" fill="#6b3fa0"/>
+      <circle cx="158.2" cy="121.4" r="18.8145" fill="url(#bubBounce)"/>
+      <circle cx="158.2" cy="121.4" r="18.8145" fill="url(#bubBall)"/>
+      <ellipse cx="152.0" cy="113.5" rx="5.6" ry="3.8" fill="#fff" opacity=".55" transform="rotate(-28 152.0 113.5)"/>
+      <g transform="translate(146.7 109.9) scale(0.960)">
         <path d="M12 11.2a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7z" fill="#fff" fill-rule="evenodd"/>
         <path d="M12 17.8c-3.6 0-6.6 2.4-7.2 5.5l.1.5h14.2l.1-.5c-.6-3.1-3.6-5.5-7.2-5.5zM12 17.9 10.2 20.4h3.6z" fill="#fff" fill-rule="evenodd"/>
         <path d="M5.6 19.6 3.9 23.8h2.3l1.4-3.4z" fill="#fff" fill-rule="evenodd"/>
@@ -113,17 +137,21 @@
       </g>
     </g>
     <g class="bub" data-icon="school" style="--i:1">
-      <circle cx="124.3" cy="138.1" r="20.339999999999996" fill="#2f7d5c"/>
-      <circle cx="124.3" cy="132.4" r="14.6" fill="#fff" opacity=".08"/>
-      <g transform="translate(111.9 125.7) scale(1.037)">
+      <circle cx="127.1" cy="144.2" r="18.305999999999997" fill="#2f7d5c"/>
+      <circle cx="127.1" cy="144.2" r="18.305999999999997" fill="url(#bubBounce)"/>
+      <circle cx="127.1" cy="144.2" r="18.305999999999997" fill="url(#bubBall)"/>
+      <ellipse cx="121.1" cy="136.5" rx="5.5" ry="3.7" fill="#fff" opacity=".55" transform="rotate(-28 121.1 136.5)"/>
+      <g transform="translate(115.9 133.0) scale(0.934)">
         <path d="M11.4 1h1.1v3.1h-1.1z M12.5 1.3l3.1 1-3.1 1zM12 3.7 22.5 8.5v1.6H1.5V8.5zM3.4 11.2h17.2V21.6H3.4zM12 12.1 16.1 15h-8.2z M10.2 15h3.6v6.6h-3.6zM11.45 12.85a1.05 1.05 0 1 0 0 2.1 1.05 1.05 0 0 0 0-2.1zM5.3 13.4h3v3h-3z M5 16.6h3.6v.8H5zM15.7 13.4h3v3h-3z M15.4 16.6h3.6v.8h-3.6zM2.6 21.6h18.8v1.3H2.6z" fill="#fff" fill-rule="evenodd"/>
         <path d="M12 3.8 22.4 8.6v1.6H1.6V8.6z M3.4 11.4h17.2v1.4H3.4z" fill="#2f7d5c" fill-rule="evenodd" opacity=".34"/>
       </g>
     </g>
     <g class="bub" data-icon="teacher" style="--i:2">
-      <circle cx="122.8" cy="179.6" r="19.775" fill="#2a5fa8"/>
-      <circle cx="122.8" cy="174.1" r="14.2" fill="#fff" opacity=".08"/>
-      <g transform="translate(110.7 167.5) scale(1.009)">
+      <circle cx="123.4" cy="181.5" r="17.7975" fill="#2a5fa8"/>
+      <circle cx="123.4" cy="181.5" r="17.7975" fill="url(#bubBounce)"/>
+      <circle cx="123.4" cy="181.5" r="17.7975" fill="url(#bubBall)"/>
+      <ellipse cx="117.5" cy="174.0" rx="5.3" ry="3.6" fill="#fff" opacity=".55" transform="rotate(-28 117.5 174.0)"/>
+      <g transform="translate(112.5 170.6) scale(0.908)">
         <path d="M8.2 2.2h14.4v11.4H8.2z M9.6 3.6h11.6v8.6H9.6zM11 5.2h8.8v1.2H11z M11 7.6h5.6v1.2H11z M11 10h7.2v1.2H11zM8.9 13.6h13v1.2h-13z" fill="#fff" fill-rule="evenodd"/>
         <path d="M4.9 5.2a2.9 2.9 0 1 0 0 5.8 2.9 2.9 0 0 0 0-5.8z" fill="#fff" fill-rule="evenodd"/>
         <path d="M4.9 11.6c-2.1 0-3.8 2-3.8 4.6v1.9h7.6v-1.9c0-2.6-1.7-4.6-3.8-4.6z" fill="#fff" fill-rule="evenodd"/>
@@ -134,9 +162,11 @@
       </g>
     </g>
     <g class="bub" data-icon="bus" style="--i:3">
-      <circle cx="85.6" cy="151.4" r="19.209999999999997" fill="#3a4a52"/>
-      <circle cx="85.6" cy="146.0" r="13.8" fill="#fff" opacity=".08"/>
-      <g transform="translate(73.8 139.6) scale(0.980)">
+      <circle cx="90.1" cy="144.5" r="17.288999999999998" fill="#3a4a52"/>
+      <circle cx="90.1" cy="144.5" r="17.288999999999998" fill="url(#bubBounce)"/>
+      <circle cx="90.1" cy="144.5" r="17.288999999999998" fill="url(#bubBall)"/>
+      <ellipse cx="84.4" cy="137.3" rx="5.2" ry="3.5" fill="#fff" opacity=".55" transform="rotate(-28 84.4 137.3)"/>
+      <g transform="translate(79.5 133.9) scale(0.882)">
         <path d="M1.2 8c0-1.7 1.4-3.1 3.1-3.1h10.4c1.1 0 2.2.5 2.9 1.4l3.6 4.4c.5.7.8 1.5.8 2.4v2.6c0 1-.8 1.8-1.8 1.8H3c-1 0-1.8-.8-1.8-1.8zM3.4 7.2h3.1v3.8H3.4z M7.9 7.2h3.1v3.8H7.9zM16.4 7.5h1.1l2.8 3.4h-3.9z" fill="#efb100" fill-rule="evenodd"/>
         <path d="M12.4 6.6h3.1v9.6h-3.1z" fill="#efb100" fill-rule="evenodd"/>
         <path d="M6.4 14.2a3.3 3.3 0 1 0 0 6.6 3.3 3.3 0 0 0 0-6.6z" fill="#efb100" fill-rule="evenodd"/>
@@ -147,50 +177,62 @@
       </g>
     </g>
     <g class="bub" data-icon="rank" style="--i:4">
-      <circle cx="55.1" cy="125.7" r="19.209999999999997" fill="#5f7d1f"/>
-      <circle cx="55.1" cy="120.3" r="13.8" fill="#fff" opacity=".08"/>
-      <g transform="translate(43.4 113.9) scale(0.980)">
+      <circle cx="60.7" cy="123.8" r="17.288999999999998" fill="#5f7d1f"/>
+      <circle cx="60.7" cy="123.8" r="17.288999999999998" fill="url(#bubBounce)"/>
+      <circle cx="60.7" cy="123.8" r="17.288999999999998" fill="url(#bubBall)"/>
+      <ellipse cx="55.0" cy="116.6" rx="5.2" ry="3.5" fill="#fff" opacity=".55" transform="rotate(-28 55.0 116.6)"/>
+      <g transform="translate(50.1 113.3) scale(0.882)">
         <path d="M12 1.2l1.5 3.1 3.4.5-2.5 2.4.6 3.4-3-1.6-3 1.6.6-3.4-2.5-2.4 3.4-.5zM9.2 11.2h5.6v10.2H9.2z M9.2 11.2h5.6v1H9.2zM2.6 14.2h5.6v7.2H2.6z M2.6 14.2h5.6v.9H2.6zM15.8 16.2h5.6v5.2h-5.6z M15.8 16.2h5.6v.9h-5.6zM1.4 21.4h21.2v1.4H1.4z" fill="#fff" fill-rule="evenodd"/>
         <path d="M2.4 14.4H8v1.3H2.4z M16 16.4h5.6v1.3H16z" fill="#5f7d1f" fill-rule="evenodd" opacity=".34"/>
       </g>
     </g>
     <g class="bub" data-icon="book" style="--i:5">
-      <circle cx="48.0" cy="85.1" r="18.08" fill="#c05a12"/>
-      <circle cx="48.0" cy="80.1" r="13.0" fill="#fff" opacity=".08"/>
-      <g transform="translate(36.9 74.1) scale(0.922)">
+      <circle cx="48.8" cy="89.2" r="16.272" fill="#c05a12"/>
+      <circle cx="48.8" cy="89.2" r="16.272" fill="url(#bubBounce)"/>
+      <circle cx="48.8" cy="89.2" r="16.272" fill="url(#bubBall)"/>
+      <ellipse cx="43.5" cy="82.3" rx="4.9" ry="3.3" fill="#fff" opacity=".55" transform="rotate(-28 43.5 82.3)"/>
+      <g transform="translate(38.9 79.2) scale(0.830)">
         <path d="M11.3 6.5C8.8 4.6 5.7 3.7 2.2 3.7v12.9c3.5 0 6.6.9 9.1 2.8zM12.7 6.5c2.5-1.9 5.6-2.8 9.1-2.8v12.9c-3.5 0-6.6.9-9.1 2.8zM2.2 16.6c3.5 0 6.6.9 9.1 2.8v1.5c-2.5-1.9-5.6-2.8-9.1-2.8zM21.8 16.6c-3.5 0-6.6.9-9.1 2.8v1.5c2.5-1.9 5.6-2.8 9.1-2.8z" fill="#fff" fill-rule="evenodd"/>
         <path d="M11.3 6.5h1.4v12.9h-1.4zM9.8 8.8 4.2 7.1v1.1l5.6 1.7z M9.8 11.3 4.2 9.6v1.1l5.6 1.7zM9.8 13.8 6.4 12.8v1.1l3.4 1zM14.2 8.8 19.8 7.1v1.1l-5.6 1.7z M14.2 11.3 19.8 9.6v1.1l-5.6 1.7zM14.2 13.8 17.6 12.8v1.1l-3.4 1zM2.2 16.6c3.5 0 6.6.9 9.1 2.8v.5c-2.5-1.9-5.6-2.8-9.1-2.8zM21.8 16.6c-3.5 0-6.6.9-9.1 2.8v.5c2.5-1.9 5.6-2.8 9.1-2.8z" fill="#c05a12" fill-rule="evenodd" opacity=".34"/>
       </g>
     </g>
     <g class="bub" data-icon="government" style="--i:6">
-      <circle cx="82.3" cy="98.9" r="17.514999999999997" fill="#3f4a9c"/>
-      <circle cx="82.3" cy="94.0" r="12.6" fill="#fff" opacity=".08"/>
-      <g transform="translate(71.6 88.2) scale(0.893)">
+      <circle cx="81.5" cy="96.4" r="15.763499999999999" fill="#3f4a9c"/>
+      <circle cx="81.5" cy="96.4" r="15.763499999999999" fill="url(#bubBounce)"/>
+      <circle cx="81.5" cy="96.4" r="15.763499999999999" fill="url(#bubBall)"/>
+      <ellipse cx="76.3" cy="89.8" rx="4.7" ry="3.2" fill="#fff" opacity=".55" transform="rotate(-28 76.3 89.8)"/>
+      <g transform="translate(71.8 86.8) scale(0.804)">
         <path d="M12 1.6 22.8 7v1.5H1.2V7z M12 3.4 18.6 6.7H5.4zM2.6 8.9h18.8v1.1H2.6zM3.6 10.2h2.5v7.6H3.6z M8.4 10.2h2.5v7.6H8.4z M13.1 10.2h2.5v7.6h-2.5z M17.9 10.2h2.5v7.6h-2.5zM3.1 17.9h3.5v1.1H3.1z M7.9 17.9h3.5v1.1H7.9z M12.6 17.9h3.5v1.1h-3.5z M17.4 17.9h3.5v1.1h-3.5zM2.2 19.2h19.6v1.4H2.2z M1.2 20.8h21.6v1.6H1.2z" fill="#fff" fill-rule="evenodd"/>
         <path d="M12 1.8 22.6 7v1.6H1.4V7z M2.2 19.6h19.6v.9H2.2z" fill="#3f4a9c" fill-rule="evenodd" opacity=".34"/>
       </g>
     </g>
     <g class="bub" data-icon="certificate" style="--i:7">
-      <circle cx="76.5" cy="57.3" r="17.514999999999997" fill="#262626"/>
-      <circle cx="76.5" cy="52.4" r="12.6" fill="#fff" opacity=".08"/>
-      <g transform="translate(65.8 46.6) scale(0.893)">
+      <circle cx="77.9" cy="57.7" r="15.763499999999999" fill="#262626"/>
+      <circle cx="77.9" cy="57.7" r="15.763499999999999" fill="url(#bubBounce)"/>
+      <circle cx="77.9" cy="57.7" r="15.763499999999999" fill="url(#bubBall)"/>
+      <ellipse cx="72.7" cy="51.0" rx="4.7" ry="3.2" fill="#fff" opacity=".55" transform="rotate(-28 72.7 51.0)"/>
+      <g transform="translate(68.2 48.0) scale(0.804)">
         <path d="M2.4 2h19.2v13H2.4z M3.8 3.4h16.4v10.2H3.8zM6 5.6h12v1.5H6z M6 8.4h8.6v1.3H6z M6 10.9h6.2v1.3H6zM17 14.4a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7zM13.4 19.9 12.1 24l2.7-1.2 1.5 1.2.5-3.3zM20.6 19.9 21.9 24l-2.7-1.2-1.5 1.2-.5-3.3z" fill="#fff" fill-rule="evenodd"/>
         <path d="M3 2.4h18v1.5H3z M17.2 16.2a1.8 1.8 0 1 0 0 3.6 1.8 1.8 0 0 0 0-3.6z" fill="#262626" fill-rule="evenodd" opacity=".34"/>
       </g>
     </g>
     <g class="bub" data-icon="coins" style="--i:8">
-      <circle cx="108.9" cy="74.0" r="17.514999999999997" fill="#ffffff"/>
-      <circle cx="108.9" cy="69.1" r="12.6" fill="#fff" opacity=".08"/>
-      <circle cx="108.9" cy="74.0" r="16.4" fill="none" stroke="url(#dhGrad)" stroke-width="2.3"/>
-      <g transform="translate(98.2 63.3) scale(0.893)">
+      <circle cx="108.0" cy="76.8" r="15.763499999999999" fill="#ffffff"/>
+      <circle cx="108.0" cy="76.8" r="15.763499999999999" fill="url(#bubBounce)"/>
+      <circle cx="108.0" cy="76.8" r="15.763499999999999" fill="url(#bubBall)"/>
+      <ellipse cx="102.8" cy="70.2" rx="4.7" ry="3.2" fill="#fff" opacity=".55" transform="rotate(-28 102.8 70.2)"/>
+      <circle cx="108.0" cy="76.8" r="14.7" fill="none" stroke="url(#dhGrad)" stroke-width="2.0"/>
+      <g transform="translate(98.3 67.2) scale(0.804)">
         
         <path d="M6.6 4h3.6v16H6.6zM9.6 4c5.6 0 9 3.2 9 8s-3.4 8-9 8v-3.4c3.4 0 5.4-2 5.4-4.6s-2-4.6-5.4-4.6zM4.6 9.7H20.4v1.9H3.2zM4.6 12.7H20.4v1.9H3.2z" fill="url(#dhGrad)"/>
       </g>
     </g>
     <g class="bub" data-icon="running" style="--i:9">
-      <circle cx="144.7" cy="75.7" r="16.95" fill="#0f8a8a"/>
-      <circle cx="144.7" cy="71.0" r="12.2" fill="#fff" opacity=".08"/>
-      <g transform="translate(134.4 65.3) scale(0.864)">
+      <circle cx="140.3" cy="74.2" r="15.254999999999999" fill="#0f8a8a"/>
+      <circle cx="140.3" cy="74.2" r="15.254999999999999" fill="url(#bubBounce)"/>
+      <circle cx="140.3" cy="74.2" r="15.254999999999999" fill="url(#bubBall)"/>
+      <ellipse cx="135.3" cy="67.8" rx="4.6" ry="3.1" fill="#fff" opacity=".55" transform="rotate(-28 135.3 67.8)"/>
+      <g transform="translate(131.0 64.9) scale(0.778)">
         <path d="M15.8 2.1a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5z" fill="#fff" fill-rule="evenodd"/>
         <path d="M14.2 8.0 10.8 14.2" fill="none" stroke="#fff" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/>
         <path d="M12.8 9.4 9.0 9.0 7.0 11.4" fill="none" stroke="#fff" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/>
@@ -205,9 +247,11 @@
       </g>
     </g>
     <g class="bub" data-icon="pen" style="--i:10">
-      <circle cx="180.0" cy="86.5" r="15.819999999999999" fill="#c0468a"/>
-      <circle cx="180.0" cy="82.1" r="11.4" fill="#fff" opacity=".08"/>
-      <g transform="translate(170.3 76.8) scale(0.807)">
+      <circle cx="176.8" cy="92.4" r="14.238" fill="#c0468a"/>
+      <circle cx="176.8" cy="92.4" r="14.238" fill="url(#bubBounce)"/>
+      <circle cx="176.8" cy="92.4" r="14.238" fill="url(#bubBall)"/>
+      <ellipse cx="172.1" cy="86.4" rx="4.3" ry="2.8" fill="#fff" opacity=".55" transform="rotate(-28 172.1 86.4)"/>
+      <g transform="translate(168.0 83.7) scale(0.726)">
         <path d="M18.1 1.3a2.1 2.1 0 0 1 3 0l1.6 1.6a2.1 2.1 0 0 1 0 3l-1.3 1.3-4.6-4.6z" fill="#fff" fill-rule="evenodd"/>
         <path d="M16.3 3.1l4.6 4.6-1.7 1.7-4.6-4.6z" fill="#fff" fill-rule="evenodd"/>
         <path d="M14.3 5.1l4.6 4.6-9.9 9.9-4.6-4.6z" fill="#fff" fill-rule="evenodd"/>

@@ -44,7 +44,7 @@ const R_GLASS = R_OUTER - RING;   // inside face of the glass
  * with them — 71 to 82 — so the fill stays near half. That headroom is not
  * only taste: these bubbles bounce, and a bubble in a full jar cannot move.
  */
-const BUBBLE_SCALE = 1.13;
+const BUBBLE_SCALE = 1.017;   // was 1.13, less a tenth
 
 /* ---------- the icons ---------- */
 /* Each is drawn in a 24x24 box, white stroke, no fill — a stroke reads at a
@@ -452,7 +452,9 @@ const bubble = (b, i) => {
     : "";
   return `    <g class="bub" data-icon="${b.icon}" style="--i:${i}">
       <circle cx="${b.x.toFixed(1)}" cy="${b.y.toFixed(1)}" r="${b.r}" fill="${b.fill}"/>
-      <circle cx="${b.x.toFixed(1)}" cy="${(b.y - b.r * 0.28).toFixed(1)}" r="${(b.r * 0.72).toFixed(1)}" fill="#fff" opacity=".08"/>${ring}
+      <circle cx="${b.x.toFixed(1)}" cy="${b.y.toFixed(1)}" r="${b.r}" fill="url(#bubBounce)"/>
+      <circle cx="${b.x.toFixed(1)}" cy="${b.y.toFixed(1)}" r="${b.r}" fill="url(#bubBall)"/>
+      <ellipse cx="${(b.x - b.r * 0.33).toFixed(1)}" cy="${(b.y - b.r * 0.42).toFixed(1)}" rx="${(b.r * 0.30).toFixed(1)}" ry="${(b.r * 0.20).toFixed(1)}" fill="#fff" opacity=".55" transform="rotate(-28 ${(b.x - b.r * 0.33).toFixed(1)} ${(b.y - b.r * 0.42).toFixed(1)})"/>${ring}
       <g transform="translate(${ox.toFixed(1)} ${oy.toFixed(1)}) scale(${s.toFixed(3)})">
         ${parts.map((d) => `<path d="${d}" fill="${face}" fill-rule="evenodd"/>`).join("\n        ")}${lines}${soft}${mark}${dim}
       </g>
@@ -502,6 +504,28 @@ const render = (list) => `  <defs>
       <stop offset="0" stop-color="#ffffff"/>
       <stop offset="0.55" stop-color="#eef7f1"/>
       <stop offset="1" stop-color="#cfe2d6"/>
+    </radialGradient>
+
+    <!-- What turns a disc into a sphere. One gradient does both halves of it:
+         white where the light lands at the upper left, black where the surface
+         rolls away at the lower right. Object-bounding-box units, so the same
+         def fits all eleven whatever their size or colour — the bubbles are
+         eleven different hues and a coloured gradient would need eleven defs.
+
+         The dark stops start at 82% of the radius. The icon reaches 61%, so it
+         stays in the lit part and does not get muddied by its own bubble. -->
+    <radialGradient id="bubBall" cx="34%" cy="30%" r="76%">
+      <stop offset="0" stop-color="#ffffff" stop-opacity=".45"/>
+      <stop offset="0.42" stop-color="#ffffff" stop-opacity=".07"/>
+      <stop offset="0.82" stop-color="#000000" stop-opacity=".05"/>
+      <stop offset="1" stop-color="#000000" stop-opacity=".28"/>
+    </radialGradient>
+
+    <!-- Light bouncing back up off the glass below. A real sphere is never
+         fully dark on its shaded side, and this is the stop that says so. -->
+    <radialGradient id="bubBounce" cx="64%" cy="82%" r="42%">
+      <stop offset="0" stop-color="#ffffff" stop-opacity=".22"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
     </radialGradient>
 
     <!-- The ring is one band of metal: light where it faces the light, dark
@@ -623,7 +647,7 @@ const RING_ORDER = ["book", "bus", "rank", "government", "certificate", "coins",
  *
  * The icons scale off the radius, so equal circles mean equal icons too.
  */
-const EQUAL_R = 21;
+const EQUAL_R = 18.9;   // was 21, less a tenth
 const sized = (n) => ({ ...byName(n), r: EQUAL_R });
 
 const trio = CENTRE_TRIO.map(sized);
