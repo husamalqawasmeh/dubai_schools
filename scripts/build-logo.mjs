@@ -648,43 +648,80 @@ const render = (list) => `  <defs>
 
   <circle cx="${CX}" cy="${CY}" r="${R_GLASS}" fill="url(#glass)"/>
 
-  <!-- Dubai under the glass: the sea to the north-west, the coast running
-       south-west to north-east across it, the Creek cutting inland, the Palm
-       off Jumeirah, and four of the highways that everyone navigates by.
+  <!-- Dubai under the glass.
 
-       Drawn, not a map tile. A screenshot of anyone's map service is their
-       copyright and could not go on a public site, and a raster could not be
-       clipped to this circle or survive the favicon. Our own coordinates
-       would have been the other way to do it, but every lat/lng in the
-       schools table is still null.
+       Drawn, not a map tile. A screenshot of a map service is its owner's
+       copyright and cannot go on a public site; a raster could be neither
+       clipped to this circle nor read at favicon size. Our own coordinates
+       were the other way to do it, but every lat/lng in the schools table is
+       still null.
 
-       Deliberately faint. It is the ground the bubbles sit on, and the moment
-       it competes with them it has stopped being a background. -->
-  <g clip-path="url(#lensClip)" opacity=".42">
-    <!-- Land first, filling the disc, then the sea laid over its north-west. -->
+       What makes it Dubai rather than any coastline is four things, and they
+       are the four that are drawn most carefully: the Palm with its trunk,
+       sixteen fronds and the crescent broken where the channel runs; the
+       World scattered offshore; the Creek cutting inland from the north-east;
+       and Jebel Ali's palm at the south-west edge. Take those away and the
+       rest is a diagonal.
+
+       Absolute coordinates, not offsets from CX/CY. This is a hand-placed
+       drawing rather than a construction, and writing 150 - CX for every
+       point would obscure the shape without making it move correctly if the
+       lens ever changed size. -->
+  <g clip-path="url(#lensClip)" opacity=".5">
     <circle cx="${CX}" cy="${CY}" r="${R_GLASS}" fill="#efe7d6"/>
-    <path d="M${CX - R_GLASS} ${CY - R_GLASS} h${R_GLASS * 2} v${R_GLASS * 0.55}
-             C ${CX + 52} ${CY - 44}, ${CX + 4} ${CY - 20}, ${CX - 30} ${CY + 14}
-             C ${CX - 52} ${CY + 36}, ${CX - 70} ${CY + 62}, ${CX - 78} ${CY + R_GLASS}
-             h-${R_GLASS} z" fill="#9fd6e8"/>
 
-    <!-- The Creek, inland from the coast. -->
-    <path d="M${CX + 6} ${CY - 24} c -10 12, -16 22, -26 30 c -8 7, -14 10, -20 12"
-          stroke="#9fd6e8" stroke-width="5" fill="none" stroke-linecap="round"/>
+    <!-- The Gulf, north-west of a coast running south-west to north-east. -->
+    <path d="M13 11 H207 V16 C186 34 168 52 150 70 C132 88 116 104 100 119
+             C82 136 60 156 40 176 C30 186 22 195 16 203 H13 z" fill="#9fd6e8"/>
 
-    <!-- The Palm, off the coast: trunk, crown and the breakwater round it. -->
-    <circle cx="${CX - 58}" cy="${CY + 40}" r="15" fill="none" stroke="#efe7d6" stroke-width="2.4"/>
-    <path d="M${CX - 46} ${CY + 30} l -10 9" stroke="#efe7d6" stroke-width="3" stroke-linecap="round"/>
-    <path d="M${CX - 58} ${CY + 40} m -9 -6 l 18 12 M${CX - 58} ${CY + 40} m -9 6 l 18 -12
-             M${CX - 58} ${CY + 40} m 0 -10 l 0 20" stroke="#efe7d6" stroke-width="1.6"/>
+    <!-- Dubai Creek, in from the coast and bending south. -->
+    <path d="M152 66 C160 78 168 90 173 102 C177 111 178 120 175 129"
+          fill="none" stroke="#9fd6e8" stroke-width="4.6" stroke-linecap="round"/>
 
-    <!-- Highways: the two that run the length of the city and two crossing. -->
-    <g stroke="#c9a86a" fill="none" stroke-linecap="round">
-      <path d="M${CX - 92} ${CY + 74} C ${CX - 40} ${CY + 30}, ${CX + 20} ${CY - 12}, ${CX + 84} ${CY - 52}" stroke-width="2.6"/>
-      <path d="M${CX - 78} ${CY + R_GLASS} C ${CX - 24} ${CY + 46}, ${CX + 34} ${CY + 6}, ${CX + 92} ${CY - 30}" stroke-width="2.2"/>
-      <path d="M${CX - 30} ${CY + 84} C ${CX - 6} ${CY + 40}, ${CX + 16} ${CY + 10}, ${CX + 54} ${CY - 16}" stroke-width="1.6"/>
-      <path d="M${CX + 18} ${CY + 76} C ${CX + 34} ${CY + 36}, ${CX + 52} ${CY + 8}, ${CX + 88} ${CY - 8}" stroke-width="1.6"/>
+    <!-- The World: an oval scatter, offshore of Jumeirah. -->
+    <g fill="#efe7d6">
+      <circle cx="104" cy="50" r="2.1"/><circle cx="112" cy="46" r="1.7"/>
+      <circle cx="120" cy="49" r="2.3"/><circle cx="99" cy="57" r="1.8"/>
+      <circle cx="108" cy="56" r="2.4"/><circle cx="117" cy="55" r="1.9"/>
+      <circle cx="125" cy="57" r="2.0"/><circle cx="103" cy="64" r="2.2"/>
+      <circle cx="112" cy="63" r="1.8"/><circle cx="121" cy="64" r="2.1"/>
+      <circle cx="129" cy="50" r="1.6"/><circle cx="96" cy="49" r="1.6"/>
     </g>
+
+    <!-- Palm Jumeirah: trunk out from the shore, a crown of sixteen fronds,
+         and the crescent around it left open where the channel runs. -->
+    <g stroke="#efe7d6" fill="none" stroke-linecap="round">
+      <path d="M74 141 L64 127" stroke-width="3.4"/>
+      <g stroke-width="1.5">
+        <path d="M64 127 L52 121 M64 127 L54 115 M64 127 L57 109 M64 127 L62 103"
+              />
+        <path d="M64 127 L68 102 M64 127 L74 105 M64 127 L79 110 M64 127 L82 117"/>
+        <path d="M64 127 L50 128 M64 127 L51 134 M64 127 L55 140 M64 127 L61 144"/>
+        <path d="M64 127 L70 143 M64 127 L76 139 M64 127 L80 133 M64 127 L83 126"/>
+      </g>
+      <path d="M64 105 A23 23 0 1 1 46 138" stroke-width="2.6"/>
+    </g>
+
+    <!-- Palm Jebel Ali, smaller, down at the south-west edge. -->
+    <g stroke="#efe7d6" fill="none" stroke-linecap="round">
+      <path d="M34 178 L26 168" stroke-width="2.4"/>
+      <g stroke-width="1.1">
+        <path d="M26 168 L18 163 M26 168 L20 158 M26 168 L25 153 M26 168 L31 156"/>
+        <path d="M26 168 L36 160 M26 168 L16 172 M26 168 L19 178 M26 168 L26 182"/>
+      </g>
+      <path d="M26 151 A17 17 0 1 1 12 176" stroke-width="1.9"/>
+    </g>
+
+    <!-- The roads the city is navigated by: Sheikh Zayed and Emirates Road
+         running its length, with three crossing them inland. -->
+    <g stroke="#c9a86a" fill="none" stroke-linecap="round">
+      <path d="M22 203 C62 163 104 124 148 84 C168 66 186 50 202 38" stroke-width="2.8"/>
+      <path d="M50 205 C88 168 128 130 168 94 C184 79 196 68 206 60" stroke-width="2.2"/>
+      <path d="M92 205 C102 172 114 144 130 118" stroke-width="1.5"/>
+      <path d="M148 203 C158 172 168 146 180 124" stroke-width="1.5"/>
+      <path d="M40 190 C66 176 96 158 126 136" stroke-width="1.2"/>
+    </g>
+  </g>
   </g>
 
   <!-- Everything that belongs to the glass surface is painted before the
@@ -734,7 +771,13 @@ const MIDDLE_ROW = ["running", "teacher", "student", "school", "rank"];
 /* The other six, three above and three below. They keep the row company
    rather than ringing it: a ring puts something directly above and below the
    centre, and this layout wants the middle line clear across. */
-const ABOVE = ["book", "certificate", "government"];
+/* Above, the certificate stands over school — the same column the pencil
+   stands in below it. Named offsets rather than even thirds, because a column
+   alignment is not something even spacing can express. */
+const ABOVE = ["book", "government", "certificate"];
+/* Below, the pencil sits under school rather than out at the edge. Named
+   offsets rather than even thirds, because it is now aligned to a column of
+   the middle row and even spacing cannot express that. */
 const BELOW = ["bus", "coins", "pen"];
 
 /**
@@ -757,11 +800,11 @@ const sized = (n) => ({ ...byName(n), r: EQUAL_R });
 const ROW_HALF = R_GLASS - EQUAL_R - 4;
 const ROW_STEP = (2 * ROW_HALF) / (MIDDLE_ROW.length - 1);
 
-/* Far enough out that the rows clear each other, close enough in that the
-   three still fit the chord at that height. */
+/* Far enough out that the rows clear each other. Both outer rows now key off
+   ROW_STEP rather than a width of their own — every bubble stands in one of
+   the middle row's columns, so there is only one horizontal measure on this
+   layout and the chord calculation that used to set a second one has gone. */
 const ROW_DY = 40;
-const sideHalf = Math.sqrt((R_GLASS - EQUAL_R - 3) ** 2 - ROW_DY ** 2);
-const SIDE_STEP = sideHalf;   // three across: -half, 0, +half
 
 const centred = [
   ...MIDDLE_ROW.map(sized).map((b, i) => ({
@@ -769,14 +812,20 @@ const centred = [
     x: CX - ROW_HALF + i * ROW_STEP,
     y: CY,
   })),
-  ...ABOVE.map(sized).map((b, i) => ({
+  ...ABOVE.map(sized).map((b) => ({
     ...b,
-    x: CX + (i - 1) * SIDE_STEP,
+    // The certificate stands over school, in the same column the pencil
+    // stands under it. Government takes the centre it vacates rather than
+    // staying out at the far side, where it would have been left three
+    // pixels off the certificate.
+    x: CX + { book: -ROW_STEP, government: 0, certificate: ROW_STEP }[b.icon],
     y: CY - ROW_DY,
   })),
-  ...BELOW.map(sized).map((b, i) => ({
+  ...BELOW.map(sized).map((b) => ({
     ...b,
-    x: CX + (i - 1) * SIDE_STEP,
+    // bus keeps the far side, the dirham the centre, the pencil the column
+    // school stands in one row up.
+    x: CX + { bus: -ROW_STEP, coins: 0, pen: ROW_STEP }[b.icon],
     y: CY + ROW_DY,
   })),
 ];

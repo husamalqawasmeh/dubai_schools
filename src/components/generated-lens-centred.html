@@ -111,43 +111,80 @@
 
   <circle cx="110" cy="108" r="95" fill="url(#glass)"/>
 
-  <!-- Dubai under the glass: the sea to the north-west, the coast running
-       south-west to north-east across it, the Creek cutting inland, the Palm
-       off Jumeirah, and four of the highways that everyone navigates by.
+  <!-- Dubai under the glass.
 
-       Drawn, not a map tile. A screenshot of anyone's map service is their
-       copyright and could not go on a public site, and a raster could not be
-       clipped to this circle or survive the favicon. Our own coordinates
-       would have been the other way to do it, but every lat/lng in the
-       schools table is still null.
+       Drawn, not a map tile. A screenshot of a map service is its owner's
+       copyright and cannot go on a public site; a raster could be neither
+       clipped to this circle nor read at favicon size. Our own coordinates
+       were the other way to do it, but every lat/lng in the schools table is
+       still null.
 
-       Deliberately faint. It is the ground the bubbles sit on, and the moment
-       it competes with them it has stopped being a background. -->
-  <g clip-path="url(#lensClip)" opacity=".42">
-    <!-- Land first, filling the disc, then the sea laid over its north-west. -->
+       What makes it Dubai rather than any coastline is four things, and they
+       are the four that are drawn most carefully: the Palm with its trunk,
+       sixteen fronds and the crescent broken where the channel runs; the
+       World scattered offshore; the Creek cutting inland from the north-east;
+       and Jebel Ali's palm at the south-west edge. Take those away and the
+       rest is a diagonal.
+
+       Absolute coordinates, not offsets from CX/CY. This is a hand-placed
+       drawing rather than a construction, and writing 150 - CX for every
+       point would obscure the shape without making it move correctly if the
+       lens ever changed size. -->
+  <g clip-path="url(#lensClip)" opacity=".5">
     <circle cx="110" cy="108" r="95" fill="#efe7d6"/>
-    <path d="M15 13 h190 v52.25000000000001
-             C 162 64, 114 88, 80 122
-             C 58 144, 40 170, 32 203
-             h-95 z" fill="#9fd6e8"/>
 
-    <!-- The Creek, inland from the coast. -->
-    <path d="M116 84 c -10 12, -16 22, -26 30 c -8 7, -14 10, -20 12"
-          stroke="#9fd6e8" stroke-width="5" fill="none" stroke-linecap="round"/>
+    <!-- The Gulf, north-west of a coast running south-west to north-east. -->
+    <path d="M13 11 H207 V16 C186 34 168 52 150 70 C132 88 116 104 100 119
+             C82 136 60 156 40 176 C30 186 22 195 16 203 H13 z" fill="#9fd6e8"/>
 
-    <!-- The Palm, off the coast: trunk, crown and the breakwater round it. -->
-    <circle cx="52" cy="148" r="15" fill="none" stroke="#efe7d6" stroke-width="2.4"/>
-    <path d="M64 138 l -10 9" stroke="#efe7d6" stroke-width="3" stroke-linecap="round"/>
-    <path d="M52 148 m -9 -6 l 18 12 M52 148 m -9 6 l 18 -12
-             M52 148 m 0 -10 l 0 20" stroke="#efe7d6" stroke-width="1.6"/>
+    <!-- Dubai Creek, in from the coast and bending south. -->
+    <path d="M152 66 C160 78 168 90 173 102 C177 111 178 120 175 129"
+          fill="none" stroke="#9fd6e8" stroke-width="4.6" stroke-linecap="round"/>
 
-    <!-- Highways: the two that run the length of the city and two crossing. -->
-    <g stroke="#c9a86a" fill="none" stroke-linecap="round">
-      <path d="M18 182 C 70 138, 130 96, 194 56" stroke-width="2.6"/>
-      <path d="M32 203 C 86 154, 144 114, 202 78" stroke-width="2.2"/>
-      <path d="M80 192 C 104 148, 126 118, 164 92" stroke-width="1.6"/>
-      <path d="M128 184 C 144 144, 162 116, 198 100" stroke-width="1.6"/>
+    <!-- The World: an oval scatter, offshore of Jumeirah. -->
+    <g fill="#efe7d6">
+      <circle cx="104" cy="50" r="2.1"/><circle cx="112" cy="46" r="1.7"/>
+      <circle cx="120" cy="49" r="2.3"/><circle cx="99" cy="57" r="1.8"/>
+      <circle cx="108" cy="56" r="2.4"/><circle cx="117" cy="55" r="1.9"/>
+      <circle cx="125" cy="57" r="2.0"/><circle cx="103" cy="64" r="2.2"/>
+      <circle cx="112" cy="63" r="1.8"/><circle cx="121" cy="64" r="2.1"/>
+      <circle cx="129" cy="50" r="1.6"/><circle cx="96" cy="49" r="1.6"/>
     </g>
+
+    <!-- Palm Jumeirah: trunk out from the shore, a crown of sixteen fronds,
+         and the crescent around it left open where the channel runs. -->
+    <g stroke="#efe7d6" fill="none" stroke-linecap="round">
+      <path d="M74 141 L64 127" stroke-width="3.4"/>
+      <g stroke-width="1.5">
+        <path d="M64 127 L52 121 M64 127 L54 115 M64 127 L57 109 M64 127 L62 103"
+              />
+        <path d="M64 127 L68 102 M64 127 L74 105 M64 127 L79 110 M64 127 L82 117"/>
+        <path d="M64 127 L50 128 M64 127 L51 134 M64 127 L55 140 M64 127 L61 144"/>
+        <path d="M64 127 L70 143 M64 127 L76 139 M64 127 L80 133 M64 127 L83 126"/>
+      </g>
+      <path d="M64 105 A23 23 0 1 1 46 138" stroke-width="2.6"/>
+    </g>
+
+    <!-- Palm Jebel Ali, smaller, down at the south-west edge. -->
+    <g stroke="#efe7d6" fill="none" stroke-linecap="round">
+      <path d="M34 178 L26 168" stroke-width="2.4"/>
+      <g stroke-width="1.1">
+        <path d="M26 168 L18 163 M26 168 L20 158 M26 168 L25 153 M26 168 L31 156"/>
+        <path d="M26 168 L36 160 M26 168 L16 172 M26 168 L19 178 M26 168 L26 182"/>
+      </g>
+      <path d="M26 151 A17 17 0 1 1 12 176" stroke-width="1.9"/>
+    </g>
+
+    <!-- The roads the city is navigated by: Sheikh Zayed and Emirates Road
+         running its length, with three crossing them inland. -->
+    <g stroke="#c9a86a" fill="none" stroke-linecap="round">
+      <path d="M22 203 C62 163 104 124 148 84 C168 66 186 50 202 38" stroke-width="2.8"/>
+      <path d="M50 205 C88 168 128 130 168 94 C184 79 196 68 206 60" stroke-width="2.2"/>
+      <path d="M92 205 C102 172 114 144 130 118" stroke-width="1.5"/>
+      <path d="M148 203 C158 172 168 146 180 124" stroke-width="1.5"/>
+      <path d="M40 190 C66 176 96 158 126 136" stroke-width="1.2"/>
+    </g>
+  </g>
   </g>
 
   <!-- Everything that belongs to the glass surface is painted before the
@@ -230,37 +267,37 @@
       </g>
     </g>
     <g class="bub" data-icon="book" style="--i:5">
-      <circle cx="41.7" cy="68.0" r="12.8142" fill="#c05a12"/>
-      <circle cx="41.7" cy="68.0" r="12.8142" fill="url(#bubBounce)"/>
-      <circle cx="41.7" cy="68.0" r="12.8142" fill="url(#bubBall)"/>
-      <g transform="translate(34.6 60.9) scale(0.588)">
+      <circle cx="70.9" cy="68.0" r="12.8142" fill="#c05a12"/>
+      <circle cx="70.9" cy="68.0" r="12.8142" fill="url(#bubBounce)"/>
+      <circle cx="70.9" cy="68.0" r="12.8142" fill="url(#bubBall)"/>
+      <g transform="translate(63.8 60.9) scale(0.588)">
         <path d="M11.3 6.5C8.8 4.6 5.7 3.7 2.2 3.7v12.9c3.5 0 6.6.9 9.1 2.8zM12.7 6.5c2.5-1.9 5.6-2.8 9.1-2.8v12.9c-3.5 0-6.6.9-9.1 2.8zM2.2 16.6c3.5 0 6.6.9 9.1 2.8v1.5c-2.5-1.9-5.6-2.8-9.1-2.8zM21.8 16.6c-3.5 0-6.6.9-9.1 2.8v1.5c2.5-1.9 5.6-2.8 9.1-2.8z" fill="#fff" fill-rule="evenodd"/>
         <path d="M11.3 6.5h1.4v12.9h-1.4zM9.8 8.8 4.2 7.1v1.1l5.6 1.7z M9.8 11.3 4.2 9.6v1.1l5.6 1.7zM9.8 13.8 6.4 12.8v1.1l3.4 1zM14.2 8.8 19.8 7.1v1.1l-5.6 1.7z M14.2 11.3 19.8 9.6v1.1l-5.6 1.7zM14.2 13.8 17.6 12.8v1.1l-3.4 1zM2.2 16.6c3.5 0 6.6.9 9.1 2.8v.5c-2.5-1.9-5.6-2.8-9.1-2.8zM21.8 16.6c-3.5 0-6.6.9-9.1 2.8v.5c2.5-1.9 5.6-2.8 9.1-2.8z" fill="#c05a12" fill-rule="evenodd" opacity=".34"/>
       </g>
     </g>
-    <g class="bub" data-icon="certificate" style="--i:6">
-      <circle cx="110.0" cy="68.0" r="12.8142" fill="#262626"/>
+    <g class="bub" data-icon="government" style="--i:6">
+      <circle cx="110.0" cy="68.0" r="12.8142" fill="#3f4a9c"/>
       <circle cx="110.0" cy="68.0" r="12.8142" fill="url(#bubBounce)"/>
       <circle cx="110.0" cy="68.0" r="12.8142" fill="url(#bubBall)"/>
       <g transform="translate(102.9 60.9) scale(0.588)">
-        <path d="M2.4 2h19.2v13H2.4z M3.8 3.4h16.4v10.2H3.8zM6 5.6h12v1.5H6z M6 8.4h8.6v1.3H6z M6 10.9h6.2v1.3H6zM17 14.4a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7zM13.4 19.9 12.1 24l2.7-1.2 1.5 1.2.5-3.3zM20.6 19.9 21.9 24l-2.7-1.2-1.5 1.2-.5-3.3z" fill="#fff" fill-rule="evenodd"/>
-        <path d="M3 2.4h18v1.5H3z M17.2 16.2a1.8 1.8 0 1 0 0 3.6 1.8 1.8 0 0 0 0-3.6z" fill="#262626" fill-rule="evenodd" opacity=".34"/>
-      </g>
-    </g>
-    <g class="bub" data-icon="government" style="--i:7">
-      <circle cx="178.3" cy="68.0" r="12.8142" fill="#3f4a9c"/>
-      <circle cx="178.3" cy="68.0" r="12.8142" fill="url(#bubBounce)"/>
-      <circle cx="178.3" cy="68.0" r="12.8142" fill="url(#bubBall)"/>
-      <g transform="translate(171.3 60.9) scale(0.588)">
         <path d="M12 1.6 22.8 7v1.5H1.2V7z M12 3.4 18.6 6.7H5.4zM2.6 8.9h18.8v1.1H2.6zM3.6 10.2h2.5v7.6H3.6z M8.4 10.2h2.5v7.6H8.4z M13.1 10.2h2.5v7.6h-2.5z M17.9 10.2h2.5v7.6h-2.5zM3.1 17.9h3.5v1.1H3.1z M7.9 17.9h3.5v1.1H7.9z M12.6 17.9h3.5v1.1h-3.5z M17.4 17.9h3.5v1.1h-3.5zM2.2 19.2h19.6v1.4H2.2z M1.2 20.8h21.6v1.6H1.2z" fill="#fff" fill-rule="evenodd"/>
         <path d="M12 1.8 22.6 7v1.6H1.4V7z M2.2 19.6h19.6v.9H2.2z" fill="#3f4a9c" fill-rule="evenodd" opacity=".34"/>
       </g>
     </g>
+    <g class="bub" data-icon="certificate" style="--i:7">
+      <circle cx="149.1" cy="68.0" r="12.8142" fill="#262626"/>
+      <circle cx="149.1" cy="68.0" r="12.8142" fill="url(#bubBounce)"/>
+      <circle cx="149.1" cy="68.0" r="12.8142" fill="url(#bubBall)"/>
+      <g transform="translate(142.0 60.9) scale(0.588)">
+        <path d="M2.4 2h19.2v13H2.4z M3.8 3.4h16.4v10.2H3.8zM6 5.6h12v1.5H6z M6 8.4h8.6v1.3H6z M6 10.9h6.2v1.3H6zM17 14.4a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7zM13.4 19.9 12.1 24l2.7-1.2 1.5 1.2.5-3.3zM20.6 19.9 21.9 24l-2.7-1.2-1.5 1.2-.5-3.3z" fill="#fff" fill-rule="evenodd"/>
+        <path d="M3 2.4h18v1.5H3z M17.2 16.2a1.8 1.8 0 1 0 0 3.6 1.8 1.8 0 0 0 0-3.6z" fill="#262626" fill-rule="evenodd" opacity=".34"/>
+      </g>
+    </g>
     <g class="bub" data-icon="bus" style="--i:8">
-      <circle cx="41.7" cy="148.0" r="12.8142" fill="#3a4a52"/>
-      <circle cx="41.7" cy="148.0" r="12.8142" fill="url(#bubBounce)"/>
-      <circle cx="41.7" cy="148.0" r="12.8142" fill="url(#bubBall)"/>
-      <g transform="translate(33.5 139.9) scale(0.676)">
+      <circle cx="70.9" cy="148.0" r="12.8142" fill="#3a4a52"/>
+      <circle cx="70.9" cy="148.0" r="12.8142" fill="url(#bubBounce)"/>
+      <circle cx="70.9" cy="148.0" r="12.8142" fill="url(#bubBall)"/>
+      <g transform="translate(62.8 139.9) scale(0.676)">
         <path d="M3.4 5.0H21.2a1.6 1.6 0 0 1 1.6 1.6V16.2H1.2V9.8zM2.0 9.9 3.9 5.9H5.4v5.0H2.0zM5.9 6.3h1.1v8.3H5.9zM7.5 6.3h2.7v4.6H7.5z M10.6 6.3h2.7v4.6h-2.7z M13.7 6.3h2.7v4.6h-2.7zM16.8 6.3h2.7v4.6h-2.7z M19.9 6.3h2.4v4.6h-2.4zM6.4 13.7a3.1 3.1 0 1 0 0 6.2 3.1 3.1 0 0 0 0-6.2zM18.4 13.7a3.1 3.1 0 1 0 0 6.2 3.1 3.1 0 0 0 0-6.2z" fill="#efb100" fill-rule="evenodd"/>
         <path d="M0.2 7.2h1.0v3.4H0.2z M0.0 6.9h1.6v1.0H0.0z" fill="#efb100" fill-rule="evenodd"/>
         <path d="M3.4 5.0H21.2a1.6 1.6 0 0 1 1.6 1.6v.3H2.6zM1.2 12.6h21.6v3.6H1.2z" fill="#3a4a52" fill-rule="evenodd" opacity=".34"/>
@@ -278,10 +315,10 @@
       </g>
     </g>
     <g class="bub" data-icon="pen" style="--i:10">
-      <circle cx="178.3" cy="148.0" r="12.8142" fill="#c0468a"/>
-      <circle cx="178.3" cy="148.0" r="12.8142" fill="url(#bubBounce)"/>
-      <circle cx="178.3" cy="148.0" r="12.8142" fill="url(#bubBall)"/>
-      <g transform="translate(171.3 140.9) scale(0.588)">
+      <circle cx="149.1" cy="148.0" r="12.8142" fill="#c0468a"/>
+      <circle cx="149.1" cy="148.0" r="12.8142" fill="url(#bubBounce)"/>
+      <circle cx="149.1" cy="148.0" r="12.8142" fill="url(#bubBall)"/>
+      <g transform="translate(142.0 140.9) scale(0.588)">
         <path d="M18.1 1.3a2.1 2.1 0 0 1 3 0l1.6 1.6a2.1 2.1 0 0 1 0 3l-1.3 1.3-4.6-4.6z" fill="#fff" fill-rule="evenodd"/>
         <path d="M16.3 3.1l4.6 4.6-1.7 1.7-4.6-4.6z" fill="#fff" fill-rule="evenodd"/>
         <path d="M14.3 5.1l4.6 4.6-9.9 9.9-4.6-4.6z" fill="#fff" fill-rule="evenodd"/>
