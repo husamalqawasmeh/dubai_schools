@@ -63,16 +63,27 @@ const ICONS = {
     "M12.7 6.5c2.5-1.9 5.6-2.8 9.1-2.8v12.9c-3.5 0-6.6.9-9.1 2.8z" +
     "M2.2 16.6c3.5 0 6.6.9 9.1 2.8v1.5c-2.5-1.9-5.6-2.8-9.1-2.8z" +
     "M21.8 16.6c-3.5 0-6.6.9-9.1 2.8v1.5c2.5-1.9 5.6-2.8 9.1-2.8z",
+  // Flag, roof, then the things a school building actually has: a gabled
+  // porch over the door, a clock in the gable, sills under the windows and a
+  // step at the foot. A box with three holes in it is any building at all.
   school:
-    "M11.4 1.2h1.2v2.4h-1.2z M12.6 1.6l3 1-3 1z" +
-    "M12 3.8 22.4 8.6v1.6H1.6V8.6z" +
-    "M3.4 11.4h17.2V21.8H3.4z" +
-    "M10.2 15.4h3.6v6.4h-3.6z" +
-    "M5.4 13.6h2.9v2.9H5.4z M15.7 13.6h2.9v2.9h-2.9z",
+    "M11.4 1h1.1v3.1h-1.1z M12.5 1.3l3.1 1-3.1 1z" +
+    "M12 3.7 22.5 8.5v1.6H1.5V8.5z" +
+    "M3.4 11.2h17.2V21.6H3.4z" +
+    "M12 12.1 16.1 15h-8.2z M10.2 15h3.6v6.6h-3.6z" +
+    "M11.45 12.85a1.05 1.05 0 1 0 0 2.1 1.05 1.05 0 0 0 0-2.1z" +
+    "M5.3 13.4h3v3h-3z M5 16.6h3.6v.8H5z" +
+    "M15.7 13.4h3v3h-3z M15.4 16.6h3.6v.8h-3.6z" +
+    "M2.6 21.6h18.8v1.3H2.6z",
+  // A portico: pediment, then capitals and bases on the columns, then two
+  // steps. Four bare rectangles under a wedge read as a fence — the flare at
+  // each end of a column is what says it is holding something up.
   government:
-    "M12 1.8 22.6 7v1.6H1.4V7z" +
-    "M3.6 9.8h2.5v8.6H3.6z M8.4 9.8h2.5v8.6H8.4z M13.1 9.8h2.5v8.6h-2.5z M17.9 9.8h2.5v8.6h-2.5z" +
-    "M2.2 19.6h19.6v2.4H2.2z",
+    "M12 1.6 22.8 7v1.5H1.2V7z M12 3.4 18.6 6.7H5.4z" +
+    "M2.6 8.9h18.8v1.1H2.6z" +
+    "M3.6 10.2h2.5v7.6H3.6z M8.4 10.2h2.5v7.6H8.4z M13.1 10.2h2.5v7.6h-2.5z M17.9 10.2h2.5v7.6h-2.5z" +
+    "M3.1 17.9h3.5v1.1H3.1z M7.9 17.9h3.5v1.1H7.9z M12.6 17.9h3.5v1.1h-3.5z M17.4 17.9h3.5v1.1h-3.5z" +
+    "M2.2 19.2h19.6v1.4H2.2z M1.2 20.8h21.6v1.6H1.2z",
   // A pencil has five parts and reads as one the moment they are all there:
   // eraser, ferrule, body, the wood cone, and the graphite. Three slabs read
   // as a wedge.
@@ -139,19 +150,30 @@ const ICONS = {
   // and that pattern is the first thing to disappear at bubble size. A runner
   // is recognisable by its pose, which survives being small.
   running: "M15.8 2.1a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5z",
+  // A ruled sheet inside a printed border, a seal over its lower corner and
+  // two ribbon tails below. The border is what makes it a certificate rather
+  // than a page of writing, and the second tail is what makes the ribbon
+  // hang rather than point.
   certificate:
-    "M3 2.4h18v12.2H3z M6.2 5.8h11.6v1.6H6.2z M6.2 9.2h7.8v1.6H6.2z" +
-    "M17.2 14.6a3.4 3.4 0 1 0 0 6.8 3.4 3.4 0 0 0 0-6.8z" +
-    "M13.6 20.1 12.4 24l2.6-1.1 1.4 1.1.6-3.4z",
+    "M2.4 2h19.2v13H2.4z M3.8 3.4h16.4v10.2H3.8z" +
+    "M6 5.6h12v1.5H6z M6 8.4h8.6v1.3H6z M6 10.9h6.2v1.3H6z" +
+    "M17 14.4a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7z" +
+    "M13.4 19.9 12.1 24l2.7-1.2 1.5 1.2.5-3.3z" +
+    "M20.6 19.9 21.9 24l-2.7-1.2-1.5 1.2-.5-3.3z",
   // Nothing: the bubble itself is the white disc and the ring is drawn at
   // bubble scale. The D is in MARK, because its bars cross its own stem and
   // evenodd would punch those crossings back out.
   coins: [],
+  // A podium, not three loose blocks: they stand on a floor, the tallest is
+  // in the middle, and each has a lip along its top — the edge you see on a
+  // real one, and the thing that stops three rectangles reading as a bar
+  // chart.
   rank:
-    "M12 1.4l1.4 3 3.2.4-2.4 2.2.6 3.2-2.8-1.6-2.8 1.6.6-3.2L7.4 4.8l3.2-.4z" +
-    "M9.2 11.4h5.6v10.8H9.2z" +
-    "M2.4 14.4H8v7.8H2.4z" +
-    "M16 16.4h5.6v5.8H16z",
+    "M12 1.2l1.5 3.1 3.4.5-2.5 2.4.6 3.4-3-1.6-3 1.6.6-3.4-2.5-2.4 3.4-.5z" +
+    "M9.2 11.2h5.6v10.2H9.2z M9.2 11.2h5.6v1H9.2z" +
+    "M2.6 14.2h5.6v7.2H2.6z M2.6 14.2h5.6v.9H2.6z" +
+    "M15.8 16.2h5.6v5.2h-5.6z M15.8 16.2h5.6v.9h-5.6z" +
+    "M1.4 21.4h21.2v1.4H1.4z",
 };
 
 /**
@@ -396,7 +418,10 @@ console.log(`packed ${placed.length} bubbles, all inside the glass and clear of 
 
 /* ---------- markup ---------- */
 const bubble = (b, i) => {
-  const s = (b.r * 2 * 0.68) / 24;          // icon box scaled to the bubble
+  // 0.612 = 0.68 less a tenth. The icons carry more detail than they did, and
+  // detail reads as clutter at the size the old factor gave them — a tenth
+  // off buys back the white ring between the drawing and the bubble edge.
+  const s = (b.r * 2 * 0.612) / 24;         // icon box scaled to the bubble
   const ox = b.x - (24 * s) / 2;
   const oy = b.y - (24 * s) / 2;
   const ic = ICONS[b.icon];
