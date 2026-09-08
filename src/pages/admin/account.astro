@@ -40,7 +40,15 @@ const admin = Astro.locals.admin!;
           <input id="currentPassword" type="password" autocomplete="current-password" required />
         </div>
 
-        <button class="btn" type="submit" id="go">Save changes</button>
+        {/* Cancel goes back to the menu rather than clearing the fields. The
+            page has one purpose and leaving it is what cancelling it means —
+            a reset button would empty the boxes and leave you still here. The
+            pair reuses .formactions and .formbtn from the board, which is why
+            those lost their rm- prefix. */}
+        <span class="formactions" style="margin-left:0">
+          <button class="formbtn" type="submit" id="go">Save changes</button>
+          <a class="formbtn" href="/admin/admin">Cancel</a>
+        </span>
         <p class="note" id="msg">
           A new password must run to at least {MIN_PASSWORD} characters, and signs
           out every other device.
