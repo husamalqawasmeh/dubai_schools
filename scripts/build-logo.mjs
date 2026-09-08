@@ -123,27 +123,32 @@ const ICONS = {
     "M4.9 11.6c-2.1 0-3.8 2-3.8 4.6v1.9h7.6v-1.9c0-2.6-1.7-4.6-3.8-4.6z",
     "M2.2 18.3h2.1v5.5H2.2z M5.5 18.3h2.1v5.5H5.5z",
   ],
-  // A real school bus has a bonnet, so the roof stops short of the front and
-  // the windscreen rakes back from it. A plain box with three windows was a
-  // van. Wheels are their own layer, or they punch holes in the body.
-  // What identifies a school bus is not the box, it is the details on it: a
-  // bonnet the roof stops short of, a raked windscreen, a passenger door with
-  // its own step, a mirror on a stalk, the stop arm, and wheels with hubs.
-  // Each is its own layer — as subpaths of one evenodd fill they would punch
-  // holes in the body instead of sitting on it.
+  // A Type C school bus, the long-bonnet shape every one of them has: a tall
+  // square body over a low bonnet, a row of windows, and the folding door set
+  // behind the bonnet where the steps are.
+  //
+  // Everything here is one colour, because everything here is the paint. The
+  // parts that are not painted — tyres, the rub rail down the flank, the
+  // bumper — are in MARK below, which draws in the bubble's own slate on top
+  // of the yellow. That is the only way to get two colours into an icon, and
+  // a yellow-wheeled bus was the thing most obviously wrong with the last one.
+  //
+  // Within one array entry the subpaths are evenodd, so the windows cut
+  // themselves out of the body. Between entries they simply overlap, which is
+  // why the bonnet and the body can meet without either eating the other.
   bus: [
-    // body, with the windows and windscreen cut out
-    "M1.2 8c0-1.7 1.4-3.1 3.1-3.1h10.4c1.1 0 2.2.5 2.9 1.4l3.6 4.4c.5.7.8 1.5.8 2.4v2.6c0 1-.8 1.8-1.8 1.8H3c-1 0-1.8-.8-1.8-1.8z" +
-      "M3.4 7.2h3.1v3.8H3.4z M7.9 7.2h3.1v3.8H7.9z" +
-      "M16.4 7.5h1.1l2.8 3.4h-3.9z",
-    // passenger door: two panes and the step below it
-    "M12.4 6.6h3.1v9.6h-3.1z",
-    // wheels
-    "M6.4 14.2a3.3 3.3 0 1 0 0 6.6 3.3 3.3 0 0 0 0-6.6z",
-    "M17.2 14.2a3.3 3.3 0 1 0 0 6.6 3.3 3.3 0 0 0 0-6.6z",
-    // wing mirror on its stalk, and the stop arm folded against the flank
-    "M20.6 6.4h1.9v2.6h-1.9z M19.4 7.2h1.4v.9h-1.4z",
-    "M1.6 11.4h1.4v3.4H1.6z",
+    // Body, with three side windows and the two door panes cut out of it.
+    "M2.4 4.6H14.6a1.7 1.7 0 0 1 1.7 1.7V15.9H0.7V6.3a1.7 1.7 0 0 1 1.7-1.7z" +
+      "M2.2 6.4h3.2v4.1H2.2z M6.3 6.4h3.2v4.1H6.3z M10.4 6.4h2.3v4.1h-2.3z" +
+      "M13.6 6.4h2.2v4.1h-2.2z M13.6 11.3h2.2v3.6h-2.2z",
+    // The bonnet, and the nose rounded where the grille wraps.
+    "M16.0 9.9h4.3a2.3 2.3 0 0 1 2.3 2.3V15.9H16.0z",
+    // Two warning lights on the roof edge, which no other vehicle carries.
+    "M11.4 3.3h1.7v1.4h-1.7z M13.9 3.3h1.7v1.4h-1.7z",
+    // Wing mirror on its stalk, out past the nose.
+    "M22.3 8.0h1.0v4.2h-1.0z M21.2 7.8h2.2v1.1h-2.2z",
+    // The stop arm, folded flat against the flank.
+    "M0.2 11.4h1.3v3.2H0.2z",
   ],
   // Only the head is a fill; the body is in STROKES below. A football failed
   // here because a ball is recognisable by the pattern over its whole surface,
@@ -208,6 +213,16 @@ const MARK = {
     "M9.6 4c5.6 0 9 3.2 9 8s-3.4 8-9 8v-3.4c3.4 0 5.4-2 5.4-4.6s-2-4.6-5.4-4.6z" +
     "M4.6 9.7H20.4v1.9H3.2z" +
     "M4.6 12.7H20.4v1.9H3.2z",
+
+  // The parts of a bus that are not painted yellow, drawn in the bubble's own
+  // slate over the top of it: two tyres, the rub rail along the flank, and the
+  // front bumper. MARK fills nonzero, so these overlap each other and the body
+  // freely instead of cancelling out the way an evenodd subpath would.
+  bus:
+    "M5.4 13.7a2.9 2.9 0 1 0 0 5.8 2.9 2.9 0 0 0 0-5.8z" +
+    "M18.6 13.7a2.9 2.9 0 1 0 0 5.8 2.9 2.9 0 0 0 0-5.8z" +
+    "M0.7 12.4h15.6v1.0H0.7z" +
+    "M16.0 14.7h6.8v1.2h-6.8z",
 };
 
 /**
@@ -262,10 +277,13 @@ const SHADE = {
                "M2.2 16.6c3.5 0 6.6.9 9.1 2.8v.5c-2.5-1.9-5.6-2.8-9.1-2.8z" +
                "M21.8 16.6c-3.5 0-6.6.9-9.1 2.8v.5c2.5-1.9 5.6-2.8 9.1-2.8z",
   school:      "M12 3.8 22.4 8.6v1.6H1.6V8.6z M3.4 11.4h17.2v1.4H3.4z",
-  bus:         "M1.2 8c0-1.7 1.4-3.1 3.1-3.1h10.4c.5 0 1 .1 1.5.3H1.4z" +
-               "M6.4 16a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3z M17.2 16a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3z" +
-               "M1.2 12.2h20.4v1.1H1.2z" +
-               "M12.4 10.9h3.1v1H12.4z M13.9 6.6h.4v9.6h-.4z",
+  // Redrawn with the bus. The old shading followed the old body — a roof band
+  // over a shape that is not there any more, and hubs on wheels that are now
+  // in MARK. What is left is the two planes a bus actually has: the roof
+  // turning away above the windows, and the skirt below the rub rail.
+  bus:         "M2.4 4.6H14.6a1.7 1.7 0 0 1 1.7 1.7v.1H0.7V6.3a1.7 1.7 0 0 1 1.7-1.7z" +
+               "M0.7 13.4h15.6v2.5H0.7z" +
+               "M16.0 9.9h4.3a2.3 2.3 0 0 1 2.3 2.3v.2H16.0z",
 
   student:     "M12 1.4 22.9 5.8 12 10.2 1.1 5.8z M12 11.2a3.5 3.5 0 0 0-3.5 3.5h7A3.5 3.5 0 0 0 12 11.2z" +
                "M12 17.9 10.2 20.6h3.6z",
