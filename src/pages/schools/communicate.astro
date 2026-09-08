@@ -26,6 +26,11 @@ const names = schools.map((s) => s.name);
 const section = (Astro.url.searchParams.get("as") ?? "").toLowerCase();
 if (section === "schools") return Astro.redirect("/schools/communicate", 301);
 if (section === "parents") return Astro.redirect("/parents/communicate", 301);
+/* The site-admin tab has its own page now. It was never the same kind of
+   thing as the other two — they collect something, it lets a person in —
+   and it sat here putting the console's front door inside a form meant
+   for parents and schools. The old address still works. */
+if (section === "site") return Astro.redirect("/admin/communicate", 301);
 
 const active = (Astro.url.searchParams.get("as") ?? "").toLowerCase();
 
@@ -41,6 +46,7 @@ const active = (Astro.url.searchParams.get("as") ?? "").toLowerCase();
 const TABS = [
   {
     id: "school",
+    href: "/schools/communicate?as=school",
     label: "School admin",
     kind: "school_details",
     title: "Provide details to be reviewed and shared",
@@ -53,6 +59,7 @@ const TABS = [
   },
   {
     id: "parent",
+    href: "/schools/communicate?as=parent",
     label: "Parents",
     kind: "info_request",
     title: "Request information",
@@ -64,6 +71,7 @@ const TABS = [
   },
   {
     id: "site",
+    href: "/admin/communicate",
     label: "Site admin",
     kind: "comment",
     title: "Sign in",
@@ -92,7 +100,7 @@ const current = TABS.find((t) => t.id === active) ?? null;
       {TABS.map((t) => (
         <a
           class={t.id === current?.id ? "tab is-on" : "tab"}
-          href={`/schools/communicate?as=${t.id}`}
+          href={t.href}
           role="tab"
           aria-selected={t.id === current?.id ? "true" : "false"}
         >
@@ -102,14 +110,7 @@ const current = TABS.find((t) => t.id === active) ?? null;
     </div>
 
     {current && (
-    <div class={current.id === "site" ? "tabpanel is-site" : "tabpanel"} role="tabpanel">
-      {current.id === "site" ? (
-        <div class="panel">
-          <h2>{current.title}</h2>
-          <p class="muted-p">{current.blurb}</p>
-          <a class="btn" href="/admin/login" style="max-width:200px">Sign in</a>
-        </div>
-      ) : (
+    <div class="tabpanel" role="tabpanel">
         <div class="panel">
           <h2>{current.title}</h2>
           <p class="muted-p">{current.blurb}</p>
@@ -155,7 +156,6 @@ const current = TABS.find((t) => t.id === active) ?? null;
             </div>
           </form>
         </div>
-      )}
     </div>
     )}
   </div>

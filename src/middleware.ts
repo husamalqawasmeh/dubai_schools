@@ -11,7 +11,13 @@ export const onRequest = defineMiddleware(async (context, next) => {
   const path = context.url.pathname;
   if (!path.startsWith("/admin") && !path.startsWith("/api/admin")) return next();
 
-  const open = path === "/admin/login" || path === "/api/admin/login";
+  /* /admin/communicate is the door, not a room behind it: bouncing an
+     anonymous visitor to the login form would make the page unreachable
+     by the only person it is addressed to. */
+  const open =
+    path === "/admin/login" ||
+    path === "/api/admin/login" ||
+    path === "/admin/communicate";
   const user = await userFromSession(context.cookies.get(COOKIE)?.value);
   context.locals.admin = user ?? undefined;
 

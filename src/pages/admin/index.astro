@@ -17,6 +17,14 @@ const pending = (
     </div>
 
     <div class="adminlinks">
+      {/* First, and pointing at the site-admin door rather than at
+          /admin/login — the login form redirects here the moment you
+          are signed in, which you are if you can read this, so it
+          would bounce straight back. That page says which account is
+          signed in and offers the switch. */}
+      <a class="adminlink" href="/admin/communicate">
+        <h2>Sign-in</h2>
+      </a>
       <a class="adminlink" href="/admin/account">
         <h2>Profile</h2>
       </a>
