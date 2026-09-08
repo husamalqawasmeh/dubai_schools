@@ -12,6 +12,10 @@ import { CATEGORIES, LIMITS, categoryLabel } from "../lib/providers";
  * the thing we were avoiding. A register the suppliers fill in themselves, with
  * an approval step in front of it, is the version of that which can name names.
  *
+ * The empty state is one line, not a panel. Three lines of consolation above
+ * the form that fixes it was the wrong way round: it says "nothing here yet",
+ * and that needs a sentence.
+ *
  * Only approved rows are read. The filter is in the query rather than applied
  * after it, so there is no arrangement of this page that shows a pending one.
  */
@@ -44,26 +48,22 @@ const ERRORS: Record<string, string> = {
 
 <Base
   nonav
-  title="Suppliers and services for Dubai schools"
+  title="School Supplies and Services in Dubai"
   description="Uniforms, textbooks, second-hand books, stationery, transport, tutoring and activities for Dubai schools — and a form for suppliers to register their own service."
 >
   <div class="wrap pick">
     <a class="back" href="/">Home</a>
-    <h1 style="margin-top:14px">Suppliers and services</h1>
+    <h1 style="margin-top:14px">School Supplies and Services</h1>
     <p class="sub">
       Businesses serving Dubai schools and the families at them. Anyone can
       register; nothing appears here until it has been checked.
     </p>
 
     {live.length === 0 ? (
-      <div class="panel" style="margin-top:18px">
-        <h2>Nothing listed yet</h2>
-        <p class="muted-p">
-          This register has just opened and no supplier has been approved onto
-          it. If you supply Dubai schools, the form below is how you get on it —
-          and being early is worth something, because the page is short.
-        </p>
-      </div>
+      <p class="prov-empty">
+        <strong>Nothing listed yet.</strong> If you supply Dubai schools, the
+        form below is how you get on this page.
+      </p>
     ) : (
       <>
         <nav class="prov-jump" aria-label="Categories">

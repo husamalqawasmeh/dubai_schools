@@ -3261,7 +3261,11 @@ a.idcard:hover h2 { color: var(--on-accent); }
 .prov-contact a:hover { text-decoration: underline; }
 
 /* The register form. */
-.prov-form { max-width: 46rem; }
+/* Full width, matching the listing above it. The 46rem cap made the form
+   narrower than the results it feeds, which read as a sidebar rather than as
+   the other half of the page. The fields inside stay in two columns, so
+   nothing is stretched — the box widens, the inputs do not lengthen. */
+.prov-form { max-width: none; }
 .prov-form textarea.tt-input { height: auto; padding: 9px 11px; line-height: 1.5; resize: vertical; }
 .prov-form select.tt-input { cursor: pointer; }
 .prov-lead {
@@ -3288,3 +3292,101 @@ a.idcard:hover h2 { color: var(--on-accent); }
 .prov-noteform { display: flex; gap: 8px; margin-top: 10px; }
 .prov-noteform .tt-input { flex: 1; height: 32px; font-size: 12.5px; }
 .prov-noteform .formbtn { height: 32px; padding: 0 14px; font-size: 13px; }
+
+
+/* ---------------- sort and view controls ---------------- */
+/* Sized to sit in the filter row with the MultiSelects, and given the same
+   edge, so the row reads as one set of controls. */
+.sortbox {
+  width: 100%;
+  height: 36px;
+  padding: 0 10px;
+  cursor: pointer;
+  font-family: var(--display);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink);
+  background: var(--surface);
+  border: 1px solid var(--rule-firm);
+  border-radius: 8px;
+}
+.sortbox:focus { border-color: var(--accent); outline: none; }
+
+.viewtoggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  height: 36px;
+  cursor: pointer;
+  font-family: var(--display);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink);
+  white-space: nowrap;
+}
+.viewtoggle input { width: 16px; height: 16px; accent-color: var(--accent); cursor: pointer; }
+
+/* The short list: one school per line.
+
+   Same cards, relaid out — not a second markup path. A separate table would
+   have meant every future change to a card being made twice, and the two
+   drifting the first time one of them was forgotten. */
+.grid.is-compact { display: block; }
+.grid.is-compact .card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 9px 14px;
+  margin-bottom: 6px;
+  min-height: 0;
+}
+.grid.is-compact .card h3 {
+  flex: 1 1 40%;
+  min-width: 0;
+  margin: 0;
+  font-size: 14.5px;
+  /* One line each, so the rows stay level and the eye can run down them. */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.grid.is-compact .card .where {
+  flex: 0 0 22%;
+  margin: 0;
+  font-size: 12.5px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.grid.is-compact .card .foot {
+  flex: 0 0 auto;
+  margin: 0;
+  border-top: none;
+  padding-top: 0;
+  gap: 7px;
+}
+/* The curriculum pill is the one that can run long, so it is the one that
+   gives way rather than pushing the rating and fee off the end. */
+.grid.is-compact .pill-cur-text { max-width: 9rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+@media (max-width: 700px) {
+  .grid.is-compact .card { flex-wrap: wrap; gap: 6px 10px; }
+  .grid.is-compact .card h3 { flex: 1 1 100%; }
+  .grid.is-compact .card .where { flex: 0 0 auto; }
+}
+
+
+/* The empty state on the suppliers page: one line, sized like a note rather
+   than a panel. It was a full card with a heading, which gave the thing that
+   is not there more room than the form that fixes it. */
+.prov-empty {
+  margin: 18px 0 0;
+  padding: 10px 14px;
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: 8px;
+  font-family: var(--display);
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: var(--ink-2);
+}
+.prov-empty strong { color: var(--ink); }

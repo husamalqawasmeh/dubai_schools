@@ -220,6 +220,26 @@ const title = activeBits.length
           <MultiSelect id="rating" icon="stamp" label="KHDA rating" options={ratOptions} selected={sel.rating} allLabel="All ratings" />
           <MultiSelect id="band" icon="coins" label="Fee band" options={bandOptions} selected={sel.band} allLabel="Any fee" />
           <MultiSelect id="area" icon="map" label="Area" groups={areaGroups} selected={sel.area} allLabel="All areas" scroll />
+          {/* Sorting is one choice, so it is a select rather than another
+              MultiSelect — those are for picking several values at once and
+              one of them here would be a checkbox list where exactly one box
+              may ever be ticked. */}
+          <div class="field sort-cell">
+            <label for="sort">Sort by</label>
+            <select id="sort" class="sortbox">
+              <option value="name">Name (A-Z)</option>
+              <option value="area">Area</option>
+              <option value="rat">KHDA rating</option>
+              <option value="band">Fee band</option>
+              <option value="cur">Curriculum</option>
+            </select>
+          </div>
+          <div class="field view-cell">
+            <label class="viewtoggle">
+              <input type="checkbox" id="compact" />
+              <span>Short list</span>
+            </label>
+          </div>
           <div class="field clearall-cell">
             <button type="button" id="clearall" class="clearall">Clear all filters</button>
           </div>
@@ -241,6 +261,10 @@ const title = activeBits.length
             data-rat={x.khda_rating}
             data-band={x.fee_band ?? "none"}
             data-fee={feeText(x)}
+            {/* Ranks, because these two are scales and their labels are not
+                in scale order. Anything unrecognised sorts to the end. */}
+            data-ratrank={String(TIERS.indexOf(x.khda_rating) === -1 ? TIERS.length : TIERS.indexOf(x.khda_rating))}
+            data-bandrank={String(x.fee_band ? BANDS.findIndex((b) => b.key === x.fee_band) : BANDS.length)}
           >
             <h3>{x.name}</h3>
             <p class="where">{x.area}</p>
@@ -335,6 +359,50 @@ const title = activeBits.length
   const noun = document.getElementById("noun")!;
   const results = document.querySelector(".listing-results")!;
   const cards = Array.from(grid.children) as HTMLElement[];
+  const sortSel = document.getElementById("sort") as HTMLSelectElement;
+  const compact = document.getElementById("compact") as HTMLInputElement;
+
+  /* Sorting reorders the cards in the DOM once, not on every filter pass.
+     Filtering only hides and shows, so the order it leaves behind is still
+     correct — and doing both in one function would re-sort 232 nodes on every
+     keystroke in the search box for no gain. */
+  const KEY: Record<string, (d: DOMStringMap) => string | number> = {
+    name: (d) => d.name!,
+    area: (d) => d.area!.toLowerCase(),
+    rat: (d) => Number(d.ratrank),
+    band: (d) => Number(d.bandrank),
+    cur: (d) => d.cur!.toLowerCase(),
+  };
+
+  function sortCards() {
+    const k = sortSel.value;
+    const key = KEY[k] ?? KEY.name;
+    const sorted = cards.slice().sort((a, b) => {
+      const x = key(a.dataset);
+      const y = key(b.dataset);
+      // Name breaks every tie, so two Outstanding schools are still in a
+      // predictable order rather than whatever the last sort left.
+      if (x === y) return a.dataset.name!.localeCompare(b.dataset.name!);
+      return x > y ? 1 : -1;
+    });
+    const frag = document.createDocumentFragment();
+    for (const c of sorted) frag.appendChild(c);
+    grid.appendChild(frag);
+  }
+
+  /* The short list is a per-visitor preference, so it belongs in this
+     browser rather than in the URL — a shared link should carry the search,
+     not how the person who sent it likes their results laid out. */
+  const VIEW = "dxb-schools-compact";
+  function applyView() {
+    grid.classList.toggle("is-compact", compact.checked);
+    try { localStorage.setItem(VIEW, compact.checked ? "1" : "0"); } catch { /* private mode */ }
+  }
+  try { compact.checked = localStorage.getItem(VIEW) === "1"; } catch { /* ignore */ }
+  applyView();
+
+  sortSel.addEventListener("change", sortCards);
+  compact.addEventListener("change", applyView);
 
   function apply() {
     const text = q.value.trim().toLowerCase();
