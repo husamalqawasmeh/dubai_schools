@@ -32,7 +32,20 @@ if (section === "parents") return Astro.redirect("/parents/communicate", 301);
    for parents and schools. The old address still works. */
 if (section === "site") return Astro.redirect("/admin/communicate", 301);
 
-const active = (Astro.url.searchParams.get("as") ?? "").toLowerCase();
+/* And ?as=parent is gone too. This page is in the parents' section, so
+   naming the audience again in a query string said the same thing twice —
+   the form it selected is now just what the page is. The address still
+   redirects: it was the target of ten "Tell us" links across the site. */
+if (section === "parent") return Astro.redirect("/parents/communicate", 301);
+
+/* Defaults to the parent form rather than to nothing.
+
+   It opened blank when this was one page for three audiences and choosing
+   was the click that made the rest mean something. The split settled that
+   question in the path — anyone here is in the parents' section — so the
+   blank state now asks a question it already has the answer to. The other
+   tabs stay reachable above the form. */
+const active = (Astro.url.searchParams.get("as") ?? "parent").toLowerCase();
 
 /**
  * One action per audience for now.
@@ -59,7 +72,7 @@ const TABS = [
   },
   {
     id: "parent",
-    href: "/parents/communicate?as=parent",
+    href: "/parents/communicate",
     label: "Parents",
     kind: "info_request",
     title: "Request information",

@@ -110,7 +110,7 @@ const SECTIONS = [
   const byName = new Map(uniforms.map((u) => [u.n.toLowerCase(), u]));
 
   const ask = (name) =>
-    `/parents/communicate?as=parent&about=${encodeURIComponent(name)}`;
+    `/parents/communicate?about=${encodeURIComponent(name)}`;
 
   box.addEventListener("input", () => {
     const q = box.value.trim();

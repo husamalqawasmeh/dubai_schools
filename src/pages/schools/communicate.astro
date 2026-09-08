@@ -32,7 +32,17 @@ if (section === "parents") return Astro.redirect("/parents/communicate", 301);
    for parents and schools. The old address still works. */
 if (section === "site") return Astro.redirect("/admin/communicate", 301);
 
-const active = (Astro.url.searchParams.get("as") ?? "").toLowerCase();
+/* And ?as=school is gone too. This page is in the schools' section, so
+   naming the audience again in a query string said the same thing twice —
+   the form it selected is now just what the page is. The address still
+   redirects: the advertise page links to it three times, and so does every
+   school's own page. */
+if (section === "school") return Astro.redirect("/schools/communicate", 301);
+
+/* Defaults to the school form rather than to nothing — see the parents'
+   copy for why the blank state stopped earning its place once the split
+   moved the audience into the path. */
+const active = (Astro.url.searchParams.get("as") ?? "school").toLowerCase();
 
 /**
  * One action per audience for now.
@@ -46,7 +56,7 @@ const active = (Astro.url.searchParams.get("as") ?? "").toLowerCase();
 const TABS = [
   {
     id: "school",
-    href: "/schools/communicate?as=school",
+    href: "/schools/communicate",
     label: "School admin",
     kind: "school_details",
     title: "Provide details to be reviewed and shared",
