@@ -11,9 +11,15 @@ interface Props {
    *  offering them before it is opened is offering two ways past the same
    *  point and makes the one button stop looking like the way in. */
   bare?: boolean;
+
+  /** Keep the brand bar, drop the nav. For a page reached from the front
+   *  page rather than from inside a section: the bar still gets you home,
+   *  but a row of section links on a page that belongs to no section was
+   *  offering eight ways out of somewhere you had just chosen to be. */
+  nonav?: boolean;
 }
 
-const { title, description = "Search and compare all 232 KHDA-registered private schools in Dubai: curriculum, fees, inspection rating, and location.", bare = false } = Astro.props;
+const { title, description = "Search and compare all 232 KHDA-registered private schools in Dubai: curriculum, fees, inspection rating, and location.", bare = false, nonav = false } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site);
 
 /**
@@ -144,6 +150,7 @@ const isHere = (href: string) => {
           <span class="brandsep" aria-hidden="true">:</span>
           <a class="partof" href="https://www.can-du-ai.com">Part of can-du-ai.com<span class="nav-mark" aria-hidden="true">▲</span></a>
         </div>
+        {!nonav && (
         <nav>
           {nav.map((raw, i) => {
             const item = raw.href in SECTIONED ? { ...raw, href: SECTIONED[raw.href] } : raw;
@@ -174,6 +181,7 @@ const isHere = (href: string) => {
             );
           })}
         </nav>
+        )}
       </div>
     </header>
     )}
