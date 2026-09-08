@@ -60,7 +60,7 @@ const shown = (d: string | null) =>
       <form class="rm-add is-editing" method="POST" action="/api/admin/roadmap">
         <input type="hidden" name="action" value="edit" />
         <input type="hidden" name="id" value={target.id} />
-        <span class="rm-editing-tag">Editing</span>
+        <span class="rm-editing-tag">Edit Item</span>
         {/* The serial is a position, not a stored value: typing 1 here means
             "put this first". Saving moves the row and renumbers the rest —
             the same thing the arrows do, reachable in one go. */}
@@ -85,8 +85,12 @@ const shown = (d: string | null) =>
           <span>Completed</span>
           <input class="tt-input" type="date" name="completion_date" value={target.completion_date ?? ""} />
         </label>
-        <button class="btn rm-addbtn" type="submit">Save</button>
-        <a class="rm-cancel" href="/admin/improvements">Cancel</a>
+        {/* Wrapped together so the pair moves as one to the right-hand end,
+            rather than each finding its own place in the wrap. */}
+        <span class="rm-formactions">
+          <button class="rm-formbtn" type="submit">Save</button>
+          <a class="rm-formbtn" href="/admin/improvements">Cancel</a>
+        </span>
       </form>
     ) : (
       <form class="rm-add" method="POST" action="/api/admin/roadmap">

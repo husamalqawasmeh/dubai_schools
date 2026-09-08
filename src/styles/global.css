@@ -2620,7 +2620,10 @@ body.is-bare .idwrap { min-height: 100dvh; }
 .rm-editing-tag {
   flex: none;
   font-family: var(--display);
-  font-size: 12px;
+  /* The same 14.5px as Save and Cancel — the three sit on one line, and a
+     smaller tag beside them read as a caption rather than as part of the
+     form. */
+  font-size: 14.5px;
   font-weight: 700;
   color: var(--on-accent);
   background: var(--accent);
@@ -2727,17 +2730,7 @@ body.is-bare .idwrap { min-height: 100dvh; }
 /* .rm-item form is (0,2,0) and set to flex; this has to outrank it or the edit
    form is laid out by that rule instead, which is what collapsed the title
    field to nothing and pushed Save on top of the text beside it. */
-.rm-item > form.rm-edit {
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  gap: 9px;
-  width: 100%;
-  min-width: 0;
-}
-.rm-edit-row { display: flex; align-items: center; gap: 9px; min-width: 0; }
-.rm-edit-title { flex: 1; min-width: 0; }
-.rm-edit-dates { flex-wrap: wrap; gap: 9px 18px; }
+/* The date fields, still used by both the add line and the edit box. */
 .rm-datefield { display: flex; align-items: center; gap: 8px; }
 .rm-datefield > span {
   flex: none;
@@ -2746,18 +2739,44 @@ body.is-bare .idwrap { min-height: 100dvh; }
 /* Fixed, not flexible: a date field has one job and a known width, and letting
    it stretch left the two of them different sizes on every row. */
 .rm-datefield .tt-input { width: 9.5rem; flex: none; height: 32px; font-size: 12.5px; }
-.rm-edit .tt-input { background: var(--surface-2); }
-.rm-edit-actions { gap: 14px; }
 
-/* One column while a row is open. An edit form is several times the height of
-   a closed row, and in a two-column flow that either overlaps the next column
-   or leaves a hole beside it. */
-.rm-save { margin-top: 0; padding: 7px 18px; font-size: 13px; }
-.rm-cancel {
-  font-family: var(--ui); font-size: 12.5px; font-weight: 700;
-  color: var(--muted); text-decoration: none;
+/* Save and Cancel are one pair, so they are one rule — a link and a button
+   that have to look identical will not stay identical if they are described
+   twice. Neither is filled until the pointer is on it: a green Save beside a
+   plain Cancel said the choice had already been made.
+
+   Same height as the field above them, and the anchor is a flex box so its
+   text centres on that height the way the button's does. */
+.rm-formbtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 38px;
+  flex: none;
+  margin: 0;
+  padding: 0 22px;
+  font-family: var(--ui);
+  font-size: 14.5px;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  color: var(--accent);
+  background: var(--surface-2);
+  border: 1px solid var(--rule-firm);
+  border-radius: 5px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.12s ease, color 0.12s ease, border-color 0.12s ease;
 }
-.rm-cancel:hover { color: var(--accent); text-decoration: underline; }
+.rm-formbtn:hover {
+  background: var(--accent);
+  color: var(--on-accent);
+  border-color: var(--accent);
+}
+
+/* Hard right. margin-left:auto eats whatever space is left on the line, so
+   the pair sits at the form's right edge whether it shares a row with the
+   fields or has wrapped onto one of its own. */
+.rm-formactions { display: flex; gap: 8px; margin-left: auto; flex: none; }
 
 /* Sign out is a form post, so its card has to be a button. These are the four
    properties a button does not inherit from a link — everything else comes
