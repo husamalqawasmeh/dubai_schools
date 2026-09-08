@@ -3166,3 +3166,25 @@ a.idcard:hover h2 { color: var(--on-accent); }
 /* The login page keeps the larger heading: there it is the page, not a panel
    that opened inside one. */
 .adminlogin .signin-h { font-size: 24px; }
+
+
+/* Sortable column headings on the admin school list. The caret is a
+   pseudo-element so the heading text does not shift when it appears, and it
+   is faint until the column is the one being sorted on — a row of arrows all
+   the same weight says nothing about which is in force. */
+.gradetbl th.sortable {
+  cursor: pointer;
+  user-select: none;
+  white-space: nowrap;
+}
+.gradetbl th.sortable::after {
+  content: "95";
+  margin-left: 5px;
+  font-size: 10px;
+  color: var(--muted);
+  opacity: .35;
+}
+.gradetbl th.sortable:hover::after { opacity: .7; }
+.gradetbl th.sortable[data-dir="up"]::after   { content: "b2"; opacity: 1; color: var(--accent); }
+.gradetbl th.sortable[data-dir="down"]::after { content: "bc"; opacity: 1; color: var(--accent); }
+.gradetbl th.sortable:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }

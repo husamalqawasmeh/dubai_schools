@@ -50,9 +50,6 @@ const bandLabel: Record<string, string> = {
         <a class="back" href="/admin/admin">Back to admin</a>
         <h1>Schools</h1>
       </div>
-      <form method="POST" action="/api/admin/logout">
-        <button class="btn sec" type="submit" style="margin:0;padding:6px 12px">Sign out {admin.email}</button>
-      </form>
     </div>
 
     <div class="mailnote">
@@ -102,15 +99,29 @@ const bandLabel: Record<string, string> = {
         <thead>
           <tr>
             <th style="width:34px"></th>
-            <th>School</th><th>Area</th><th>Curriculum</th><th>Rating</th><th>Email</th><th>Source</th><th></th>
+            {/* Sortable by any of the five that carry a value worth ordering
+                on. Source is a tag rather than a scale and the edit column
+                holds a link, so neither is. */}
+            <th class="sortable" data-sort="name">School</th>
+            <th class="sortable" data-sort="area">Area</th>
+            <th class="sortable" data-sort="cur">Curriculum</th>
+            <th class="sortable" data-sort="rat">Rating</th>
+            <th class="sortable" data-sort="mailaddr">Email</th>
+            <th>Source</th><th></th>
           </tr>
         </thead>
         <tbody id="tb">
           {rows.map((r) => (
             <tr
+              data-name={r.name}
               data-area={r.area}
               data-cur={r.curricula.join("|")}
               data-rat={r.khda_rating}
+              {/* Ratings are a scale, not an alphabet: Acceptable must not
+                  sort above Outstanding. The rank is the tier order, with
+                  anything unrecognised after the lot. */}
+              data-rank={String(TIERS.indexOf(r.khda_rating) === -1 ? TIERS.length : TIERS.indexOf(r.khda_rating))}
+              data-mailaddr={r.email ?? ""}
               data-mail={r.email ? "yes" : "no"}
               data-src={r.source ?? ""}
             >
@@ -189,6 +200,64 @@ const bandLabel: Record<string, string> = {
     shownEl.textContent = String(shown);
     all.checked = false;
     count();
+  }
+
+  /* Sorting.
+
+     Reorders the rows in the DOM rather than re-querying, because the filters
+     already work that way and the two have to agree: a filtered-out row keeps
+     its place in the order and simply stays hidden, so clearing a filter never
+     drops rows back in the wrong position.
+
+     Ratings sort on data-rank, not on their text. Acceptable sorting above
+     Outstanding is the one wrong answer this column can give.
+
+     Blank values always sort last, whichever direction is chosen. A column of
+     dashes at the top is never what someone clicking Email wants to see. */
+  const tb = document.getElementById("tb")!;
+  const heads = Array.from(document.querySelectorAll("th.sortable")) as HTMLElement[];
+  let sortKey = "";
+  let sortDir = 1;
+
+  const keyOf = (r: HTMLElement, k: string) =>
+    k === "rat" ? Number(r.dataset.rank) : (r.dataset[k] ?? "").toLowerCase();
+
+  function sortBy(k: string) {
+    sortDir = sortKey === k ? -sortDir : 1;
+    sortKey = k;
+
+    const sorted = rows.slice().sort((a, b) => {
+      const x = keyOf(a, k);
+      const y = keyOf(b, k);
+      const xb = x === "" || x === null;
+      const yb = y === "" || y === null;
+      if (xb !== yb) return xb ? 1 : -1;          // blanks last, always
+      if (x === y) return (a.dataset.name ?? "").localeCompare(b.dataset.name ?? "");
+      return (x > y ? 1 : -1) * sortDir;
+    });
+
+    // One fragment, one reflow, rather than 232 separate appends.
+    const frag = document.createDocumentFragment();
+    for (const r of sorted) frag.appendChild(r);
+    tb.appendChild(frag);
+
+    for (const h of heads) {
+      const on = h.dataset.sort === k;
+      h.dataset.dir = on ? (sortDir === 1 ? "up" : "down") : "";
+      h.setAttribute("aria-sort", on ? (sortDir === 1 ? "ascending" : "descending") : "none");
+    }
+  }
+
+  for (const h of heads) {
+    h.tabIndex = 0;
+    h.setAttribute("role", "button");
+    h.addEventListener("click", () => sortBy(h.dataset.sort!));
+    h.addEventListener("keydown", (e) => {
+      if ((e as KeyboardEvent).key === "Enter" || (e as KeyboardEvent).key === " ") {
+        e.preventDefault();
+        sortBy(h.dataset.sort!);
+      }
+    });
   }
 
   function count() {

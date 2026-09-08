@@ -127,14 +127,27 @@ export const POST: APIRoute = async ({ request }) => {
   }
 
   if (action === "up" || action === "down") {
+    /* Each click moves the item one place, so moving it five places is five
+       clicks, and the arrows stay live until the item reaches the end it is
+       being sent to.
+
+       The swap is one statement covering both rows, and the value it writes
+       is self-inverse: given the pair of positions, each row takes the sum
+       minus its own. That matters more than it looks. Two UPDATEs can half-
+       apply and leave two items sharing a position, and a version of this
+       that found the neighbour inside the UPDATE was worse still — the
+       subquery re-read the table as the same statement was changing it, so
+       the second row swapped against a value the first had already moved.
+       Tested against SQLite before it shipped: an item walked the length of
+       the list and back returns to where it started, and no position is ever
+       duplicated or left null. */
     const row = await DB.prepare("SELECT id, position FROM roadmap WHERE id = ?")
       .bind(id)
       .first<{ id: number; position: number }>();
     if (!row) return back();
 
-    // The neighbour is whichever row is nearest in the direction of travel —
-    // found by position rather than by index, so it stays correct even if two
-    // items somehow share a position.
+    // The neighbour is whichever row is nearest in the direction of travel,
+    // found by position rather than by index.
     const neighbour = await DB.prepare(
       action === "up"
         ? "SELECT id, position FROM roadmap WHERE position < ? ORDER BY position DESC LIMIT 1"
@@ -144,12 +157,11 @@ export const POST: APIRoute = async ({ request }) => {
       .first<{ id: number; position: number }>();
     if (!neighbour) return back();   // already at the end it was asked to move to
 
-    await DB.batch([
-      DB.prepare("UPDATE roadmap SET position = ?, updated_at = ? WHERE id = ?")
-        .bind(neighbour.position, now, row.id),
-      DB.prepare("UPDATE roadmap SET position = ?, updated_at = ? WHERE id = ?")
-        .bind(row.position, now, neighbour.id),
-    ]);
+    await DB.prepare(
+      "UPDATE roadmap SET position = ? - position, updated_at = ? WHERE id IN (?, ?)"
+    )
+      .bind(row.position + neighbour.position, now, row.id, neighbour.id)
+      .run();
     return back();
   }
 
