@@ -44,7 +44,7 @@ const R_GLASS = R_OUTER - RING;   // inside face of the glass
  * with them — 71 to 82 — so the fill stays near half. That headroom is not
  * only taste: these bubbles bounce, and a bubble in a full jar cannot move.
  */
-const BUBBLE_SCALE = 1.017;   // was 1.13, less a tenth
+const BUBBLE_SCALE = 0.9153;  // 1.13, less a tenth twice over
 
 /* ---------- the icons ---------- */
 /* Each is drawn in a 24x24 box, white stroke, no fill — a stroke reads at a
@@ -513,11 +513,20 @@ const render = (list) => `  <defs>
 
          The dark stops start at 82% of the radius. The icon reaches 61%, so it
          stays in the lit part and does not get muddied by its own bubble. -->
-    <radialGradient id="bubBall" cx="34%" cy="30%" r="76%">
-      <stop offset="0" stop-color="#ffffff" stop-opacity=".45"/>
-      <stop offset="0.42" stop-color="#ffffff" stop-opacity=".07"/>
-      <stop offset="0.82" stop-color="#000000" stop-opacity=".05"/>
-      <stop offset="1" stop-color="#000000" stop-opacity=".28"/>
+    <radialGradient id="bubBall" cx="33%" cy="29%" r="80%">
+      <!-- The highlight is a stop in the falloff, not a shape laid over it.
+           Drawn as its own ellipse it sat on the surface instead of being
+           part of it, and at bubble size it smeared across the icon. As the
+           first two stops it does the same job and cannot detach. -->
+      <stop offset="0" stop-color="#ffffff" stop-opacity=".52"/>
+      <stop offset="0.16" stop-color="#ffffff" stop-opacity=".34"/>
+      <stop offset="0.40" stop-color="#ffffff" stop-opacity=".08"/>
+      <!-- The terminator: the darkest band sits inside the edge, not on it,
+           which is what a sphere does and a disc with a dark outline does
+           not. -->
+      <stop offset="0.86" stop-color="#000000" stop-opacity=".16"/>
+      <stop offset="0.97" stop-color="#000000" stop-opacity=".30"/>
+      <stop offset="1" stop-color="#000000" stop-opacity=".20"/>
     </radialGradient>
 
     <!-- Light bouncing back up off the glass below. A real sphere is never
@@ -525,8 +534,9 @@ const render = (list) => `  <defs>
          With the specular highlight gone this and the shading gradient are
          the whole of the modelling, which is the point: the roundness comes
          from the falloff, not from a shape drawn on top of it. -->
-    <radialGradient id="bubBounce" cx="64%" cy="82%" r="42%">
-      <stop offset="0" stop-color="#ffffff" stop-opacity=".22"/>
+    <radialGradient id="bubBounce" cx="70%" cy="84%" r="38%">
+      <stop offset="0" stop-color="#ffffff" stop-opacity=".26"/>
+      <stop offset="0.6" stop-color="#ffffff" stop-opacity=".10"/>
       <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
     </radialGradient>
 
@@ -649,7 +659,7 @@ const RING_ORDER = ["book", "bus", "rank", "government", "certificate", "coins",
  *
  * The icons scale off the radius, so equal circles mean equal icons too.
  */
-const EQUAL_R = 18.9;   // was 21, less a tenth
+const EQUAL_R = 17.01;  // 21, less a tenth twice over
 const sized = (n) => ({ ...byName(n), r: EQUAL_R });
 
 const trio = CENTRE_TRIO.map(sized);
