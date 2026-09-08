@@ -1133,24 +1133,38 @@ button.btn:disabled { opacity: 0.55; cursor: default; }
 .composer input { height: 38px; }
 .composer .field { margin-bottom: 12px; }
 .adminlinks { display: grid; gap: 12px; margin-top: 18px; }
-/* Three across. Sign-in sits alone on the first row — it is the odd one out,
-   a thing you do rather than a place you go — and everything else follows
-   from the second row on.
+/* Sign-in down the left, everything else in the two columns beside it.
 
-   Placed by class, not :nth-child: the sign-in box is a real element that
-   appears between the first two cards when it is open, so every index would
-   shift the moment someone clicked Sign-in. .is-newrow pins only the column
-   and leaves the row automatic, which is what makes it land on row 2 with the
-   box closed and row 3 with it open, without either case being written down. */
+   Two containers rather than one eleven-item grid. The box that Sign-in opens
+   has to appear directly below Sign-in, at Sign-in's width, without moving
+   any other card — and a single grid cannot express that, because whatever
+   follows Sign-in is placed into the space the box needs.
+
+   The outer grid stays three equal columns and the inner one takes two of
+   them, so the cards line up across both: same track width, same gap. */
+.admin-side,
+.admin-main {
+  display: grid;
+  gap: 12px;
+  /* Top-aligned. Without this the side column stretches its one card down the
+     full height of the block beside it. */
+  align-content: start;
+}
+.admin-main { grid-template-columns: 1fr; }
+
 @media (min-width: 700px) {
   .adminlinks { grid-template-columns: repeat(3, 1fr); }
-  .adminlinks .is-alone { grid-column: 1; grid-row: 1; }
-  .adminlinks .is-newrow { grid-column: 1; }
-  /* Across all three, not one. A column-wide box put the sentence about which
-     account is signed in on three wrapped lines and left the form squeezed
-     into a third of the row — the box is a form, and the row is the width it
-     had to work in. */
-  .adminsignin { grid-column: 1 / -1; }
+  .admin-side { grid-column: 1; }
+  .admin-main { grid-column: 2 / -1; grid-template-columns: 1fr 1fr; }
+}
+
+/* While the box is open the rest is out of reach, not merely faint —
+   greying something that still takes a click says one thing and does
+   another. */
+.admin-main.is-dimmed {
+  opacity: 0.4;
+  pointer-events: none;
+  user-select: none;
 }
 .adminlink {
   background: var(--surface); border: 1px solid var(--rule); border-radius: 6px;
@@ -2931,7 +2945,7 @@ a.idcard:hover h2 { color: var(--on-accent); }
    grid would otherwise drop it — the cards are a two-column grid above 700px,
    and without this the box would land beside Profile. Below that width the
    grid is one column and this is already true. */
-.adminsignin { grid-column: 1 / -1; margin: -2px 0 4px; }
+.adminsignin { margin: -2px 0 4px; }
 .adminsignin .signin-h { font-size: 17px; margin-bottom: 4px; }
 /* One line. The sentence names the account you are signed in as, and a
    wrapped account name is harder to read at a glance than a scrolled
