@@ -2982,16 +2982,21 @@ a.idcard:hover h2 { color: var(--on-accent); }
 @media (prefers-reduced-motion: reduce) { .idtag { animation: none; opacity: 1; transform: none; } }
 
 
-/* The wordmark sits about 1cm above where the column would put it — it was
-   2cm and has come down by one. A transform, so the tagline and the cards
-   below it do not move with it: lowering the name is the change; re-spacing
-   everything under it is not.
+/* The wordmark sits 1cm below where the column would put it.
 
-   Reduced on short screens: on a laptop even this much can lift it clear of
-   the glass it is meant to sit beside. */
-.idword { transform: translateY(-1cm); }
-@media (max-height: 860px) { .idword { transform: translateY(-0.2cm); } }
-@media (max-width: 820px) { .idword { transform: none; } }
+   This was three transform rules, and all three were dead. .idword animates
+   with id-rise at fill-mode `both`, whose last keyframe is transform:
+   translateY(0) — an animation applies its value before, during and after
+   the run, and animated values outrank normal author declarations, so the
+   transform declared here never reached the screen at any point. The
+   wordmark had been sitting at its natural position the whole time, and two
+   separate attempts to move it changed nothing.
+
+   A relative offset instead. It is in a different property from the one the
+   animation drives, so the two stop competing — and like the transform it
+   was meant to be, it moves the name without re-spacing the tagline and
+   cards below it. The same fix the tagline needed, for the same reason. */
+.idword { position: relative; top: 1cm; }
 
 
 /* The whole stage moves an inch and a centimetre left. A transform on the
@@ -3003,7 +3008,7 @@ a.idcard:hover h2 { color: var(--on-accent); }
 .idwrap { transform: translateX(calc(-1in - 1cm)); }
 @media (max-width: 1200px) { .idwrap { transform: none; } }
 
-/* And the lens alone comes back 2cm to the right, inside that.
+/* And the lens alone comes back 2.5cm to the right, inside that.
 
    A transform, so everything drawn in it moves with it as one piece — the
    glass, the ring, the handle and all eleven bubbles are one <svg>, and
@@ -3013,7 +3018,7 @@ a.idcard:hover h2 { color: var(--on-accent); }
    It stops where the stage does. Below 1200px the wrap gives up its own
    offset because the column has no room to spare, and a lens still pushed
    right in that column would be the one thing left off-centre. */
-.idmark { transform: translateX(2cm); }
+.idmark { transform: translateX(2.5cm); }
 @media (max-width: 1200px) { .idmark { transform: none; } }
 
 /* The two cards, a fifth larger and centred.
