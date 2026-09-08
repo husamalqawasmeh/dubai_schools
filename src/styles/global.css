@@ -2571,9 +2571,47 @@ body.is-bare .idwrap { min-height: 100dvh; }
 
 
 /* ---------------- roadmap ---------------- */
-.rm-add { display: flex; gap: 8px; margin-top: 14px; max-width: 44rem; }
+/* Full width, both states. The line holds a title, a date and a button now,
+   and at 44rem the title box was the part that gave way — the field you
+   actually type a sentence into was the narrowest thing on the row. It wraps
+   rather than squeezing when the window is small. */
+.rm-add {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  row-gap: 10px;
+  margin-top: 14px;
+}
+.rm-add .tt-input[name="title"] { flex: 1 1 20rem; }
 .rm-add .tt-input { flex: 1; }
 .rm-addbtn { margin-top: 0; flex: none; padding: 0 20px; }
+
+/* The same line, carrying the edit form. It holds a title, two dates, Save
+   and Cancel, which will not sit on one row at this width — so it wraps, and
+   the title keeps a floor of its own so it never ends up narrower than the
+   date fields beside it. */
+.rm-add.is-editing { row-gap: 10px; }
+.rm-add.is-editing .tt-input[name="title"] { flex: 1 1 22rem; }
+.rm-add.is-editing .tt-input { background: var(--surface-2); }
+
+/* Says which row the form is holding. The number is the row's serial, so it
+   matches what is printed beside the item in the list. */
+.rm-editing-tag {
+  flex: none;
+  font-family: var(--display);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--on-accent);
+  background: var(--accent);
+  border-radius: 5px;
+  padding: 5px 10px;
+  white-space: nowrap;
+}
+
+/* And the row it belongs to, marked so the pair is obvious when the list is
+   long enough that the form and the row are not on screen together. */
+.rm-item.is-target { outline: 2px solid var(--accent); outline-offset: 1px; }
 
 .rm-page { max-width: 1080px; }
 /* Two columns by CSS columns, not grid, and that choice is about the arrows.

@@ -1,5 +1,6 @@
 import type { APIRoute } from "astro";
 import { env } from "cloudflare:workers";
+import { todayInDubai } from "../../../lib/today";
 
 /**
  * Every change to the roadmap: add, delete, tick, and move.
@@ -24,7 +25,10 @@ export const POST: APIRoute = async ({ request }) => {
   const action = String(form.get("action") ?? "");
   const id = Number(form.get("id") ?? 0);
   const now = new Date().toISOString();
-  const today = now.slice(0, 10);
+  /* The board records what happened on a given day in Dubai, so "today"
+     has to be today there — `now` is UTC and would roll over four hours
+     early. */
+  const today = todayInDubai();
 
   /** An empty date field means "no date", not "the epoch". */
   const dateOrNull = (v: FormDataEntryValue | null) => {
@@ -38,13 +42,15 @@ export const POST: APIRoute = async ({ request }) => {
     // New items land at the end. Appending is the safe default: an item pushed
     // to the top would reorder someone else's list without being asked to.
     const max = await DB.prepare("SELECT COALESCE(MAX(position), 0) p FROM roadmap").first<{ p: number }>();
-    // Today is the entry date, because today is when it was entered. It stays
-    // editable, so anything raised earlier can be backdated.
+    // The form offers a date, defaulted to today, so something raised last
+    // week can be entered with the date it was actually raised. Today stays
+    // the fallback for a submission that carries no date at all.
+    const entry = dateOrNull(form.get("entry_date")) ?? today;
     await DB.prepare(
       `INSERT INTO roadmap (title, done, position, entry_date, created_at, updated_at)
        VALUES (?, 0, ?, ?, ?, ?)`
     )
-      .bind(title, (max?.p ?? 0) + 10, today, now, now)
+      .bind(title, (max?.p ?? 0) + 10, entry, now, now)
       .run();
     return back();
   }

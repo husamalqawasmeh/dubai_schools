@@ -1,5 +1,6 @@
 ---
 import Base from "../../layouts/Base.astro";
+import { todayInDubai } from "../../lib/today";
 import { env } from "cloudflare:workers";
 
 const DB = (env as unknown as { DB: D1Database }).DB;
@@ -27,6 +28,21 @@ const items = results ?? [];
  */
 const editing = Number(Astro.url.searchParams.get("edit") ?? 0);
 
+/* The row itself, and its position in the list — the serial the form names is
+   the same one shown beside the row, so "Editing 4" points at something the
+   reader can see. An ?edit= that names nothing (a deleted row, a stale
+   bookmark) leaves target null and the page falls back to the add line rather
+   than showing an edit form for a row that is gone. */
+const target = items.find((i) => i.id === editing) ?? null;
+const targetNo = target ? items.indexOf(target) + 1 : 0;
+
+/* The add line offers the date it was raised, filled in with today so the
+   common case needs no thought — and editable, so something raised last week
+   goes in with the date it actually happened rather than the date it was
+   typed. Today in Dubai, not in UTC: the Worker rolls over four hours early,
+   which would date an evening entry to yesterday. */
+const raisedToday = todayInDubai();
+
 const shown = (d: string | null) =>
   d ? new Date(d + "T00:00:00Z").toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" }) : null;
 ---
@@ -35,47 +51,58 @@ const shown = (d: string | null) =>
   <div class="wrap pick rm-page">
     <a class="back" href="/admin/admin">Back to admin</a>
     <h1 style="margin-top:14px">Improvements and planned changes</h1>
-    <form class="rm-add" method="POST" action="/api/admin/roadmap">
-      <input type="hidden" name="action" value="add" />
-      <input
-        class="tt-input"
-        name="title"
-        placeholder="Add a change to make…"
-        maxlength="300"
-        required
-        autocomplete="off"
-      />
-      <button class="btn rm-addbtn" type="submit">Add</button>
-    </form>
+    {/* One form at the top, and it is either the add line or the edit line.
+        Editing used to reshape the row in place, which meant the fields
+        appeared wherever that row happened to sit — halfway down a long list,
+        under the mouse that had just clicked Edit. Here it is always in the
+        same place, and the row stays readable while you retype it. */}
+    {target ? (
+      <form class="rm-add is-editing" method="POST" action="/api/admin/roadmap">
+        <input type="hidden" name="action" value="edit" />
+        <input type="hidden" name="id" value={target.id} />
+        <span class="rm-editing-tag">Editing {targetNo}</span>
+        <input
+          class="tt-input"
+          name="title"
+          value={target.title}
+          maxlength="300"
+          required
+          autocomplete="off"
+          autofocus
+        />
+        <label class="rm-datefield">
+          <span>Raised</span>
+          <input class="tt-input" type="date" name="entry_date" value={target.entry_date ?? ""} />
+        </label>
+        <label class="rm-datefield">
+          <span>Completed</span>
+          <input class="tt-input" type="date" name="completion_date" value={target.completion_date ?? ""} />
+        </label>
+        <button class="btn rm-addbtn" type="submit">Save</button>
+        <a class="rm-cancel" href="/admin/improvements">Cancel</a>
+      </form>
+    ) : (
+      <form class="rm-add" method="POST" action="/api/admin/roadmap">
+        <input type="hidden" name="action" value="add" />
+        <input
+          class="tt-input"
+          name="title"
+          placeholder="Add a change to make…"
+          maxlength="300"
+          required
+          autocomplete="off"
+        />
+        <label class="rm-datefield">
+          <span>Raised</span>
+          <input class="tt-input" type="date" name="entry_date" value={raisedToday} />
+        </label>
+        <button class="btn rm-addbtn" type="submit">Add</button>
+      </form>
+    )}
 
     <ol class={editing ? "rm-list is-editing" : "rm-list"}>
       {items.map((item, i) => (
-        <li class={item.done ? "rm-item is-done" : "rm-item"}>
-          {editing === item.id ? (
-            <form class="rm-edit" method="POST" action="/api/admin/roadmap">
-              <input type="hidden" name="action" value="edit" />
-              <input type="hidden" name="id" value={item.id} />
-              <span class="rm-edit-row">
-                <span class="rm-no">{i + 1}</span>
-                <input class="tt-input rm-edit-title" name="title" value={item.title} maxlength="300" required />
-              </span>
-              <span class="rm-edit-row rm-edit-dates">
-                <label class="rm-datefield">
-                  <span>Raised</span>
-                  <input class="tt-input" type="date" name="entry_date" value={item.entry_date ?? ""} />
-                </label>
-                <label class="rm-datefield">
-                  <span>Completed</span>
-                  <input class="tt-input" type="date" name="completion_date" value={item.completion_date ?? ""} />
-                </label>
-              </span>
-              <span class="rm-edit-row rm-edit-actions">
-                <button class="btn rm-save" type="submit">Save</button>
-                <a class="rm-cancel" href="/admin/improvements">Cancel</a>
-              </span>
-            </form>
-          ) : (
-            <>
+        <li class={`rm-item${item.done ? " is-done" : ""}${editing === item.id ? " is-target" : ""}`}>
               {/* Each control is its own form. One form with several submit
                   buttons would work, but a stray Enter would then fire
                   whichever came first — here there is no ambiguity. */}
@@ -128,8 +155,6 @@ const shown = (d: string | null) =>
                 <input type="hidden" name="id" value={item.id} />
                 <button type="submit" class="rm-del" aria-label={`Delete "${item.title}"`}>&times;</button>
               </form>
-            </>
-          )}
         </li>
       ))}
     </ol>
