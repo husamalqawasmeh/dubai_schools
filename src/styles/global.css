@@ -2396,14 +2396,9 @@ a.cur-note {
 @media (min-width: 700px) { .idsplit { grid-template-columns: 1fr 1fr; } }
 
 .idcard {
-  background: var(--surface);
-  /* No edges. The fill makes it a block and the hover makes it a control —
-     an outline as well was a third thing saying the same. */
-  /* No outline, but a 2.9px bar down the left edge — the one edge that says
-     which way the card is read from. It turns white on hover rather than
-     vanishing into the fill it would otherwise match. */
+  /* No fill and no edges — the label is the control. */
+  background: none;
   border: none;
-  border-left: 2.7px solid var(--accent-2);
   border-radius: 8px;
   padding: 14px 16px 16px;
 }
@@ -2804,7 +2799,7 @@ a.idcard:hover h2 { color: var(--on-accent); }
    min-height rather than a fixed one, so a label that wraps on a narrow column
    grows the card instead of spilling out of it. */
 .idcard {
-  padding: 17px 19px 19px;
+  padding: 18px 19px;
   min-height: 4.6rem;
   display: flex;
   align-items: center;
@@ -2849,13 +2844,12 @@ a.idcard:hover h2 { color: var(--on-accent); }
 .adminlink h2 { margin: 0; }
 
 
-/* The two cards rest halfway to the hover colour and complete the move on
-   hover. The label is ink at rest, not the accent: on this ground the accent
-   is 2.3:1 and disappears, where ink is 5.2:1. White would have been 3.1:1 —
-   legible at 17px bold, but only just, and the label is the whole card. */
-.idcard { background: var(--card-mid); }
-.idcard h2 { color: var(--ink); }
-a.idcard:hover h2 { color: var(--on-accent); }
 
-/* The bar would disappear into the hover fill, which is the same colour. */
-a.idcard:hover { border-left-color: var(--on-accent); }
+/* The two cards are one flat colour and nothing else, filling to dark green on
+   hover. These come after the earlier .idcard rules deliberately — same
+   specificity, so the last one wins, and the fill and bar set above have to be
+   overridden rather than edited in three places. */
+.idcard { background: var(--surface-3); border: none; }
+.idcard h2 { color: var(--ink); }
+a.idcard:hover { background: var(--accent-2); }
+a.idcard:hover h2 { color: var(--on-accent); }
