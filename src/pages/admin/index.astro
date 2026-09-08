@@ -27,7 +27,7 @@ const pending = (
           /admin/login: that redirects here the moment you are signed in,
           which you are if you can read this, so it would bounce straight
           back. Signing in again is how you switch account. */}
-      <a class="adminlink" href={signin ? "/admin" : "/admin?signin"} aria-expanded={signin ? "true" : "false"}>
+      <a class="adminlink is-alone" href={signin ? "/admin" : "/admin?signin"} aria-expanded={signin ? "true" : "false"}>
         <h2>Sign-in</h2>
       </a>
       {/* Directly under the option that opened it and one column wide, so it
@@ -39,7 +39,7 @@ const pending = (
           blurb={`Signed in as ${admin.email}. Signing in again replaces this session.`}
         />
       )}
-      <a class="adminlink" href="/admin/account">
+      <a class="adminlink is-newrow" href="/admin/account">
         <h2>Profile</h2>
       </a>
       <a class="adminlink" href="/admin/roadmap">

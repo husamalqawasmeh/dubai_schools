@@ -1133,7 +1133,21 @@ button.btn:disabled { opacity: 0.55; cursor: default; }
 .composer input { height: 38px; }
 .composer .field { margin-bottom: 12px; }
 .adminlinks { display: grid; gap: 12px; margin-top: 18px; }
-@media (min-width: 700px) { .adminlinks { grid-template-columns: 1fr 1fr; } }
+/* Three across. Sign-in sits alone on the first row — it is the odd one out,
+   a thing you do rather than a place you go — and everything else follows
+   from the second row on.
+
+   Placed by class, not :nth-child: the sign-in box is a real element that
+   appears between the first two cards when it is open, so every index would
+   shift the moment someone clicked Sign-in. .is-newrow pins only the column
+   and leaves the row automatic, which is what makes it land on row 2 with the
+   box closed and row 3 with it open, without either case being written down. */
+@media (min-width: 700px) {
+  .adminlinks { grid-template-columns: repeat(3, 1fr); }
+  .adminlinks .is-alone { grid-column: 1; grid-row: 1; }
+  .adminlinks .is-newrow { grid-column: 1; }
+  .adminsignin { grid-column: 1; }
+}
 .adminlink {
   background: var(--surface); border: 1px solid var(--rule); border-radius: 6px;
   padding: 16px 18px; text-decoration: none; color: inherit; display: block;
