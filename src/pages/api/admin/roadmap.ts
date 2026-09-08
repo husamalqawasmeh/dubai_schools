@@ -13,7 +13,9 @@ import { env } from "cloudflare:workers";
  * and this is the one page whose entire job is recording decisions.
  */
 const DB = (env as unknown as { DB: D1Database }).DB;
-const BACK = "/admin/roadmap";
+/* The page moved to /admin/improvements; this endpoint did not — it is
+   named for the `roadmap` table it writes, which is unchanged. */
+const BACK = "/admin/improvements";
 
 const back = () => new Response(null, { status: 303, headers: { Location: BACK } });
 
