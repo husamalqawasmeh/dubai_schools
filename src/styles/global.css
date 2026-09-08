@@ -3037,7 +3037,7 @@ a.idcard:hover h2 { color: var(--on-accent); }
 .idtag { margin-top: calc(10px + 1in); }
 @media (max-height: 860px) { .idtag { margin-top: calc(10px + 0.6in); } }
 
-/* And half a centimetre lower again.
+/* And a quarter of a centimetre lower again.
 
    Relative offset rather than a transform or a margin, and for two separate
    reasons. The tagline finishes its rise on transform: translateY(0) with a
@@ -3045,7 +3045,7 @@ a.idcard:hover h2 { color: var(--on-accent); }
    the animation lands. And a margin would push the cards down with it, which
    would undo the centimetre they were just raised by — top: moves what is
    drawn without moving anything that follows. */
-.idtag { position: relative; top: 0.5cm; }
+.idtag { position: relative; top: 0.25cm; }
 
 
 /* The whole text block — name, tagline and both cards — moves 2cm right and
