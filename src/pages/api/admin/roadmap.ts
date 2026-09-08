@@ -103,15 +103,20 @@ export const POST: APIRoute = async ({ request }) => {
     // same list cannot both read "not done" and both write "done".
     //
     // Ticking fills the completion date only when it is empty, so it never
-    // overwrites a date someone set deliberately. Unticking leaves it alone
-    // rather than clearing it: the date is a fact about when the work
-    // finished, and a mis-click should not delete a fact.
+    // overwrites a date someone set deliberately. Unticking clears it: an
+    // item that is not done has no completion date, and leaving one behind
+    // meant a row could show "Completed 8 Sept" with an empty box beside it.
+    // The date can be typed back in from the edit form if it was a mis-click.
     await DB.prepare(
       `UPDATE roadmap
           SET done = 1 - done,
               completion_date = CASE
+                -- becoming done, with no date of its own yet
                 WHEN done = 0 AND completion_date IS NULL THEN ?
-                ELSE completion_date
+                -- becoming done, keeping the date it already had
+                WHEN done = 0 THEN completion_date
+                -- becoming not done
+                ELSE NULL
               END,
               updated_at = ?
         WHERE id = ?`
