@@ -3560,7 +3560,6 @@ a.idcard:hover h2 { color: var(--on-accent); }
 .prov-body .prov-contact { margin: 9px 0 0; font-family: var(--display); font-size: 13px; }
 @media (max-width: 620px) {
   .prov > summary { grid-template-columns: 1fr; }
-  .prov .prov-areas { }
 }
 
 
