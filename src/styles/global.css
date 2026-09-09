@@ -3770,6 +3770,11 @@ a.idcard:hover h2 { color: var(--on-accent); }
 /* Air between the rows. Without it the boxes stack edge to edge and the form
    reads as one tall control rather than a list of questions. Unconditional,
    because a narrow screen stacks the same fields and wants the same gap. */
+/* Bold, a step up from the 600 every other .field label on the site carries.
+   This is the one form a stranger fills in, and the labels are what tell them
+   what each box wants. The "optional" and "not published" badges keep their
+   own weight — they are asides, not part of the question. */
+.prov-form .field > label { font-weight: 700; }
 .prov-form .field { margin-bottom: 11px; }
 .prov-form .form-row { gap: 12px; margin-bottom: 11px; }
 .prov-form .form-row .field { margin-bottom: 0; }
