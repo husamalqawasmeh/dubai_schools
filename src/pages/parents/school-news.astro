@@ -1,89 +1,64 @@
 ---
 import Base from "../../layouts/Base.astro";
-import { env } from "cloudflare:workers";
-
-const DB = (env as unknown as { DB: D1Database }).DB;
+import NewsList from "../../components/NewsList.astro";
+import { publishedNews, band } from "../../lib/newsfeed";
 
 /**
- * Only published rows, newest first. A draft has no published_at, which is what
- * keeps a half-written item off the page — the filter is the publishing gate,
- * so there is no way to forget to apply it.
+ * Schools news, in three bands.
+ *
+ * The first band is the reader's own — their school here, their favourites on
+ * the parents' page. Neither exists yet: there is no school sign-in and no
+ * favourites, so nothing can be attributed to a reader and the band is empty
+ * for everyone. It is rendered anyway, saying plainly what would fill it,
+ * because a section that appears the day accounts arrive is a section nobody
+ * knew to expect.
+ *
+ * The other two are decided by the story: anything tied to a listed school, or
+ * naming Dubai, KHDA or the Emirates, is local; the rest reached the scan
+ * without being about here.
  */
-const { results } = await DB.prepare(
-  `SELECT n.headline, n.body, n.source_name, n.source_url, n.published_at,
-          s.name AS school_name, s.slug AS school_slug
-   FROM school_news n
-   LEFT JOIN schools s ON s.id = n.school_id
-   WHERE n.published_at IS NOT NULL
-   ORDER BY n.published_at DESC
-   LIMIT 60`
-).all<any>();
-
-const items = results ?? [];
-
-const when = (iso: string) =>
-  new Date(iso).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" });
+const rows = await publishedNews();
+const own = new Set<number>();   // nothing to put in it until accounts exist
+const { own: mine, local, other } = band(rows, own);
 ---
 
 <Base
-  title="Schools news — what is changing in Dubai schools"
+  title="Schools news — Dubai Schools"
   description="Term dates, fee decisions, inspection results, openings and closures across Dubai's private schools."
 >
   <div class="wrap pick">
     <a class="back" href="/parents/overview">Overview</a>
     <h1 style="margin-top:14px">Schools news</h1>
-    <p class="sub">
-      What is changing across Dubai's private schools — term dates, fee
-      decisions, inspection results, openings and closures.
-    </p>
 
-    {items.length > 0 ? (
-      <div class="news-list">
-        {items.map((n) => (
-          <article class="news-item">
-            <p class="news-meta">
-              {n.published_at && <time>{when(n.published_at)}</time>}
-              {n.school_name && (
-                <>
-                  <span class="news-dot">·</span>
-                  <a href={`/schools/${n.school_slug}`}>{n.school_name}</a>
-                </>
-              )}
-            </p>
-            <h2 class="news-head">{n.headline}</h2>
-            <p class="news-body">{n.body}</p>
-            {n.source_url && (
-              <p class="news-src">
-                <a href={n.source_url} target="_blank" rel="noopener noreferrer">
-                  {n.source_name || "Source"}
-                </a>
-              </p>
-            )}
-          </article>
-        ))}
+    <section class="newsband">
+      <div class="faq-group-title">
+        <h2>Your favourite schools</h2>
+        <span class="faq-group-n">{mine.length}</span>
       </div>
-    ) : (
-      <div class="news-empty">
-        <p><b>Nothing published yet.</b></p>
-        <p>
-          This page will carry term-date changes, KHDA fee and inspection
-          decisions, and schools opening or closing — the things that change
-          between one school year and the next and are easy to miss.
-        </p>
-        <p>
-          If you run a school and have something worth listing, or you have
-          spotted something we should cover, send it through the{" "}
-          <a href="/parents/communicate">Communicate</a> page. Nothing is published
-          without being checked first.
-        </p>
+      <NewsList items={mine} empty="Mark a school as a favourite and its news will appear here first. Favourites need an account, which is not built yet." />
+    </section>
+
+    <section class="newsband">
+      <div class="faq-group-title">
+        <h2>Dubai schools</h2>
+        <span class="faq-group-n">{local.length}</span>
       </div>
-    )}
+      <NewsList items={local} empty="Nothing published yet. The scan runs every morning and each story is checked before it appears here." />
+    </section>
+
+    <section class="newsband">
+      <div class="faq-group-title">
+        <h2>Elsewhere</h2>
+        <span class="faq-group-n">{other.length}</span>
+      </div>
+      <NewsList items={other} empty="Nothing here at the moment." />
+    </section>
 
     <p class="note-foot">
-      Items are checked before they appear, and each carries its source where
-      there is one. For anything official — inspection reports, fee rules, the
-      parent charter — <a href="https://www.khda.gov.ae" target="_blank" rel="noopener noreferrer">KHDA</a>{" "}
-      is the authority, not this page.
+      Each line is dated by the newspaper that published it; a date marked with
+      an asterisk is the day we found the story, because that source gave none.
+      Headlines link to the original. Nothing appears here automatically — every
+      item is read before it is published.
     </p>
   </div>
 </Base>

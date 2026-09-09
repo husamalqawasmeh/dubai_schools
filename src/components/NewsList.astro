@@ -1,0 +1,50 @@
+---
+import { newsDate, newsHref, type NewsRow } from "../lib/newsfeed";
+
+/**
+ * One line per story: date, source, headline.
+ *
+ * A list rather than cards. These are one-line items whose whole content is the
+ * headline, and a card around each turned a day's news into a page of scrolling
+ * — the point of a news page is to run your eye down it.
+ *
+ * The date is the newspaper's own where we have it. Where we do not, it is the
+ * date we found the story and it is marked, because printing our date in the
+ * newspaper's column would be quietly wrong.
+ */
+interface Props {
+  items: NewsRow[];
+  empty: string;
+}
+const { items, empty } = Astro.props;
+---
+
+{items.length === 0 ? (
+  <p class="prov-empty">{empty}</p>
+) : (
+  <ul class="newslist">
+    {items.map((r) => {
+      const d = newsDate(r);
+      const href = newsHref(r);
+      return (
+        <li class="newsline">
+          <span class={d.exact ? "newsdate" : "newsdate is-approx"} title={d.exact ? undefined : "The date we found this — the source did not give one"}>
+            {d.label}
+            {!d.exact && <span aria-hidden="true">*</span>}
+          </span>
+          <span class="newssrc">{r.source_name ?? "—"}</span>
+          <span class="newstitle">
+            {href ? (
+              <a href={href} target="_blank" rel="noopener nofollow">{r.headline}</a>
+            ) : (
+              r.headline
+            )}
+            {r.school_name && r.slug && (
+              <a class="newsschool" href={`/schools/${r.slug}`}>{r.school_name}</a>
+            )}
+          </span>
+        </li>
+      );
+    })}
+  </ul>
+)}

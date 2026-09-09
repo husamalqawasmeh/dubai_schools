@@ -112,9 +112,12 @@ export async function scanNews(all: Candidate[]): Promise<ScanResult> {
     if (!c) continue;
     try {
       const res = await DB.prepare(
+        // source_published_at is the newspaper's date, which is what a reader
+        // wants at the front of a news line — not scanned_at, which is ours.
         `INSERT INTO school_news
-           (school_id, headline, body, source_name, source_url, scanned_at, created_at)
-         VALUES (?, ?, ?, ?, ?, ?, ?)`
+           (school_id, headline, body, source_name, source_url, source_final_url,
+            source_published_at, scanned_at, created_at)
+         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`
       )
         .bind(
           matchSchool(`${c.headline} ${s.headline}`),
@@ -122,6 +125,8 @@ export async function scanNews(all: Candidate[]): Promise<ScanResult> {
           s.body,
           c.source || null,
           c.url,
+          (c as any).finalUrl || null,
+          c.published || null,
           now,
           now
         )

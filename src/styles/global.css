@@ -3468,3 +3468,46 @@ a.idcard:hover h2 { color: var(--on-accent); }
   /* The buttons line up with the inputs, not with the labels. */
   .prov-actions { margin-left: calc(8.5rem + 12px); }
 }
+
+
+/* ---------------- news list ---------------- */
+/* One line per story: date, source, headline. A grid rather than a flex row,
+   so the dates and the sources form columns and the eye can run down them —
+   which is the only reason to put a date in front of a headline at all. */
+.newsband { margin-top: 22px; }
+.newslist { list-style: none; margin: 10px 0 0; padding: 0; }
+.newsline {
+  display: grid;
+  grid-template-columns: 6.6rem 9rem minmax(0, 1fr);
+  gap: 12px;
+  align-items: baseline;
+  padding: 7px 2px;
+  border-bottom: 1px solid var(--rule);
+}
+.newsline:last-child { border-bottom: none; }
+.newsdate {
+  font-family: var(--display); font-size: 12px; font-weight: 600;
+  color: var(--ink-2); white-space: nowrap; font-variant-numeric: tabular-nums;
+}
+/* Our date, not the paper's. Faint and asterisked rather than hidden: the
+   difference matters to anyone reading a date, and dropping the line for want
+   of a date would be worse. */
+.newsdate.is-approx { color: var(--muted); font-weight: 500; }
+.newssrc {
+  font-family: var(--display); font-size: 12px; color: var(--muted);
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.newstitle { font-size: 14px; line-height: 1.45; min-width: 0; }
+.newstitle a { color: var(--ink); text-decoration: none; }
+.newstitle a:hover { color: var(--accent); text-decoration: underline; }
+.newsschool {
+  font-family: var(--display); font-size: 11.5px; font-weight: 700;
+  color: var(--accent) !important; margin-left: 8px; white-space: nowrap;
+}
+
+/* Narrow: the date and source stack above the headline rather than squeezing
+   three columns into a phone. */
+@media (max-width: 620px) {
+  .newsline { grid-template-columns: auto 1fr; gap: 4px 10px; }
+  .newstitle { grid-column: 1 / -1; }
+}
