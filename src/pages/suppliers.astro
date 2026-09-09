@@ -56,6 +56,24 @@ const ERRORS: Record<string, string> = {
 >
   <div class="wrap pick">
     <a class="back" href="/">Home</a>
+
+    {/* This page carries its own bar rather than the site one. The site nav
+        moves you between pages; every option here is a band further down this
+        page, so they are anchors. Same marks and same look, because they
+        behave the same way to the hand even though one hops and one scrolls.
+
+        Chatbot is the exception and goes last: it is the only item that
+        leaves, so it sits where the eye stops rather than in among the
+        things that do not. */}
+    <nav class="supnav" aria-label="Sections of this page">
+      {byBand.map((b, i) => (
+        <>
+          <a href={`#cat-${b.id}`}>{b.label}</a>
+          <span class="nav-sep" aria-hidden="true">►</span>
+        </>
+      ))}
+      <a href="/parents/overview#chatbox">Chatbot</a>
+    </nav>
     <h1 style="margin-top:14px">School Supplies and Services</h1>
     <p class="sub">
       Suppliers serving Dubai schools. For what to buy and when — and what a

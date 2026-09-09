@@ -3650,3 +3650,34 @@ a.idcard:hover h2 { color: var(--on-accent); }
    full one had. */
 .prov-bandhead { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
 .prov-bandhead .prov-none { padding: 0; }
+
+
+/* The suppliers page carries its own bar. It borrows the site nav's look
+   deliberately — same weight, same marks, same fill on hover — because the
+   two behave the same way to the hand; the difference is that these jump down
+   the page rather than to another one, and that is not a difference worth
+   showing with a different style. */
+.supnav {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  margin: 12px 0 4px;
+  font-family: var(--display);
+  font-size: 13.5px;
+  font-weight: 700;
+}
+.supnav a {
+  color: var(--ink);
+  text-decoration: none;
+  padding: 4px 9px;
+  border-radius: 6px;
+}
+.supnav a:hover { background: var(--accent); color: var(--on-accent); }
+/* Anchors are reached by keyboard as often as by pointer here, so focus gets
+   the same fill rather than a ring nobody styled. */
+.supnav a:focus-visible { background: var(--accent); color: var(--on-accent); outline: none; }
+.supnav .nav-sep { color: var(--nav-mark); font-size: 11px; line-height: 1; }
+
+/* An anchored band should not land under the top of the window. */
+.prov-group { scroll-margin-top: 14px; }

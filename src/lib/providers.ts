@@ -104,9 +104,9 @@ export const BANDS = [
   { id: "transport", label: "Transport", of: ["transport"] },
   { id: "uniforms", label: "Uniforms", of: ["uniforms"] },
   { id: "books", label: "Books", of: ["books", "used_books"] },
-  {
-    id: "other",
-    label: "Other Supplies",
-    of: ["stationery", "tutoring", "activities", "other"],
-  },
+  { id: "supplies", label: "Other Supplies", of: ["stationery"] },
+  /* Things bought by the hour rather than off a shelf. Split out of Other
+     Supplies because a parent looking for a tutor and a parent looking for
+     pencil cases are not doing the same errand. */
+  { id: "services", label: "Other services", of: ["tutoring", "activities", "other"] },
 ] as const;
