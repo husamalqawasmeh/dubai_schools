@@ -1226,7 +1226,7 @@ button.adminlink:hover { border-color: var(--accent); }
      — "More than one curriculum" is the longest label any of them carries, and
      it was the one closest to being clipped. Area still takes the most width
      because its values are much the longest. */
-  .listing .filters .row { grid-template-columns: 0.87fr 0.65fr 0.70fr 1.04fr auto; }
+  .listing .filters .row { grid-template-columns: 1fr 0.72fr 0.66fr 0.92fr 0.86fr auto; }
 }
 .clearall-cell { display: flex; align-items: flex-end; }
 .clearall {
