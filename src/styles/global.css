@@ -3681,3 +3681,20 @@ a.idcard:hover h2 { color: var(--on-accent); }
 
 /* An anchored band should not land under the top of the window. */
 .prov-group { scroll-margin-top: 14px; }
+
+/* A row that does not open. Same three parts and the same line, but nothing
+   about it invites a click — no pointer, no hover fill, and no + after the
+   name, because a marker promising more is worse than plain text when there
+   is no more to give. */
+.prov.is-flat { cursor: default; }
+.prov.is-flat .prov-row {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  padding: 9px 14px;
+  white-space: nowrap;
+}
+.prov.is-flat .prov-name::after { content: none; }
+@media (max-width: 700px) {
+  .prov.is-flat .prov-row { flex-wrap: wrap; white-space: normal; gap: 2px 10px; }
+}

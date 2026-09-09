@@ -18,11 +18,14 @@ interface Props {
   /** Draw the section bar. Off where the page has put those options into the
    *  header instead — two bars of navigation for one page is one too many. */
   showNav?: boolean;
+  /** Let a row open. Off where the list is there for reference rather than for
+   *  reading — a row that cannot be opened should not look as though it can. */
+  expandable?: boolean;
   /** Where the Chatbot item in the bar should point. The chatbot lives on an
    *  overview, and which overview depends on who is reading. */
   chatHref?: string;
 }
-const { chatHref = "/parents/overview#chatbox", showNav = true } = Astro.props;
+const { chatHref = "/parents/overview#chatbox", showNav = true, expandable = true } = Astro.props;
 
 const DB = (env as unknown as { DB: D1Database }).DB;
 
@@ -60,12 +63,12 @@ const byBand = BANDS.map((b) => ({
                 )}
               </div>
             <div class="prov-list">
+              {/* One line. Where it opens, the closed state is the whole line and
+                  the detail waits behind it; details/summary rather than a script,
+                  so it works with JavaScript off. Where it does not open, the same
+                  line is drawn flat. */}
               {c.items.map((p) => (
-                /* One line that opens. A directory is scanned before it is
-                   read, so the closed state is the whole line — name, what
-                   they do, where — and everything else waits behind it.
-                   details/summary rather than a script: it works with
-                   JavaScript off and the browser handles the keyboard. */
+                expandable ? (
                 <details class="prov">
                   <summary>
                     <span class="prov-name">{p.name}</span>
@@ -83,10 +86,19 @@ const byBand = BANDS.map((b) => ({
                         <a href={p.website} target="_blank" rel="noopener nofollow">
                           {p.website.replace(/^https?:\/\//, "").replace(/\/$/, "")}
                         </a>
-                      )}
+                )}
                     </p>
                   </div>
                 </details>
+                ) : (
+                  <div class="prov is-flat">
+                    <div class="prov-row">
+                      <span class="prov-name">{p.name}</span>
+                      <span class="prov-sum">{p.summary}</span>
+                      {p.areas && <span class="prov-areas">{p.areas}</span>}
+                    </div>
+                  </div>
+                )
               ))}
             </div>
           </section>
