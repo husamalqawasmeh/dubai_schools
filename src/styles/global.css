@@ -3487,8 +3487,13 @@ a.idcard:hover h2 { color: var(--on-accent); }
      the two labels long enough to wrap — "Anything else worth knowing" and
      "Areas you serve" — which left those two ranged right while every other
      label in the column sat left. */
+  /* 6.25rem, and the number is load-bearing at both ends. Below about 5.9rem
+     the longest one-line labels — "What you supply", "Areas you serve" — start
+     wrapping too; at the old 8.5rem "Anything else worth" all fitted on the
+     first line, which read as a broken phrase. This lands between the two, and
+     every input gains the 2.25rem the gutter gave up. */
   .prov-form .field > label {
-    flex: 0 0 8.5rem;
+    flex: 0 0 6.25rem;
     margin-bottom: 0;
     text-align: left;
   }
@@ -3498,7 +3503,7 @@ a.idcard:hover h2 { color: var(--on-accent); }
   .prov-form .field:has(textarea) { align-items: flex-start; }
   .prov-form .field:has(textarea) > label { margin-top: 9px; }
   /* The buttons line up with the inputs, not with the labels. */
-  .prov-actions { margin-left: calc(8.5rem + 12px); }
+  .prov-actions { margin-left: calc(6.25rem + 12px); }
 }
 
 
