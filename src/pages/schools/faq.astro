@@ -1,5 +1,6 @@
 ---
 import Base from "../../layouts/Base.astro";
+import { emphasise } from "../../lib/emphasis";
 
 /**
  * The schools' FAQ, which is a different page from the parents' one rather
@@ -195,7 +196,12 @@ const GROUPS = [
           {g.items.map((f) => (
             <details class="faq-item">
               <summary>{f.q}</summary>
-              {f.a.map((para) => <p>{para}</p>)}
+              {/* A few words carry the answer — the flat "No.", and the three
+                  ways a school is asked to act. Rendered as pieces rather than
+                  as HTML, so nothing here can inject markup. */}
+              {f.a.map((para) => (
+                <p>{emphasise(para).map((piece) => (piece.b ? <strong>{piece.t}</strong> : piece.t))}</p>
+              ))}
             </details>
           ))}
         </div>
