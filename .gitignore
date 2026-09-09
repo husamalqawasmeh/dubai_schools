@@ -38,4 +38,5 @@ world-travel-landmarks-concept-with-iconic-cities-halfearth_485374-25004.avif
 # deleted in the same breath; one slipped into a commit, which is what this is for.
 /*.py
 /*.mjs
+!/astro.config.mjs
 /*.tmp
