@@ -3731,3 +3731,18 @@ a.idcard:hover h2 { color: var(--on-accent); }
   letter-spacing: 0.02em;
   text-transform: uppercase;
 }
+
+/* Three adjustments to the short list's columns.
+
+   The fee centres in its column like the two beside it. Ending it on the right
+   edge was meant to line the numbers up, but the fee is a band — "Mid", "High"
+   — rather than a figure, and words do not compare down an edge the way digits
+   do, so it was the odd one out for no gain.
+
+   The curriculum loses its flag and gains a little size. In a fixed column the
+   icon was spending width the text needed, and it was the one pill whose text
+   was being cut. */
+.grid.is-compact .card .pill-fee { justify-content: center; }
+.grid.is-compact .card .pill-cur .pill-ico { display: none; }
+.grid.is-compact .card .pill-cur { gap: 0; }
+.grid.is-compact .card .pill-cur-text { font-size: 12.5px; }
