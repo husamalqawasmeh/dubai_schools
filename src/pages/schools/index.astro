@@ -223,12 +223,6 @@ const title = activeBits.length
           <div class="field clearall-cell">
             <button type="button" id="clearall" class="clearall">Clear all filters</button>
           </div>
-          <div class="field view-cell">
-            <label class="viewtoggle">
-              <input type="checkbox" id="compact" />
-              <span>Short list</span>
-            </label>
-          </div>
           {/* Sorting is one choice, so it is a select rather than another
               MultiSelect — those are for picking several values at once and
               one of them here would be a checkbox list where exactly one box
@@ -236,6 +230,7 @@ const title = activeBits.length
           <div class="field sort-cell">
             <label for="sort">Sort by</label>
             <select id="sort" class="sortbox">
+              <option value="">Do not sort</option>
               <option value="name">Name (A-Z)</option>
               <option value="area">Area</option>
               <option value="rat">KHDA rating</option>
@@ -248,7 +243,7 @@ const title = activeBits.length
     </div>
 
     <div class="listing-results">
-      <div class="grid" id="grid">
+      <div class="grid is-compact" id="grid">
         {all.map((x) => (
           <a
             class="card"
@@ -360,7 +355,6 @@ const title = activeBits.length
   const results = document.querySelector(".listing-results")!;
   const cards = Array.from(grid.children) as HTMLElement[];
   const sortSel = document.getElementById("sort") as HTMLSelectElement;
-  const compact = document.getElementById("compact") as HTMLInputElement;
 
   /* Sorting reorders the cards in the DOM once, not on every filter pass.
      Filtering only hides and shows, so the order it leaves behind is still
@@ -376,6 +370,18 @@ const title = activeBits.length
 
   function sortCards() {
     const k = sortSel.value;
+
+    /* "Do not sort" is not the absence of an order — it is the order the
+       server sent, which groups the list the way the page was built. `cards`
+       still holds that sequence, because sorting only ever re-appends the
+       nodes and never rebuilt the array. */
+    if (!k) {
+      const back = document.createDocumentFragment();
+      for (const c of cards) back.appendChild(c);
+      grid.appendChild(back);
+      return;
+    }
+
     const key = KEY[k] ?? KEY.name;
     const sorted = cards.slice().sort((a, b) => {
       const x = key(a.dataset);
@@ -390,19 +396,6 @@ const title = activeBits.length
     grid.appendChild(frag);
   }
 
-  /* The short list is a per-visitor preference, so it belongs in this
-     browser rather than in the URL — a shared link should carry the search,
-     not how the person who sent it likes their results laid out. */
-  const VIEW = "dxb-schools-compact";
-  function applyView() {
-    grid.classList.toggle("is-compact", compact.checked);
-    try { localStorage.setItem(VIEW, compact.checked ? "1" : "0"); } catch { /* private mode */ }
-  }
-  try { compact.checked = localStorage.getItem(VIEW) === "1"; } catch { /* ignore */ }
-  applyView();
-
-  sortSel.addEventListener("change", sortCards);
-  compact.addEventListener("change", applyView);
 
   function apply() {
     const text = q.value.trim().toLowerCase();
