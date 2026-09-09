@@ -3554,7 +3554,27 @@ a.idcard:hover h2 { color: var(--on-accent); }
   font-family: var(--display); font-size: 11.5px;
   color: var(--muted); margin: 0;
 }
-.prov > summary:hover .prov-name { color: var(--accent); }
+/* The whole row answers the pointer, not just the name. It is one control —
+   clicking anywhere on it opens the entry — so lighting only the name said
+   the name was the link and the rest was decoration.
+
+   Every part has to take the reverse colour with it, including the muted
+   summary and areas: leaving those grey on a dark ground is the one way this
+   fill can end up less readable than no fill at all. */
+.prov > summary:hover,
+.prov > summary:focus-visible {
+  background: var(--accent);
+  border-radius: 7px;
+  outline: none;
+}
+.prov > summary:hover .prov-name,
+.prov > summary:hover .prov-sum,
+.prov > summary:hover .prov-areas,
+.prov > summary:focus-visible .prov-name,
+.prov > summary:focus-visible .prov-sum,
+.prov > summary:focus-visible .prov-areas { color: var(--on-accent); }
+.prov > summary:hover .prov-name::after,
+.prov > summary:focus-visible .prov-name::after { color: var(--on-accent); }
 .prov-body { padding: 0 14px 13px; border-top: 1px solid var(--rule); margin-top: 2px; }
 .prov-body .prov-detail { margin: 10px 0 0; font-size: 13.5px; color: var(--ink-2); line-height: 1.6; }
 .prov-body .prov-contact { margin: 9px 0 0; font-family: var(--display); font-size: 13px; }
@@ -3623,3 +3643,10 @@ a.idcard:hover h2 { color: var(--on-accent); }
   font-size: 13px;
   color: var(--muted);
 }
+
+
+/* The band label and, when the band is empty, what it has to say — on one
+   line. A note under the label gave an empty section more of the page than a
+   full one had. */
+.prov-bandhead { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.prov-bandhead .prov-none { padding: 0; }

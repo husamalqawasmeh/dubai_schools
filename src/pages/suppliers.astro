@@ -65,12 +65,12 @@ const ERRORS: Record<string, string> = {
 
         {byBand.map((c) => (
           <section class="prov-group" id={`cat-${c.id}`}>
-            <h2 class="prov-band">
-              {c.label}<span>{c.items.length}</span>
-            </h2>
-            {c.items.length === 0 && (
-              <p class="prov-none">Nothing listed here yet.</p>
-            )}
+              <div class="prov-bandhead">
+                <h2 class="prov-band">{c.label}<span>{c.items.length}</span></h2>
+                {c.items.length === 0 && (
+                  <span class="prov-none">Nothing listed here yet.</span>
+                )}
+              </div>
             <div class="prov-list">
               {c.items.map((p) => (
                 /* One line that opens. A directory is scanned before it is
