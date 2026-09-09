@@ -67,7 +67,8 @@ const here = (Astro.url.pathname.replace(/\/+$/, "") || "/").toLowerCase();
  * outside a section.
  */
 const SCHOOL_SECTION = new Set([
-  "overview", "faq", "communicate", "school-supplies", "school-news", "advertise",
+  "overview", "faq", "communicate", "supplies", "school-supplies",
+  "school-news", "advertise",
 ]);
 const inSchools = (() => {
   const seg = here.split("/");   // "/schools/faq" -> ["", "schools", "faq"]
@@ -242,20 +243,22 @@ const isHere = (href: string) => {
                     {down ? "\u25bc" : "\u25ba"}
                   </span>
                 )}
+              </>
+            );
+          })}
+        </nav>
+        )}
         {/* A page with no site nav may still put its own items in the bar.
             The suppliers page does: its options are sections of itself, and
             they belong beside the mark rather than in a second bar under the
             heading, which was two rows of navigation for one page.
 
-            Guarded on the slot having content, so a bare nonav page does not
-            render an empty <nav> and the gap it would leave. */}
+            It sits after the site nav rather than inside it: nested there it
+            was inside a block that only renders when nonav is false, so the
+            one page that fills the slot was the one page that could never
+            show it. */}
         {nonav && (
           <nav><slot name="nav" /></nav>
-        )}
-              </>
-            );
-          })}
-        </nav>
         )}
       </div>
     </header>
