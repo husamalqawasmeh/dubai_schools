@@ -980,9 +980,14 @@ button.btn:disabled { opacity: 0.55; cursor: default; }
 .factgrid { display: grid; gap: 10px; margin-top: 14px; }
 @media (min-width: 620px) { .factgrid { grid-template-columns: 1fr 1fr; } .fact.wide { grid-column: 1 / -1; } }
 .fact { background: var(--surface); border: 1px solid var(--rule); border-radius: 6px; padding: 12px 14px; }
+/* The weight was already 700 and did not look it — at 10.5px in the muted
+   grey a bold face has nothing to be bold against, so the colour was doing
+   the work and the weight had nowhere to show. Same 700, in the ink colour
+   and a point larger. Matches the table headings, which had the same fault
+   and the same fix. */
 .fact h3 {
-  font-size: 10.5px; font-weight: 700; letter-spacing: 0.1em;
-  text-transform: uppercase; color: var(--muted); margin-bottom: 5px;
+  font-size: 11.5px; font-weight: 700; letter-spacing: 0.09em;
+  text-transform: uppercase; color: var(--ink); margin-bottom: 6px;
 }
 .fact p { font-family: var(--display); font-size: 13.5px; color: var(--ink); margin: 0; line-height: 1.45; }
 
