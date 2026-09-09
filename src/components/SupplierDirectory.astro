@@ -42,15 +42,15 @@ const byBand = BANDS.map((b) => ({
   items: live.filter((p) => (b.of as readonly string[]).includes(p.category)),
 }));
 ---
+    {/* Boxes, and nothing between them. The separators went with the chatbot:
+        an arrow between two boxes points at a thing that already has an edge
+        of its own, and once the last item was removed the row ended in an
+        arrow leading nowhere. */}
     {showNav && (
     <nav class="supnav" aria-label="Sections of this page">
       {byBand.map((b) => (
-        <>
-          <a href={`#cat-${b.id}`}>{b.label}<span class="supnav-n">{b.items.length}</span></a>
-          <span class="nav-sep" aria-hidden="true">►</span>
-        </>
+        <a href={`#cat-${b.id}`}>{b.label}<span class="supnav-n">{b.items.length}</span></a>
       ))}
-      <a href={chatHref}>Chatbot</a>
     </nav>
     )}
 

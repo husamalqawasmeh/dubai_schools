@@ -3667,16 +3667,22 @@ a.idcard:hover h2 { color: var(--on-accent); }
   font-size: 13.5px;
   font-weight: 700;
 }
+/* Each option is a box. It was bare text with arrows between, which read as a
+   sentence of links; a box says "this is a thing you press" without needing a
+   mark beside it to point at the next one. */
 .supnav a {
   color: var(--ink);
   text-decoration: none;
-  padding: 4px 9px;
-  border-radius: 6px;
+  padding: 6px 13px;
+  border: 1px solid var(--rule-firm);
+  border-radius: 999px;
+  background: var(--surface);
+  transition: background 0.12s ease, color 0.12s ease, border-color 0.12s ease;
 }
-.supnav a:hover { background: var(--accent); color: var(--on-accent); }
+.supnav a:hover { background: var(--accent); color: var(--on-accent); border-color: var(--accent); }
 /* Anchors are reached by keyboard as often as by pointer here, so focus gets
    the same fill rather than a ring nobody styled. */
-.supnav a:focus-visible { background: var(--accent); color: var(--on-accent); outline: none; }
+.supnav a:focus-visible { background: var(--accent); color: var(--on-accent); border-color: var(--accent); outline: none; }
 .supnav .nav-sep { color: var(--nav-mark); font-size: 11px; line-height: 1; }
 
 /* An anchored band should not land under the top of the window. */
