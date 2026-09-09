@@ -44,9 +44,9 @@ const byBand = BANDS.map((b) => ({
 ---
     {showNav && (
     <nav class="supnav" aria-label="Sections of this page">
-      {byBand.map((b, i) => (
+      {byBand.map((b) => (
         <>
-          <a href={`#cat-${b.id}`}>{b.label}</a>
+          <a href={`#cat-${b.id}`}>{b.label}<span class="supnav-n">{b.items.length}</span></a>
           <span class="nav-sep" aria-hidden="true">►</span>
         </>
       ))}
@@ -54,14 +54,9 @@ const byBand = BANDS.map((b) => ({
     </nav>
     )}
 
-        {byBand.map((c) => (
+        {byBand.filter((c) => c.items.length > 0).map((c) => (
           <section class="prov-group" id={`cat-${c.id}`}>
-              <div class="prov-bandhead">
-                <h2 class="prov-band">{c.label}<span>{c.items.length}</span></h2>
-                {c.items.length === 0 && (
-                  <span class="prov-none">Nothing listed here yet.</span>
-                )}
-              </div>
+              <h2 class="prov-bandname">{c.label}</h2>
             <div class="prov-list">
               {/* One line. Where it opens, the closed state is the whole line and
                   the detail waits behind it; details/summary rather than a script,

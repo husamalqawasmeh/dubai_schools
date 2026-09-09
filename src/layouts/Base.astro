@@ -132,12 +132,16 @@ const nav = NAV.filter(
    which is the routing that had to be fixed once the page stopped being one
    page. */
 const faqHref = inSchools ? "/schools/faq" : "/parents/faq";
-/* School Supplies leads to the register of actual suppliers rather than to
-   the buying advice. The advice is general and says to ask the school; the
-   register names shops, which is what someone clicking "School Supplies"
-   is after. Both advice pages stay reachable from the top of that page, so
-   nothing is orphaned by the change. */
-const suppliesHref = "/suppliers";
+/* School Supplies leads to the section's own copy of the supplier list,
+   not to the shared /suppliers page.
+
+   Same list either way, so the difference looks like nothing — but a nav item
+   pointing at an address the section never occupies can never be the current
+   one, so its mark stayed a right-pointing arrow on the very page it led to.
+   Pointing it at the page the reader is actually on is what lets the mark
+   turn down. /suppliers keeps the registration form and is reached from the
+   front page. */
+const suppliesHref = inSchools ? "/schools/school-supplies" : "/parents/school-supplies";
 const newsHref = inSchools ? "/schools/school-news" : "/parents/school-news";
 
 /* Each section opens on its own overview, and it leads the bar because it is
