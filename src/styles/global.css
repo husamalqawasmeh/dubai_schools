@@ -3387,7 +3387,7 @@ a.idcard:hover h2 { color: var(--on-accent); }
    than a panel. It was a full card with a heading, which gave the thing that
    is not there more room than the form that fixes it. */
 .prov-empty {
-  margin: 18px 0 0;
+  margin: 14px 0 0;
   padding: 10px 14px;
   background: var(--surface);
   border: 1px solid var(--rule);
@@ -3437,4 +3437,34 @@ a.idcard:hover h2 { color: var(--on-accent); }
 .prov-askform .formbtn:disabled { opacity: .45; cursor: not-allowed; }
 .prov-askform .formbtn:disabled:hover {
   background: var(--surface-2); color: var(--accent); border-color: var(--rule-firm);
+}
+
+
+/* Labels beside their fields on the register form, not stacked over them.
+
+   A fixed label column rather than fit-content: labels of different lengths
+   sizing their own column would step the inputs in and out down the form, and
+   a ragged left edge on the boxes is harder to read than a wide-ish gutter.
+
+   Scoped to this form. Every other .field on the site stacks, and changing
+   that globally would relayout the admin screens and the travel-time page for
+   no reason. */
+@media (min-width: 560px) {
+  .prov-form .field {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .prov-form .field > label {
+    flex: 0 0 8.5rem;
+    margin-bottom: 0;
+    text-align: right;
+  }
+  .prov-form .field > .tt-input { flex: 1; min-width: 0; }
+  /* The one field taller than a line: its label sits at the top of the box
+     rather than floating in the middle of it. */
+  .prov-form .field:has(textarea) { align-items: flex-start; }
+  .prov-form .field:has(textarea) > label { margin-top: 9px; }
+  /* The buttons line up with the inputs, not with the labels. */
+  .prov-actions { margin-left: calc(8.5rem + 12px); }
 }

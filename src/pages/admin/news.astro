@@ -1,0 +1,164 @@
+---
+import Base from "../../layouts/Base.astro";
+import { env } from "cloudflare:workers";
+
+/**
+ * The news queue.
+ *
+ * Every scan writes drafts and nothing publishes itself. Until now the only way
+ * to approve one was a link in the morning digest — and the digest needs
+ * RESEND_API_KEY, which is not set, so it has never sent. Forty-seven drafts
+ * had accumulated with no way to reach the site at all.
+ *
+ * So the same decision is available here. The emailed links still work and are
+ * still the convenient path once mail is configured; this is the one that does
+ * not depend on anything outside the console.
+ *
+ * Discarded items are left out entirely rather than shown in a third group.
+ * A discard is a decision that the story is not for this site, and a list of
+ * things nobody will act on again is a list that makes the queue longer
+ * without making it more useful.
+ */
+const DB = (env as unknown as { DB: D1Database }).DB;
+
+const { results } = await DB.prepare(
+  `SELECT n.id, n.headline, n.body, n.source_name, n.source_url, n.published_at,
+          n.created_at, n.school_id, s.name AS school_name, s.slug
+     FROM school_news n
+     LEFT JOIN schools s ON s.id = n.school_id
+    WHERE n.rejected_at IS NULL
+    ORDER BY (n.published_at IS NULL) DESC, n.created_at DESC, n.id DESC
+    LIMIT 200`
+).all<any>();
+
+const rows = results ?? [];
+const drafts = rows.filter((r) => !r.published_at);
+const live = rows.filter((r) => r.published_at);
+
+/* Drafts by the day they arrived, because a scan is a day's worth of news and
+   reviewing one morning at a time is how it is actually done. */
+const byDay = new Map<string, any[]>();
+for (const r of drafts) {
+  const day = (r.created_at ?? "").slice(0, 10);
+  (byDay.get(day) ?? byDay.set(day, []).get(day)!).push(r);
+}
+
+const when = (iso: string | null) =>
+  iso
+    ? new Date(iso).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" })
+    : "";
+
+/* Google News wraps every link, so the stored URL says nothing about who wrote
+   the piece. The source name is the only honest label available. */
+const host = (u: string | null) => {
+  if (!u) return "";
+  try {
+    return new URL(u).hostname.replace(/^www\./, "");
+  } catch {
+    return "";
+  }
+};
+---
+
+<Base title="News queue — admin">
+  <div class="wrap pick rm-page">
+    <a class="back" href="/admin/admin">Back to admin</a>
+    <h1 style="margin-top:14px">News queue</h1>
+    <p class="sub">
+      {drafts.length} waiting · {live.length} published to
+      <a href="/parents/school-news">/parents/school-news</a>
+    </p>
+
+    {drafts.length === 0 ? (
+      <p class="prov-empty">
+        <strong>Nothing waiting.</strong> The morning scan writes drafts here;
+        anything approved appears on the news pages.
+      </p>
+    ) : (
+      [...byDay].map(([day, items]) => (
+        <>
+          <h2 style="margin:24px 0 8px">
+            {when(day + "T00:00:00Z")} <span class="faq-group-n">({items.length})</span>
+          </h2>
+          <div class="mod-list">
+            {items.map((r) => (
+              <article class="mod-item" id={`n${r.id}`}>
+                <p class="mod-meta">
+                  <span class="mod-tag">Draft</span>
+                  <span>{r.source_name || host(r.source_url) || "unknown source"}</span>
+                  {r.school_name && <span class="mod-dot">·</span>}
+                  {r.school_name && (
+                    <span>{r.slug ? <a href={`/schools/${r.slug}`}>{r.school_name}</a> : r.school_name}</span>
+                  )}
+                </p>
+
+                <h3 style="margin:2px 0 4px">{r.headline}</h3>
+                {r.body ? (
+                  <p class="mod-message">{r.body}</p>
+                ) : (
+                  <p class="missing" style="margin:2px 0">
+                    No summary — the summariser could not reach the model, so the
+                    headline is all there is. Publishing it publishes the headline
+                    and the link.
+                  </p>
+                )}
+                {r.source_url && (
+                  <p class="mod-from">
+                    <a href={r.source_url} target="_blank" rel="noopener nofollow">Read the original</a>
+                  </p>
+                )}
+
+                <div class="mod-actions">
+                  <form method="POST" action="/api/admin/news">
+                    <input type="hidden" name="action" value="publish" />
+                    <input type="hidden" name="id" value={r.id} />
+                    <button class="btn mod-ok" type="submit">Publish</button>
+                  </form>
+                  <form method="POST" action="/api/admin/news">
+                    <input type="hidden" name="action" value="discard" />
+                    <input type="hidden" name="id" value={r.id} />
+                    <button class="btn sec mod-no" type="submit">Discard</button>
+                  </form>
+                </div>
+              </article>
+            ))}
+          </div>
+        </>
+      ))
+    )}
+
+    {live.length > 0 && (
+      <>
+        <h2 style="margin:26px 0 8px">Published ({live.length})</h2>
+        <div class="mod-list">
+          {live.map((r) => (
+            <article class="mod-item is-approved">
+              <p class="mod-meta">
+                <span class="mod-tag">Live</span>
+                <span>{r.source_name || host(r.source_url)}</span>
+                <span class="mod-dot">·</span>
+                <span>{when(r.published_at)}</span>
+                {r.school_name && <span class="mod-dot">·</span>}
+                {r.school_name && <span>{r.school_name}</span>}
+              </p>
+              <h3 style="margin:2px 0 4px">{r.headline}</h3>
+              <div class="mod-actions">
+                <form method="POST" action="/api/admin/news">
+                  <input type="hidden" name="action" value="unpublish" />
+                  <input type="hidden" name="id" value={r.id} />
+                  <button class="btn sec" type="submit">Take down</button>
+                </form>
+              </div>
+            </article>
+          ))}
+        </div>
+      </>
+    )}
+
+    <p class="note-foot">
+      Nothing published by the scan reaches the site on its own. Discarding
+      keeps the row so the same story is not offered again on tomorrow's scan;
+      taking something down clears its publish date and returns it here.
+    </p>
+  </div>
+</Base>
