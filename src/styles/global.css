@@ -3727,14 +3727,21 @@ a.idcard:hover h2 { color: var(--on-accent); }
 /* A band's name below, as plain text. The pill for it is in the row above, and
    showing both was the same word twice — which is what the pill replaced the
    first time round. */
+/* A band label, and the one above the register form. Boxes rather than plain
+   text, in accent-2 — a step darker than the accent the rest of the page uses,
+   so a label reads as a division of the page rather than as one more control
+   among the boxes below it. */
 .prov-bandname {
-  margin: 20px 0 6px;
+  display: inline-block;
+  margin: 24px 0 8px;
+  padding: 6px 14px;
+  border-radius: 999px;
   font-family: var(--display);
   font-size: 14px;
   font-weight: 700;
-  color: var(--ink-2);
   letter-spacing: 0.02em;
-  text-transform: uppercase;
+  color: var(--on-accent);
+  background: var(--accent-2);
 }
 
 /* Three adjustments to the short list's columns.
