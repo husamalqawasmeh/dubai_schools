@@ -3248,11 +3248,8 @@ a.idcard:hover h2 { color: var(--on-accent); }
 .prov-group { margin-top: 20px; }
 .prov-list { display: grid; gap: 10px; margin-top: 10px; }
 @media (min-width: 820px) { .prov-list { grid-template-columns: 1fr 1fr; } }
-.prov {
-  background: var(--surface); border: 1px solid var(--rule);
-  border-radius: 8px; padding: 13px 15px;
-}
-.prov h3 { margin: 0 0 3px; font-size: 15.5px; }
+
+
 .prov-sum { margin: 0; font-family: var(--display); font-size: 14px; color: var(--ink); line-height: 1.5; }
 .prov-areas { margin: 5px 0 0; font-family: var(--display); font-size: 12px; color: var(--muted); }
 .prov-detail { margin: 7px 0 0; font-size: 13.5px; color: var(--ink-2); line-height: 1.55; }
@@ -3510,4 +3507,54 @@ a.idcard:hover h2 { color: var(--on-accent); }
 @media (max-width: 620px) {
   .newsline { grid-template-columns: auto 1fr; gap: 4px 10px; }
   .newstitle { grid-column: 1 / -1; }
+}
+
+
+/* A supplier is one line that opens. Closed, it is the whole listing: who
+   they are, what they do, where. Open, it adds the detail and the contacts —
+   deliberately no more than that, because a directory entry that runs to a
+   page stops being scannable and starts being a brochure. */
+.prov {
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: 8px;
+  padding: 0;
+}
+.prov + .prov { margin-top: 8px; }
+.prov > summary {
+  display: grid;
+  grid-template-columns: minmax(9rem, 14rem) minmax(0, 1fr);
+  gap: 2px 14px;
+  align-items: baseline;
+  cursor: pointer;
+  padding: 11px 14px;
+  list-style: none;
+}
+.prov > summary::-webkit-details-marker { display: none; }
+.prov > summary::before {
+  content: "+";
+  grid-row: 1 / span 3;
+  display: none;
+}
+.prov-name {
+  font-family: var(--display); font-size: 14.5px; font-weight: 700; color: var(--ink);
+}
+/* The marker sits after the name rather than in a column of its own, so a
+   long name does not push it off the end of the line. */
+.prov-name::after { content: " +"; color: var(--accent); font-weight: 700; }
+.prov[open] .prov-name::after { content: " –"; }
+.prov .prov-sum {
+  font-family: var(--display); font-size: 13.5px; color: var(--ink-2); line-height: 1.45; margin: 0;
+}
+.prov .prov-areas {
+  grid-column: 2; font-family: var(--display); font-size: 11.5px;
+  color: var(--muted); margin: 0;
+}
+.prov > summary:hover .prov-name { color: var(--accent); }
+.prov-body { padding: 0 14px 13px; border-top: 1px solid var(--rule); margin-top: 2px; }
+.prov-body .prov-detail { margin: 10px 0 0; font-size: 13.5px; color: var(--ink-2); line-height: 1.6; }
+.prov-body .prov-contact { margin: 9px 0 0; font-family: var(--display); font-size: 13px; }
+@media (max-width: 620px) {
+  .prov > summary { grid-template-columns: 1fr; }
+  .prov .prov-areas { grid-column: 1; }
 }

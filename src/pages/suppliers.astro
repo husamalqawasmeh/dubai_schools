@@ -54,6 +54,11 @@ const ERRORS: Record<string, string> = {
   <div class="wrap pick">
     <a class="back" href="/">Home</a>
     <h1 style="margin-top:14px">School Supplies and Services</h1>
+    <p class="sub">
+      Suppliers serving Dubai schools. For what to buy and when — and what a
+      school usually provides — see the
+      <a href="/parents/school-supplies">buying guide</a>.
+    </p>
 
     {live.length === 0 ? (
       <p class="prov-empty">
@@ -76,26 +81,32 @@ const ERRORS: Record<string, string> = {
             </div>
             <div class="prov-list">
               {c.items.map((p) => (
-                <article class="prov">
-                  <h3>{p.name}</h3>
-                  <p class="prov-sum">{p.summary}</p>
-                  {p.areas && <p class="prov-areas">Serves {p.areas}</p>}
-                  {p.detail && <p class="prov-detail">{p.detail}</p>}
-                  <p class="prov-contact">
-                    {p.phone && <a href={`tel:${p.phone.replace(/\s+/g, "")}`}>{p.phone}</a>}
-                    {p.phone && (p.email || p.website) && <span class="mod-dot">·</span>}
-                    {p.email && <a href={`mailto:${p.email}`}>{p.email}</a>}
-                    {p.email && p.website && <span class="mod-dot">·</span>}
-                    {/* nofollow on an unvetted outbound link: a directory that
-                        passes its own standing to anyone who fills in a form is
-                        a directory worth spamming. */}
-                    {p.website && (
-                      <a href={p.website} target="_blank" rel="noopener nofollow">
-                        {p.website.replace(/^https?:\/\//, "").replace(/\/$/, "")}
-                      </a>
-                    )}
-                  </p>
-                </article>
+                /* One line that opens. A directory is scanned before it is
+                   read, so the closed state is the whole line — name, what
+                   they do, where — and everything else waits behind it.
+                   details/summary rather than a script: it works with
+                   JavaScript off and the browser handles the keyboard. */
+                <details class="prov">
+                  <summary>
+                    <span class="prov-name">{p.name}</span>
+                    <span class="prov-sum">{p.summary}</span>
+                    {p.areas && <span class="prov-areas">{p.areas}</span>}
+                  </summary>
+                  <div class="prov-body">
+                    {p.detail && <p class="prov-detail">{p.detail}</p>}
+                    <p class="prov-contact">
+                      {p.phone && <a href={`tel:${p.phone.replace(/[^+\d]/g, "")}`}>{p.phone}</a>}
+                      {p.phone && (p.email || p.website) && <span class="mod-dot">·</span>}
+                      {p.email && <a href={`mailto:${p.email}`}>{p.email}</a>}
+                      {p.email && p.website && <span class="mod-dot">·</span>}
+                      {p.website && (
+                        <a href={p.website} target="_blank" rel="noopener nofollow">
+                          {p.website.replace(/^https?:\/\//, "").replace(/\/$/, "")}
+                        </a>
+                      )}
+                    </p>
+                  </div>
+                </details>
               ))}
             </div>
           </section>
