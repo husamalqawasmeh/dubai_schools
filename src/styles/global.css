@@ -2712,7 +2712,7 @@ body.is-bare .idwrap { min-height: 100dvh; }
 .rm-box[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); }
 .rm-box:hover { border-color: var(--accent); }
 
-/* The done control, at the right-hand end of the row: a flag and the box it
+/* The done control, at the right-hand end of the row: a tick and the box it
    belongs to, kept together so neither reads as a stray. */
 .rm-done { display: flex; align-items: center; gap: 5px; flex: none; }
 .rm-done form { display: flex; margin: 0; }
@@ -2723,8 +2723,8 @@ body.is-bare .idwrap { min-height: 100dvh; }
   color: var(--muted);
   display: block;
 }
-/* Once it is ticked the flag stops being an instruction and becomes a label
-   for a state, so it takes the colour of the state. */
+/* Once the box is ticked the mark stops being an instruction and becomes a
+   label for a state, so it takes the colour of the state. */
 .rm-done:has(.rm-box[aria-pressed="true"]) .rm-doneico { color: var(--accent); }
 
 .rm-title {
