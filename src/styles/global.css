@@ -3758,3 +3758,17 @@ a.idcard:hover h2 { color: var(--on-accent); }
 .grid.is-compact .card .pill-cur .pill-ico { display: none; }
 .grid.is-compact .card .pill-cur { gap: 0; }
 .grid.is-compact .card .pill-cur-text { font-size: 12.5px; }
+
+
+/* The paired rows sit in a two-column grid, so their own gap has to match the
+   gap between single rows or the form is evenly spaced in one place and not
+   the other. */
+/* Air between the rows. Without it the boxes stack edge to edge and the form
+   reads as one tall control rather than a list of questions. Unconditional,
+   because a narrow screen stacks the same fields and wants the same gap. */
+.prov-form .field { margin-bottom: 11px; }
+.prov-form .form-row { gap: 12px; margin-bottom: 11px; }
+.prov-form .form-row .field { margin-bottom: 0; }
+/* The last thing before the buttons needs no gap of its own — the buttons
+   bring their own. */
+.prov-form .form-row:last-of-type { margin-bottom: 0; }
