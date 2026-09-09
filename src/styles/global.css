@@ -3280,7 +3280,20 @@ a.idcard:hover h2 { color: var(--on-accent); }
 }
 .prov-opt {
   font-weight: 400; text-transform: none; letter-spacing: 0;
-  color: var(--muted); font-size: 10.5px; margin-left: 4px;
+  color: var(--muted); font-size: 10.5px;
+}
+
+/* The badge sits under its label, not trailing after it. Beside the text it
+   competed with the label for the same line and pushed the longer ones into
+   an extra wrap; under it, it reads as a note about the question above.
+
+   The label is already a flex box, so this is a direction change rather than
+   a new layout — and it is unconditional, because the badge belongs under the
+   label whether the label sits beside its input or over it. */
+.prov-form .field > label {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1px;
 }
 
 /* Said back to the submitter after the redirect. Green for received, amber
