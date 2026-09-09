@@ -1,41 +1,9 @@
 ---
-import Base from "../../layouts/Base.astro";
-import SupplierDirectory from "../../components/SupplierDirectory.astro";
-
 /**
- * The supplier directory, inside the schools section.
- *
- * The same list as /suppliers and the same component, without the
- * registration form. A school reading this is looking for a supplier, not
- * offering to become one — and a form asking for a trade licence under a list
- * a parent is browsing is a form in the wrong place. Anyone who does want to
- * register is one link away at the foot.
- *
- * This address used to redirect to the buying guide. It now holds the
- * directory, and the guide keeps its own address and a link from here.
+ * The old address, kept alive. It has pointed at two different things — the
+ * buying guide, then the supplier directory — and both of those now live at
+ * school-supplies, so it redirects there rather than 404ing on anyone who
+ * kept a link from either period.
  */
+return Astro.redirect("/schools/school-supplies", 301);
 ---
-
-<Base
-  title="School Supplies and Services — for schools"
-  description="Uniforms, textbooks, second-hand books, stationery, transport, tutoring and activities for Dubai schools."
->
-  <div class="wrap pick">
-    <a class="back" href="/schools/overview">Overview</a>
-    <h1 style="margin-top:14px">School Supplies and Services</h1>
-    <p class="sub">
-      Suppliers serving Dubai schools. For what to buy and when — and what a
-      school usually provides — see the
-      <a href="/schools/school-supplies">buying guide</a>.
-    </p>
-
-    <SupplierDirectory chatHref="/schools/overview#chatbox" showNav={false} />
-
-    <p class="note-foot">
-      A listing here is not a recommendation. We check that a business exists
-      and that its details are real; we do not inspect it, and nothing on this
-      page is paid for. Supply Dubai schools and want to be listed?
-      <a href="/suppliers#register">Register your service</a>.
-    </p>
-  </div>
-</Base>
