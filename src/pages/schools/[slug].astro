@@ -14,7 +14,10 @@ const grades = school ? await gradeFees(school.id) : [];
 
 // Everything below the per-grade table is the same on every sheet for a
 // school, so it is shown once rather than repeated fourteen times.
-const sample = grades.find((g) => g.transport || g.discounts.length || g.increase_policy);
+/* The row of extra facts is shown when a grade has one. increase_policy no
+   longer counts towards that: its box is gone, so a school whose only extra
+   was the policy would otherwise open an empty row. */
+const sample = grades.find((g) => g.transport || g.discounts.length);
 const feeYearFromSheets = grades[0]?.academic_year ?? null;
 
 const aed = (v: number) => "AED " + v.toLocaleString("en-AE");
@@ -186,12 +189,6 @@ const facts: { k: string; v: string | null; href?: string }[] = [
                   <div class="fact">
                     <h3>Discounts</h3>
                     <p>{sample.discounts.join(" · ")}</p>
-                  </div>
-                )}
-                {sample.increase_policy && (
-                  <div class="fact wide">
-                    <h3>Fee increase policy</h3>
-                    <p>{sample.increase_policy}</p>
                   </div>
                 )}
               </div>
