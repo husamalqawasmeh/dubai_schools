@@ -3268,7 +3268,10 @@ a.idcard:hover h2 { color: var(--on-accent); }
    narrower than the results it feeds, which read as a sidebar rather than as
    the other half of the page. The fields inside stay in two columns, so
    nothing is stretched — the box widens, the inputs do not lengthen. */
-.prov-form { max-width: none; }
+/* The same 4px .prov-list takes, so "Register a service" sits over its form
+   at exactly the distance "Uniform" sits over the list under it. Both add to
+   the label pill's own 4px; inline-block margins do not collapse. */
+.prov-form { max-width: none; margin-top: 4px; }
 .prov-form textarea.tt-input { height: auto; padding: 9px 11px; line-height: 1.5; resize: vertical; }
 .prov-form select.tt-input { cursor: pointer; }
 .prov-lead {

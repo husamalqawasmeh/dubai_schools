@@ -101,7 +101,7 @@ export const safeUrl = (raw: string): string | null => {
  * reading the page that there is a place for them.
  */
 export const BANDS = [
-  { id: "uniforms", label: "Uniforms", of: ["uniforms"] },
+  { id: "uniforms", label: "Uniform", of: ["uniforms"] },
   { id: "transport", label: "Transport", of: ["transport"] },
   { id: "books", label: "Books", of: ["books", "used_books"] },
   { id: "supplies", label: "Other Supplies", of: ["stationery"] },
