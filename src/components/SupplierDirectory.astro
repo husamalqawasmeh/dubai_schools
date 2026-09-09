@@ -1,0 +1,99 @@
+---
+import { BANDS } from "../lib/providers";
+import { env } from "cloudflare:workers";
+
+/**
+ * The supplier directory: the section bar and the five bands.
+ *
+ * A component because three pages show it — /suppliers, and a copy in each
+ * section — and the only difference between them is whether the registration
+ * form follows. Three copies of this markup would have drifted the first time
+ * one of them was edited and the others forgotten.
+ *
+ * It reads the database itself rather than taking rows as a prop. Every page
+ * that shows it wants the same query, and a prop would have let one of them
+ * pass something else — including, one day, unapproved rows.
+ */
+interface Props {
+  /** Draw the section bar. Off where the page has put those options into the
+   *  header instead — two bars of navigation for one page is one too many. */
+  showNav?: boolean;
+  /** Where the Chatbot item in the bar should point. The chatbot lives on an
+   *  overview, and which overview depends on who is reading. */
+  chatHref?: string;
+}
+const { chatHref = "/parents/overview#chatbox", showNav = true } = Astro.props;
+
+const DB = (env as unknown as { DB: D1Database }).DB;
+
+const { results } = await DB.prepare(
+  `SELECT id, name, category, summary, detail, areas, phone, email, website
+     FROM providers
+    WHERE status = 'approved'
+    ORDER BY category, name COLLATE NOCASE`
+).all<any>();
+
+const live = results ?? [];
+const byBand = BANDS.map((b) => ({
+  ...b,
+  items: live.filter((p) => (b.of as readonly string[]).includes(p.category)),
+}));
+---
+    {showNav && (
+    <nav class="supnav" aria-label="Sections of this page">
+      {byBand.map((b, i) => (
+        <>
+          <a href={`#cat-${b.id}`}>{b.label}</a>
+          <span class="nav-sep" aria-hidden="true">►</span>
+        </>
+      ))}
+      <a href={chatHref}>Chatbot</a>
+    </nav>
+    )}
+    <h1 style="margin-top:14px">School Supplies and Services</h1>
+    <p class="sub">
+      Suppliers serving Dubai schools. For what to buy and when — and what a
+      school usually provides — see the
+      <a href="/parents/school-supplies">buying guide</a>.
+    </p>
+
+        {byBand.map((c) => (
+          <section class="prov-group" id={`cat-${c.id}`}>
+              <div class="prov-bandhead">
+                <h2 class="prov-band">{c.label}<span>{c.items.length}</span></h2>
+                {c.items.length === 0 && (
+                  <span class="prov-none">Nothing listed here yet.</span>
+                )}
+              </div>
+            <div class="prov-list">
+              {c.items.map((p) => (
+                /* One line that opens. A directory is scanned before it is
+                   read, so the closed state is the whole line — name, what
+                   they do, where — and everything else waits behind it.
+                   details/summary rather than a script: it works with
+                   JavaScript off and the browser handles the keyboard. */
+                <details class="prov">
+                  <summary>
+                    <span class="prov-name">{p.name}</span>
+                    <span class="prov-sum">{p.summary}</span>
+                    {p.areas && <span class="prov-areas">{p.areas}</span>}
+                  </summary>
+                  <div class="prov-body">
+                    {p.detail && <p class="prov-detail">{p.detail}</p>}
+                    <p class="prov-contact">
+                      {p.phone && <a href={`tel:${p.phone.replace(/[^+\d]/g, "")}`}>{p.phone}</a>}
+                      {p.phone && (p.email || p.website) && <span class="mod-dot">·</span>}
+                      {p.email && <a href={`mailto:${p.email}`}>{p.email}</a>}
+                      {p.email && p.website && <span class="mod-dot">·</span>}
+                      {p.website && (
+                        <a href={p.website} target="_blank" rel="noopener nofollow">
+                          {p.website.replace(/^https?:\/\//, "").replace(/\/$/, "")}
+                        </a>
+                      )}
+                    </p>
+                  </div>
+                </details>
+              ))}
+            </div>
+          </section>
+        ))}

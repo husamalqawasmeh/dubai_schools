@@ -1,6 +1,6 @@
 ---
 import Base from "../layouts/Base.astro";
-import { env } from "cloudflare:workers";
+import SupplierDirectory from "../components/SupplierDirectory.astro";
 import { BANDS, CATEGORIES, LIMITS } from "../lib/providers";
 
 /**
@@ -19,23 +19,6 @@ import { BANDS, CATEGORIES, LIMITS } from "../lib/providers";
  * Only approved rows are read. The filter is in the query rather than applied
  * after it, so there is no arrangement of this page that shows a pending one.
  */
-const DB = (env as unknown as { DB: D1Database }).DB;
-
-const { results } = await DB.prepare(
-  `SELECT id, name, category, summary, detail, areas, phone, email, website
-     FROM providers
-    WHERE status = 'approved'
-    ORDER BY category, name COLLATE NOCASE`
-).all<any>();
-
-const live = results ?? [];
-/* Grouped into the four bands the page shows, and every band is kept whether
-   or not it has anything in it — an empty one tells a reader nobody supplies
-   that yet, and tells a supplier there is a place for them. */
-const byBand = BANDS.map((b) => ({
-  ...b,
-  items: live.filter((p) => (b.of as readonly string[]).includes(p.category)),
-}));
 
 /* What the form has just done, if anything. Carried in the query string
    because the post redirects — a message held in a variable would not survive
@@ -54,6 +37,18 @@ const ERRORS: Record<string, string> = {
   title="School Supplies and Services in Dubai"
   description="Uniforms, textbooks, second-hand books, stationery, transport, tutoring and activities for Dubai schools — and a form for suppliers to register their own service."
 >
+  {/* Straight into the header bar, after the mark. Same marks and the same
+      fill as the site nav on every other page, because on this page these
+      are the navigation. */}
+  <Fragment slot="nav">
+    {BANDS.map((b) => (
+      <>
+        <a href={`#cat-${b.id}`}>{b.label}</a>
+        <span class="nav-sep" aria-hidden="true">►</span>
+      </>
+    ))}
+    <a href="/parents/overview#chatbox">Chatbot</a>
+  </Fragment>
   <div class="wrap pick">
     <a class="back" href="/">Home</a>
 
@@ -65,62 +60,7 @@ const ERRORS: Record<string, string> = {
         Chatbot is the exception and goes last: it is the only item that
         leaves, so it sits where the eye stops rather than in among the
         things that do not. */}
-    <nav class="supnav" aria-label="Sections of this page">
-      {byBand.map((b, i) => (
-        <>
-          <a href={`#cat-${b.id}`}>{b.label}</a>
-          <span class="nav-sep" aria-hidden="true">►</span>
-        </>
-      ))}
-      <a href="/parents/overview#chatbox">Chatbot</a>
-    </nav>
-    <h1 style="margin-top:14px">School Supplies and Services</h1>
-    <p class="sub">
-      Suppliers serving Dubai schools. For what to buy and when — and what a
-      school usually provides — see the
-      <a href="/parents/school-supplies">buying guide</a>.
-    </p>
-
-        {byBand.map((c) => (
-          <section class="prov-group" id={`cat-${c.id}`}>
-              <div class="prov-bandhead">
-                <h2 class="prov-band">{c.label}<span>{c.items.length}</span></h2>
-                {c.items.length === 0 && (
-                  <span class="prov-none">Nothing listed here yet.</span>
-                )}
-              </div>
-            <div class="prov-list">
-              {c.items.map((p) => (
-                /* One line that opens. A directory is scanned before it is
-                   read, so the closed state is the whole line — name, what
-                   they do, where — and everything else waits behind it.
-                   details/summary rather than a script: it works with
-                   JavaScript off and the browser handles the keyboard. */
-                <details class="prov">
-                  <summary>
-                    <span class="prov-name">{p.name}</span>
-                    <span class="prov-sum">{p.summary}</span>
-                    {p.areas && <span class="prov-areas">{p.areas}</span>}
-                  </summary>
-                  <div class="prov-body">
-                    {p.detail && <p class="prov-detail">{p.detail}</p>}
-                    <p class="prov-contact">
-                      {p.phone && <a href={`tel:${p.phone.replace(/[^+\d]/g, "")}`}>{p.phone}</a>}
-                      {p.phone && (p.email || p.website) && <span class="mod-dot">·</span>}
-                      {p.email && <a href={`mailto:${p.email}`}>{p.email}</a>}
-                      {p.email && p.website && <span class="mod-dot">·</span>}
-                      {p.website && (
-                        <a href={p.website} target="_blank" rel="noopener nofollow">
-                          {p.website.replace(/^https?:\/\//, "").replace(/\/$/, "")}
-                        </a>
-                      )}
-                    </p>
-                  </div>
-                </details>
-              ))}
-            </div>
-          </section>
-        ))}
+    <SupplierDirectory showNav={false} />
 
     <section class="panel prov-form" id="register" style="margin-top:12px">
       <h2>Register a service</h2>
