@@ -85,3 +85,28 @@ export const safeUrl = (raw: string): string | null => {
     return null;
   }
 };
+
+
+/**
+ * How the public page groups the categories.
+ *
+ * The form asks for eight, because a supplier knows exactly what it sells and
+ * a short list would make several of them pick "other". The page shows four,
+ * because a reader is scanning for a kind of thing rather than a taxonomy —
+ * second-hand books belong under Books to anyone looking for a book.
+ *
+ * Every stored category appears in exactly one band, and the bands are shown
+ * in this order whether or not they have anything in them: an empty section
+ * says "nobody supplies this yet", which is useful, and it tells a supplier
+ * reading the page that there is a place for them.
+ */
+export const BANDS = [
+  { id: "transport", label: "Transport", of: ["transport"] },
+  { id: "uniforms", label: "Uniforms", of: ["uniforms"] },
+  { id: "books", label: "Books", of: ["books", "used_books"] },
+  {
+    id: "other",
+    label: "Other Supplies",
+    of: ["stationery", "tutoring", "activities", "other"],
+  },
+] as const;

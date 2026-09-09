@@ -1,7 +1,7 @@
 ---
 import Base from "../layouts/Base.astro";
 import { env } from "cloudflare:workers";
-import { CATEGORIES, LIMITS, categoryLabel } from "../lib/providers";
+import { BANDS, CATEGORIES, LIMITS } from "../lib/providers";
 
 /**
  * Suppliers and services: the directory, and the form that fills it.
@@ -29,10 +29,13 @@ const { results } = await DB.prepare(
 ).all<any>();
 
 const live = results ?? [];
-const byCategory = CATEGORIES.map((c) => ({
-  ...c,
-  items: live.filter((p) => p.category === c.id),
-})).filter((c) => c.items.length > 0);
+/* Grouped into the four bands the page shows, and every band is kept whether
+   or not it has anything in it — an empty one tells a reader nobody supplies
+   that yet, and tells a supplier there is a place for them. */
+const byBand = BANDS.map((b) => ({
+  ...b,
+  items: live.filter((p) => (b.of as readonly string[]).includes(p.category)),
+}));
 
 /* What the form has just done, if anything. Carried in the query string
    because the post redirects — a message held in a variable would not survive
@@ -60,25 +63,14 @@ const ERRORS: Record<string, string> = {
       <a href="/parents/school-supplies">buying guide</a>.
     </p>
 
-    {live.length === 0 ? (
-      <p class="prov-empty">
-        <strong>Nothing listed yet.</strong> If you supply Dubai schools, the
-        form below is how you get on this page.
-      </p>
-    ) : (
-      <>
-        <nav class="prov-jump" aria-label="Categories">
-          {byCategory.map((c) => (
-            <a href={`#cat-${c.id}`}>{c.label} <span>{c.items.length}</span></a>
-          ))}
-        </nav>
-
-        {byCategory.map((c) => (
+        {byBand.map((c) => (
           <section class="prov-group" id={`cat-${c.id}`}>
-            <div class="faq-group-title">
-              <h2>{c.label}</h2>
-              <span class="faq-group-n">{c.items.length} listed</span>
-            </div>
+            <h2 class="prov-band">
+              {c.label}<span>{c.items.length}</span>
+            </h2>
+            {c.items.length === 0 && (
+              <p class="prov-none">Nothing listed here yet.</p>
+            )}
             <div class="prov-list">
               {c.items.map((p) => (
                 /* One line that opens. A directory is scanned before it is
@@ -111,8 +103,6 @@ const ERRORS: Record<string, string> = {
             </div>
           </section>
         ))}
-      </>
-    )}
 
     <section class="panel prov-form" id="register" style="margin-top:12px">
       <h2>Register a service</h2>
