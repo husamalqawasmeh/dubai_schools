@@ -3330,54 +3330,63 @@ a.idcard:hover h2 { color: var(--on-accent); }
    have meant every future change to a card being made twice, and the two
    drifting the first time one of them was forgotten. */
 .grid.is-compact { display: block; }
+/* Columns, not a row of things that happen to be next to each other.
+
+   display:contents on .foot is what makes this work: it dissolves the wrapper
+   so the three pills become grid items of the row itself. Without it they
+   would share one cell and go on sizing themselves, which is what left the
+   curriculum, the rating and the fee at a different width on every line.
+
+   Fixed widths rather than auto: auto sizes each column to its own longest
+   value, which is per-column but still ragged down the page once a filter
+   changes what is on screen. */
 .grid.is-compact .card {
-  display: flex;
-  /* The one that was missing, and the whole reason the short list stayed
-     tall: .card is flex-direction: column, so setting display:flex here
-     changed nothing — the children went on stacking. A row is the entire
-     point of a one-line-per-school view. */
-  flex-direction: row;
-  flex-wrap: nowrap;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 11rem 10rem 8.5rem 7.5rem;
   align-items: center;
-  gap: 14px;
-  padding: 9px 14px;
+  gap: 12px;
+  padding: 8px 14px;
   margin-bottom: 6px;
   min-height: 0;
 }
 .grid.is-compact .card h3 {
-  flex: 1 1 40%;
-  min-width: 0;
   margin: 0;
   font-size: 14.5px;
-  /* One line each, so the rows stay level and the eye can run down them. */
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+/* Area reads left, against the name. */
 .grid.is-compact .card .where {
-  flex: 0 0 22%;
   margin: 0;
   font-size: 12.5px;
+  text-align: left;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 .grid.is-compact .card .foot {
-  flex: 0 0 auto;
-  flex-wrap: nowrap;
-  justify-content: flex-end;
-  margin: 0;
+  display: contents;
   border-top: none;
+  margin: 0;
   padding-top: 0;
-  gap: 7px;
 }
-/* The curriculum pill is the one that can run long, so it is the one that
-   gives way rather than pushing the rating and fee off the end. */
-.grid.is-compact .pill-cur-text { max-width: 9rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-@media (max-width: 700px) {
-  .grid.is-compact .card { flex-wrap: wrap; gap: 6px 10px; }
+/* Each pill fills its column, so the three line up down the page whatever
+   they contain. */
+.grid.is-compact .card .pill { width: 100%; justify-content: center; }
+/* The fee is a quantity, so it ends where the row ends — numbers compare
+   down a right edge, not a left one. */
+.grid.is-compact .card .pill-fee { justify-content: flex-end; }
+.grid.is-compact .pill-cur-text { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+/* Below this the columns stop fitting, and a grid squeezed past its content
+   is worse than a wrap. */
+@media (max-width: 900px) {
+  .grid.is-compact .card { display: flex; flex-wrap: wrap; gap: 6px 10px; }
   .grid.is-compact .card h3 { flex: 1 1 100%; }
   .grid.is-compact .card .where { flex: 0 0 auto; }
+  .grid.is-compact .card .foot { display: flex; gap: 7px; }
+  .grid.is-compact .card .pill { width: auto; }
 }
 
 
