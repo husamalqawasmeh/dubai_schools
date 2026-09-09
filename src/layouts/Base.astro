@@ -28,6 +28,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
  * and light up with the item before it, making one link look two wide.
  */
 const NAV = [
+  { href: "OVERVIEW", label: "Overview" },
   { href: "FAQ", label: "FAQ" },
   { href: "/parents/pick-of-the-week", label: "School Pick-of-the-week" },
   { href: "SUPPLIES", label: "School Supplies" },
@@ -109,7 +110,7 @@ const nav = NAV.filter(
     !(hideAdvertise && n.href === "/schools/advertise") &&
     !(hideTravel && n.href === "/parents/travel-time") &&
     !(hidePick && n.href === "/parents/pick-of-the-week") &&
-    !(isConsole && n.href !== "CHATBOT" && n.href !== "ADMINFN") &&
+    !(isConsole && n.href !== "CHATBOT" && n.href !== "ADMINFN" && n.href !== "OVERVIEW") &&
     /* And Admin Functions exists only there — it is the console's own menu,
        and a link to it on a public page is a locked door with a sign on it. */
     !(!isConsole && n.href === "ADMINFN")
@@ -133,14 +134,23 @@ const faqHref = inSchools ? "/schools/faq" : "/parents/faq";
 const suppliesHref = inSchools ? "/schools/school-supplies" : "/parents/school-supplies";
 const newsHref = inSchools ? "/schools/school-news" : "/parents/school-news";
 
-/* The chatbot lives on an overview, and there are three of them now — one
-   per section, plus the console's. It follows you into whichever you are in
-   rather than sending a parent into the schools' copy to ask a question. */
-const chatbotHref = isConsole
-  ? "/admin/overview#chatbox"
+/* Each section opens on its own overview, and it leads the bar because it is
+   the page the rest of the section hangs off — the one item that answers
+   "where am I" rather than "where else could I go". The console gets it for
+   the same reason, and is the one place it had to be spared by the filter
+   above rather than simply appearing. */
+const overviewHref = isConsole
+  ? "/admin/overview"
   : inSchools
-    ? "/schools/overview#chatbox"
-    : "/parents/overview#chatbox";
+    ? "/schools/overview"
+    : "/parents/overview";
+
+/* The chatbot lives on an overview — the same one, so it follows you into
+   whichever section you are in rather than sending a parent into the schools'
+   copy to ask a question. Derived rather than repeated: the two were the same
+   three-way choice written twice, and only one of them would have been
+   updated when a fourth section arrives. */
+const chatbotHref = `${overviewHref}#chatbox`;
 
 
 const communicateHref = inSchools
@@ -154,6 +164,7 @@ const communicateHref = inSchools
    there are four now, and each one added made the chain harder to read
    than the thing it was expressing. */
 const SECTIONED: Record<string, string> = {
+  OVERVIEW: overviewHref,
   COMMUNICATE: communicateHref,
   FAQ: faqHref,
   SUPPLIES: suppliesHref,
