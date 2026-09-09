@@ -3251,7 +3251,7 @@ a.idcard:hover h2 { color: var(--on-accent); }
 .prov-jump a:hover span { color: var(--on-accent); }
 
 .prov-group { margin-top: 20px; }
-.prov-list { display: block; margin-top: 10px; }
+.prov-list { display: block; margin-top: 4px; }
 /* One per row. Two columns made each entry a box three lines deep, which
    is the opposite of a list you can run your eye down. */
 
@@ -3535,7 +3535,7 @@ a.idcard:hover h2 { color: var(--on-accent); }
   border-radius: 8px;
   padding: 0;
 }
-.prov + .prov { margin-top: 8px; }
+.prov + .prov { margin-top: 4px; }
 .prov > summary {
   display: flex;
   align-items: baseline;
@@ -3733,7 +3733,7 @@ a.idcard:hover h2 { color: var(--on-accent); }
    among the boxes below it. */
 .prov-bandname {
   display: inline-block;
-  margin: 24px 0 8px;
+  margin: 22px 0 4px;
   padding: 6px 14px;
   border-radius: 999px;
   font-family: var(--display);
