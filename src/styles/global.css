@@ -2154,7 +2154,7 @@ a.cur-note {
 .tt-go { margin-top: 0; flex: none; padding: 8px 14px; font-size: 13px; }
 
 /* ---------------- nav separators ---------------- */
-/* Eight items and seven separators do not fit a 52px bar at the old size, so
+/* Seven items and six separators do not fit a 52px bar at the old size, so
    the nav tightens rather than wrapping — the header height is part of the
    app shell and growing it would push the page below out of one screen. */
 /* No gap of its own: the mark sets its own spacing, tight to the item it

@@ -30,7 +30,6 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
 const NAV = [
   { href: "OVERVIEW", label: "Overview" },
   { href: "FAQ", label: "FAQ" },
-  { href: "/parents/pick-of-the-week", label: "School Pick-of-the-week" },
   { href: "SUPPLIES", label: "School Supplies" },
   { href: "/parents/travel-time", label: "Travel Time" },
   { href: "SCHOOLNEWS", label: "Schools News" },
@@ -92,11 +91,6 @@ const hideAdvertise = !inSchools;
    section for the same reason Advertise comes out of the parents'. */
 const hideTravel = inSchools;
 
-/* Same for the weekly pick. It is a school chosen for parents to look at;
-   showing a school a shortlist it might not be on is a different proposition
-   entirely, and not one this page is making. */
-const hidePick = inSchools;
-
 /* The console keeps only the chatbot.
 
    Every other item leads out into the public site, and an admin working
@@ -110,7 +104,6 @@ const nav = NAV.filter(
     !(hideSupplies && n.href === "SUPPLIES") &&
     !(hideAdvertise && n.href === "/schools/advertise") &&
     !(hideTravel && n.href === "/parents/travel-time") &&
-    !(hidePick && n.href === "/parents/pick-of-the-week") &&
     !(isConsole && n.href !== "CHATBOT" && n.href !== "ADMINFN" && n.href !== "OVERVIEW") &&
     /* And Admin Functions exists only there — it is the console's own menu,
        and a link to it on a public page is a locked door with a sign on it. */
