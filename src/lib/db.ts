@@ -191,6 +191,38 @@ const parseJson = <T,>(raw: string | null, fallback: T): T => {
  * sortable text — "KG 1", "FS 2", "Year 10" and "Grade 3" all coexist, and
  * fee order happens to track school stage closely enough to read naturally.
  */
+/* -------------------------------------------------------------------------- */
+/* Photographs                                                                 */
+/* -------------------------------------------------------------------------- */
+
+export interface SchoolPhoto {
+  image_url: string;
+  caption: string | null;
+  attribution: string | null;
+}
+
+/**
+ * Cleared photographs for one school, newest first. Only rows with a direct
+ * image_url qualify — a Street View row stores just a pano id, and turning
+ * that into a picture takes a Maps API key this project does not have, so
+ * those rows sit in the table unusable until one exists.
+ *
+ * publish_ok is the gate: a photo an admin has not reviewed, or has rejected,
+ * cannot reach this query no matter how it got into the table.
+ */
+export async function schoolPhotos(schoolId: number): Promise<SchoolPhoto[]> {
+  const { results } = await DB.prepare(
+    `SELECT image_url, caption, attribution
+     FROM school_photos
+     WHERE school_id = ? AND publish_ok = 1 AND image_url IS NOT NULL
+     ORDER BY id DESC
+     LIMIT 2`
+  )
+    .bind(schoolId)
+    .all<SchoolPhoto>();
+  return results;
+}
+
 export async function gradeFees(schoolId: number): Promise<GradeFee[]> {
   const { results } = await DB.prepare(
     `SELECT grade, curriculum, academic_year, tuition_aed, total_aed,

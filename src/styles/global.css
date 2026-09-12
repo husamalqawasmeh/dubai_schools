@@ -525,6 +525,17 @@ a.tier:hover .coin-edge { filter: brightness(0.9); }
 }
 .coins-lg .coin-face { stroke-width: 1.1; }
 
+/* The dirham coin used as the "What schools cost" heading icon — a frontal
+   face of the same coin the stack above is built from, so the two read as
+   one symbol rather than two different ideas of money on one page. */
+.coin-ico { flex: none; width: 16px; height: 16px; }
+.coin-ico svg { display: block; width: 100%; height: 100%; }
+.coin-ico-face { fill: var(--coin); stroke: var(--coin-rim); stroke-width: 1.2; }
+.coin-ico-mark {
+  fill: none; stroke: var(--coin-ink); stroke-width: 2;
+  stroke-linecap: round; stroke-linejoin: round;
+}
+
 /* ---------------- chart header icons ---------------- */
 .chart-ico { flex: none; width: 15px; height: 15px; color: var(--accent); }
 .chart-ico svg { display: block; width: 100%; height: 100%; }
@@ -1217,6 +1228,24 @@ button.adminlink:hover { border-color: var(--accent); }
 .topsplit .mapcard iframe { height: 100%; min-height: 300px; }
 .belowsplit { padding: 28px 0 60px; }
 .belowsplit > h2:first-child { margin-top: 0; }
+
+/* Two cleared photographs, left and right, sat above the fee table the way
+   the map sits beside the fact panel above it — the same side-by-side
+   language used twice on one page rather than invented again. A single
+   photograph spans the row instead of sitting alone in half of it. */
+.photorow { display: grid; grid-template-columns: 1fr; gap: 16px; margin-bottom: 22px; }
+@media (min-width: 860px) {
+  .photorow:not(.is-single) { grid-template-columns: 1fr 1fr; }
+}
+.photocard {
+  margin: 0; border: 1px solid var(--rule); border-radius: 6px;
+  overflow: hidden; box-shadow: var(--shadow); background: var(--surface);
+}
+.photocard img { display: block; width: 100%; height: 220px; object-fit: cover; }
+.photocard figcaption {
+  padding: 8px 12px; font-family: var(--display); font-size: 12px;
+  color: var(--muted); border-top: 1px solid var(--rule);
+}
 
 /* Area carries the longest values — "Jumeirah Village Circle (south)" — so it
    takes the extra width the other three give back, and sits last. */

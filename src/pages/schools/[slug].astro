@@ -1,6 +1,6 @@
 ---
 import Base from "../../layouts/Base.astro";
-import { schoolBySlug, gradeFees } from "../../lib/db";
+import { schoolBySlug, gradeFees, schoolPhotos } from "../../lib/db";
 import Coins from "../../components/Coins.astro";
 
 const { slug } = Astro.params;
@@ -11,6 +11,7 @@ if (!school) {
 }
 
 const grades = school ? await gradeFees(school.id) : [];
+const photos = await schoolPhotos(school.id);
 
 // Everything below the per-grade table is the same on every sheet for a
 // school, so it is shown once rather than repeated fourteen times.
@@ -136,6 +137,23 @@ const facts: { k: string; v: string | null; href?: string }[] = [
     </div>
 
     <div class="belowsplit">
+        {photos.length > 0 && (
+          <div class={photos.length > 1 ? "photorow" : "photorow is-single"}>
+            {photos.map((p) => (
+              <figure class="photocard">
+                <img src={p.image_url} alt={p.caption ?? `${school.name}`} loading="lazy" />
+                {(p.caption || p.attribution) && (
+                  <figcaption>
+                    {p.caption}
+                    {p.caption && p.attribution ? " — " : ""}
+                    {p.attribution}
+                  </figcaption>
+                )}
+              </figure>
+            ))}
+          </div>
+        )}
+
         <h2>Fees by grade</h2>
         {grades.length > 0 ? (
           <>
