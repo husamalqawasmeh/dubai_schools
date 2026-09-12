@@ -1001,6 +1001,14 @@ button.btn:disabled { opacity: 0.55; cursor: default; }
   text-transform: uppercase; color: var(--ink); margin-bottom: 6px;
 }
 .fact p { font-family: var(--display); font-size: 13.5px; color: var(--ink); margin: 0; line-height: 1.45; }
+/* Optional services and discounts often run to several items, and run
+   together with " · " they read as one long sentence. One per line instead. */
+.fact-list {
+  font-family: var(--display); font-size: 13.5px; color: var(--ink);
+  margin: 0; padding: 0; list-style: none;
+}
+.fact-list li { line-height: 1.45; }
+.fact-list li + li { margin-top: 3px; }
 
 /* ---------------- advertise ---------------- */
 /* The last page with a cap of its own. Like .pick and .contribute it now

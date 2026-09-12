@@ -200,13 +200,19 @@ const facts: { k: string; v: string | null; href?: string }[] = [
                 {sample.optional.filter((o) => !/transport/i.test(o.name)).length > 0 && (
                   <div class="fact">
                     <h3>Optional services</h3>
-                    <p>{sample.optional.filter((o) => !/transport/i.test(o.name)).map((o) => `${o.name} AED ${o.amount}`).join(" · ")}</p>
+                    <ul class="fact-list">
+                      {sample.optional.filter((o) => !/transport/i.test(o.name)).map((o) => (
+                        <li>{o.name} AED {o.amount}</li>
+                      ))}
+                    </ul>
                   </div>
                 )}
                 {sample.discounts.length > 0 && (
                   <div class="fact">
                     <h3>Discounts</h3>
-                    <p>{sample.discounts.join(" · ")}</p>
+                    <ul class="fact-list">
+                      {sample.discounts.map((d) => <li>{d}</li>)}
+                    </ul>
                   </div>
                 )}
               </div>
