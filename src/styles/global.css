@@ -2714,14 +2714,25 @@ body.is-bare .idwrap { min-height: 100dvh; }
 
 /* The done control, at the right-hand end of the row: a tick and the box it
    belongs to, kept together so neither reads as a stray. */
-.rm-done { display: flex; align-items: center; gap: 5px; flex: none; }
+.rm-done { display: flex; align-items: center; gap: 0; flex: none; }
 .rm-done form { display: flex; margin: 0; }
+/* The mark leans into its box, tip just past the border, so the pair reads as
+   one control — this mark goes in that box — rather than as an icon that
+   happens to sit near a checkbox.
+
+   -4px, not -2: the tick ends about 2px short of the right edge of its own
+   14px viewport, so the first 2px of the pull only closes that slack and the
+   rest is the overlap. Positioned so it paints over the box instead of
+   under it. */
 .rm-doneico {
   width: 14px;
   height: 14px;
   flex: none;
   color: var(--muted);
   display: block;
+  position: relative;
+  z-index: 1;
+  margin-right: -4px;
 }
 /* Once the box is ticked the mark stops being an instruction and becomes a
    label for a state, so it takes the colour of the state. */
